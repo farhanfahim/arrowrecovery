@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="470dp"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x20dp"
+        android:layout_marginBottom="@dimen/x20dp"
+        android:text="Personal Information"
+        android:textColor="@color/title_color"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:id="@+id/txtmantracategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Select Year..."
+                android:padding="5dp"
+                android:textColor="@color/title_color"
+                android:textColorHint="@color/txtGrey"
+
+                android:textSize="18sp"
+                app:typeface="@string/font_regular" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Select category"
+                android:padding="@dimen/x10dp"
+                android:src="@drawable/spinner" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/txtGrey" />
+
+
+    </LinearLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_fullname_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+        <EditText
+            android:id="@+id/input_fullname_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:inputType="textEmailAddress"
+            android:singleLine="true"
+            android:textColor="@color/title_color"
+            android:textColorHint="@color/txtGrey"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/x5dp"
+        android:gravity="center|start"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Comapny"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Individual"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="20sp" />
+
+    </RadioGroup>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company Name"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="@color/title_color"
+            android:textColorHint="@color/txtGrey"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company Kind"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:textColor="@color/title_color"
+            android:textColorHint="@color/txtGrey"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/searchbar_grey"
+        android:backgroundTint="@color/green_bg"
+        android:gravity="center"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="@color/c_white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

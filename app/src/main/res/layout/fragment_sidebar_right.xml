@@ -63,7 +63,7 @@
                         android:src="@drawable/ic_tekrevol_logo" />
 
 
-                    <com.android.structure.widget.AnyTextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:id="@+id/txtHome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                         android:background="@color/c_white" />
 
 
-                    <com.android.structure.widget.AnyTextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:id="@+id/txtCardSubscription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                         android:layout_height="2px"
                         android:background="@color/c_white" />
 
-                    <com.android.structure.widget.AnyTextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:id="@+id/txtPreferences"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                         android:layout_height="2px"
                         android:background="@color/c_white" />
 
-                    <com.android.structure.widget.AnyTextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:id="@+id/txtAbout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <com.android.structure.widget.AnyTextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:id="@+id/txtLogout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

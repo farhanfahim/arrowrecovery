@@ -41,7 +41,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1069819690088:android:20a42096add8595c",
         "android_client_info": {
-          "package_name": "com.android.structure"
+          "package_name": "com.tekrevol.arrowrecovery"
         }
       },
       "oauth_client": [
@@ -49,7 +49,7 @@
           "client_id": "1069819690088-us1bkcq41b7ikvtdgspd1pjral6kc7hq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.android.structure",
+            "package_name": "com.tekrevol.arrowrecovery",
             "certificate_hash": "403a6a990d2f19110106938d778f12871be3ce03"
           }
         },

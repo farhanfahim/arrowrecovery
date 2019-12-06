@@ -78,7 +78,7 @@
                         <!--android:textSize="@dimen/s12"-->
                         <!--app:typeface="@string/font_medium" />-->
 
-                    <com.android.structure.widget.AnyTextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -95,7 +95,7 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <com.android.structure.widget.AnyEditTextView
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:id="@+id/edtUserName"
                             style="@style/Item.padding_form_field"
                             android:layout_width="match_parent"
@@ -114,10 +114,10 @@
                             android:textSize="@dimen/s14"
                             app:testType="nocheck">
 
-                        </com.android.structure.widget.AnyEditTextView>
+                        </com.tekrevol.arrowrecovery.widget.AnyEditTextView>
 
 
-                        <com.android.structure.widget.AnyEditTextView
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:id="@+id/edtPassword"
                             style="@style/Item.padding_form_field"
                             android:layout_width="match_parent"
@@ -145,7 +145,7 @@
                             android:textSize="@dimen/s12"
                             android:theme="@style/CheckboxStyle" />
 
-                        <com.android.structure.widget.AnyTextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:id="@+id/btnLogin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -199,7 +199,7 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
-            <com.android.structure.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -210,7 +210,7 @@
                 android:textSize="@dimen/s10"
                 app:typeface="@string/font_medium" />
 
-            <com.android.structure.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

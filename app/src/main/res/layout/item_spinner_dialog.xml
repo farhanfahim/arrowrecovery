@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:clickable="false" />
 
-            <com.android.structure.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/txtChoice"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

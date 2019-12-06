@@ -10,7 +10,7 @@
     android:padding="@dimen/x10dp">
 
 
-    <com.android.structure.widget.AnyTextView
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
 
         android:layout_weight="1">
 
-        <com.android.structure.widget.AnyTextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:id="@+id/txtMessage"
             android:layout_width="@dimen/x260dp"
             android:layout_height="wrap_content"

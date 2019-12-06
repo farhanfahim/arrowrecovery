@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_white"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Checkout"
+        android:textColor="@color/txtDarkGrey"
+        android:textSize="25sp" />
+
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Shipping"
+        android:textColor="@color/txtDarkGrey"
+        android:textSize="25sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="-5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="Pickup"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Delivered to collection center"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="20sp" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mantracategory"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x60dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/x10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_stroke_grey"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="216 San Andrew St, Miami, FL"
+            android:padding="5dp"
+            android:textColor="@color/c_black"
+            android:textColorHint="@color/c_black"
+            android:textSize="12sp"
+            app:typeface="@string/font_regular" />
+
+
+    </LinearLayout>
+
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Price"
+        android:textColor="@color/txtDarkGrey"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Discount: $"
+            android:textColor="@color/txtGrey"
+            android:textSize="18sp" />
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="541.36"
+            android:textColor="@color/txtGrey"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Total: $"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="20sp" />
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="541.36"
+            android:textColor="@color/txtDarkGrey"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_stroke_green"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textColor="@color/green_bg"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/searchbar_grey"
+            android:backgroundTint="@color/green_bg"
+            android:gravity="center"
+            android:text="Place Order"
+            android:textColor="@color/c_white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

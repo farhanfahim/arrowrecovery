@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x70dp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/plus"
+                    android:padding="@dimen/x10dp" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center|start"
+                    android:text="1397.00"
+                    android:textColor="@color/green_bg"
+                    android:textSize="@dimen/x50dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/refresh"
+                    android:padding="@dimen/x10dp" />
+            </LinearLayout>
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:gravity="center|start"
+                android:text="$/Oz t"
+                android:textColor="@color/txtGrey"
+                android:textSize="@dimen/x35dp" />
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/carouselView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:fillColor="@color/green_bg"
+                app:pageColor="#FFFFFF"
+                app:radius="6dp"
+                app:slideInterval="3000"
+                app:strokeColor="#FF777777"
+                app:strokeWidth="1dp"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_marginRight="@dimen/x10dp"
+                android:layout_marginBottom="@dimen/x20dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dayslist" />
+            </LinearLayout>
+
+
+            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/quantum_grey100"
+                app:top_right_corner_radius="10dp"
+                app:top_left_corner_radius="10dp"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_dashboard"
+                    android:layout_height="match_parent">
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

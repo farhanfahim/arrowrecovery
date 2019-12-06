@@ -26,7 +26,7 @@
             android:background="#ff9c3d"
             android:padding="@dimen/x5dp">
 
-            <com.android.structure.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

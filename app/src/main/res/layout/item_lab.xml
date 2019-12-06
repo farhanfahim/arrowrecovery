@@ -17,7 +17,7 @@
             android:layout_weight="1.7"
             android:orientation="vertical">
 
-            <com.android.structure.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/txtLabName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:textSize="@dimen/s12"
                 app:typeface="@string/font_bold" />
 
-            <com.android.structure.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/txtRange"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content">
 
 
-                <com.android.structure.widget.AnyTextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtResult"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                     app:typeface="@string/font_medium" />
 
 
-                <com.android.structure.widget.AnyTextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
-                <com.android.structure.widget.AnyTextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
         </LinearLayout>
 
 
-        <com.android.structure.widget.AnyTextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:id="@+id/txtState"
             android:layout_width="@dimen/x40dp"
             android:layout_height="wrap_content"

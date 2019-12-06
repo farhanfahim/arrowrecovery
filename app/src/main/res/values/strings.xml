@@ -76,4 +76,8 @@
     <string name="login_text"> --------------- Log In ---------------</string>
 
 
+    <string name="SIgn_Up"><u>Sign up</u></string>
+    <string name="Log_In"><u>Log In</u></string>
+    <string name="Send_Code"><u>Send a new code</u></string>
+
 </resources>

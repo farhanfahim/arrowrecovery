@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/c_white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x50dp">
+
+        <LinearLayout
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/bg_selectall"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_marginLeft="-5dp"
+                android:layout_marginBottom="2dp"
+                android:layout_gravity="fill|center"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_check_black_24dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="0dp"
+            android:gravity="center|start"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_alignRight="@+id/check"
+            android:text="Select All"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/delete"/>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        tools:listitem="@layout/item_cart"
+        android:layout_height="match_parent">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

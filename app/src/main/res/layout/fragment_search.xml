@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="10dp">
+
+
+        <ImageButton
+            android:padding="@dimen/x10dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/x50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_stroke_grey_search"
+            android:gravity="center"
+            android:visibility="visible">
+
+
+
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:id="@+id/txtmantracategory"
+                android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/x10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search"
+                android:padding="5dp"
+                android:drawablePadding="@dimen/x10dp"
+                android:drawableLeft="@drawable/Search"
+                android:textColor="@color/c_black"
+                android:textColorHint="@color/c_black"
+                android:textSize="12sp"
+                app:typeface="@string/font_regular" />
+
+            <View
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dp"
+                android:layout_width="@dimen/x1dp"
+                android:layout_height="25dp"
+                android:background="@color/transparent_grey"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Select category"
+                android:padding="@dimen/x10dp"
+                android:layout_margin="@dimen/x10dp"
+                android:background="@drawable/filtersearch" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_search">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_cart">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

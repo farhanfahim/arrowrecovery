@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.structure">
+    package="com.tekrevol.arrowrecovery">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -22,7 +22,7 @@
 
 
     <application
-        android:name="com.android.structure.BaseApplication"
+        android:name="com.tekrevol.arrowrecovery.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -42,7 +42,7 @@
 
         <!-- Splash screen -->
         <activity
-            android:name="com.android.structure.activities.SplashActivity"
+            android:name="com.tekrevol.arrowrecovery.activities.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SplashActivty">
@@ -57,7 +57,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name="com.android.structure.activities.MainActivity"
+            android:name="com.tekrevol.arrowrecovery.activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -66,7 +66,7 @@
 
         <!-- Home Activity -->
         <activity
-            android:name="com.android.structure.activities.HomeActivity"
+            android:name="com.tekrevol.arrowrecovery.activities.HomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

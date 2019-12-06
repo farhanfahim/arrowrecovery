@@ -3,17 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_black">
+    android:background="@drawable/background">
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.4"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_placeholder_nurse" />
+        android:id="@+id/imgLogo"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        />
 
-    <LinearLayout
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/s20"
+        android:layout_below="@+id/imgLogo"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:textColor="@color/title_color"
+        android:layout_height="wrap_content"
+        android:text="Changing Tomorrow... Today!"
+        />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/x20dp"
+        android:gravity="center"
+        android:text="1.0.0.0"
+        android:textColor="@color/c_white"
+        android:textSize="20sp" />
+
+  <!--  <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
@@ -53,7 +77,7 @@
         </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
     <!--<ImageView-->

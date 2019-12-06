@@ -36,7 +36,7 @@
                 android:layout_below="@id/titlebar"
                 android:layout_centerHorizontal="true" />
 
-            <com.android.structure.widget.TitleBar
+            <com.tekrevol.arrowrecovery.widget.TitleBar
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

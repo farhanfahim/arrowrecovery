@@ -17,6 +17,9 @@
     <color name="base_dark_gray">#394752</color>
     <color name="base_amber">#FD8200</color>
 
+    <color name="title_color">#282646</color>
+    <color name="title_grey">#8A8A8F</color>
+
     <color name="base_blue">#1DB9D9</color>
     <color name="panic_blue">#4F81BD</color>
     <color name="base_green">#38BD70</color>
@@ -415,6 +418,10 @@
 
     <color name="material_black">#ff000000</color>
     <color name="material_white">#ffffffff</color>
+    <color name="green_bg">#1D8836</color>
+    <color name="blue_bg">#3F5AA9</color>
+    <color name="red_bg">#D64937</color>
+
 
 
 </resources>
