@@ -198,7 +198,7 @@ public class GPSTracker2 extends Service implements LocationListener {
     /**
      * Get list of address by latitude and longitude
      *
-     * @return null or List<Address>
+     * @return null or List<AddressFragment>
      */
     public List<Address> getGeocoderAddress(Context context) {
         if (location != null) {
@@ -308,10 +308,10 @@ public class GPSTracker2 extends Service implements LocationListener {
     }
 /*	public static String getCountryName(Context context, double latitude, double longitude) {
 	    Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-	    List<Address> addresses = null;
+	    List<AddressFragment> addresses = null;
 	    try {
 	        addresses = geocoder.getFromLocation(latitude, longitude, 1);
-	        Address result;
+	        AddressFragment result;
 		    if (addresses != null && !addresses.isEmpty()) {
 		        return addresses.get(0).getCountryName();
 		    }

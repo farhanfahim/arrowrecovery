@@ -232,7 +232,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     /**
      * Get list of address by latitude and longitude
-     * @return null or List<Address>
+     * @return null or List<AddressFragment>
      */
     public List<Address> getGeocoderAddress(Context context) {
         if (location != null) {

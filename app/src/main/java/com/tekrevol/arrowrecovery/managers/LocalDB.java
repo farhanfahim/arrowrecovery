@@ -57,7 +57,7 @@
 //
 //public class LocalDB {
 //    private static final String TAG = "LOCAL_DB";
-//    /* Contact Related Methods  */
+//    /* ContactFragment Related Methods  */
 //
 //    private static Realm openRealmInstance() {
 //        Realm realm = Realm.getDefaultInstance();

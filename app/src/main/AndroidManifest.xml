@@ -42,10 +42,11 @@
 
         <!-- Splash screen -->
         <activity
-            android:name="com.tekrevol.arrowrecovery.activities.SplashActivity"
+            android:name="com.tekrevol.arrowrecovery.activities.SplashActivityKotlin"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashActivty">
+            android:exported="true"
+            android:theme="@style/SplashActivtyKotlin"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +68,14 @@
         <!-- Home Activity -->
         <activity
             android:name="com.tekrevol.arrowrecovery.activities.HomeActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
+            android:name="com.tekrevol.arrowrecovery.activities.ScreenSlidePagerActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"

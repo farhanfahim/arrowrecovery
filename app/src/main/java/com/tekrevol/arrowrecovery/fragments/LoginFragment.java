@@ -119,5 +119,4 @@ public class LoginFragment extends BaseFragment {
         getBaseActivity().openActivity(HomeActivity.class);
     }
 
-
 }

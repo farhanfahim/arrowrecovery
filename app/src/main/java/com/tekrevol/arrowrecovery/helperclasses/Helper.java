@@ -177,7 +177,7 @@ public class Helper {
 //            }
 //            cur.close();
 //        }
-//        Log.e("abc", "Contact sync complete");
+//        Log.e("abc", "ContactFragment sync complete");
 //        return contacts;
 //    }
 

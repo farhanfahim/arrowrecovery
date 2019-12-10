@@ -190,7 +190,7 @@ public class GooglePlaceHelper {
 
         GoogleAddressModel googleAddressModel = new GoogleAddressModel("", "", "", "", "", "");
 
-        //Set Address
+        //Set AddressFragment
         try {
             Geocoder geocoder = new Geocoder(context, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);

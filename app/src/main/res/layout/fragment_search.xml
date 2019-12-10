@@ -43,7 +43,7 @@
                 android:hint="Search"
                 android:padding="5dp"
                 android:drawablePadding="@dimen/x10dp"
-                android:drawableLeft="@drawable/Search"
+                android:drawableLeft="@drawable/search"
                 android:textColor="@color/c_black"
                 android:textColorHint="@color/c_black"
                 android:textSize="12sp"

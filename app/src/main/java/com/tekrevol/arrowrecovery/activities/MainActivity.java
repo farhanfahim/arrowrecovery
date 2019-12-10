@@ -10,13 +10,12 @@ import android.view.Gravity;
 import android.view.WindowManager;
 
 import com.tekrevol.arrowrecovery.R;
+import com.tekrevol.arrowrecovery.fragments.LoginFragmentt;
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 
 import java.util.List;
 
-
-import com.tekrevol.arrowrecovery.fragments.LoginFragment;
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment;
 
 
@@ -70,9 +69,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFragments() {
-        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null) {
-            addDockableFragment(LoginFragment.newInstance(), false);
-        } else {
+        if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null)
+            addDockableFragment(LoginFragmentt.newInstance(), false);
+        else {
             openActivity(HomeActivity.class);
             this.finish();
         }

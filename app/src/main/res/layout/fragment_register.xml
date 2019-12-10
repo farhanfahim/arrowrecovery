@@ -13,6 +13,11 @@
           android:contentDescription="Splash"
           android:src="@drawable/splash" />-->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,8 +48,6 @@
 
         </LinearLayout>
 
-
-
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,67 +68,138 @@
             android:textStyle="bold" />
 
         <androidx.viewpager.widget.ViewPager
+            android:id="@+id/registerViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </androidx.viewpager.widget.ViewPager>
 
+
+        <TextView
+            android:id="@+id/btnnext"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/searchbar_grey"
+            android:backgroundTint="@color/green_bg"
+            android:gravity="center"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/c_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:gravity="center"
+            android:text="or sign up with social account" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/btnfb"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/searchbar_grey"
+                android:backgroundTint="@color/blue_bg"
+                android:gravity="center"
+                android:weightSum="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/facebook" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="Log in"
+                    android:textColor="@color/c_white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btngoogle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/searchbar_grey"
+                android:backgroundTint="@color/red_bg"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/google" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="Log in"
+                    android:textColor="@color/c_white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/x20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account?"
+                android:textColor="@color/title_color"
+                app:typeface="@string/font_regular" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:id="@+id/txt_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:contentDescription="Sign up"
+                android:text="@string/Log_In"
+                android:textColor="@color/title_color"
+                app:typeface="@string/font_regular" />
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
-
-    <!-- <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="bottom"
-      android:orientation="vertical" >
-
-      <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-          android:id="@+id/contParentLayout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:layout_marginBottom="@dimen/x200dp"
-          android:orientation="vertical"  >
-
-
-          <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#9fff"
-              android:gravity="center"
-              android:orientation="horizontal"
-              app:corner_radius="@dimen/x5dp">
-
-
-              <ImageView
-                  android:id="@+id/imageView"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:paddingTop="@dimen/x30dp"
-                  android:paddingBottom="@dimen/x30dp"
-                  android:src="@drawable/ic_tekrevol_logo" />
-
-
-          </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
-
-
-      </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
-
-
-  </LinearLayout>-->
-
-
-    <!--<ImageView-->
-    <!--android:layout_width="@dimen/x280dp"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_margin="@dimen/x10dp"-->
-    <!--android:padding="@dimen/x8dp"-->
-    <!--android:scaleType="fitCenter"-->
-    <!--android:src="@drawable/akuh_logo"-->
-    <!--android:visibility="gone" />-->
-
+    </ScrollView>
 
 </RelativeLayout>
