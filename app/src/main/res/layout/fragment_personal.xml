@@ -2,23 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="470dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <com.tekrevol.arrowrecovery.widget.AnyTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/x20dp"
-        android:layout_marginBottom="@dimen/x20dp"
-        android:text="Personal Information"
-        android:textColor="@color/title_color"
-        android:textSize="25sp" />
+        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -138,22 +134,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/searchbar_grey"
-        android:backgroundTint="@color/green_bg"
-        android:gravity="center"
-        android:text="Next"
-        android:textAllCaps="false"
-        android:textColor="@color/c_white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    </ScrollView>
 
 </RelativeLayout>

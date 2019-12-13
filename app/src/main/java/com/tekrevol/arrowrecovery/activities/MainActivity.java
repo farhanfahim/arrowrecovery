@@ -11,6 +11,8 @@ import android.view.WindowManager;
 
 import com.tekrevol.arrowrecovery.R;
 import com.tekrevol.arrowrecovery.fragments.LoginFragmentt;
+import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment;
+import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragmentKt;
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragments() {
         if (SharedPreferenceManager.getInstance(getApplicationContext()).getCurrentUser() == null)
-            addDockableFragment(LoginFragmentt.newInstance(), false);
+            addDockableFragment(RegisterPagerFragment.newInstance(0), false);
         else {
             openActivity(HomeActivity.class);
             this.finish();

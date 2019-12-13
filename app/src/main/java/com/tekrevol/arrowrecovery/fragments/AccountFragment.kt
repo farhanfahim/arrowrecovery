@@ -10,28 +10,27 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 
-public class AddressFragment : BaseFragment() {
-    override fun getDrawerLockMode(): Int {
-        return 0
-
-    }
+class AccountFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(): AddressFragment {
+
+        fun newInstance(): AccountFragment {
+
             val args = Bundle()
 
-            val fragment = AddressFragment()
+            val fragment = AccountFragment()
             fragment.setArguments(args)
             return fragment
         }
     }
 
+    override fun getDrawerLockMode(): Int {
+        return 0
 
+    }
 
     override fun getFragmentLayout(): Int {
-
-        return R.layout.fragment_address
-
+        return R.layout.fragment_account
     }
 
     override fun setTitlebar(titleBar: TitleBar?) {
@@ -46,4 +45,6 @@ public class AddressFragment : BaseFragment() {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
+
 }
+

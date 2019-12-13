@@ -10,13 +10,38 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 
-public class ContactFragment : Fragment()
-{
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_contact, container, false)
+public class ContactFragment : BaseFragment() {
+
+    companion object {
+        fun newInstance(): ContactFragment {
+            val args = Bundle()
+
+            val fragment = ContactFragment()
+            fragment.setArguments(args)
+            return fragment
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun getDrawerLockMode(): Int {
+        return 0
+
+    }
+
+    override fun getFragmentLayout(): Int {
+        return R.layout.fragment_contact
+
+
+    }
+
+    override fun setTitlebar(titleBar: TitleBar?) {
+    }
+
+    override fun setListeners() {
+    }
+
+    override fun onClick(v: View?) {
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 }

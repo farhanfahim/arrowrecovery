@@ -66,7 +66,7 @@ class SplashActivityKotlin : AppCompatActivity() {
 
                 Handler().postDelayed({
                     //                        animateSplashLayout(true);
-                    changeActivity(ScreenSlidePagerActivity::class.java)
+                    changeActivity(MainActivity::class.java)
                 }, ANIMATIONS_DELAY.toLong())
 
             } else {
