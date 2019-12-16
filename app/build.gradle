@@ -22,10 +22,10 @@ android {
     buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId 'com.tekrevol.arrowrecovery'
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "3.2"
+        versionName "1.0.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -129,6 +129,7 @@ dependencies {
     implementation 'com.synnapps:carouselview:0.1.5'
 
     implementation 'com.specyci:residemenu:1.6+'
+    implementation 'com.etebarian:meow-bottom-navigation:1.0.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -11,12 +11,14 @@ import com.tekrevol.arrowrecovery.R;
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment;
 import com.tekrevol.arrowrecovery.widget.TitleBar;
 
-public class HomeFragment extends BaseFragment {
+public class DashboardPagerFragment extends BaseFragment {
 
-    public static HomeFragment newInstance() {
+
+    public static DashboardPagerFragment newInstance() {
 
         Bundle args = new Bundle();
-        HomeFragment fragment = new HomeFragment();
+
+        DashboardPagerFragment fragment = new DashboardPagerFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -29,11 +31,13 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_dashboard;
+        return R.layout.fragment_dashboard_pager;
     }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
+        titleBar.setVisibility(View.VISIBLE);
+        titleBar.setTitle("");
 
     /*    titleBar.setVisibility(View.VISIBLE);
         titleBar.showSidebar(getBaseActivity());
