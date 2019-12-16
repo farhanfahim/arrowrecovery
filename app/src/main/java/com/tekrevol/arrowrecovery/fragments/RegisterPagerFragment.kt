@@ -1,10 +1,12 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -26,6 +28,12 @@ class RegisterPagerFragment : BaseFragment() {
     var btnBack: LinearLayout? = null
     var positionToSelect: Int = 0
     var btnnext: TextView? = null
+    var txtPersonal: TextView? = null
+    var txtContact: TextView? = null
+    var viewPersonal: View? = null
+    var viewContact: View? = null
+    var imgPersonal: ImageView? = null
+    var imgContact: ImageView? = null
 
     companion object {
         @JvmStatic
@@ -50,6 +58,12 @@ class RegisterPagerFragment : BaseFragment() {
         txt_login = view.findViewById(R.id.txt_login)
         btnnext = view.findViewById(R.id.btnnext)
         btnBack = view.findViewById(R.id.btnBack)
+        viewPersonal = view.findViewById(R.id.viewPersonal)
+        imgPersonal = view.findViewById(R.id.imgPersonal)
+        txtPersonal = view.findViewById(R.id.txtPersonal)
+        viewContact = view.findViewById(R.id.viewContact)
+        imgContact = view.findViewById(R.id.imgContact)
+        txtContact = view.findViewById(R.id.txtContact)
 
         if (onCreated) {
             setViewPagerAdapter()
@@ -78,9 +92,25 @@ class RegisterPagerFragment : BaseFragment() {
         btnnext?.setOnClickListener(View.OnClickListener {
 
             if (positionToSelect < 3) {
+
+                if (positionToSelect == 0) {
+                    viewPersonal?.setBackgroundColor(resources.getColor(R.color.green_bg))
+                    imgPersonal?.setImageResource(R.drawable.personalcoloredlogo)
+                    txtPersonal?.setTextColor(getResources().getColor(R.color.c_black))
+
+                } else if (positionToSelect == 1) {
+                    viewContact?.setBackgroundColor(resources.getColor(R.color.green_bg))
+                    imgContact?.setImageResource(R.drawable.contact)
+                    txtContact?.setTextColor(getResources().getColor(R.color.c_black))
+                }else if(positionToSelect == 2)
+                {
+                    viewContact?.setBackgroundColor(resources.getColor(R.color.green_bg))
+                    imgContact?.setImageResource(R.drawable.contact)
+                    txtContact?.setTextColor(getResources().getColor(R.color.c_black))
+                }
+
                 val current = positionToSelect + 1
                 setCurrentItem(current)
-            } else {
 
             }
         })

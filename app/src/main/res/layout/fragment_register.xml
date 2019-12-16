@@ -28,13 +28,12 @@
             android:gravity="start|center">
 
             <ImageView
-                android:visibility="gone"
-                android:padding="@dimen/x5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/icon_back"
-                android:contentDescription="back" />
-
+                android:contentDescription="back"
+                android:padding="@dimen/x5dp"
+                android:visibility="gone" />
 
 
         </LinearLayout>
@@ -69,6 +68,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imgAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -84,6 +84,7 @@
 
 
             <View
+                android:id="@+id/viewPersonal"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
@@ -96,20 +97,26 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imgPersonal"
+
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:src="@drawable/personallogogrey" />
 
                 <TextView
+                    android:id="@+id/txtPersonal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
-                    android:text="Personal" />
+                    android:text="Personal"
+                    android:textColor="@color/star_grey" />
             </LinearLayout>
 
 
             <View
+                android:id="@+id/viewContact"
+
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
@@ -122,19 +129,26 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imgContact"
+
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:src="@drawable/contactlogogrey" />
 
                 <TextView
+                    android:id="@+id/txtContact"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
-                    android:text="Contact" />
+                    android:text="Contact"
+                    android:textColor="@color/star_grey" />
             </LinearLayout>
 
             <View
+                android:id="@+id/viewAddress"
+
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
@@ -147,16 +161,20 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imgAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:src="@drawable/addressgrey" />
 
                 <TextView
+                    android:id="@+id/txtAddress"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
-                    android:text="Address" />
+                    android:text="Address"
+                    android:textColor="@color/star_grey" />
             </LinearLayout>
 
 
@@ -167,9 +185,9 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginBottom="@dimen/x10dp"
             android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x10dp"
+            android:text=""
             android:textColor="@color/title_color"
             android:textSize="20sp" />
 
@@ -285,8 +303,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/x10dp"
-               >
+                android:layout_marginTop="@dimen/x10dp">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="wrap_content"
