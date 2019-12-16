@@ -9,14 +9,14 @@ import com.tekrevol.arrowrecovery.R;
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment;
 import com.tekrevol.arrowrecovery.widget.TitleBar;
 
-public class HomeFragment extends BaseFragment {
+public class DashboardPagerFragment extends BaseFragment {
 
 
-    public static HomeFragment newInstance() {
+    public static DashboardPagerFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        HomeFragment fragment = new HomeFragment();
+        DashboardPagerFragment fragment = new DashboardPagerFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -29,7 +29,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_login_v2;
+        return R.layout.fragment_dashboard_pager;
     }
 
     @Override

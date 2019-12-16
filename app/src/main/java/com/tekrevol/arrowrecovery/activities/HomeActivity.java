@@ -18,7 +18,7 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants;
 
 import java.util.List;
 
-import com.tekrevol.arrowrecovery.fragments.HomeFragment;
+import com.tekrevol.arrowrecovery.fragments.DashboardPagerFragment;
 import com.tekrevol.arrowrecovery.fragments.RightSideMenuFragment;
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment;
 import com.tekrevol.arrowrecovery.libraries.residemenu.ResideMenu;
@@ -134,7 +134,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initFragments(String intentData) {
-        addDockableFragment(HomeFragment.newInstance(), false);
+        addDockableFragment(DashboardPagerFragment.newInstance(), false);
     }
 
     public FrameLayout getContMain() {
