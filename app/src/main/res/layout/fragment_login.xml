@@ -6,14 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/c_white">
 
-    <!--  <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType=""
-          android:contentDescription="Splash"
-          android:src="@drawable/splash" />-->
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -24,21 +19,14 @@
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start|center">
+            android:gravity="start|center"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/icon_back"
                 android:contentDescription="back" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="back"
-                android:text=" Back"
-                android:textColor="@color/title_color"
-                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -47,12 +35,11 @@
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x50dp"
+            android:layout_marginTop="@dimen/x20dp"
             android:gravity="start"
             android:text="Login into"
             android:textColor="@color/title_color"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
@@ -60,8 +47,7 @@
             android:gravity="start"
             android:text="your account"
             android:textColor="@color/title_color"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
         <View
             android:layout_width="match_parent"
@@ -82,7 +68,8 @@
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
                 android:textColor="@color/title_color"
-                android:textColorHint="#C800BCD4"
+
+                android:textColorHint="@color/txtGrey"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +96,8 @@
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="@color/title_color"
-                android:textColorHint="#C800BCD4"
+
+                android:textColorHint="@color/txtGrey"
                 android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,7 +127,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -159,7 +147,8 @@
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginBottom="@dimen/x10dp"
             android:gravity="center"
-            android:text="or log in with social account" />
+            android:text="or log in with social account"
+            android:textColor="@color/title_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,7 +157,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
@@ -200,7 +189,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -246,8 +235,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account?"
-                android:textColor="@color/title_color"
-                app:typeface="@string/font_regular" />
+                android:textColor="@color/title_color" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/txt_signup"
@@ -256,8 +244,7 @@
                 android:layout_marginLeft="5dp"
                 android:contentDescription="Sign up"
                 android:text="@string/SIgn_Up"
-                android:textColor="@color/title_color"
-                app:typeface="@string/font_regular" />
+                android:textColor="@color/title_color" />
 
 
         </LinearLayout>

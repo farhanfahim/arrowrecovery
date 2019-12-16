@@ -22,6 +22,7 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +34,7 @@
                 android:background="@drawable/icon_back"
                 android:contentDescription="back"
                 android:padding="@dimen/x5dp"
-                android:visibility="gone" />
+                />
 
 
         </LinearLayout>
@@ -58,7 +59,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x71dp"
+            android:layout_height="@dimen/x60dp"
             android:gravity="center">
 
             <LinearLayout
@@ -116,7 +117,6 @@
 
             <View
                 android:id="@+id/viewContact"
-
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1"
@@ -162,6 +162,7 @@
 
                 <ImageView
                     android:id="@+id/imgAddress"
+
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -185,7 +186,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginTop="@dimen/x20dp"
             android:layout_marginBottom="@dimen/x10dp"
             android:text=""
             android:textColor="@color/title_color"
@@ -215,6 +216,8 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/socialloginLayout"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

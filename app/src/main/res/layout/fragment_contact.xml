@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/x20dp"
+                android:textColor="@color/title_color"
                 android:text=" LINE account, WhatsApp account, WeChat account" />
 
 

@@ -8,12 +8,19 @@ import android.widget.Switch
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 
 
-private var btnBack: Button? = null
+private var txt_signup: AnyTextView? = null
 
 class LoginFragmentt : BaseFragment() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        txt_signup = view.findViewById(R.id.txt_signup);
+    }
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -29,12 +36,13 @@ class LoginFragmentt : BaseFragment() {
 
     override fun setListeners() {
 
+        txt_signup?.setOnClickListener(View.OnClickListener {
+            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(0), true)
+
+        })
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btnBack -> activity?.supportFragmentManager?.popBackStack();
-        }
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
