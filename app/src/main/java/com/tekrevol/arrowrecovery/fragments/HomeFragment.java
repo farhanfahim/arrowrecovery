@@ -13,11 +13,9 @@ import com.tekrevol.arrowrecovery.widget.TitleBar;
 
 public class HomeFragment extends BaseFragment {
 
-
     public static HomeFragment newInstance() {
 
         Bundle args = new Bundle();
-
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
