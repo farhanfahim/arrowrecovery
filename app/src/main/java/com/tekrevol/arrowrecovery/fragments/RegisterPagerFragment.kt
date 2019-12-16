@@ -124,6 +124,8 @@ class RegisterPagerFragment : BaseFragment() {
                 val current = positionToSelect + 1
                 setCurrentItem(current)
 
+            } else {
+                baseActivity.addDockableFragment(OptVerification.newInstance(), true)
             }
         })
 
@@ -176,7 +178,6 @@ class RegisterPagerFragment : BaseFragment() {
                 title?.setText("Account Information")
                 btnnext?.setText("Next")
                 btnBack?.visibility = View.GONE
-
             }
             1 -> {
                 socialloginLayout?.visibility = View.GONE
@@ -194,9 +195,7 @@ class RegisterPagerFragment : BaseFragment() {
                 title?.setText("Address")
                 btnnext?.setText("Sign Up")
                 btnBack?.visibility = View.VISIBLE
-
             }
-
         }
     }
 

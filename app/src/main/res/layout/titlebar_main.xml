@@ -13,16 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/containerTitlebar1"
         android:visibility="visible">
-
-
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/containerTitlebar1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x40dp"
+        android:layout_height="@dimen/x50dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/title_bar_gradient"
+        android:background="@color/c_white"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/x8dp"
         android:paddingRight="@dimen/x8dp">
@@ -34,9 +32,33 @@
         <!--android:padding="@dimen/x10dp"-->
         <!--android:src="@drawable/ic_back" />-->
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/btnRight2"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/searchicon"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_marginRight="@dimen/x10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x8dp"
+            android:background="@color/transparent"
+            android:drawableEnd="@drawable/notification"
+            android:drawablePadding="@dimen/x5dp"
+            android:gravity="center"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:padding="@dimen/x5dp"
+            android:textColor="@color/c_white"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/btnLeft1"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:drawablePadding="@dimen/x5dp"
@@ -45,7 +67,7 @@
             android:padding="@dimen/x5dp"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:textColor="@color/c_white" />
+            android:textColor="@color/c_black" />
 
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
@@ -55,19 +77,21 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center"
+            android:visibility="invisible"
             android:singleLine="true"
             android:text="Your Title"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:textSize="@dimen/s15"
             app:typeface="@string/font_bold" />
 
 
         <ImageView
             android:id="@+id/imgTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
-            android:src="@drawable/imglogoname"
+            android:src="@drawable/arrowreclogonav"
             android:visibility="gone" />
 
 
@@ -108,20 +132,42 @@
             android:src="@drawable/imgsearch"
             android:visibility="gone" />
 
+        <ImageView
+            android:id="@+id/btnRightSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10dp"
+            android:layout_toLeftOf="@id/btnRight2"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/searchicon"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/btnRightNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x10dp"
+            android:layout_toLeftOf="@id/btnRight2"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/notification"
+            android:visibility="visible" />
+
         <TextView
             android:id="@+id/btnRight2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/x8dp"
             android:background="@color/transparent"
-            android:drawableEnd="@drawable/b_home_icon"
+            android:drawableEnd="@drawable/notification"
             android:drawablePadding="@dimen/x5dp"
             android:gravity="center"
             android:scaleX="1.2"
             android:scaleY="1.2"
             android:padding="@dimen/x5dp"
             android:textColor="@color/c_white"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
 
         <TextView

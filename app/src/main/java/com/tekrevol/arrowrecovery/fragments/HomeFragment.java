@@ -1,7 +1,9 @@
 package com.tekrevol.arrowrecovery.fragments;
 
 import android.os.Bundle;
+
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -35,9 +37,11 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void setTitlebar(TitleBar titleBar) {
         titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("HOME");
+        titleBar.setTitle("");
+
+    /*    titleBar.setVisibility(View.VISIBLE);
         titleBar.showSidebar(getBaseActivity());
-        titleBar.showResideMenu(getHomeActivity());
+        titleBar.showResideMenu(getHomeActivity());*/
     }
 
     @Override
