@@ -31,13 +31,11 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_login_v2;
+        return R.layout.fragment_dashboard;
     }
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
-        titleBar.setVisibility(View.VISIBLE);
-        titleBar.setTitle("");
 
     /*    titleBar.setVisibility(View.VISIBLE);
         titleBar.showSidebar(getBaseActivity());

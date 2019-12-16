@@ -23,7 +23,6 @@ class OptVerification : BaseFragment() {
     }
 
     companion object {
-        @JvmStatic
         fun newInstance(): Fragment {
 
             val args = Bundle()
