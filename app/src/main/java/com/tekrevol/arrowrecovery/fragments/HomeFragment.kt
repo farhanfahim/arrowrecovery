@@ -3,55 +3,47 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.TextView
-import androidx.fragment.app.Fragment
+import android.widget.ImageView
+import com.google.android.libraries.places.internal.nu
+import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 
-class OptVerification : BaseFragment() {
 
-    private var txtSendCode: TextView? = null
+var carouselView: CarouselView? = null
+var sampleImages = intArrayOf(R.drawable.graph, R.drawable.graph, R.drawable.graph)
+
+class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        txtSendCode = view.findViewById(R.id.txtSendCode)
-
+        carouselView = view.findViewById(R.id.carouselView)
+        bindData();
     }
 
-    companion object {
-        fun newInstance(): Fragment {
-
-            val args = Bundle()
-
-            val fragment = OptVerification()
-            fragment.arguments = args
-            return fragment
-        }
+    private fun bindData() {
+        carouselView?.setPageCount(sampleImages.size)
+        carouselView?.setImageListener(imageListener)
     }
+
+    private var imageListener: ImageListener = ImageListener { position, imageView -> imageView.setImageResource(sampleImages[position]) }
+
 
     override fun getDrawerLockMode(): Int {
         return 0;
     }
 
     override fun getFragmentLayout(): Int {
-        return R.layout.fragment_verify_account
+        return R.layout.fragment_home
     }
 
     override fun setTitlebar(titleBar: TitleBar?) {
     }
 
     override fun setListeners() {
-
-        txtSendCode?.setOnClickListener(View.OnClickListener {
-
-            baseActivity.finish()
-            baseActivity.openActivity(HomeActivity::class.java)
-        })
-
     }
 
     override fun onClick(v: View?) {
@@ -59,4 +51,5 @@ class OptVerification : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
+
 }

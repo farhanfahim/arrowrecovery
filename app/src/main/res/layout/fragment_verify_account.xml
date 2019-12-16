@@ -61,6 +61,11 @@ the number +1 285 4849 4059"
             android:gravity="center"
             android:orientation="horizontal">
 
+            <com.tekrevol.arrowrecovery.widget.PinEntryEditText
+                android:layout_width="@dimen/x150dp"
+                android:text=""
+                android:layout_height="wrap_content" />
+<!--
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 android:layout_width="35dp"
@@ -104,6 +109,7 @@ the number +1 285 4849 4059"
                 android:textSize="20sp"
                 android:text=""
                 android:textColor="@color/title_color" />
+-->
 
         </LinearLayout>
 

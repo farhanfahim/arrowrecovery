@@ -93,52 +93,97 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:src="@drawable/sub"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/mantracategory"
-                android:layout_width="@dimen/x30dp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/x30dp"
                 android:layout_gravity="center"
-                android:background="@drawable/rounded_stroke_grey"
+                android:layout_marginTop="@dimen/x10dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:visibility="visible">
 
-                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtmantracategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:background="@null"
-                    android:text="2"
+                    android:hint="75%"
+                    android:gravity="end"
+                    android:padding="5dp"
                     android:textColor="@color/c_black"
                     android:textColorHint="@color/c_black"
                     android:textSize="12sp"
                     app:typeface="@string/font_regular" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="Select category"
+                    android:padding="@dimen/x5dp"
+                    android:src="@drawable/spinner" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-            <ImageView
-                android:src="@drawable/plus"
-                android:textSize="20sp"
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:src="@drawable/sub"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="@dimen/x30dp"
+                    android:layout_height="@dimen/x30dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rounded_stroke_grey"
+                    android:gravity="center"
+                    android:visibility="visible">
+
+                    <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:background="@null"
+                        android:text="2"
+                        android:textColor="@color/c_black"
+                        android:textColorHint="@color/c_black"
+                        android:textSize="12sp"
+                        app:typeface="@string/font_regular" />
+
+
+                </LinearLayout>
+
+
+
+                <ImageView
+                    android:src="@drawable/plus"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 
