@@ -26,13 +26,17 @@ class RegisterPagerFragment : BaseFragment() {
     var title: AnyTextView? = null
     var txt_login: AnyTextView? = null
     var btnBack: LinearLayout? = null
+    var socialloginLayout: LinearLayout? = null
     var positionToSelect: Int = 0
     var btnnext: TextView? = null
     var txtPersonal: TextView? = null
     var txtContact: TextView? = null
+    var txtAddress: TextView? = null
     var viewPersonal: View? = null
     var viewContact: View? = null
+    var viewAddress: View? = null
     var imgPersonal: ImageView? = null
+    var imgAddress: ImageView? = null
     var imgContact: ImageView? = null
 
     companion object {
@@ -61,9 +65,13 @@ class RegisterPagerFragment : BaseFragment() {
         viewPersonal = view.findViewById(R.id.viewPersonal)
         imgPersonal = view.findViewById(R.id.imgPersonal)
         txtPersonal = view.findViewById(R.id.txtPersonal)
+        socialloginLayout = view.findViewById(R.id.socialloginLayout)
         viewContact = view.findViewById(R.id.viewContact)
         imgContact = view.findViewById(R.id.imgContact)
         txtContact = view.findViewById(R.id.txtContact)
+        viewAddress = view.findViewById(R.id.viewAddress)
+        imgAddress = view.findViewById(R.id.imgAddress)
+        txtAddress = view.findViewById(R.id.txtAddress)
 
         if (onCreated) {
             setViewPagerAdapter()
@@ -89,6 +97,11 @@ class RegisterPagerFragment : BaseFragment() {
 
     override fun setListeners() {
 
+        txt_login?.setOnClickListener(View.OnClickListener {
+
+            baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
+        })
+
         btnnext?.setOnClickListener(View.OnClickListener {
 
             if (positionToSelect < 3) {
@@ -102,21 +115,37 @@ class RegisterPagerFragment : BaseFragment() {
                     viewContact?.setBackgroundColor(resources.getColor(R.color.green_bg))
                     imgContact?.setImageResource(R.drawable.contact)
                     txtContact?.setTextColor(getResources().getColor(R.color.c_black))
-                }else if(positionToSelect == 2)
-                {
-                    viewContact?.setBackgroundColor(resources.getColor(R.color.green_bg))
-                    imgContact?.setImageResource(R.drawable.contact)
-                    txtContact?.setTextColor(getResources().getColor(R.color.c_black))
+                } else if (positionToSelect == 2) {
+                    viewAddress?.setBackgroundColor(resources.getColor(R.color.green_bg))
+                    imgAddress?.setImageResource(R.drawable.addresscolered)
+                    txtAddress?.setTextColor(getResources().getColor(R.color.c_black))
                 }
 
                 val current = positionToSelect + 1
                 setCurrentItem(current)
 
+            } else {
+                baseActivity.addDockableFragment(OptVerification.newInstance(), true)
             }
         })
 
         btnBack?.setOnClickListener(View.OnClickListener {
 
+            if (positionToSelect == 3) {
+                viewAddress?.setBackgroundColor(resources.getColor(R.color.star_grey))
+                imgAddress?.setImageResource(R.drawable.addressgrey)
+                txtAddress?.setTextColor(getResources().getColor(R.color.star_grey))
+            } else if (positionToSelect == 2) {
+                viewContact?.setBackgroundColor(resources.getColor(R.color.star_grey))
+                imgContact?.setImageResource(R.drawable.contactlogogrey)
+                txtContact?.setTextColor(getResources().getColor(R.color.star_grey))
+            } else if (positionToSelect == 1) {
+                viewPersonal?.setBackgroundColor(resources.getColor(R.color.star_grey))
+                imgPersonal?.setImageResource(R.drawable.personallogogrey)
+                txtPersonal?.setTextColor(getResources().getColor(R.color.star_grey))
+                socialloginLayout?.visibility = View.VISIBLE
+
+            }
             val previous = positionToSelect - 1
             setCurrentItem(previous)
 
@@ -147,29 +176,26 @@ class RegisterPagerFragment : BaseFragment() {
         when (positionToSelect) {
             0 -> {
                 title?.setText("Account Information")
-                btnBack?.visibility = View.VISIBLE
                 btnnext?.setText("Next")
+                btnBack?.visibility = View.GONE
             }
             1 -> {
+                socialloginLayout?.visibility = View.GONE
                 title?.setText("Personal Information")
                 btnnext?.setText("Next")
-
-                btnBack?.visibility = View.GONE
+                btnBack?.visibility = View.VISIBLE
             }
             2 -> {
                 title?.setText("Contact Information")
                 btnnext?.setText("Next")
-
-                btnBack?.visibility = View.GONE
+                btnBack?.visibility = View.VISIBLE
             }
 
             3 -> {
                 title?.setText("Address")
                 btnnext?.setText("Sign Up")
-
-                btnBack?.visibility = View.GONE
+                btnBack?.visibility = View.VISIBLE
             }
-
         }
     }
 

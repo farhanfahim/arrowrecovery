@@ -2,11 +2,13 @@ package com.tekrevol.arrowrecovery.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,10 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         setAndBindTitleBar();
         drawerLayout = findViewById(getDrawerLayoutId());
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-   //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment();
     }
-
 
 
     /**
@@ -66,8 +67,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void addDrawerFragment() {
-        leftSideMenuFragment = LeftSideMenuFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(getDrawerFragmentId(), leftSideMenuFragment).commit();
+//        leftSideMenuFragment = LeftSideMenuFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction().replace(getDrawerFragmentId(), leftSideMenuFragment).commit();
     }
 
 

@@ -31,7 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Select Year..."
+                android:hint="Title"
                 android:padding="5dp"
                 android:textColor="@color/title_color"
                 android:textColorHint="@color/txtGrey"
@@ -66,13 +66,29 @@
             android:id="@+id/input_fullname_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
+            android:hint="First Name"
             android:inputType="textEmailAddress"
             android:singleLine="true"
             android:textColor="@color/title_color"
             android:textColorHint="@color/txtGrey"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:textColor="@color/title_color"
+                android:textColorHint="@color/txtGrey"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -86,6 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="Comapny"
+            android:checked="true"
             android:textColor="@color/txtDarkGrey"
             android:textSize="20sp" />
 
@@ -125,7 +142,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Company Kind"
+            android:hint="Kind of Company"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/title_color"
