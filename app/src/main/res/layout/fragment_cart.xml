@@ -8,11 +8,14 @@
 
     <LinearLayout
         android:padding="10dp"
+        android:layout_marginLeft="@dimen/x2dp"
+        android:layout_marginRight="@dimen/x2dp"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x50dp">
 
         <LinearLayout
+            android:layout_gravity="center"
             android:id="@+id/check"
             android:layout_width="wrap_content"
             android:gravity="center"
@@ -50,6 +53,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         tools:listitem="@layout/item_cart"
         android:layout_height="match_parent">

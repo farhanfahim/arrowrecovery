@@ -5,6 +5,7 @@
     android:background="@drawable/bg_items"
     android:layout_width="match_parent"
     android:layout_height="120dp"
+    android:id="@+id/layoutItemMyOrder"
     android:padding="@dimen/x20dp">
 
 

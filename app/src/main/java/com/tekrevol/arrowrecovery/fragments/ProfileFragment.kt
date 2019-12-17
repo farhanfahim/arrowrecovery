@@ -14,24 +14,7 @@ class ProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        editProfile.setOnClickListener(View.OnClickListener {
-            editProfile.visibility = View.GONE
-            txtAddress.visibility = View.GONE
-            edtAddress.visibility = View.VISIBLE
-            edtAbout.visibility = View.VISIBLE
-            txtAbout.visibility = View.GONE
-            txtSave.visibility = View.VISIBLE
-        })
 
-        txtSave.setOnClickListener(View.OnClickListener {
-            txtSave.visibility = View.GONE
-            editProfile.visibility = View.VISIBLE
-            txtAddress.visibility = View.VISIBLE
-            edtAddress.visibility = View.GONE
-            edtAbout.visibility = View.GONE
-            txtAbout.visibility = View.VISIBLE
-
-        })
     }
 
     companion object {
@@ -59,6 +42,30 @@ class ProfileFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+        editProfile.setOnClickListener(View.OnClickListener {
+            editProfile.visibility = View.GONE
+            txtAddress.visibility = View.GONE
+            edtAddress.visibility = View.VISIBLE
+            edtAbout.visibility = View.VISIBLE
+            txtAbout.visibility = View.GONE
+            txtSave.visibility = View.VISIBLE
+        })
+
+        txtSave.setOnClickListener(View.OnClickListener {
+            txtSave.visibility = View.GONE
+            editProfile.visibility = View.VISIBLE
+            txtAddress.visibility = View.VISIBLE
+            edtAddress.visibility = View.GONE
+            edtAbout.visibility = View.GONE
+            txtAbout.visibility = View.VISIBLE
+
+        })
+
+        linearlayoutMyorder.setOnClickListener(View.OnClickListener {
+
+            baseActivity.addDockableFragment(MyOrderFragment.newInstance(),true)
+        })
     }
 
     override fun onClick(v: View?) {

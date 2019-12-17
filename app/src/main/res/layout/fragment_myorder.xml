@@ -5,9 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c_white"
     android:orientation="vertical"
-    android:padding="@dimen/x10dp">
+    android:padding="@dimen/x5dp">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMyOrder"
         android:layout_width="match_parent"
         tools:listitem="@layout/item_myorder"
         android:layout_height="match_parent">
