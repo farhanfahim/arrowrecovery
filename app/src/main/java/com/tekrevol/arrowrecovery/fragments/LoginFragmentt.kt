@@ -44,7 +44,8 @@ class LoginFragmentt : BaseFragment() {
         })
 
         txt_signup?.setOnClickListener(View.OnClickListener {
-            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(0), true)
+            baseActivity.popBackStack()
+            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(), true)
         })
     }
 
