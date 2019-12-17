@@ -21,125 +21,55 @@
         android:padding="10dp">
 
 
-
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
             android:layout_marginTop="@dimen/x30dp"
-            android:text="Enter the code"
-            android:textColor="@color/title_color"
-            android:textSize="30sp" />
-
-        <com.tekrevol.arrowrecovery.widget.AnyTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/x10dp"
             android:gravity="start"
-            android:text="to verify your account"
+            android:text="Enter the code to verify your account"
             android:textColor="@color/title_color"
-            android:textSize="30sp" />
+            android:textSize="@dimen/s26" />
+
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10dp"
+            android:layout_marginBottom="@dimen/x20dp"
             android:gravity="start"
             android:text="We have sent you a SMS with a code to
-the number +1 285 4849 4059"
+the \nnumber +1 285 4849 4059"
             android:textColor="@color/title_color"
-            android:textSize="18sp" />
+            android:textSize="@dimen/s14" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/x50dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.tekrevol.arrowrecovery.widget.PinEntryEditText
-                android:layout_width="@dimen/x150dp"
-                android:text=""
-                android:layout_height="wrap_content" />
-<!--
-
-            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/title_color"
-                android:gravity="center"
-                android:maxLength="1"
-                android:textSize="20sp"
-                android:text=""
-                android:textColor="@color/title_color" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/title_color"
-                android:gravity="center"
-                android:maxLength="1"
-                android:textSize="20sp"
-                android:text=""
-                android:textColor="@color/title_color" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/title_color"
-                android:gravity="center"
-                android:maxLength="1"
-                android:textSize="20sp"
-                android:text=""
-                android:textColor="@color/title_color" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:backgroundTint="@color/title_color"
-                android:gravity="center"
-                android:maxLength="1"
-                android:textSize="20sp"
-                android:text=""
-                android:textColor="@color/title_color" />
--->
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
+        <com.tekrevol.arrowrecovery.widget.PinEntryEditText
+            android:id="@+id/pinEditText"
+            android:layout_width="@dimen/x200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/x40dp"
+            android:layout_marginBottom="@dimen/x40dp"
+            android:cursorVisible="false"
+            android:digits="1234567890"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="4"
+            android:text="1234"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/s20"
+            app:pinAnimationType="popIn" />
 
         <TextView
             android:id="@+id/txtSendCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/Send_Code"
+            android:text="@string/send_code"
             android:textColor="@color/title_color" />
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8" />
-
-
     </LinearLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
 
 </RelativeLayout>
