@@ -24,6 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/x20dp"
                 android:padding="@dimen/x8dp"
+                app:disableColor="@color/transparent"
+                app:selectedColor="@color/transparent"
                 app:selectedTab="1"
                 app:selectedTextColor="@color/colorAccent"
                 app:selectedTextSize="@dimen/s18"
@@ -32,10 +34,7 @@
                 app:strokeWidth="1dp"
                 app:switchTabs="@array/converter_types"
                 app:textSize="@dimen/s17"
-                app:selectedColor="@color/transparent"
-                app:disableColor="@color/transparent"
-                app:unSelectedTextColor="@color/c_light_grey"
-                />
+                app:unSelectedTextColor="@color/c_light_grey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,7 +81,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/graph"/>
+                android:src="@drawable/graph" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,22 +92,23 @@
                 android:layout_marginBottom="@dimen/x20dp"
                 android:gravity="center">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/dayslist" />
-            </LinearLayout>
 
+             <androidx.recyclerview.widget.RecyclerView
+                 android:id="@+id/rvDays"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal"/>
+
+            </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
                 android:background="#EEE"
+                android:orientation="vertical"
                 android:padding="@dimen/x20dp">
-
 
 
                 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
@@ -117,12 +117,12 @@
                     android:layout_marginBottom="@dimen/x20dp"
                     android:background="#FFF"
                     android:elevation="@dimen/x5dp"
-                    app:corner_radius="@dimen/x5dp"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/x20dp"
-                    android:paddingRight="@dimen/x20dp"
                     android:paddingTop="@dimen/x5dp"
+                    android:paddingRight="@dimen/x20dp"
                     android:paddingBottom="@dimen/x5dp"
-                    android:orientation="vertical">
+                    app:corner_radius="@dimen/x5dp">
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -134,27 +134,27 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
+                        android:layout_height="@dimen/x60dp"
                         android:layout_gravity="center"
-                        android:layout_height="@dimen/x60dp">
+                        android:gravity="center">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/circle_stroke_1d_primary"
-                            android:padding="@dimen/x10dp"
                             android:layout_margin="@dimen/x5dp"
+                            android:background="@drawable/circle_stroke_1d_primary"
                             android:elevation="@dimen/x40dp"
-                            android:src="@drawable/img_arrow_up"/>
+                            android:padding="@dimen/x10dp"
+                            android:src="@drawable/img_arrow_up" />
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:orientation="vertical"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:gravity="center"
                             android:layout_marginLeft="@dimen/x10dp"
-                            android:layout_height="match_parent">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
@@ -179,20 +179,18 @@
                 </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-
-
                 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x20dp"
                     android:background="#FFF"
                     android:elevation="@dimen/x5dp"
-                    app:corner_radius="@dimen/x5dp"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/x20dp"
-                    android:paddingRight="@dimen/x20dp"
                     android:paddingTop="@dimen/x5dp"
+                    android:paddingRight="@dimen/x20dp"
                     android:paddingBottom="@dimen/x5dp"
-                    android:orientation="vertical">
+                    app:corner_radius="@dimen/x5dp">
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -204,28 +202,28 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
+                        android:layout_height="@dimen/x60dp"
                         android:layout_gravity="center"
-                        android:layout_height="@dimen/x60dp">
+                        android:gravity="center">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/x5dp"
                             android:background="@drawable/circle_stroke_1d_primary"
                             android:backgroundTint="@color/colorAccent"
-                            android:padding="@dimen/x10dp"
-                            android:layout_margin="@dimen/x5dp"
                             android:elevation="@dimen/x40dp"
-                            android:src="@drawable/img_arrow_down"/>
+                            android:padding="@dimen/x10dp"
+                            android:src="@drawable/img_arrow_down" />
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:orientation="vertical"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:gravity="center"
                             android:layout_marginLeft="@dimen/x10dp"
-                            android:layout_height="match_parent">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
@@ -250,20 +248,18 @@
                 </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-
-
                 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x50dp"
                     android:background="#FFF"
                     android:elevation="@dimen/x5dp"
-                    app:corner_radius="@dimen/x5dp"
+                    android:orientation="vertical"
                     android:paddingLeft="@dimen/x20dp"
-                    android:paddingRight="@dimen/x20dp"
                     android:paddingTop="@dimen/x5dp"
+                    android:paddingRight="@dimen/x20dp"
                     android:paddingBottom="@dimen/x5dp"
-                    android:orientation="vertical">
+                    app:corner_radius="@dimen/x5dp">
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -275,27 +271,27 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:gravity="center"
+                        android:layout_height="@dimen/x60dp"
                         android:layout_gravity="center"
-                        android:layout_height="@dimen/x60dp">
+                        android:gravity="center">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/circle_stroke_1d_primary"
-                            android:padding="@dimen/x10dp"
                             android:layout_margin="@dimen/x5dp"
+                            android:background="@drawable/circle_stroke_1d_primary"
                             android:elevation="@dimen/x40dp"
-                            android:src="@drawable/img_arrow_up"/>
+                            android:padding="@dimen/x10dp"
+                            android:src="@drawable/img_arrow_up" />
 
                         <LinearLayout
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:orientation="vertical"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:gravity="center"
                             android:layout_marginLeft="@dimen/x10dp"
-                            android:layout_height="match_parent">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
@@ -320,15 +316,7 @@
                 </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-
-
-
-
-
-
             </LinearLayout>
-
-
 
 
         </LinearLayout>
