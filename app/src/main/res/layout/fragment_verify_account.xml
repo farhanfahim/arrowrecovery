@@ -55,7 +55,6 @@ the \nnumber +1 285 4849 4059"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLength="4"
-            android:text="1234"
             android:textIsSelectable="false"
             android:textSize="@dimen/s20"
             app:pinAnimationType="popIn" />

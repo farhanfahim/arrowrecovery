@@ -22,24 +22,27 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="end"
-                    android:padding="@dimen/x15dp"
-                    android:text="SAVE"
-                    android:textColor="@color/green_bg"
-                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:padding="10dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="150dp">
+                        android:layout_height="130dp">
+
+                        <TextView
+                            android:id="@+id/txtSave"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_gravity="end"
+                            android:padding="@dimen/x15dp"
+                            android:text="SAVE"
+                            android:textColor="@color/green_bg"
+                            android:visibility="visible" />
 
                         <RelativeLayout
                             android:id="@+id/img_pic"
@@ -74,7 +77,7 @@
                             android:layout_centerInParent="true"
                             android:layout_centerHorizontal="true"
                             android:layout_marginLeft="-30dp"
-                            android:layout_marginBottom="20dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_toRightOf="@id/img_pic"
                             android:contentDescription="change image"
                             android:src="@drawable/edit" />
@@ -192,6 +195,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:textSize="15sp"
                         android:id="@+id/txtAbout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -203,6 +207,8 @@
 
 
                     <EditText
+                        android:textSize="15sp"
+
                         android:id="@+id/edtAbout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

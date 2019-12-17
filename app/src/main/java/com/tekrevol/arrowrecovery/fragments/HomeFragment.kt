@@ -33,20 +33,18 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-   /*     carouselView = view.findViewById(R.id.carouselView)
-        bindData();*/
+        carouselView = view.findViewById(R.id.carouselView)
+        bindData()
     }
 
     private fun bindData() {
 //        carouselView?.setPageCount(sampleImages.size)
-     //   carouselView?.setImageListener(imageListener)
+//        carouselView?.setImageListener(imageListener)
     }
-
-   // private var imageListener: ImageListener = ImageListener { position, imageView -> imageView.setImageResource(sampleImages[position]) }
 
 
     override fun getDrawerLockMode(): Int {
-        return 0;
+        return 0
     }
 
     override fun getFragmentLayout(): Int {

@@ -98,7 +98,6 @@ class DashboardPagerFragment : BaseFragment() {
     override fun onItemClick(adapterView: AdapterView<*>?, view: View, i: Int, l: Long) {}
 
     companion object {
-        @JvmStatic
         fun newInstance(): DashboardPagerFragment {
             val args = Bundle()
             val fragment = DashboardPagerFragment()
