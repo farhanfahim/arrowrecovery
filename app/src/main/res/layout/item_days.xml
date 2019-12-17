@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x5dp"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/x1dp"
+    app:corner_radius="@dimen/x12dp">
+
+    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+        android:id="@+id/contDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/c_white"
+        android:gravity="center"
+        android:paddingLeft="@dimen/x12dp"
+        android:paddingTop="@dimen/x3dp"
+        android:paddingRight="@dimen/x12dp"
+        android:paddingBottom="@dimen/x3dp"
+        app:corner_radius="@dimen/x12dp">
+
+        <TextView
+            android:id="@+id/txtDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1d"
+            android:textColor="@color/colorPrimary" />
+    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+</com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
