@@ -16,17 +16,23 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorControlActivated">@color/base_amber</item>
         <item name="colorControlHighlight">@color/base_amber</item>
+
+<!--        <item name="android:statusBarColor">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+<!--        <item name="android:windowBackground">@color/colorPrimaryDark</item>-->
     </style>
 
-    <!-- BaseApplication theme. -->
+    <!-- Other Activities theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
 
+<!--        <item name="android:statusBarColor">@color/colorPrimaryDark</item>-->
+<!--        <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="actionModeBackground">@color/colorPrimaryDark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
 
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
 
     <style name="SplashActivtyKotlin" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>

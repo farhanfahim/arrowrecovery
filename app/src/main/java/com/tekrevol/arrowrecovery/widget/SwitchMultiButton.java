@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.tekrevol.arrowrecovery.R;
 
+
 public class SwitchMultiButton extends View {
 
     private static final String TAG = "SwitchMultiButton";
@@ -27,7 +28,10 @@ public class SwitchMultiButton extends View {
     private static final float STROKE_RADIUS = 0;
     private static final float STROKE_WIDTH = 2;
     private static final float TEXT_SIZE = 14;
+    private static final int STROKE_COLOR = 0xffeb7b00;
     private static final int SELECTED_COLOR = 0xffeb7b00;
+    private static final int DISABLE_COLOR = 0xffcccccc;
+    private static final int ENABLE_COLOR = 0xffffffff;
     private static final int SELECTED_TAB = 0;
     private static final String FONTS_DIR = "fonts/";
     /*other*/
@@ -40,14 +44,19 @@ public class SwitchMultiButton extends View {
     private OnSwitchListener onSwitchListener;
     private float mStrokeRadius;
     private float mStrokeWidth;
+    private int mStrokeColor;
+    private int mSelectedTextColor;
+    private int mUnSelectedTextColor;
     private int mSelectedColor;
+    private int mDisableColor;
     private float mTextSize;
+    private float mSelectedTextSize;
     private int mSelectedTab;
-    private String mTypeface;
     private float perWidth;
     private float mTextHeightOffset;
     private Paint.FontMetrics mFontMetrics;
     private Typeface typeface;
+    private boolean mEnable = true;
 
 
     public SwitchMultiButton(Context context) {
@@ -74,10 +83,15 @@ public class SwitchMultiButton extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SwitchMultiButton);
         mStrokeRadius = typedArray.getDimension(R.styleable.SwitchMultiButton_strokeRadius, STROKE_RADIUS);
         mStrokeWidth = typedArray.getDimension(R.styleable.SwitchMultiButton_strokeWidth, STROKE_WIDTH);
+        mStrokeColor = typedArray.getColor(R.styleable.SwitchMultiButton_strokeColor, STROKE_COLOR);
+        mSelectedTextColor = typedArray.getColor(R.styleable.SwitchMultiButton_selectedTextColor, SELECTED_COLOR);
+        mUnSelectedTextColor = typedArray.getColor(R.styleable.SwitchMultiButton_unSelectedTextColor, SELECTED_COLOR);
         mTextSize = typedArray.getDimension(R.styleable.SwitchMultiButton_textSize, TEXT_SIZE);
+        mSelectedTextSize = typedArray.getDimension(R.styleable.SwitchMultiButton_selectedTextSize, TEXT_SIZE);
         mSelectedColor = typedArray.getColor(R.styleable.SwitchMultiButton_selectedColor, SELECTED_COLOR);
+        mDisableColor = typedArray.getColor(R.styleable.SwitchMultiButton_disableColor, DISABLE_COLOR);
         mSelectedTab = typedArray.getInteger(R.styleable.SwitchMultiButton_selectedTab, SELECTED_TAB);
-        mTypeface = typedArray.getString(R.styleable.SwitchMultiButton_typeface2);
+        String mTypeface = typedArray.getString(R.styleable.SwitchMultiButton_fontFamily);
         int mSwitchTabsResId = typedArray.getResourceId(R.styleable.SwitchMultiButton_switchTabs, 0);
         if (mSwitchTabsResId != 0) {
             mTabTexts = getResources().getStringArray(mSwitchTabsResId);
@@ -95,7 +109,7 @@ public class SwitchMultiButton extends View {
     private void initPaint() {
         // round rectangle paint
         mStrokePaint = new Paint();
-        mStrokePaint.setColor(mSelectedColor);
+        mStrokePaint.setColor(mStrokeColor);
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setAntiAlias(true);
         mStrokePaint.setStrokeWidth(mStrokeWidth);
@@ -106,13 +120,13 @@ public class SwitchMultiButton extends View {
         mStrokePaint.setAntiAlias(true);
         // selected text paint
         mSelectedTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        mSelectedTextPaint.setTextSize(mTextSize);
-        mSelectedTextPaint.setColor(0xffffffff);
+        mSelectedTextPaint.setTextSize(mSelectedTextSize);
+        mSelectedTextPaint.setColor(mSelectedTextColor);
         mStrokePaint.setAntiAlias(true);
         // unselected text paint
         mUnselectedTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mUnselectedTextPaint.setTextSize(mTextSize);
-        mUnselectedTextPaint.setColor(mSelectedColor);
+        mUnselectedTextPaint.setColor(mUnSelectedTextColor);
         mStrokePaint.setAntiAlias(true);
         mTextHeightOffset = -(mSelectedTextPaint.ascent() + mSelectedTextPaint.descent()) * 0.5f;
         mFontMetrics = mSelectedTextPaint.getFontMetrics();
@@ -183,6 +197,12 @@ public class SwitchMultiButton extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (!mEnable) {
+            mStrokePaint.setColor(mDisableColor);
+            mFillPaint.setColor(mDisableColor);
+            mSelectedTextPaint.setColor(ENABLE_COLOR);
+            mUnselectedTextPaint.setColor(mDisableColor);
+        }
         float left = mStrokeWidth * 0.5f;
         float top = mStrokeWidth * 0.5f;
         float right = mWidth - mStrokeWidth * 0.5f;
@@ -203,17 +223,14 @@ public class SwitchMultiButton extends View {
                 //draw selected tab
                 if (i == 0) {
                     drawLeftPath(canvas, left, top, bottom);
-
                 } else if (i == mTabNum - 1) {
                     drawRightPath(canvas, top, right, bottom);
-
                 } else {
                     canvas.drawRect(new RectF(perWidth * i, top, perWidth * (i + 1), bottom), mFillPaint);
                 }
                 // draw selected text
                 canvas.drawText(tabText, 0.5f * perWidth * (2 * i + 1) - 0.5f * tabTextWidth, mHeight * 0.5f +
                         mTextHeightOffset, mSelectedTextPaint);
-
             } else {
                 //draw unselected text
                 canvas.drawText(tabText, 0.5f * perWidth * (2 * i + 1) - 0.5f * tabTextWidth, mHeight * 0.5f +
@@ -297,6 +314,9 @@ public class SwitchMultiButton extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!mEnable) {
+            return true;
+        }
         if (event.getAction() == MotionEvent.ACTION_UP) {
             float x = event.getX();
             for (int i = 0; i < mTabNum; i++) {
@@ -315,6 +335,19 @@ public class SwitchMultiButton extends View {
         return true;
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        if (enabled == isEnabled()) {
+            return;
+        }
+        mEnable = enabled;
+        invalidate();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return mEnable;
+    }
     /*=========================================Interface=========================================*/
 
     /**
@@ -324,7 +357,7 @@ public class SwitchMultiButton extends View {
         void onSwitch(int position, String tabText);
     }
 
-    public SwitchMultiButton setOnSwitchListener(@NonNull OnSwitchListener onSwitchListener) {
+    public SwitchMultiButton setOnSwitchListener(OnSwitchListener onSwitchListener) {
         this.onSwitchListener = onSwitchListener;
         return this;
     }
@@ -351,12 +384,6 @@ public class SwitchMultiButton extends View {
             onSwitchListener.onSwitch(mSelectedTab, mTabTexts[mSelectedTab]);
         }
         return this;
-    }
-
-
-    public void setSelectedColor(int color) {
-        mSelectedColor = color;
-        initPaint();
     }
 
     public void clearSelection() {
@@ -389,8 +416,14 @@ public class SwitchMultiButton extends View {
         bundle.putFloat("StrokeRadius", mStrokeRadius);
         bundle.putFloat("StrokeWidth", mStrokeWidth);
         bundle.putFloat("TextSize", mTextSize);
+        bundle.putFloat("SelectedTextSize", mSelectedTextSize);
         bundle.putInt("SelectedColor", mSelectedColor);
+        bundle.putInt("StrokeColor", mStrokeColor);
+        bundle.putInt("SelectedTextColor", mSelectedTextColor);
+        bundle.putInt("UnSelectedTextColor", mUnSelectedTextColor);
+        bundle.putInt("DisableColor", mDisableColor);
         bundle.putInt("SelectedTab", mSelectedTab);
+        bundle.putBoolean("Enable", mEnable);
         return bundle;
     }
 
@@ -401,8 +434,14 @@ public class SwitchMultiButton extends View {
             mStrokeRadius = bundle.getFloat("StrokeRadius");
             mStrokeWidth = bundle.getFloat("StrokeWidth");
             mTextSize = bundle.getFloat("TextSize");
+            mSelectedTextSize = bundle.getFloat("SelectedTextSize");
             mSelectedColor = bundle.getInt("SelectedColor");
+            mStrokeColor = bundle.getInt("StrokeColor");
+            mSelectedTextColor = bundle.getInt("SelectedTextColor");
+            mUnSelectedTextColor = bundle.getInt("UnSelectedTextColor");
+            mDisableColor = bundle.getInt("DisableColor");
             mSelectedTab = bundle.getInt("SelectedTab");
+            mEnable = bundle.getBoolean("Enable");
             super.onRestoreInstanceState(bundle.getParcelable("View"));
         } else {
             super.onRestoreInstanceState(state);

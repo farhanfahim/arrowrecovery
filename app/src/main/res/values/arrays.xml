@@ -12,4 +12,11 @@
     </array>
 
 
+    <string-array name="converter_types">
+        <item>Platinum</item>
+        <item>Palladium</item>
+        <item>Rhodium</item>
+    </string-array>
+
+
 </resources>

@@ -33,11 +33,11 @@ class DashboardPagerFragment : BaseFragment() {
         dashboardTitleBar.visibility = View.VISIBLE
 
         when (positionToSelect) {
-            0 -> dashboardTitleBar.setTitle("Frag 1")
-            1 -> dashboardTitleBar.setTitle("Frag 2")
-            2 -> dashboardTitleBar.setTitle("Frag 3")
-            3 -> dashboardTitleBar.setTitle("Frag 4")
-            4 -> dashboardTitleBar.setTitle("Frag 5")
+            0 -> dashboardTitleBar.showTitleImage()
+            1 -> dashboardTitleBar.showTitleImage()
+            2 -> dashboardTitleBar.setTitle("Cart")
+            3 -> dashboardTitleBar.setTitle("Customer Support")
+            4 -> dashboardTitleBar.setTitle("Profile")
         }
     }
 
@@ -64,8 +64,8 @@ class DashboardPagerFragment : BaseFragment() {
         viewpager.adapter = adapter
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
-//        setCurrentItem(positionToSelect)
-        //        tabs.setupWithViewPager(viewpager);
+//        setCurrentItem(positionToSelect
+        navigationBar.show(positionToSelect, true)
     }
 
 
@@ -85,11 +85,11 @@ class DashboardPagerFragment : BaseFragment() {
         dashboardTitleBar.visibility = View.VISIBLE
 
         when (position) {
-            0 -> dashboardTitleBar.setTitle("Frag 1")
-            1 -> dashboardTitleBar.setTitle("Frag 2")
-            2 -> dashboardTitleBar.setTitle("Frag 3")
-            3 -> dashboardTitleBar.setTitle("Frag 4")
-            4 -> dashboardTitleBar.setTitle("Frag 5")
+            0 -> dashboardTitleBar.showTitleImage()
+            1 -> dashboardTitleBar.showTitleImage()
+            2 -> dashboardTitleBar.setTitle("Cart")
+            3 -> dashboardTitleBar.setTitle("Customer Support")
+            4 -> dashboardTitleBar.setTitle("Profile")
         }
 
     }

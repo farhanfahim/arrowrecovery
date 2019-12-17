@@ -9,7 +9,9 @@ import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.fragments.carouselView
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
 var carouselView: CarouselView? = null
@@ -33,13 +35,14 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        carouselView = view.findViewById(R.id.carouselView)
+//        carouselView = view.findViewById(R.id.carouselView)
         bindData()
     }
 
     private fun bindData() {
 //        carouselView?.setPageCount(sampleImages.size)
 //        carouselView?.setImageListener(imageListener)
+
     }
 
 

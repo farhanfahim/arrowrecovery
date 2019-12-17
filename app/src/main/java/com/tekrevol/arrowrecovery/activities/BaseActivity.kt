@@ -2,6 +2,7 @@ package com.tekrevol.arrowrecovery.activities
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Pair
 import android.view.View
@@ -33,6 +34,11 @@ abstract class BaseActivity : AppCompatActivity() {
         drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment()
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//        }
+
     }
 
     /**

@@ -34,7 +34,7 @@
         android:layout_marginBottom="@dimen/x20dp"
         android:gravity="center"
         android:text="1.0.0.0"
-        android:textColor="@color/c_white"
+        android:textColor="@color/txtDarkGrey"
         android:textSize="20sp" />
 
   <!--  <LinearLayout

@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Lifecycle
 import com.tekrevol.arrowrecovery.fragments.*
 
-class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
+class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm!!, Lifecycle.State.RESUMED.ordinal) {
     // CURRENT FRAGMENT
     private val registeredFragments = SparseArray<Fragment>()
 

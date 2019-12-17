@@ -50,11 +50,16 @@
     <declare-styleable name="SwitchMultiButton">
         <attr name="strokeRadius" format="dimension" />
         <attr name="strokeWidth" format="dimension" />
+        <attr name="strokeColor" format="color|reference"/>
+        <attr name="selectedTextColor" format="color|reference"/>
+        <attr name="unSelectedTextColor" format="color|reference"/>
         <attr name="textSize" format="dimension" />
+        <attr name="selectedTextSize" format="dimension" />
         <attr name="selectedTab" format="integer" />
-        <attr name="selectedColor" format="color" />
+        <attr name="selectedColor" format="color|reference" />
         <attr name="switchTabs" format="reference" />
-        <attr name="typeface2" format="string" />
+        <attr name="fontFamily" format="string" />
+        <attr name="disableColor" format="color|reference" />
     </declare-styleable>
 
     <declare-styleable name="RangeSeekBar">
@@ -152,5 +157,7 @@
         <attr name="rsb_thumb_size" format="dimension" />
         <attr name="rsb_thumb_scale_ratio" format="float" />
     </declare-styleable>
+
+
 
 </resources>
