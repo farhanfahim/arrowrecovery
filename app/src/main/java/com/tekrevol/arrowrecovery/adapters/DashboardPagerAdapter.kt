@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.tekrevol.arrowrecovery.fragments.DummyFragment
-import com.tekrevol.arrowrecovery.fragments.LoginFragment
+import com.tekrevol.arrowrecovery.fragments.*
 
 class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
     // CURRENT FRAGMENT
@@ -20,12 +19,12 @@ class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> DummyFragment.newInstance("a")
-            1 -> LoginFragment.newInstance()
-            2 -> DummyFragment.newInstance("a")
-            3 -> LoginFragment.newInstance()
-            4 -> DummyFragment.newInstance("a")
-            else -> DummyFragment.newInstance("a")
+            0 -> HomeFragment.newInstance()
+            1 -> ConverterFragment.newInstance()
+            2 -> CartFragment.newInstance()
+            3 -> CustomerSupportFragment.newInstance()
+            4 -> ProfileFragment.newInstance()
+            else -> ProfileFragment.newInstance()
         }
     }
 

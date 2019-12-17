@@ -1,84 +1,352 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/c_white"
     android:layout_height="match_parent">
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/layout1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingStart="10dp"
-                android:paddingLeft="10dp"
-                android:paddingEnd="10dp"
-                android:paddingRight="10dp">
+                android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <RelativeLayout
-                        android:id="@+id/img_pic"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center">
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <RelativeLayout
+                            android:id="@+id/img_pic"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_centerInParent="true"
-                            android:src="@color/c_white"
-                            app:civ_border_color="@color/transparent_grey"
-                            app:civ_border_width="@dimen/x3dp" />
+                            android:layout_gravity="center">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/image"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:layout_centerInParent="true"
+                                android:src="@color/c_white"
+                                app:civ_border_color="@color/transparent_grey"
+                                app:civ_border_width="@dimen/x3dp" />
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/image"
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/profilepic" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+
+                            android:id="@+id/camera_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/profilepic" />
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="-30dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_toRightOf="@id/img_pic"
+                            android:contentDescription="change image"
+                            android:src="@drawable/edit" />
 
                     </RelativeLayout>
 
-                    <ImageView
-
-                        android:id="@+id/camera_icon"
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="-30dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_toRightOf="@id/img_pic"
-                        android:contentDescription="change image"
-                        android:src="@drawable/edit" />
+                        android:gravity="center"
+                        android:text="John Smith"
+                        android:textColor="@color/green_bg"
+                        android:textSize="15sp" />
 
-                </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:gravity="center"
+                        android:text="123Username"
+                        android:textSize="15sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email: "
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:minLines="1"
+                            android:maxLines="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="example@example.com"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Address: "
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:ellipsize="end"
+                            android:minLines="1"
+                            android:maxLines="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="216 San Andrew St, Miami, FL"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_marginTop="@dimen/x10dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/title_color"
+                        android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text."/>
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                android:layout_alignBottom="@+id/layout1"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x20dp"
+                android:background="@color/quantum_grey100"
+                android:padding="@dimen/x10dp"
+                app:top_left_corner_radius="15dp"
+                app:top_right_corner_radius="15dp">
 
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/x80dp"
+                            android:background="@drawable/bg_items"
+                            android:padding="@dimen/x20dp">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center|start"
+                                android:src="@drawable/ordericon" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_weight="1"
+                                android:gravity="center|start"
+                                android:text="My Orders"
+                                android:textColor="@color/title_color"
+                                android:textSize="15sp" />
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_marginRight="@dimen/x10dp"
+                                android:gravity="center|start"
+                                android:src="@drawable/next" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/x80dp"
+                            android:background="@drawable/bg_items"
+                            android:padding="@dimen/x20dp">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center|start"
+                                android:src="@drawable/notificationiconprof" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_weight="1"
+                                android:gravity="center|start"
+                                android:text="Notification Settings"
+                                android:textColor="@color/title_color"
+                                android:textSize="15sp" />
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_marginRight="@dimen/x10dp"
+                                android:gravity="center|start"
+                                android:src="@drawable/next" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/x80dp"
+                            android:background="@drawable/bg_items"
+                            android:padding="@dimen/x20dp">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center|start"
+                                android:src="@drawable/privacyicon" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_weight="1"
+                                android:gravity="center|start"
+                                android:text="Privacy Policy"
+                                android:textColor="@color/title_color"
+                                android:textSize="15sp" />
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_marginRight="@dimen/x10dp"
+                                android:gravity="center|start"
+                                android:src="@drawable/next" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/x80dp"
+                            android:background="@drawable/bg_items"
+                            android:padding="@dimen/x20dp">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center|start"
+                                android:src="@drawable/ordericon" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_weight="1"
+                                android:gravity="center|start"
+                                android:text="Terms and Conditions"
+                                android:textColor="@color/title_color"
+                                android:textSize="15sp" />
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_marginRight="@dimen/x10dp"
+                                android:gravity="center|start"
+                                android:src="@drawable/next" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/x80dp"
+                            android:background="@drawable/bg_items"
+                            android:padding="@dimen/x20dp">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center|start"
+                                android:src="@drawable/logouticon" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/x10dp"
+                                android:layout_weight="1"
+                                android:gravity="center|start"
+                                android:text="Logout"
+                                android:textColor="@color/title_color"
+                                android:textSize="15sp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </ScrollView>
+
+
+
+            </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+        </LinearLayout>
     </ScrollView>
 
-
-    <!-- </android.support.v4.widget.SwipeRefreshLayout>-->
 
 
 </RelativeLayout>
