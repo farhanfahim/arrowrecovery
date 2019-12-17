@@ -71,6 +71,22 @@
 
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="John Smith"
+                    android:textColor="@color/green_bg"
+                    android:textSize="@dimen/x20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="123Username"
+                    android:textSize="@dimen/x15dp" />
+
+
             </LinearLayout>
 
         </LinearLayout>
