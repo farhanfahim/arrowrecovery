@@ -17,6 +17,19 @@ var sampleImages = intArrayOf(R.drawable.graph, R.drawable.graph, R.drawable.gra
 
 class HomeFragment : BaseFragment() {
 
+    companion object {
+
+        fun newInstance(): HomeFragment {
+
+            val args = Bundle()
+
+            val fragment = HomeFragment()
+            fragment.setArguments(args)
+            return fragment
+        }
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
