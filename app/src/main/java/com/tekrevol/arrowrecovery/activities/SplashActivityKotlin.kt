@@ -10,6 +10,7 @@ import butterknife.ButterKnife
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 
+
 class SplashActivityKotlin : AppCompatActivity() {
 
     private val SPLASH_TIME_OUT = 2000
@@ -66,7 +67,7 @@ class SplashActivityKotlin : AppCompatActivity() {
 
                 Handler().postDelayed({
                     //                        animateSplashLayout(true);
-                    changeActivity(MainActivity::class.java)
+                    changeActivity(HomeActivity::class.java)
                 }, ANIMATIONS_DELAY.toLong())
 
             } else {

@@ -46,10 +46,6 @@ public class DummyFragment extends BaseFragment {
 
     @Override
     public void setTitlebar(TitleBar titleBar) {
-        titleBar.resetViews();
-        titleBar.setVisibility(View.VISIBLE);
-        titleBar.showBackButton(getBaseActivity());
-        titleBar.showSidebar(getBaseActivity());
     }
 
     @Override
