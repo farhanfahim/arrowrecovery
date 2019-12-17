@@ -42,7 +42,7 @@
                             android:padding="@dimen/x15dp"
                             android:text="SAVE"
                             android:textColor="@color/green_bg"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <RelativeLayout
                             android:id="@+id/img_pic"
@@ -241,6 +241,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/linearlayoutMyorder"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x80dp"
                         android:background="@drawable/bg_items"

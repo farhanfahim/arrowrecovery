@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/x10dp">
 
-
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center"
@@ -15,6 +14,7 @@
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="wrap_content"
+            android:id="@+id/index"
             android:text="1"
             android:layout_marginRight="@dimen/x15dp"
             android:ellipsize="end"
