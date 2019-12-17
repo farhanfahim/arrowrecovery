@@ -28,8 +28,9 @@ class DashboardPagerFragment : BaseFragment() {
         titleBar.resetViews()
         titleBar.visibility = View.GONE
 
+        // Using own title bar
         dashboardTitleBar.resetViews()
-        dashboardTitleBar.setVisibility(View.VISIBLE)
+        dashboardTitleBar.visibility = View.VISIBLE
 
         when (positionToSelect) {
             0 -> dashboardTitleBar.setTitle("Frag 1")

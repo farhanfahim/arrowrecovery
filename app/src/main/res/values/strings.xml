@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Structure</string>
+    <string name="app_name">Arrow Recovery</string>
 
     <!--FONTS-->
 
@@ -78,6 +78,6 @@
 
     <string name="SIgn_Up"><u>Sign up</u></string>
     <string name="Log_In"><u>Log In</u></string>
-    <string name="Send_Code"><u>Send a new code</u></string>
+    <string name="send_code"><u>Send a new code</u></string>
 
 </resources>

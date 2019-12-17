@@ -10,15 +10,13 @@ import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_verify_account.*
 
 class OptVerification : BaseFragment() {
 
-    private var txtSendCode: TextView? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        txtSendCode = view.findViewById(R.id.txtSendCode)
 
     }
 
@@ -34,7 +32,7 @@ class OptVerification : BaseFragment() {
     }
 
     override fun getDrawerLockMode(): Int {
-        return 0;
+        return 0
     }
 
     override fun getFragmentLayout(): Int {
@@ -46,11 +44,15 @@ class OptVerification : BaseFragment() {
 
     override fun setListeners() {
 
-        txtSendCode?.setOnClickListener(View.OnClickListener {
+        txtSendCode.setOnClickListener {
+            showNextBuildToast()
 
+        }
+
+        pinEditText.setOnPinEnteredListener {
             baseActivity.finish()
             baseActivity.openActivity(HomeActivity::class.java)
-        })
+        }
 
     }
 
