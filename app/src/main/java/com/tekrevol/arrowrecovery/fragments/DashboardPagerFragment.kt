@@ -54,11 +54,11 @@ class DashboardPagerFragment : BaseFragment() {
 
 
     private fun setViewPagerAdapter() {
-        navigationBar.add(MeowBottomNavigation.Model(0, R.drawable.user_icon))
-        navigationBar.add(MeowBottomNavigation.Model(1, R.drawable.user_icon))
-        navigationBar.add(MeowBottomNavigation.Model(2, R.drawable.user_icon))
-        navigationBar.add(MeowBottomNavigation.Model(3, R.drawable.user_icon))
-        navigationBar.add(MeowBottomNavigation.Model(4, R.drawable.user_icon))
+        navigationBar.add(MeowBottomNavigation.Model(0, R.drawable.homecoloredicon))
+        navigationBar.add(MeowBottomNavigation.Model(1, R.drawable.coloredconvertericon))
+        navigationBar.add(MeowBottomNavigation.Model(2, R.drawable.coloredcarticon))
+        navigationBar.add(MeowBottomNavigation.Model(3, R.drawable.coloredcontacticon))
+        navigationBar.add(MeowBottomNavigation.Model(4, R.drawable.coloredprofileicon))
 
         viewpager.adapter = adapter
         viewpager.setPagingEnabled(false)
