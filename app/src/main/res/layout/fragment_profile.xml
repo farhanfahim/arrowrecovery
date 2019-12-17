@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/c_white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/c_white">
 
 
     <ScrollView
@@ -11,9 +11,9 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/layout1"
@@ -21,6 +21,16 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:padding="@dimen/x15dp"
+                    android:text="SAVE"
+                    android:textColor="@color/green_bg"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,7 +67,7 @@
 
                         <ImageView
 
-                            android:id="@+id/camera_icon"
+                            android:id="@+id/editProfile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -72,6 +82,7 @@
                     </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/txtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -79,7 +90,19 @@
                         android:textColor="@color/green_bg"
                         android:textSize="15sp" />
 
+                    <EditText
+                        android:id="@+id/edtName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="John Smith"
+                        android:textColor="@color/green_bg"
+                        android:textSize="15sp"
+                        android:visibility="gone" />
+
                     <TextView
+                        android:id="@+id/txtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
@@ -103,14 +126,17 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:ellipsize="end"
-                            android:minLines="1"
-                            android:maxLines="1"
-                            android:layout_width="match_parent"
+                            android:id="@+id/txtEmail"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:minLines="1"
                             android:text="example@example.com"
                             android:textColor="@color/title_color"
                             android:textSize="15sp" />
+
+
                     </LinearLayout>
 
 
@@ -130,25 +156,62 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:ellipsize="end"
-                            android:minLines="1"
-                            android:maxLines="1"
-                            android:layout_width="match_parent"
+                            android:id="@+id/txtAddress"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:minLines="1"
                             android:text="216 San Andrew St, Miami, FL"
                             android:textColor="@color/title_color"
                             android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/edtAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:hint="Enter Addtress"
+                            android:maxLines="1"
+                            android:minLines="1"
+                            android:text="216 San Andrew St, Miami, FL"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
+
+
                     </LinearLayout>
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginTop="@dimen/x10dp"
-                        android:layout_marginBottom="@dimen/x10dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:text="About: "
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/txtAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
-                        android:layout_width="match_parent"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text."
+                        android:textColor="@color/title_color" />
+
+
+                    <EditText
+                        android:id="@+id/edtAbout"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x8dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:layout_marginBottom="@dimen/x10dp"
+                        android:hint="Enter about yourself"
                         android:textColor="@color/title_color"
-                        android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text."/>
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -156,197 +219,195 @@
             </LinearLayout>
 
             <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-                android:layout_alignBottom="@+id/layout1"
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/layout1"
+                android:layout_alignParentBottom="true"
                 android:layout_marginTop="@dimen/x20dp"
                 android:background="@color/quantum_grey100"
                 android:padding="@dimen/x10dp"
                 app:top_left_corner_radius="15dp"
                 app:top_right_corner_radius="15dp">
 
-                <ScrollView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="@dimen/x80dp"
+                        android:background="@drawable/bg_items"
+                        android:padding="@dimen/x20dp">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/x80dp"
-                            android:background="@drawable/bg_items"
-                            android:padding="@dimen/x20dp">
+                        <ImageView
 
-                            <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|start"
+                            android:src="@drawable/ordericon" />
 
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center|start"
-                                android:src="@drawable/ordericon" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:text="My Orders"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_weight="1"
-                                android:gravity="center|start"
-                                android:text="My Orders"
-                                android:textColor="@color/title_color"
-                                android:textSize="15sp" />
+                        <ImageView
 
-                            <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:gravity="center|start"
+                            android:src="@drawable/next" />
 
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_marginRight="@dimen/x10dp"
-                                android:gravity="center|start"
-                                android:src="@drawable/next" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/x80dp"
-                            android:background="@drawable/bg_items"
-                            android:padding="@dimen/x20dp">
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center|start"
-                                android:src="@drawable/notificationiconprof" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_weight="1"
-                                android:gravity="center|start"
-                                android:text="Notification Settings"
-                                android:textColor="@color/title_color"
-                                android:textSize="15sp" />
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_marginRight="@dimen/x10dp"
-                                android:gravity="center|start"
-                                android:src="@drawable/next" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/x80dp"
-                            android:background="@drawable/bg_items"
-                            android:padding="@dimen/x20dp">
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center|start"
-                                android:src="@drawable/privacyicon" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_weight="1"
-                                android:gravity="center|start"
-                                android:text="Privacy Policy"
-                                android:textColor="@color/title_color"
-                                android:textSize="15sp" />
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_marginRight="@dimen/x10dp"
-                                android:gravity="center|start"
-                                android:src="@drawable/next" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/x80dp"
-                            android:background="@drawable/bg_items"
-                            android:padding="@dimen/x20dp">
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center|start"
-                                android:src="@drawable/ordericon" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_weight="1"
-                                android:gravity="center|start"
-                                android:text="Terms and Conditions"
-                                android:textColor="@color/title_color"
-                                android:textSize="15sp" />
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_marginRight="@dimen/x10dp"
-                                android:gravity="center|start"
-                                android:src="@drawable/next" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/x80dp"
-                            android:background="@drawable/bg_items"
-                            android:padding="@dimen/x20dp">
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:gravity="center|start"
-                                android:src="@drawable/logouticon" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="@dimen/x10dp"
-                                android:layout_weight="1"
-                                android:gravity="center|start"
-                                android:text="Logout"
-                                android:textColor="@color/title_color"
-                                android:textSize="15sp" />
-
-
-                        </LinearLayout>
                     </LinearLayout>
-                </ScrollView>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x80dp"
+                        android:background="@drawable/bg_items"
+                        android:padding="@dimen/x20dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|start"
+                            android:src="@drawable/notificationiconprof" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:text="Notification Settings"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:gravity="center|start"
+                            android:src="@drawable/next" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x80dp"
+                        android:background="@drawable/bg_items"
+                        android:padding="@dimen/x20dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|start"
+                            android:src="@drawable/privacyicon" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:text="Privacy Policy"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:gravity="center|start"
+                            android:src="@drawable/next" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x80dp"
+                        android:background="@drawable/bg_items"
+                        android:padding="@dimen/x20dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|start"
+                            android:src="@drawable/ordericon" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:text="Terms and Conditions"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:gravity="center|start"
+                            android:src="@drawable/next" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x80dp"
+                        android:background="@drawable/bg_items"
+                        android:padding="@dimen/x20dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|start"
+                            android:src="@drawable/logouticon" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:text="Logout"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
 
 
             </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x50dp"
+                android:background="@color/quantum_grey100">
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 
 
 </RelativeLayout>

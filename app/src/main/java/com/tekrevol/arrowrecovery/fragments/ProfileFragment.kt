@@ -3,19 +3,30 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ImageView
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 
 class ProfileFragment : BaseFragment() {
 
+
+    var editProfile: ImageView? = null
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        editProfile = view.findViewById(R.id.editProfile)
+    }
+
     companion object {
 
-        fun newInstance(): CustomerSupportFragment {
+        fun newInstance(): ProfileFragment {
 
             val args = Bundle()
 
-            val fragment = CustomerSupportFragment()
+            val fragment = ProfileFragment()
             fragment.setArguments(args)
             return fragment
         }
