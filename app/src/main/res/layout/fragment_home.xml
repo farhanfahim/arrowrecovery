@@ -78,14 +78,14 @@
                         android:id="@+id/progressRefresh"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@drawable/refresh_button_background"
+                        android:visibility="gone"
                         app:mlpb_arrow_height="8dp"
                         app:mlpb_arrow_width="10dp"
-                        app:mlpb_progress_stoke_width="4dp"
-                        app:mlpb_inner_radius="@dimen/x10dp"
                         app:mlpb_enable_circle_background="false"
-                        android:visibility="gone"
-                        android:background="@drawable/refresh_button_background"
+                        app:mlpb_inner_radius="@dimen/x10dp"
                         app:mlpb_progress_color="@color/c_white"
+                        app:mlpb_progress_stoke_width="4dp"
                         app:mlpb_show_arrow="true" />
 
 
@@ -94,8 +94,8 @@
                         android:layout_width="@dimen/x25dp"
                         android:layout_height="@dimen/x25dp"
                         android:layout_centerInParent="true"
-                        android:visibility="visible"
-                        android:src="@drawable/refresh_arrow" />
+                        android:src="@drawable/refresh_arrow"
+                        android:visibility="visible" />
 
 
                 </RelativeLayout>
@@ -116,7 +116,15 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/graph" />
+                android:src="@drawable/graph"
+                android:visibility="gone" />
+
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x200dp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -145,8 +153,6 @@
                 android:background="#EEE"
                 android:orientation="vertical"
                 android:padding="@dimen/x20dp">
-                
-
 
                 <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                     android:layout_width="match_parent"
