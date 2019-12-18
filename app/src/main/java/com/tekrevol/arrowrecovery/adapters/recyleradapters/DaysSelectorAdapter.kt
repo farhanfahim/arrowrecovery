@@ -33,7 +33,7 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contDay.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model,v, null) })
+        holder.contDay.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model,v, DaysSelectorAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {

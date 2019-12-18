@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/x10dp">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/x10dp"
         android:gravity="center">
 
         <LinearLayout
@@ -19,11 +19,11 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/index"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/x15dp"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:text="1"
                 android:textColor="@color/title_color" />
 
@@ -86,50 +86,44 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:text="580 x 2"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/s12" />
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="@dimen/x5dp"
-                android:layout_weight="1"
-                android:ellipsize="end"
-
-                android:gravity="center|start"
-                android:text="580 x 2"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s12" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="@dimen/x5dp"
-                android:layout_weight="1"
-
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:text="75%"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s12" />
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:text="75%"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/s12" />
 
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
+            android:gravity="center"
+            android:text="$1160"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/s12" />
 
-                android:gravity="center|start"
-                android:text="$1160"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s12" />
 
-        </LinearLayout>
     </LinearLayout>
 
 

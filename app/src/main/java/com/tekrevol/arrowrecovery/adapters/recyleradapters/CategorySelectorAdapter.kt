@@ -33,7 +33,7 @@ class CategorySelectorAdapter(private val activity: Context, private val arrData
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contParent.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CategorySelectorAdapter::javaClass.name) })
+        holder.contParent.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CategorySelectorAdapter::class.java.simpleName) })
     }
 
     override fun getItemCount(): Int {
