@@ -8,7 +8,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +37,7 @@
                         android:layout_marginBottom="5dp"
                         android:text="Bill From"
                         android:textColor="@color/txtGrey"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -46,7 +48,7 @@
                         android:minLines="1"
                         android:text="John Smith"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -57,7 +59,7 @@
                         android:minLines="1"
                         android:text="New York, USA"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -68,7 +70,7 @@
                         android:minLines="1"
                         android:text="+44 123 456 1"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
 
                 </LinearLayout>
@@ -92,7 +94,7 @@
                             android:layout_marginBottom="5dp"
                             android:text="Bill To"
                             android:textColor="@color/txtGrey"
-                            android:textSize="@dimen/s18" />
+                            android:textSize="@dimen/s16" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -104,7 +106,7 @@
                             android:text="Alen Michaels
 "
                             android:textColor="@color/txtBlack"
-                            android:textSize="@dimen/s18" />
+                            android:textSize="@dimen/s16" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -115,7 +117,7 @@
                             android:minLines="1"
                             android:text="Dallas, Texas"
                             android:textColor="@color/txtBlack"
-                            android:textSize="@dimen/s18" />
+                            android:textSize="@dimen/s16" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -126,7 +128,7 @@
                             android:minLines="1"
                             android:text="+44 321 546 7"
                             android:textColor="@color/txtBlack"
-                            android:textSize="@dimen/s18" />
+                            android:textSize="@dimen/s16" />
 
 
                     </LinearLayout>
@@ -199,7 +201,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewOrderDetail"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x280dp"
+                android:layout_height="@dimen/x210dp"
                 android:layout_weight="1"
                 tools:listitem="@layout/item_order">
 
@@ -234,7 +236,7 @@
                         android:minLines="1"
                         android:text="Payment Method"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -245,7 +247,7 @@
                         android:minLines="1"
                         android:text="Wire Transfer"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -256,7 +258,7 @@
                         android:minLines="1"
                         android:text="Balance $500"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/s16" />
 
 
                 </LinearLayout>
@@ -284,7 +286,7 @@
                             android:text="Total: $2320
 "
                             android:textColor="@color/txtBlack"
-                            android:textSize="@dimen/s18" />
+                            android:textSize="@dimen/s16" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -295,7 +297,7 @@
                             android:minLines="1"
                             android:text="Paid: None"
                             android:textColor="@color/txtBlack"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s16" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -306,7 +308,7 @@
                             android:minLines="1"
                             android:text="Due: $2320"
                             android:textColor="@color/txtBlack"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s16" />
 
 
                     </LinearLayout>
@@ -317,19 +319,34 @@
             </LinearLayout>
 
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/searchbar_grey"
-                android:backgroundTint="@color/green_bg"
-                android:gravity="center"
-                android:text="Take Screenshot"
-                android:textColor="@color/c_white"
-                android:textSize="20sp" />
-
-
         </LinearLayout>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadowgrey" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/searchbar_grey"
+            android:backgroundTint="@color/green_bg"
+            android:gravity="center"
+            android:padding="@dimen/x10dp"
+            android:text="Take Screenshot"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s18" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
