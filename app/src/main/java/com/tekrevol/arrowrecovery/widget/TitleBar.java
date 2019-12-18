@@ -3,7 +3,9 @@ package com.tekrevol.arrowrecovery.widget;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+
 import androidx.core.view.GravityCompat;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +30,15 @@ public class TitleBar extends RelativeLayout {
 
     public TextView txtCircle;
     private ImageView imgTitle;
+    private ImageView img;
+    private ImageView btnRightSearch;
+    private ImageView btnRightNotification;
 
     private AnyTextView txtTitle;
     private TextView btnLeft1;
     private ImageButton btnRight3;
     private TextView btnRight2;
+    private TextView btnRight5;
     //change Right button
     public ImageView btnRight1;
 
@@ -69,9 +75,13 @@ public class TitleBar extends RelativeLayout {
 
     private void bindViews() {
         imgTitle = findViewById(R.id.imgTitle);
+        btnRightSearch = findViewById(R.id.btnRightSearch);
+        img = findViewById(R.id.img);
+        btnRightNotification = findViewById(R.id.btnRightNotification);
         txtTitle = findViewById(R.id.txtTitle);
         btnLeft1 = findViewById(R.id.btnLeft1);
         btnRight3 = findViewById(R.id.btnRight3);
+        btnRight5 = findViewById(R.id.btnRight5);
         btnRight2 = findViewById(R.id.btnRight2);
         btnRight1 = findViewById(R.id.btnRight1);
         txtClearAll = findViewById(R.id.txtClearAll);
@@ -81,7 +91,10 @@ public class TitleBar extends RelativeLayout {
     }
 
     public void resetViews() {
+        btnRightSearch.setVisibility(VISIBLE);
+        btnRightNotification.setVisibility(VISIBLE);
         imgTitle.setVisibility(GONE);
+        img.setVisibility(INVISIBLE);
         txtTitle.setVisibility(GONE);
         btnLeft1.setVisibility(GONE);
         btnRight3.setVisibility(GONE);
@@ -164,7 +177,6 @@ public class TitleBar extends RelativeLayout {
 
     public void showResideMenu(final HomeActivity homeActivity) {
 
-        this.btnRight2.setVisibility(VISIBLE);
         this.btnRight2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.menu_icon, 0);
         this.btnRight2.setText(null);
         btnRight2.setOnClickListener(new OnClickListener() {
@@ -191,7 +203,6 @@ public class TitleBar extends RelativeLayout {
         this.btnRight1.setImageResource(drawable);
         this.btnRight1.setOnClickListener(onClickListener);
     }
-
 
 
     public void setRightButton(int drawable, OnClickListener onClickListener, int colorToTint) {
@@ -226,6 +237,35 @@ public class TitleBar extends RelativeLayout {
         this.btnRight2.setText(text);
         btnRight2.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0);
         this.btnRight2.setOnClickListener(onClickListener);
+    }
+
+
+    public void showEditProfile(final HomeActivity homeActivity, OnClickListener onClickListener) {
+        btnRightNotification.setVisibility(GONE);
+        img.setVisibility(GONE);
+        btnRightSearch.setVisibility(GONE);
+        this.btnRight2.setVisibility(VISIBLE);
+        this.btnRight2.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.icon_edit, 0);
+        this.btnRight2.setText("");
+        btnRight2.setOnClickListener(onClickListener);
+
+    }
+
+    public void btnSearch(final HomeActivity homeActivity, OnClickListener onClickListener) {
+
+        btnRightSearch.setOnClickListener(onClickListener);
+
+    }
+
+    public void showSaveButton(final HomeActivity homeActivity, OnClickListener onClickListener) {
+        btnRightNotification.setVisibility(GONE);
+        img.setVisibility(GONE);
+        btnRightSearch.setVisibility(GONE);
+        btnRight5.setVisibility(VISIBLE);
+        this.btnRight5.setText("SAVE");
+        this.btnRight5.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        btnRight5.setOnClickListener(onClickListener);
+
     }
 
 

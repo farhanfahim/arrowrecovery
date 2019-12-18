@@ -5,16 +5,27 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_myorder.*
 
 class MyOrderFragment : BaseFragment(), OnItemClickListener {
 
-    private var arr: ArrayList<String> = ArrayList()
+    private var arrData: ArrayList<DummyModel> = ArrayList()
+    private lateinit var myOrderAdapter: MyOrderAdapter
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myOrderAdapter = MyOrderAdapter(context!!, arrData, this)
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,14 +35,11 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
 
     private fun onBind() {
 
-        arr.add("034111")
-        arr.add("034111")
-        arr.add("034111")
-        arr.add("034111")
-        arr.add("034111")
-        arr.add("034111")
-        recyclerViewMyOrder.layoutManager = LinearLayoutManager(context)
-        recyclerViewMyOrder.adapter = MyOrderAdapter(context, arr, this)
+        arrData.clear()
+        arrData.addAll(Constants.daysSelector())
+
+        recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerViewMyOrder.adapter = myOrderAdapter
 
     }
 

@@ -1,28 +1,24 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_profile.*
 
-class ProfileFragment : BaseFragment() {
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
+class AdvanceSearchFragment : BaseFragment() {
 
     companion object {
 
-        fun newInstance(): ProfileFragment {
+        fun newInstance(): AdvanceSearchFragment {
 
             val args = Bundle()
 
-            val fragment = ProfileFragment()
+            val fragment = AdvanceSearchFragment()
             fragment.setArguments(args)
             return fragment
         }
@@ -30,31 +26,18 @@ class ProfileFragment : BaseFragment() {
 
     override fun getDrawerLockMode(): Int {
         return 0
+
     }
 
     override fun getFragmentLayout(): Int {
-
-        return R.layout.fragment_profile
+        return R.layout.fragment_advanced_search
     }
 
     override fun setTitlebar(titleBar: TitleBar?) {
     }
 
     override fun setListeners() {
-
-
-        linearlayoutMyorder.setOnClickListener(View.OnClickListener {
-
-            baseActivity.addDockableFragment(MyOrderFragment.newInstance(), true)
-        })
-
-        linearlayoutChangePassword.setOnClickListener(View.OnClickListener {
-
-            baseActivity.addDockableFragment(ChangePasswordFragment.newInstance(), true)
-
-        })
     }
-
 
     override fun onClick(v: View?) {
     }
@@ -62,4 +45,6 @@ class ProfileFragment : BaseFragment() {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
+
 }
+

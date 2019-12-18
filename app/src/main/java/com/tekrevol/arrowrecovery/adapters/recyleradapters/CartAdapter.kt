@@ -8,11 +8,12 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
  */
-class CartAdapter(private val activity: Context?, private val arrData: List<String>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
+class CartAdapter(private val activity: Context?, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
@@ -25,7 +26,7 @@ class CartAdapter(private val activity: Context?, private val arrData: List<Stri
         setListener(holder, model)
     }
 
-    private fun setListener(holder: ViewHolder, model: String) {
+    private fun setListener(holder: ViewHolder, model: DummyModel) {
 
         //   holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model) })
 

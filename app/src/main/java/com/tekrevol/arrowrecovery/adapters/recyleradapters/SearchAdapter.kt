@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
  */
-class MyOrderAdapter(private val activity: Context?, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<MyOrderAdapter.ViewHolder>() {
+class SearchAdapter(private val activity: Context?, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_myorder, parent, false)
+                .inflate(R.layout.item_search, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -27,7 +28,7 @@ class MyOrderAdapter(private val activity: Context?, private val arrData: List<D
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
 
-        holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, null) })
+        //   holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model) })
 
     }
 
@@ -37,7 +38,6 @@ class MyOrderAdapter(private val activity: Context?, private val arrData: List<D
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
 
-        var layoutItemMyOrder: LinearLayout? = view?.findViewById(R.id.layoutItemMyOrder)
     }
 
 }

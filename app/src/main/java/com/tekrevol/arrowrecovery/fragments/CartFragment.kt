@@ -6,17 +6,25 @@ import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CartAdapter
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.OrderDetailAdapter
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_orderdetail.*
+import kotlinx.android.synthetic.main.fragment_myorder.*
 
 class CartFragment : BaseFragment(), OnItemClickListener {
 
-    private var arr: ArrayList<String> = ArrayList()
+    private var arrData: ArrayList<DummyModel> = ArrayList()
+    private lateinit var cartAdapter: CartAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        cartAdapter = CartAdapter(context!!, arrData, this)
+
+    }
 
     companion object {
 
@@ -32,20 +40,19 @@ class CartFragment : BaseFragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         onBind()
 
 
     }
 
     private fun onBind() {
-        arr.add("1")
-        arr.add("2")
-        arr.add("3")
-        arr.add("4")
-        arr.add("5")
-        arr.add("")
-        recyclerViewCart.layoutManager = LinearLayoutManager(context)
-        recyclerViewCart.adapter = CartAdapter(context, arr, this)
+
+        arrData.clear()
+        arrData.addAll(Constants.daysSelector())
+
+        recyclerViewCart.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerViewCart.adapter = cartAdapter
     }
 
 

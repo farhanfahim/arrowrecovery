@@ -24,15 +24,9 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/x8dp"
         android:paddingRight="@dimen/x8dp">
-        <!--<ImageButton-->
-        <!--android:id="@+id/btnLeft1"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@color/colorPrimary"-->
-        <!--android:padding="@dimen/x10dp"-->
-        <!--android:src="@drawable/ic_back" />-->
 
         <ImageView
+            android:id="@+id/img"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -169,6 +163,20 @@
             android:textColor="@color/c_white"
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/btnRight5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:drawablePadding="@dimen/x5dp"
+            android:gravity="center"
+            android:scaleX="1.2"
+            android:text="SAVE"
+            android:scaleY="1.2"
+            android:layout_marginLeft="@dimen/x10dp"
+            android:padding="@dimen/x5dp"
+            android:textColor="@color/green_bg"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/txtClearAll"
