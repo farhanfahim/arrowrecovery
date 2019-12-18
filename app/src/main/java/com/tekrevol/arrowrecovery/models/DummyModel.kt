@@ -1,12 +1,14 @@
 package com.tekrevol.arrowrecovery.models
 
-class DummyModel() {
+data class DummyModel(var text: String) {
 
-    var number : String = ""
+    var isSelected = false
 
-    fun DummyModel(number: String) {
-        this.number = number
-    }
+    constructor(text: String, isSelected: Boolean) : this(text) {
+        this.isSelected = isSelected
+     }
+
+
 
 
 }
