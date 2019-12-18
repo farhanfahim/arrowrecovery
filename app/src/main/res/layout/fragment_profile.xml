@@ -276,6 +276,42 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/linearlayoutChangePassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x80dp"
+                        android:background="@drawable/bg_items"
+                        android:padding="@dimen/x20dp">
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center|start"
+                            android:src="@drawable/ordericon" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:text="Change Password"
+                            android:textColor="@color/title_color"
+                            android:textSize="15sp" />
+
+                        <ImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/x10dp"
+                            android:layout_marginRight="@dimen/x10dp"
+                            android:gravity="center|start"
+                            android:src="@drawable/next" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x80dp"
                         android:background="@drawable/bg_items"

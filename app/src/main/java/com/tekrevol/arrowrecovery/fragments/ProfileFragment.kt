@@ -64,9 +64,16 @@ class ProfileFragment : BaseFragment() {
 
         linearlayoutMyorder.setOnClickListener(View.OnClickListener {
 
-            baseActivity.addDockableFragment(MyOrderFragment.newInstance(),true)
+            baseActivity.addDockableFragment(MyOrderFragment.newInstance(), true)
+        })
+
+        linearlayoutChangePassword.setOnClickListener(View.OnClickListener {
+
+            baseActivity.addDockableFragment(ChangePasswordFragment.newInstance(), true)
+
         })
     }
+
 
     override fun onClick(v: View?) {
     }
