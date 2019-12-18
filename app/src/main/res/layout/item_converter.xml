@@ -7,29 +7,29 @@
     android:padding="10dp">
 
     <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-        android:id="@+id/cont_play"
+        android:id="@+id/contParent"
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:background="@color/c_white"
         app:corner_radius="@dimen/x10dp">
 
         <LinearLayout
-            android:id="@+id/layout1"
+            android:id="@+id/contHeader"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x70dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="@dimen/x10dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
-
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtMake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -41,6 +41,7 @@
 
 
                 <TextView
+                    android:id="@+id/txtModel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -51,29 +52,15 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_like"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/like_icon" />
-
-            </LinearLayout>
-
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/img_converter"
+            android:id="@+id/imgConverter"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_below="@+id/layout1"
-            android:scaleType="center"
+            android:layout_below="@+id/contHeader"
+            android:scaleType="centerInside"
             android:src="@drawable/img1" />
 
 
@@ -82,13 +69,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center"
+            android:padding="@dimen/x10dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -103,6 +89,7 @@
                     android:textColor="@color/title_color" />
 
                 <TextView
+                    android:id="@+id/txtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -114,14 +101,15 @@
             </LinearLayout>
 
             <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                android:id="@+id/contAddToCart"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@color/green_bg"
                 app:top_left_corner_radius="@dimen/x10dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/x25dp"
+                    android:layout_height="@dimen/x25dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/cart" />
 

@@ -4,10 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.models.DummyModel
@@ -16,11 +18,11 @@ import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
  */
-class DaysSelectorAdapter(private val activity: Context, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<DaysSelectorAdapter.ViewHolder>() {
+class ConverterItemAdapter(private val activity: Context, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<ConverterItemAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_days, parent, false)
+                .inflate(R.layout.item_converter, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -33,7 +35,7 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contDay.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model,v, null) })
+        holder.contParent.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemAdapter::javaClass.name) }
     }
 
     override fun getItemCount(): Int {
@@ -41,8 +43,12 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val contDay = view.findViewById<RoundKornerLinearLayout>(R.id.contDay)
-        val txtDay = view.findViewById<TextView>(R.id.txtDay)
+        val contParent = view.findViewById<RoundKornerRelativeLayout>(R.id.contParent)
+        val contAddToCart = view.findViewById<RoundKornerRelativeLayout>(R.id.contAddToCart)
+        val txtMake = view.findViewById<TextView>(R.id.txtMake)
+        val txtModel = view.findViewById<TextView>(R.id.txtModel)
+        val txtPrice = view.findViewById<TextView>(R.id.txtPrice)
+        val imgConverter = view.findViewById<ImageView>(R.id.imgConverter)
         var model: DummyModel? = null
 
         /**
@@ -53,14 +59,7 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
             this.model = model
 
             this.model?.let {
-                txtDay?.text = it.text
-                if (it.isSelected) {
-                    contDay?.setBackgroundColor(context.resources.getColor(R.color.base_green))
-                    txtDay?.setTextColor(context.resources.getColor(R.color.c_white))
-                } else {
-                    contDay?.setBackgroundColor(context.resources.getColor(R.color.c_white))
-                    txtDay?.setTextColor(context.resources.getColor(R.color.base_green))
-                }
+                txtMake.text = it.text
             }
 
 

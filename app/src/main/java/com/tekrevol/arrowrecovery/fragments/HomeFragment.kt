@@ -127,7 +127,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             set1.cubicIntensity = 0.2f
             set1.setDrawFilled(true)
             set1.setDrawCircles(false)
-            set1.lineWidth = 4f
+            set1.lineWidth = 3f
             set1.circleRadius = 4f
             set1.setCircleColor(Color.BLUE)
             set1.highLightColor = Color.rgb(244, 117, 117)
@@ -184,7 +184,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
-    override fun onItemClick(position: Int, anyObject: Any?) {
+    override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
         arrData.forEach { it.isSelected = false }
         arrData[position].isSelected = true
         daysSelectorAdapter.notifyDataSetChanged()

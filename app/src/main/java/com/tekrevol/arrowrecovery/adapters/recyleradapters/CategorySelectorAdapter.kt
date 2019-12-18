@@ -16,11 +16,11 @@ import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
  */
-class DaysSelectorAdapter(private val activity: Context, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<DaysSelectorAdapter.ViewHolder>() {
+class CategorySelectorAdapter(private val activity: Context, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<CategorySelectorAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
-                .inflate(R.layout.item_days, parent, false)
+                .inflate(R.layout.item_categories, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -33,7 +33,7 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contDay.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model,v, null) })
+        holder.contParent.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CategorySelectorAdapter::javaClass.name) })
     }
 
     override fun getItemCount(): Int {
@@ -41,8 +41,8 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val contDay = view.findViewById<RoundKornerLinearLayout>(R.id.contDay)
-        val txtDay = view.findViewById<TextView>(R.id.txtDay)
+        val contParent = view.findViewById<RoundKornerLinearLayout>(R.id.contParent)
+        val txtCategory = view.findViewById<TextView>(R.id.txtCategory)
         var model: DummyModel? = null
 
         /**
@@ -53,13 +53,13 @@ class DaysSelectorAdapter(private val activity: Context, private val arrData: Li
             this.model = model
 
             this.model?.let {
-                txtDay?.text = it.text
+                txtCategory?.text = it.text
                 if (it.isSelected) {
-                    contDay?.setBackgroundColor(context.resources.getColor(R.color.base_green))
-                    txtDay?.setTextColor(context.resources.getColor(R.color.c_white))
+                    contParent?.setBackgroundColor(context.resources.getColor(R.color.material_grey600))
+                    txtCategory?.setTextColor(context.resources.getColor(R.color.c_white))
                 } else {
-                    contDay?.setBackgroundColor(context.resources.getColor(R.color.c_white))
-                    txtDay?.setTextColor(context.resources.getColor(R.color.base_green))
+                    contParent?.setBackgroundColor(context.resources.getColor(R.color.transparent))
+                    txtCategory?.setTextColor(context.resources.getColor(R.color.material_grey600))
                 }
             }
 

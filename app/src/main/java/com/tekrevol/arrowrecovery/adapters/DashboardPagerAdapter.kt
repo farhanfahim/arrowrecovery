@@ -21,7 +21,7 @@ class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> HomeFragment.newInstance()
-            1 -> ConverterFragment.newInstance()
+            1 -> ConverterDashboardFragment.newInstance()
             2 -> CartFragment.newInstance()
             3 -> CustomerSupportFragment.newInstance()
             4 -> ProfileFragment.newInstance()

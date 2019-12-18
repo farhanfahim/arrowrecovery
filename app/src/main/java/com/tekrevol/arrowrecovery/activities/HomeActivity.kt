@@ -53,7 +53,7 @@ class HomeActivity : BaseActivity() {
         contMain = findViewById(R.id.contMain)
         contParentActivityLayout = findViewById(R.id.contParentActivityLayout)
         blurImage = findViewById(R.id.imageBlur)
-        setSideMenu(ResideMenu.DIRECTION_RIGHT)
+//        setSideMenu(ResideMenu.DIRECTION_RIGHT)
         initFragments()
     }
 

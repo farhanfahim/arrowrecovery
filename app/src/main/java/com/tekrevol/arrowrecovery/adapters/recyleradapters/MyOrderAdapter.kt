@@ -26,7 +26,7 @@ class MyOrderAdapter(private val activity: Context?, private val arrData: List<S
 
     private fun setListener(holder: ViewHolder, model: String) {
 
-        holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model) })
+        holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, null) })
 
     }
 

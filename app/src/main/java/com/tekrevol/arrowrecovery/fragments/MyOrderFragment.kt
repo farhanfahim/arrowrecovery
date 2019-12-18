@@ -68,7 +68,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
         return R.layout.fragment_myorder
     }
 
-    override fun onItemClick(position: Int, `object`: Any) {
+    override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
 
         baseActivity.addDockableFragment(OrderDetailFragment.newInstance(),true)
 

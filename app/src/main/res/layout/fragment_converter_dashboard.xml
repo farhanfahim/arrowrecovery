@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_white"
+    android:background="@color/background_color"
     android:orientation="vertical">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,12 +16,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/x200dp"
                 app:fillColor="@color/green_bg"
+                android:background="@color/c_white"
                 app:pageColor="#FFFFFF"
                 app:radius="6dp"
                 app:slideInterval="3000"
@@ -31,15 +31,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:background="@color/quantum_grey100"
+                android:padding="@dimen/x20dp"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|start"
                     android:orientation="vertical">
@@ -51,7 +51,7 @@
                         android:maxLines="1"
                         android:text="Popular Catalytic Converters"
                         android:textColor="@color/title_color"
-                        android:textSize="28sp" />
+                        android:textSize="@dimen/s24" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                         android:maxLines="1"
                         android:text="7743 items found"
                         android:textColor="@color/title_grey"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/s16" />
 
                 </LinearLayout>
 
@@ -69,58 +69,54 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:padding="10dp"
-                    android:src="@drawable/filter" />
+                    android:visibility="gone"
+                    android:src="@drawable/img_filter" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/x10dp"
+                android:paddingBottom="@dimen/x10dp"
+                android:background="@color/c_white"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCategories"
                     android:layout_width="match_parent"
-                    tools:listitem="@layout/item_list"
-                    app:reverseLayout="false"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_height="wrap_content">
+                    app:reverseLayout="false"
+                    tools:listitem="@layout/item_categories">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>
 
-            <LinearLayout
+
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
+                android:orientation="vertical"
+                android:padding="10dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_converter">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:padding="10dp"
-                    app:spanCount="2"
-                    android:orientation="vertical"
-                    android:background="@color/quantum_grey100"
-                    tools:listitem="@layout/item_converter"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    android:layout_height="match_parent">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-            </LinearLayout>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
 

@@ -70,7 +70,7 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
-    override fun onItemClick(position: Int, `object`: Any?) {
+    override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
 
     }
 

@@ -21,7 +21,8 @@
 
     <color name="base_blue">#1DB9D9</color>
     <color name="panic_blue">#4F81BD</color>
-    <color name="base_green">#38BD70</color>
+    <color name="base_green">#50AC8C</color>
+
     <!--<color name="medication_light_red">#E74C3C</color>-->
     <!--<color name="base_gray">#72777A</color>-->
 
@@ -125,7 +126,7 @@
 
 
     <color name="selected_item">#cbe5f9</color>
-    <color name="background_color">#effbff</color>
+    <color name="background_color">#F0F0F0</color>
     <color name="question_header">#F5B195</color>
     <color name="question_subheader">#FCE4DB</color>
 
