@@ -23,7 +23,6 @@
         android:visibility="visible">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/x10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -51,6 +50,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/x10dp"
             android:background="@color/txtGrey" />
 
 
@@ -120,7 +120,6 @@
 
     </RadioGroup>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_marginBottom="@dimen/x10dp"
@@ -137,7 +136,6 @@
             android:textColorHint="@color/txtGrey"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

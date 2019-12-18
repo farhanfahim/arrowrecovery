@@ -27,7 +27,9 @@ class DashboardPagerFragment : BaseFragment() {
     override fun setTitlebar(titleBar: TitleBar) {
         titleBar.resetViews()
         titleBar.visibility = View.GONE
-
+        dashboardTitleBar.btnSearch(homeActivity, View.OnClickListener {
+            baseActivity.addDockableFragment(SearchFragment.newInstance(),true)
+        })
         // Using own title bar
         dashboardTitleBar.resetViews()
         dashboardTitleBar.visibility = View.VISIBLE
@@ -37,7 +39,7 @@ class DashboardPagerFragment : BaseFragment() {
             1 -> dashboardTitleBar.showTitleImage()
             2 -> dashboardTitleBar.setTitle("Cart")
             3 -> dashboardTitleBar.setTitle("Customer Support")
-            4 -> dashboardTitleBar.setTitle("Profile")
+            4 -> setProfileTitleBar()
         }
     }
 
@@ -89,9 +91,21 @@ class DashboardPagerFragment : BaseFragment() {
             1 -> dashboardTitleBar.showTitleImage()
             2 -> dashboardTitleBar.setTitle("Cart")
             3 -> dashboardTitleBar.setTitle("Customer Support")
-            4 -> dashboardTitleBar.setTitle("Profile")
+            4 -> {
+                setProfileTitleBar()
+
+            }
         }
 
+    }
+
+    private fun setProfileTitleBar() {
+        dashboardTitleBar.setTitle("Profile")
+        dashboardTitleBar.showEditProfile(homeActivity, View.OnClickListener {
+
+            baseActivity.addDockableFragment(EditProfileFragment.newInstance(), false)
+
+        })
     }
 
     override fun onClick(view: View) {}

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/c_white"
+    android:padding="@dimen/x10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -16,7 +17,8 @@
 
 
         <ImageButton
-            android:padding="@dimen/x10dp"
+            android:id="@+id/image"
+            android:padding="@dimen/x5dp"
             android:layout_marginRight="@dimen/x10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,12 +36,14 @@
 
 
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
+            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 android:id="@+id/txtmantracategory"
+                android:background="@null"
                 android:layout_width="0dp"
                 android:layout_marginLeft="@dimen/x10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:singleLine="true"
                 android:hint="Search"
                 android:padding="5dp"
                 android:drawablePadding="@dimen/x10dp"
@@ -47,6 +51,7 @@
                 android:textColor="@color/c_black"
                 android:textColorHint="@color/c_black"
                 android:textSize="12sp"
+                android:imeOptions="actionSearch"
                 app:typeface="@string/font_regular" />
 
             <View
@@ -56,6 +61,7 @@
                 android:layout_height="25dp"
                 android:background="@color/transparent_grey"/>
             <ImageButton
+                android:id="@+id/advSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="Select category"
@@ -69,6 +75,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearchList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_search">

@@ -25,9 +25,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:padding="10dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -68,20 +68,20 @@
 
                         </RelativeLayout>
 
-                        <ImageView
+                        <!--    <ImageView
 
-                            android:id="@+id/editProfile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerInParent="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginLeft="-30dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_toRightOf="@id/img_pic"
-                            android:contentDescription="change image"
-                            android:src="@drawable/edit" />
-
+                                android:id="@+id/editProfile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerInParent="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="-30dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_toRightOf="@id/img_pic"
+                                android:contentDescription="change image"
+                                android:src="@drawable/edit" />
+    -->
                     </RelativeLayout>
 
                     <TextView
@@ -195,7 +195,6 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:textSize="15sp"
                         android:id="@+id/txtAbout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -203,21 +202,8 @@
                         android:layout_marginRight="@dimen/x10dp"
                         android:layout_marginBottom="@dimen/x10dp"
                         android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text."
-                        android:textColor="@color/title_color" />
-
-
-                    <EditText
-                        android:textSize="15sp"
-
-                        android:id="@+id/edtAbout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/x8dp"
-                        android:layout_marginRight="@dimen/x10dp"
-                        android:layout_marginBottom="@dimen/x10dp"
-                        android:hint="Enter about yourself"
                         android:textColor="@color/title_color"
-                        android:visibility="gone" />
+                        android:textSize="15sp" />
 
 
                 </LinearLayout>
@@ -230,7 +216,7 @@
                 android:layout_alignBottom="@+id/layout1"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="@dimen/x20dp"
-                android:background="@color/quantum_grey100"
+                android:background="@color/background_color"
                 android:padding="@dimen/x10dp"
                 app:top_left_corner_radius="15dp"
                 app:top_right_corner_radius="15dp">
@@ -445,8 +431,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x50dp"
-                android:background="@color/quantum_grey100">
+                android:layout_height="@dimen/x60dp"
+                android:background="@color/background_color">
 
             </LinearLayout>
         </LinearLayout>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/c_white"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <com.tekrevol.arrowrecovery.widget.TitleBar
         android:id="@+id/dashboardTitleBar"
@@ -16,8 +16,8 @@
     <com.tekrevol.arrowrecovery.widget.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_below="@id/dashboardTitleBar"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/dashboardTitleBar" />
 
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/navigationBar"
@@ -29,6 +29,6 @@
         app:mbn_defaultIconColor="@color/material_grey200"
         app:mbn_rippleColor="@color/colorPrimary"
         app:mbn_selectedIconColor="@color/colorPrimary"
-        app:mbn_shadowColor="#5000"/>
+        app:mbn_shadowColor="#5000" />
 
 </RelativeLayout>
