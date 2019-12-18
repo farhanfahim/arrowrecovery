@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/c_white"
     android:layout_height="match_parent"
+    android:background="@color/c_white"
     android:orientation="vertical">
 
     <ScrollView
@@ -35,7 +35,7 @@
                         android:layout_marginBottom="5dp"
                         android:text="Bill From"
                         android:textColor="@color/txtGrey"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/s18" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                         android:minLines="1"
                         android:text="John Smith"
                         android:textColor="@color/txtBlack"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/s18" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                         android:minLines="1"
                         android:text="New York, USA"
                         android:textColor="@color/txtBlack"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/s18" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                         android:minLines="1"
                         android:text="+44 123 456 1"
                         android:textColor="@color/txtBlack"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/s18" />
 
 
                 </LinearLayout>
@@ -92,7 +92,7 @@
                             android:layout_marginBottom="5dp"
                             android:text="Bill To"
                             android:textColor="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s18" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                             android:text="Alen Michaels
 "
                             android:textColor="@color/txtBlack"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s18" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                             android:minLines="1"
                             android:text="Dallas, Texas"
                             android:textColor="@color/txtBlack"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s18" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
@@ -126,7 +126,7 @@
                             android:minLines="1"
                             android:text="+44 321 546 7"
                             android:textColor="@color/txtBlack"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s18" />
 
 
                     </LinearLayout>
@@ -147,33 +147,39 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/x10dp"
-                android:layout_marginLeft="@dimen/x18dp"
                 android:orientation="horizontal">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="0dp"
+                    android:layout_weight="2.5"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_weight="2"
                     android:text="Product"
                     android:textColor="@color/txtGrey"
                     android:textSize="15sp" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_weight="1.2"
-                    android:text="Rate &amp; Quantity"
+                    android:text="Rate &amp; Qty"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textColor="@color/txtGrey"
                     android:textSize="15sp" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_weight="1.2"
                     android:text=" Amount"
+                    android:textColor="@color/txtGrey"
+                    android:textSize="15sp" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text=" Quality"
                     android:textColor="@color/txtGrey"
                     android:textSize="15sp" />
 
@@ -181,8 +187,8 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:id="@+id/recyclerViewOrderDetail"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/x280dp"
                 android:layout_marginTop="@dimen/x10dp"
                 android:layout_weight="1"
