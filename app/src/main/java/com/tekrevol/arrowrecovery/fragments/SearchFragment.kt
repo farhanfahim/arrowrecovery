@@ -83,7 +83,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
-    override fun onItemClick(position: Int, anyObject: Any?) {
+    override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
     }
 
