@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x50dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/x5dp"
+            android:background="@color/c_white"
+            android:elevation="@dimen/x5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/x10dp"
+            android:paddingBottom="@dimen/x10dp"
+            android:visibility="invisible">
+
+            <include layout="@layout/item_categories" />
+
+
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/dummyViews"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/base_green"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -19,9 +59,9 @@
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x200dp"
+                android:layout_height="@dimen/x180dp"
+                android:background="@color/c_black"
                 app:fillColor="@color/green_bg"
-                android:background="@color/c_white"
                 app:pageColor="#FFFFFF"
                 app:radius="6dp"
                 app:slideInterval="3000"
@@ -31,11 +71,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:padding="@dimen/x20dp"
                 android:layout_height="wrap_content"
                 android:background="@color/background_color"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/x20dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -70,19 +110,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:padding="10dp"
-                    android:visibility="gone"
-                    android:src="@drawable/img_filter" />
+                    android:src="@drawable/img_filter"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/contCategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/x10dp"
-                android:paddingBottom="@dimen/x10dp"
-                android:background="@color/c_white"
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:background="@color/c_white"
+                android:elevation="@dimen/x5dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/x10dp"
+                android:paddingBottom="@dimen/x10dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCategories"
@@ -102,11 +145,14 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvConverters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x10dp"
                 android:background="@color/background_color"
+                android:clipToPadding="false"
                 android:orientation="vertical"
-                android:padding="10dp"
+                android:paddingBottom="@dimen/x60dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 tools:listitem="@layout/item_converter">
@@ -118,5 +164,5 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+</RelativeLayout>
 

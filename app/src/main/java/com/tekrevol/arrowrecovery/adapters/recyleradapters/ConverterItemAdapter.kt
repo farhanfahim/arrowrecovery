@@ -35,7 +35,8 @@ class ConverterItemAdapter(private val activity: Context, private val arrData: L
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contParent.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemAdapter::javaClass.name) }
+        holder.contParent.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemAdapter::class.java.simpleName) }
+        holder.contAddToCart.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {
@@ -43,7 +44,7 @@ class ConverterItemAdapter(private val activity: Context, private val arrData: L
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val contParent = view.findViewById<RoundKornerRelativeLayout>(R.id.contParent)
+        val contParent = view.findViewById<RoundKornerLinearLayout>(R.id.contParent)
         val contAddToCart = view.findViewById<RoundKornerRelativeLayout>(R.id.contAddToCart)
         val txtMake = view.findViewById<TextView>(R.id.txtMake)
         val txtModel = view.findViewById<TextView>(R.id.txtModel)

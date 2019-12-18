@@ -9,12 +9,14 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.DashboardPagerAdapter
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_dashboard_pager.*
 
 class DashboardPagerFragment : BaseFragment() {
 
     var positionToSelect = 0
     private var adapter: DashboardPagerAdapter? = null
+    lateinit var dashboardTitleBar: TitleBar
 
     override fun getDrawerLockMode(): Int {
         return DrawerLayout.LOCK_MODE_LOCKED_CLOSED
@@ -45,6 +47,7 @@ class DashboardPagerFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dashboardTitleBar = view.findViewById(R.id.dashboardTitleBar)
 
         if (onCreated) {
             setViewPagerAdapter()
@@ -52,7 +55,6 @@ class DashboardPagerFragment : BaseFragment() {
             adapter = DashboardPagerAdapter(childFragmentManager)
             setViewPagerAdapter()
         }
-
     }
 
 
