@@ -30,7 +30,7 @@ class ChangePasswordFragment : BaseFragment() {
     }
 
     override fun getFragmentLayout(): Int {
-        return R.layout.fragment_account
+        return R.layout.fragment_change_password
     }
 
     override fun setTitlebar(titleBar: TitleBar?) {

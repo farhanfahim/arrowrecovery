@@ -23,6 +23,7 @@
         android:visibility="visible">
 
         <LinearLayout
+            android:layout_marginBottom="@dimen/x10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
