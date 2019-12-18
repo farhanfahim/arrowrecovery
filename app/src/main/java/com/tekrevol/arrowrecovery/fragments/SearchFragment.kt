@@ -1,11 +1,14 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -17,7 +20,10 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
+    private var text: String? = null
+    private var arrDataSearchBar: ArrayList<DummyModel> = ArrayList()
     private lateinit var searchAdapter: SearchAdapter
+    private lateinit var searchBarAdapter: SearchBarAdapter
 
     companion object {
 
@@ -35,6 +41,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         searchAdapter = SearchAdapter(context!!, arrData, this)
+        searchBarAdapter = SearchBarAdapter(context!!, arrDataSearchBar, this)
 
     }
 
@@ -43,8 +50,34 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         arrData.clear()
         arrData.addAll(Constants.daysSelector())
 
+
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerViewSearchList.adapter = searchAdapter
+
+        recyclerViewSearchItem.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerViewSearchItem.adapter = searchBarAdapter
+
+        /*if (onCreated) {
+            return;
+        }*/txtSearch.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int,
+                                       count: Int) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
+                                           after: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                if (txtSearch.text.length > 2) {
+                    text = txtSearch.text.toString()
+                    arrDataSearchBar.clear()
+                    arrDataSearchBar.addAll(Constants.daysSelector())
+                    recyclerViewSearchList.visibility = View.GONE
+                    recyclerViewSearchItem.visibility = View.VISIBLE
+                }
+            }
+        })
 
     }
 

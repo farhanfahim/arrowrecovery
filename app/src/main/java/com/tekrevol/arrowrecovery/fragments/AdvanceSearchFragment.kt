@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_advanced_search.*
 
 class AdvanceSearchFragment : BaseFragment() {
 
@@ -24,6 +25,7 @@ class AdvanceSearchFragment : BaseFragment() {
         }
     }
 
+
     override fun getDrawerLockMode(): Int {
         return 0
 
@@ -37,6 +39,13 @@ class AdvanceSearchFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+        advSearch.setOnClickListener(View.OnClickListener {
+            baseActivity.popBackStack()
+        })
+        backButton.setOnClickListener(View.OnClickListener {
+            baseActivity.popBackStack()
+        })
     }
 
     override fun onClick(v: View?) {
