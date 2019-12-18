@@ -39,6 +39,19 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="AppThemeTransparentBar" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/c_white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlActivated">@color/base_amber</item>
+        <item name="colorControlHighlight">@color/base_amber</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
     <!--<item name="android:windowIsTranslucent">true</item>-->
 
 
@@ -58,6 +71,9 @@
         <item name="android:paddingBottom">@dimen/x8dp</item>
         <item name="android:paddingTop">@dimen/x8dp</item>
     </style>
+
+
+
 
     <!--Rating Bar-->
 
