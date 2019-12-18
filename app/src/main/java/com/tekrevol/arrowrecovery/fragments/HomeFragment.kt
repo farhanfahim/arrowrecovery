@@ -1,23 +1,26 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ImageView
-import com.google.android.libraries.places.internal.nu
-import com.synnapps.carouselview.CarouselView
-import com.synnapps.carouselview.ImageListener
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.CartAdapter
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
+import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.fragments.carouselView
+import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
-var carouselView: CarouselView? = null
-var sampleImages = intArrayOf(R.drawable.graph, R.drawable.graph, R.drawable.graph)
+class HomeFragment : BaseFragment(), OnItemClickListener {
 
-class HomeFragment : BaseFragment() {
+    private var arrData: ArrayList<DummyModel> = ArrayList()
+    private lateinit var daysSelectorAdapter: DaysSelectorAdapter
 
     companion object {
 
@@ -26,25 +29,31 @@ class HomeFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = HomeFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        daysSelectorAdapter = DaysSelectorAdapter(context!!, arrData, this)
+
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        carouselView = view.findViewById(R.id.carouselView)
-        bindData()
+        onBind()
     }
 
-    private fun bindData() {
-//        carouselView?.setPageCount(sampleImages.size)
-//        carouselView?.setImageListener(imageListener)
+    private fun onBind() {
+        arrData.clear()
+        arrData.addAll(Constants.daysSelector())
 
+        rvDays.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        rvDays.adapter = daysSelectorAdapter
     }
-
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -58,12 +67,29 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+        contRefresh.setOnClickListener {
+            imgArrow.visibility = View.GONE
+            progressRefresh.visibility = View.VISIBLE
+
+            Handler().postDelayed({
+                imgArrow.visibility = View.VISIBLE
+                progressRefresh.visibility = View.GONE
+            }, 3000)
+
+
+        }
     }
 
     override fun onClick(v: View?) {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    }
+
+    override fun onItemClick(position: Int, anyObject: Any?) {
+        arrData.forEach { it.isSelected = false }
+        arrData[position].isSelected = true
+        daysSelectorAdapter.notifyDataSetChanged()
     }
 
 }

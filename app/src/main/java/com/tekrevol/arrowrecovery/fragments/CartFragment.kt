@@ -25,20 +25,19 @@ class CartFragment : BaseFragment(), OnItemClickListener {
             val args = Bundle()
 
             val fragment = CartFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         onBind()
+
 
     }
 
     private fun onBind() {
-
         arr.add("1")
         arr.add("2")
         arr.add("3")
@@ -47,7 +46,6 @@ class CartFragment : BaseFragment(), OnItemClickListener {
         arr.add("")
         recyclerViewCart.layoutManager = LinearLayoutManager(context)
         recyclerViewCart.adapter = CartAdapter(context, arr, this)
-
     }
 
 

@@ -24,6 +24,7 @@ public class SpinnerModel {
         this.text = text;
     }
 
+
     public String getText() {
         return text;
     }
