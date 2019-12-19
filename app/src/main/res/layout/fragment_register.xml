@@ -22,19 +22,18 @@
         android:padding="10dp">
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start|center">
+            android:gravity="start|center"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/icon_back"
                 android:contentDescription="back"
-                android:padding="@dimen/x5dp"
-                />
+                android:padding="@dimen/x5dp" />
 
 
         </LinearLayout>
@@ -46,7 +45,7 @@
             android:gravity="start"
             android:text="Create"
             android:textColor="@color/title_color"
-            android:textSize="28sp" />
+            android:textSize="@dimen/s25" />
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
@@ -55,7 +54,7 @@
             android:gravity="start"
             android:text="your account"
             android:textColor="@color/title_color"
-            android:textSize="28sp" />
+            android:textSize="@dimen/s25" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +79,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Account"
-                    android:textColor="@color/title_color" />
+                    android:textColor="@color/title_color"
+
+                    android:textSize="@dimen/s14" />
             </LinearLayout>
 
 
@@ -111,7 +112,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Personal"
-                    android:textColor="@color/star_grey" />
+                    android:textColor="@color/star_grey"
+
+                    android:textSize="@dimen/s14" />
             </LinearLayout>
 
 
@@ -143,7 +146,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Contact"
-                    android:textColor="@color/star_grey" />
+                    android:textColor="@color/star_grey"
+                    android:textSize="@dimen/s14" />
             </LinearLayout>
 
             <View
@@ -175,7 +179,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Address"
-                    android:textColor="@color/star_grey" />
+                    android:textColor="@color/star_grey"
+                    android:textSize="@dimen/s14" />
             </LinearLayout>
 
 
@@ -198,7 +203,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/btnnext"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -213,14 +218,30 @@
             android:textAllCaps="false"
             android:textColor="@color/c_white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
+
+        <info.hoang8f.widget.FButton
+            android:id="@+id/btnnext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20dp"
+            android:paddingLeft="@dimen/x10dp"
+            android:paddingRight="@dimen/x10dp"
+            android:text="Next"
+            android:background="@drawable/searchbar_grey"
+            android:backgroundTint="@color/green_bg"
+            android:textAllCaps="false"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s18"
+            app:shadowHeight="@dimen/x1dp" />
+
 
         <LinearLayout
             android:id="@+id/socialloginLayout"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"
@@ -229,7 +250,8 @@
                 android:layout_marginBottom="@dimen/x5dp"
                 android:gravity="center"
                 android:text="or sign up with social account"
-                android:textColor="@color/title_color" />
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s14" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -321,10 +343,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-
                     android:contentDescription="Sign up"
                     android:text="@string/Log_In"
-                    android:textColor="@color/title_color" />
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s14" />
 
 
             </LinearLayout>

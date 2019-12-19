@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/c_white"
     android:orientation="vertical"
     android:padding="@dimen/x20dp">
@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x5dp"
                 android:text="Offline"
-                android:textColor="@color/title_color" />
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s14" />
         </LinearLayout>
 
         <TextView
@@ -39,7 +40,8 @@
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginRight="@dimen/x20dp"
             android:layout_marginBottom="@dimen/x20dp"
-            android:text="Welcome to Arrow Recovery customer support" />
+            android:text="Welcome to Arrow Recovery customer support"
+            android:textSize="@dimen/s14" />
 
 
         <ImageView
@@ -50,33 +52,50 @@
             android:src="@drawable/livechatarrowrecovery" />
 
         <TextView
+            android:id="@+id/txtCS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20dp"
             android:layout_marginTop="@dimen/x20dp"
             android:layout_marginRight="@dimen/x20dp"
-            android:text="Dear Valued Customers, ARROW RECOVERY chat
-09:00 AM- 09:00 PM (MON-SAT). Thank You"
-            android:textColor="@color/title_color" />
+            android:text="fff"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/s14" />
 
     </LinearLayout>
 
-    <TextView
+    <!--    <TextView
+            android:id="@+id/txtLeaveMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/x10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/searchbar_grey"
+            android:backgroundTint="@color/green_bg"
+            android:gravity="center"
+            android:text="Leave Message"
+            android:textAllCaps="false"
+            android:textColor="@color/c_white"
+            android:textSize="20sp"
+            android:textStyle="bold" />-->
+
+    <info.hoang8f.widget.FButton
         android:id="@+id/txtLeaveMessage"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x20dp"
         android:background="@drawable/searchbar_grey"
         android:backgroundTint="@color/green_bg"
-        android:gravity="center"
+        android:paddingLeft="@dimen/x10dp"
+        android:paddingRight="@dimen/x10dp"
         android:text="Leave Message"
         android:textAllCaps="false"
         android:textColor="@color/c_white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/s18"
+        app:shadowHeight="@dimen/x1dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

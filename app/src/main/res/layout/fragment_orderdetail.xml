@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_white"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/x10dp">
+
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:background="@drawable/back"
+            android:padding="@dimen/x5dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Order Detail"
+            android:textColor="#000"
+            android:textSize="@dimen/s15" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5dp"
+            android:layout_marginRight="@dimen/x10dp"
+            android:background="@drawable/back"
+            android:padding="@dimen/x5dp"
+            android:visibility="invisible" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadowgrey" />
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -331,20 +376,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <!--   <Button
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="20dp"
+               android:background="@drawable/searchbar_grey"
+               android:backgroundTint="@color/green_bg"
+               android:gravity="center"
+               android:padding="@dimen/x10dp"
+               android:text="Take Screenshot"
+               android:textColor="@color/c_white"
+               android:textSize="@dimen/s18" />-->
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
             android:background="@drawable/searchbar_grey"
             android:backgroundTint="@color/green_bg"
             android:gravity="center"
-            android:padding="@dimen/x10dp"
-            android:text="Take Screenshot"
-            android:textColor="@color/c_white"
-            android:textSize="@dimen/s18" />
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/camera_ss" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="Take Screenshot"
+                android:textColor="@color/c_white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <!--
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/txtLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/x20dp"
+                    android:background="@drawable/searchbar_grey"
+                    android:backgroundTint="@color/green_bg"
+                    android:paddingLeft="@dimen/x10dp"
+                    android:paddingRight="@dimen/x10dp"
+                    android:text="Take Screenshot"
+                    android:textAllCaps="false"
+                    android:textColor="@color/c_white"
+                    android:textSize="@dimen/s18"
+                    app:shadowHeight="@dimen/x1dp" />
+                -->
+
 
     </LinearLayout>
 

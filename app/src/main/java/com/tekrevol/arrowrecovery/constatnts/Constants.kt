@@ -34,6 +34,7 @@ object Constants {
     var sampleConverterBanners = intArrayOf(R.drawable.banner0, R.drawable.banner1, R.drawable.banner2, R.drawable.banner3)
 
     var qualities = arrayOf("25%", "50%", "75%", "100%")
+    var title = arrayOf("Mr", "Mrs", "Ms", "Miss")
 
 
 

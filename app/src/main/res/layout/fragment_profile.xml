@@ -78,7 +78,7 @@
                         android:gravity="center"
                         android:text="John Smith"
                         android:textColor="@color/green_bg"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/s16" />
 
                     <EditText
                         android:id="@+id/edtName"
@@ -98,7 +98,7 @@
                         android:layout_marginBottom="@dimen/x10dp"
                         android:gravity="center"
                         android:text="123Username"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/s16" />
 
 
                     <LinearLayout
@@ -113,7 +113,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Email: "
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <TextView
                             android:id="@+id/txtEmail"
@@ -124,7 +124,7 @@
                             android:minLines="1"
                             android:text="example@example.com"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
 
                     </LinearLayout>
@@ -143,7 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Address: "
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <TextView
                             android:id="@+id/txtAddress"
@@ -154,7 +154,7 @@
                             android:minLines="1"
                             android:text="216 San Andrew St, Miami, FL"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <EditText
                             android:id="@+id/edtAddress"
@@ -179,7 +179,7 @@
                         android:layout_marginTop="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:text="About: "
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/s14" />
 
                     <TextView
                         android:id="@+id/txtAbout"
@@ -190,7 +190,7 @@
                         android:layout_marginBottom="@dimen/x10dp"
                         android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text."
                         android:textColor="@color/title_color"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/s14" />
 
 
                 </LinearLayout>
@@ -215,19 +215,19 @@
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
 
-                        app:corner_radius="@dimen/x5dp"
                         android:id="@+id/linearlayoutMyorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:padding="@dimen/x20dp">
+                        android:padding="@dimen/x20dp"
+                        app:corner_radius="@dimen/x5dp">
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="@dimen/x30dp"
                             android:gravity="center|start"
                             android:src="@drawable/ordericon" />
 
@@ -239,7 +239,7 @@
                             android:gravity="center|start"
                             android:text="My Orders"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <ImageView
 
@@ -253,19 +253,19 @@
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-                        app:corner_radius="@dimen/x5dp"
                         android:id="@+id/linearlayoutChangePassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:padding="@dimen/x20dp">
+                        android:padding="@dimen/x20dp"
+                        app:corner_radius="@dimen/x5dp">
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="@dimen/x30dp"
                             android:gravity="center|start"
                             android:src="@drawable/ordericon" />
 
@@ -277,7 +277,7 @@
                             android:gravity="center|start"
                             android:text="Change Password"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <ImageView
 
@@ -293,17 +293,17 @@
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                         android:layout_width="match_parent"
-                        app:corner_radius="@dimen/x5dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:padding="@dimen/x20dp">
+                        android:padding="@dimen/x20dp"
+                        app:corner_radius="@dimen/x5dp">
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="@dimen/x30dp"
                             android:gravity="center|start"
                             android:src="@drawable/notificationiconprof" />
 
@@ -315,7 +315,7 @@
                             android:gravity="center|start"
                             android:text="Notification Settings"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <ImageView
 
@@ -329,18 +329,18 @@
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-                        app:corner_radius="@dimen/x5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:padding="@dimen/x20dp">
+                        android:padding="@dimen/x20dp"
+                        app:corner_radius="@dimen/x5dp">
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="@dimen/x30dp"
                             android:gravity="center|start"
                             android:src="@drawable/privacyicon" />
 
@@ -352,7 +352,7 @@
                             android:gravity="center|start"
                             android:text="Privacy Policy"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <ImageView
 
@@ -367,17 +367,17 @@
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                         android:layout_width="match_parent"
-                        app:corner_radius="@dimen/x5dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:padding="@dimen/x20dp">
+                        android:padding="@dimen/x20dp"
+                        app:corner_radius="@dimen/x5dp">
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="@dimen/x30dp"
                             android:gravity="center|start"
                             android:src="@drawable/ordericon" />
 
@@ -389,7 +389,7 @@
                             android:gravity="center|start"
                             android:text="Terms and Conditions"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
                         <ImageView
 
@@ -404,17 +404,17 @@
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
                         android:layout_width="match_parent"
-                        app:corner_radius="@dimen/x5dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:padding="@dimen/x20dp">
+                        android:padding="@dimen/x20dp"
+                        app:corner_radius="@dimen/x5dp">
 
                         <ImageView
 
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_width="@dimen/x30dp"
+                            android:layout_height="@dimen/x30dp"
                             android:gravity="center|start"
                             android:src="@drawable/logouticon" />
 
@@ -426,7 +426,7 @@
                             android:gravity="center|start"
                             android:text="Logout"
                             android:textColor="@color/title_color"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/s14" />
 
 
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_change_password.*
 
 class ChangePasswordFragment : BaseFragment() {
 
@@ -37,6 +38,15 @@ class ChangePasswordFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+
+        backButton.setOnClickListener(View.OnClickListener {
+            baseActivity.popBackStack()
+        })
+
+        txtChangePass.setOnClickListener(View.OnClickListener {
+            baseActivity.popBackStack()
+        })
     }
 
     override fun onClick(v: View?) {
