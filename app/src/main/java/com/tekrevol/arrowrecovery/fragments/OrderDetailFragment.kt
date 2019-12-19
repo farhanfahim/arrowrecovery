@@ -66,10 +66,11 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun setListeners() {
-/*
-        backButton.setOnClickListener(View.OnClickListener {
+        backButtonorder.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-        })*/
+
+        })
+
     }
 
     override fun onClick(v: View?) {

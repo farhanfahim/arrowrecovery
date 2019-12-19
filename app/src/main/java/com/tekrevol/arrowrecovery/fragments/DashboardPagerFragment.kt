@@ -32,6 +32,9 @@ class DashboardPagerFragment : BaseFragment() {
         dashboardTitleBar.btnSearch(homeActivity, View.OnClickListener {
             baseActivity.addDockableFragment(SearchFragment.newInstance(),true)
         })
+        dashboardTitleBar.btnNotification(homeActivity, View.OnClickListener {
+            baseActivity.addDockableFragment(NotificationFragment.newInstance(),true)
+        })
         // Using own title bar
         dashboardTitleBar.resetViews()
         dashboardTitleBar.visibility = View.VISIBLE

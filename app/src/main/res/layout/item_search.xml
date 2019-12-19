@@ -6,7 +6,7 @@
 
     <com.tekrevol.arrowrecovery.widget.AnyTextView
         android:layout_width="match_parent"
-        android:textSize="@dimen/s18"
+        android:textSize="@dimen/s14"
         android:layout_marginTop="@dimen/x10dp"
         android:layout_marginRight="@dimen/x30dp"
         android:layout_marginLeft="@dimen/x30dp"

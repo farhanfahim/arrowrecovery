@@ -1,26 +1,26 @@
 package com.tekrevol.arrowrecovery.fragments.dialogs;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.tekrevol.arrowrecovery.R;
 import com.tekrevol.arrowrecovery.adapters.SpinnerDialogAdapter;
+import com.tekrevol.arrowrecovery.callbacks.OnSpinnerItemClickListener;
+import com.tekrevol.arrowrecovery.callbacks.OnSpinnerOKPressedListener;
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.arrowrecovery.models.SpinnerModel;
-import com.tekrevol.arrowrecovery.widget.AnyEditTextView;
-import com.tekrevol.arrowrecovery.widget.AnyTextView;
 import com.tekrevol.arrowrecovery.widget.recyclerview_layout.CustomLayoutManager;
 
 import java.util.ArrayList;
@@ -29,11 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import com.tekrevol.arrowrecovery.R;
-
-import com.tekrevol.arrowrecovery.callbacks.OnSpinnerItemClickListener;
-import com.tekrevol.arrowrecovery.callbacks.OnSpinnerOKPressedListener;
-
 import info.hoang8f.widget.FButton;
 
 /**
@@ -45,18 +40,14 @@ public class SpinnerDialogFragment extends DialogFragment {
     String title;
     Unbinder unbinder;
     SpinnerDialogAdapter adapter;
-    @BindView(R.id.txtTitle)
-    AnyTextView txtTitle;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.txtOK)
     FButton txtOK;
-    @BindView(R.id.edtSearchBar)
-    AnyEditTextView edtSearchBar;
-    @BindView(R.id.imgSearch)
-    ImageView imgSearch;
-    @BindView(R.id.contSearchBar)
-    LinearLayout contSearchBar;
+    @BindView(R.id.txtTitle)
+    TextView txtTitle;
+    @BindView(R.id.btnClose)
+    ImageView btnClose;
 
 
     private ArrayList<SpinnerModel> arrData;
@@ -83,6 +74,17 @@ public class SpinnerDialogFragment extends DialogFragment {
         return frag;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        getDialog().getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +101,10 @@ public class SpinnerDialogFragment extends DialogFragment {
         return view;
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        KeyboardHelper.hideSoftKeyboard(getContext(),view);
+        KeyboardHelper.hideSoftKeyboard(getContext(), view);
         setListeners();
         adapter = new SpinnerDialogAdapter(getActivity(), arrData, onItemClickListener);
         adapter.notifyDataSetChanged();
@@ -124,6 +125,7 @@ public class SpinnerDialogFragment extends DialogFragment {
 
 
     private void setListeners() {
+/*
         edtSearchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -145,6 +147,7 @@ public class SpinnerDialogFragment extends DialogFragment {
 
             }
         });
+*/
     }
 
     private void bindView() {
