@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.fragments.dialogs
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.res.Resources
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -62,5 +63,12 @@ class CheckoutDialogFragment: BottomSheetDialogFragment() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             })
         }
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
     }
 }
