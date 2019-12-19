@@ -13,11 +13,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.DateManager
+import com.tekrevol.arrowrecovery.models.IntWrapper
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
 
 class CheckoutDialogFragment : BottomSheetDialogFragment() {
 
+    var pickupSelectedPos: IntWrapper = IntWrapper(0)
     private fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
     }
@@ -81,6 +85,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment() {
 
 
     private fun setListener() {
+
         rgShipping.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rbPickup -> {
@@ -93,5 +98,14 @@ class CheckoutDialogFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+
+        contDate.setOnClickListener {
+            DateManager.showDatePicker(context, txtDate, null  , false, true)
+        }
+
+        contPickupSelected.setOnClickListener {
+            UIHelper.showSpinnerDialog(fragmentManager, Constants.locationSelector(), "Select Location", txtPickupLocation, null, {}, pickupSelectedPos)
+        }
+
     }
 }

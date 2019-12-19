@@ -74,6 +74,17 @@ public class SpinnerDialogFragment extends DialogFragment {
         return frag;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        getDialog().getWindow()
+                .setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
