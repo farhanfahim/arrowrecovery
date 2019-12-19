@@ -38,7 +38,9 @@ class MainActivity : BaseActivity() {
 
 
     private fun initFragments() {
-        if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) addDockableFragment(RegisterPagerFragment.newInstance(), false) else {
+        if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
+            addDockableFragment(RegisterPagerFragment.newInstance(), false)
+        } else {
             openActivity(HomeActivity::class.java)
             finish()
         }

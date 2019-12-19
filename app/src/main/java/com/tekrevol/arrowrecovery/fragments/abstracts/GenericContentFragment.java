@@ -56,9 +56,8 @@ public class GenericContentFragment extends BaseFragment {
     private void bindViews(View view) {
         AnyTextView txtViewContent = view.findViewById(R.id.txtViewContent_generic_content);
 
-        txtViewContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
-
-//        txtViewContent.setText(content);
+//        txtViewContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
+        txtViewContent.setText(content);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class GenericContentFragment extends BaseFragment {
         titleBar.resetViews();
         titleBar.setVisibility(View.VISIBLE);
         titleBar.setTitle(title);
-        titleBar.showBackButton(getBaseActivity());
+//        titleBar.showBackButton(getBaseActivity());
     }
 
 

@@ -246,42 +246,20 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
 
     public void logoutClick() {
-        UIHelper.showAlertDialog("Do you want to logout?", "Quit", new DialogInterface.OnClickListener() {
+        UIHelper.showAlertDialog("Do you want to logout?", "Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 sharedPreferenceManager.clearDB();
                 getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
             }
-        }, "YES", new DialogInterface.OnClickListener() {
+        }, "Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
 
             }
-        }, "NO", getContext());
-       /* final GenericDialogFragment genericDialogFragment = GenericDialogFragment.newInstance();
-
-        genericDialogFragment.setTitle("Logout");
-        genericDialogFragment.setMessage(context.getString(R.string.areYouSureToLogout));
-        genericDialogFragment.setButton1("Yes", new GenericClickableInterface() {
-            @Override
-            public void click() {
-                genericDialogFragment.dismiss();
-               sharedPreferenceManager.clearDB();
-               getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
-            }
-        });
-
-        genericDialogFragment.setButton2("No", new GenericClickableInterface() {
-            @Override
-            public void click() {
-                genericDialogFragment.getDialog().dismiss();
-            }
-        });
-        genericDialogFragment.show(baseFragment.getBaseActivity().getSupportFragmentManager(), null);
-*/
-
+        }, "No", getContext());
     }
 }

@@ -22,9 +22,10 @@
 
         <ImageView
             android:id="@+id/imgSelect"
-            android:layout_width="@dimen/x25dp"
-            android:layout_height="@dimen/x25dp"
+            android:layout_width="@dimen/x40dp"
+            android:layout_height="@dimen/x40dp"
             android:checked="false"
+            android:padding="@dimen/x10dp"
             android:src="@drawable/img_selecte_check"
             android:tint="@color/colorAccent" />
 

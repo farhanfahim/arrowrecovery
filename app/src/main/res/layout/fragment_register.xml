@@ -345,6 +345,7 @@
                     android:layout_marginLeft="5dp"
                     android:contentDescription="Sign up"
                     android:text="@string/Log_In"
+                    android:padding="@dimen/x10dp"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s14" />
 

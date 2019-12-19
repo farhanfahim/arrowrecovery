@@ -1,10 +1,7 @@
 <resources>
     <string name="app_name">Arrow Recovery</string>
 
-    <!--FONTS-->
 
-    <!--<string name="font_regular">HelveticaNeue Light.ttf</string>-->
-    <!--<string name="font_bold">HelveticaNeue Medium.ttf</string>-->
 
     <string name="font_regular">Roboto-Light_D.ttf</string>
     <string name="font_bold">Roboto-Medium_2.ttf</string>
@@ -17,33 +14,6 @@
     <string name="logout">Logout</string>
     <!--Checkout Bar-->
 
-    <!--login-->
-    <!--login-->
-
-    <!--SignUp/Edit Profile-->
-    <!--SignUp/Edit Profile-->
-
-    <!--Login/SignUP-->
-    <!--Common in Login/SignUP-->
-
-    <!--verify Number-->
-    <!--verify Number-->
-
-    <!--common in Signup / verify Number/Edit Profile-->
-    <!--common in Signup / verify Number-->
-
-    <!--verification code  -->
-    <!--verification code-->
-
-    <!--fragment feedback-->
-    <!--fragment feedback-->
-
-    <!--shopping cart-->
-    <!--shopping cart-->
-
-
-    <!--sortby-->
-    <!--sortby-->
 
     <!--success popup-->
     <string name="title">Title</string>

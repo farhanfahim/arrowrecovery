@@ -292,6 +292,7 @@
 
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                        android:id="@+id/contNotificationSetting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
@@ -329,6 +330,7 @@
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                        android:id="@+id/contPrivacyPolicy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
@@ -366,6 +368,7 @@
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                        android:id="@+id/contTermsAndConditions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"

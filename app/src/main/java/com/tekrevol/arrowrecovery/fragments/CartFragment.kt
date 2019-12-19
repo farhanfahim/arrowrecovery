@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CartAdapter
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_cart.btnDelete
 import kotlinx.android.synthetic.main.fragment_cart.cbSelectAll
 import kotlinx.android.synthetic.main.fragment_myorder.*
 import kotlinx.android.synthetic.main.fragment_notification.*
+import kotlinx.android.synthetic.main.fragment_product_detail.*
 
 class CartFragment : BaseFragment(), OnItemClickListener {
 
@@ -103,9 +105,19 @@ class CartFragment : BaseFragment(), OnItemClickListener {
                 arrData[position].isSelected = !arrData[position].isSelected
                 cartAdapter.notifyDataSetChanged()
             }
-            R.id.contSelectQuality -> {}
-            R.id.imgAdd -> {}
-            R.id.imgSubtract -> {}
+            R.id.contSelectQuality -> {
+                UIHelper.showCheckedDialogBox(context, "Select Quality", Constants.qualities, 0) { dialog, which ->
+//                    val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+//                    txtQuality.text = Constants.qualities[selectedPosition]
+                    dialog.dismiss()
+                }
+            }
+            R.id.btnSubtract -> {
+                showNextBuildToast()
+            }
+            R.id.btnAdd -> {
+                showNextBuildToast()
+            }
         }
     }
 

@@ -272,7 +272,7 @@
                 android:contentDescription="Sign up"
                 android:text="@string/SIgn_Up"
                 android:textColor="@color/title_color"
-
+                android:padding="@dimen/x10dp"
                 android:textSize="@dimen/s14" />
 
 

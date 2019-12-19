@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.AdapterView
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.MainActivity
+import com.tekrevol.arrowrecovery.constatnts.AppConstants.AboutUs
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -59,9 +61,20 @@ class ProfileFragment : BaseFragment() {
 
         logout.setOnClickListener(View.OnClickListener {
             logoutClick()
-
-
         })
+
+
+        contNotificationSetting.setOnClickListener{
+            showNextBuildToast()
+        }
+
+        contPrivacyPolicy.setOnClickListener {
+            baseActivity.addDockableFragment(GenericContentFragment.newInstance("Privacy Policy", AboutUs), true)
+        }
+
+        contTermsAndConditions.setOnClickListener {
+            baseActivity.addDockableFragment(GenericContentFragment.newInstance("Terms and Conditions", AboutUs), true)
+        }
 
 
     }
