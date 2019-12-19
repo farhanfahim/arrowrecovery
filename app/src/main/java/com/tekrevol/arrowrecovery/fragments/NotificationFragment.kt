@@ -1,21 +1,19 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.CartAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.NotificationAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 
 class NotificationFragment : BaseFragment(), OnItemClickListener {
@@ -31,7 +29,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener {
             val args = Bundle()
 
             val fragment = NotificationFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -53,30 +51,44 @@ class NotificationFragment : BaseFragment(), OnItemClickListener {
         notificationAdapter = NotificationAdapter(context!!, arrData, this)
 
     }
+
     override fun setListeners() {
 
-        backButton.setOnClickListener(View.OnClickListener {
+        backButton.setOnClickListener {
             baseActivity.popBackStack()
-        })
+        }
+
+        cbSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
+            arrData.forEach { it.isSelected = isChecked }
+            notificationAdapter.notifyDataSetChanged()
+        }
+
+        btnDelete.setOnClickListener {
+            UIHelper.showAlertDialog("Are you sure you want to delete selected Notifications?", "Delete Notification", { dialog, which ->
+                arrData.removeAll { it.isSelected }
+                notificationAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            }, context)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         onBind()
-
 
     }
 
     private fun onBind() {
         arrData.clear()
-        arrData.addAll(Constants.daysSelector())
+        arrData.addAll(Constants.notifications())
 
         recyclerViewNotification.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        (recyclerViewNotification.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        val resId = R.anim.layout_animation_fall_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+        recyclerViewNotification.layoutAnimation = animation
         recyclerViewNotification.adapter = notificationAdapter
     }
-
-
 
 
     override fun onClick(v: View?) {

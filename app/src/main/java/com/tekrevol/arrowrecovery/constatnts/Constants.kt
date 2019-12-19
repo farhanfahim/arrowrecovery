@@ -100,6 +100,22 @@ object Constants {
         return array
     }
 
+
+    fun notifications(): ArrayList<DummyModel> {
+        val array: ArrayList<DummyModel> = ArrayList()
+        array.add(DummyModel("Notification 1: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 2: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 3: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 4: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 5: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 6: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 7: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 8: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 9: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 10: Your order is arriving soon!", false))
+         return array
+    }
+
     var sampleConverterBanners = intArrayOf(R.drawable.banner0, R.drawable.banner1, R.drawable.banner2, R.drawable.banner3)
 
     var qualities = arrayOf("25%", "50%", "75%", "100%")

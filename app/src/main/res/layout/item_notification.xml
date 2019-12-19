@@ -20,12 +20,12 @@
         app:corner_radius="@dimen/x5dp">
 
 
-        <ImageView
-            android:visibility="gone"
+        <CheckBox
+            android:id="@+id/cbSelect"
             android:layout_width="@dimen/x25dp"
             android:layout_height="@dimen/x25dp"
-            android:background="@drawable/greycircle"
-            android:padding="@dimen/x5dp"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
             android:src="@drawable/img_selected_tick"
             android:tint="@color/colorAccent" />
 
@@ -45,6 +45,7 @@
                 android:layout_height="wrap_content">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
