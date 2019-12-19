@@ -61,7 +61,6 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun getFragmentLayout(): Int {
-
         return R.layout.fragment_cart
     }
 

@@ -6,13 +6,17 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
 
-class CheckoutDialogFragment: BottomSheetDialogFragment() {
+class CheckoutDialogFragment : BottomSheetDialogFragment() {
 
     private fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
@@ -66,9 +70,28 @@ class CheckoutDialogFragment: BottomSheetDialogFragment() {
     }
 
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_checkout_dialog, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListener()
+    }
 
 
+    private fun setListener() {
+        rgShipping.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.rbPickup -> {
+                    contPickupSelected.visibility = View.VISIBLE
+                    contCollectionCenter.visibility = View.GONE
+                }
+                R.id.rbCollectionCenter -> {
+                    contPickupSelected.visibility = View.GONE
+                    contCollectionCenter.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }
