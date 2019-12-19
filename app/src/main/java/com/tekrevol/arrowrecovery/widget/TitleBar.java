@@ -257,6 +257,12 @@ public class TitleBar extends RelativeLayout {
 
     }
 
+    public void btnNotification(final HomeActivity homeActivity, OnClickListener onClickListener) {
+
+        btnRightNotification.setOnClickListener(onClickListener);
+
+    }
+
     public void showSaveButton(final HomeActivity homeActivity, OnClickListener onClickListener) {
         btnRightNotification.setVisibility(GONE);
         img.setVisibility(GONE);

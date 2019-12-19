@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+
+    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/x10dp"
+        android:background="@color/c_white"
+        android:elevation="@dimen/x5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        app:corner_radius="@dimen/x5dp">
+
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="@dimen/x25dp"
+            android:layout_height="@dimen/x25dp"
+            android:background="@drawable/greycircle"
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/img_selected_tick"
+            android:tint="@color/colorAccent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:gravity="center|start"
+                android:layout_marginBottom="@dimen/x5dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="Your order is arriving soon!"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s12" />
+
+                <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                    android:layout_width="@dimen/x10dp"
+                    android:layout_marginLeft="@dimen/x5dp"
+                    android:layout_height="@dimen/x10dp"
+                    android:background="@color/colorAccent"
+                   android:visibility="gone"
+                    app:corner_radius="@dimen/x10dp"></com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+
+            </LinearLayout>
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:minLines="1"
+                android:text="This is dummy copy. It is not meant to be read."
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s12" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/x10dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtmantracategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:hint="3m"
+                    android:padding="5dp"
+                    android:textColor="@color/c_black"
+                    android:textColorHint="@color/c_black"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+</LinearLayout>
