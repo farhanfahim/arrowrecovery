@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="BMW-0418189"
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s22" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="$ "
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s16" />
+
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="541.36"
+                        android:textColor="@color/txtBlack"
+                        android:textSize="@dimen/s16" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x5dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgSubtract"
+                        android:layout_width="@dimen/x30dp"
+                        android:layout_height="@dimen/x30dp"
+                        android:padding="@dimen/x8dp"
+                        android:src="@drawable/sub" />
+
+                    <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                        android:id="@+id/edtQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/x10dp"
+                        android:layout_marginRight="@dimen/x10dp"
+                        android:background="@drawable/rounded_stroke_grey"
+                        android:gravity="center"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:padding="@dimen/x8dp"
+                        android:text="2"
+                        android:textColor="@color/c_black"
+                        android:textColorHint="@color/c_black"
+                        android:textSize="@dimen/s12"
+                        app:typeface="@string/font_regular" />
+
+
+                    <ImageView
+                        android:id="@+id/imgAdd"
+                        android:layout_width="@dimen/x30dp"
+                        android:layout_height="@dimen/x30dp"
+                        android:padding="@dimen/x8dp"
+                        android:src="@drawable/plus"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/contQuality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/x8dp"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_stroke_blue"
+                    android:visibility="visible">
+
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        android:id="@+id/txtQuality"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:hint="75%"
+                        android:padding="5dp"
+                        android:textColor="@color/c_black"
+                        android:textColorHint="@color/c_black"
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Select category"
+                        android:padding="@dimen/x5dp"
+                        android:src="@drawable/spinner" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Year"
+                    android:textColor="@color/txtGrey"
+                    android:textSize="@dimen/s14" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="2014"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Make"
+                    android:textColor="@color/txtGrey"
+                    android:textSize="@dimen/s14" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="BMW"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s16" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Model"
+                    android:textColor="@color/txtGrey"
+                    android:textSize="@dimen/s14" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="5 Series"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="Reference"
+                    android:textColor="@color/txtGrey"
+                    android:textSize="@dimen/s14" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="0418189"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s16" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:padding="@dimen/x20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Notes"
+                android:textColor="@color/txtGrey"
+                android:textSize="@dimen/s14" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
+This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
+This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
+This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
+This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed."
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s16" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/shadowgrey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCustomerSupport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_stroke_green"
+                android:gravity="center"
+                android:text="Customer Support"
+                android:textColor="@color/green_bg"
+                android:textSize="@dimen/s14"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnAddToCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/searchbar_grey"
+                android:backgroundTint="@color/green_bg"
+                android:gravity="center"
+                android:text="Add to Cart"
+                android:textColor="@color/c_white"
+                android:textSize="@dimen/s14" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+

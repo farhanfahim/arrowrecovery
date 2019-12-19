@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CategorySelectorAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -120,7 +121,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         if (type == ConverterItemAdapter::class.java.simpleName) {
             when (view?.id) {
                 R.id.contParent -> {
-
+                    baseActivity.openActivity(ProductDetailActivity::class.java)
                 }
                 R.id.contAddToCart -> {
                     Snackbar.make(view, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
