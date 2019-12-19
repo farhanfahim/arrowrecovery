@@ -10,6 +10,7 @@ import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_cart.*
@@ -47,7 +48,6 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun onBind() {
-
         arrData.clear()
         arrData.addAll(Constants.daysSelector())
 
@@ -69,6 +69,10 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun setListeners() {
+        btnCheckout.setOnClickListener{
+            val checkoutDialogFragment = CheckoutDialogFragment()
+            checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
+        }
     }
 
     override fun onClick(v: View?) {
