@@ -141,7 +141,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             marker.position(latLng);
             mMap.addMarker(marker);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-         });
+        });
 
         mMap.setOnMapClickListener(point -> {
             mMap.clear();
@@ -172,3 +172,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 }
+

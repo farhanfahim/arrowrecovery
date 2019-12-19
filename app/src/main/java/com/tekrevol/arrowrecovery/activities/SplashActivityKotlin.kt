@@ -7,18 +7,23 @@ import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
+import com.mikhaellopez.rxanimation.RxAnimation
+import com.mikhaellopez.rxanimation.fadeIn
+import com.mikhaellopez.rxanimation.resize
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
 class SplashActivityKotlin : AppCompatActivity() {
 
-    private val SPLASH_TIME_OUT = 2000
-    private val ANIMATIONS_DELAY = 2000
-    private val ANIMATIONS_TIME_OUT = 250
-    private val FADING_TIME = 500
-    private val hasAnimationStarted = false
+    private val ANIMATIONS_DELAY = 0
+    private val ANIMATIONS_TIME_OUT: Long = 4000
+    private val composite = CompositeDisposable()
+    var subscribe: Disposable? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +43,32 @@ class SplashActivityKotlin : AppCompatActivity() {
         }
 
 
+
+        if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
+
+            Handler().postDelayed({
+                //                        animateSplashLayout(true);
+                changeActivity(HomeActivity::class.java)
+            }, ANIMATIONS_DELAY.toLong())
+
+        } else {
+            Handler().postDelayed({
+                changeActivity(HomeActivity::class.java)
+                //                        animateSplashLayout(false);
+            }, ANIMATIONS_DELAY.toLong())
+        }
+
+
     }
 
     private fun changeActivity(activityClass: Class<*>) {
+        RxAnimation.together(
+                imgLogo.fadeIn(ANIMATIONS_TIME_OUT),
+                imgLogo.resize(200, 200, ANIMATIONS_TIME_OUT)
+        ).subscribe()
+
+
+
         Handler().postDelayed(/*
              * Showing splash screen with a timer. This will be useful when you
              * want to show case your app logo / company
@@ -62,19 +90,7 @@ class SplashActivityKotlin : AppCompatActivity() {
 
         if (hasFocus) {
 
-            if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
 
-                Handler().postDelayed({
-                    //                        animateSplashLayout(true);
-                    changeActivity(HomeActivity::class.java)
-                }, ANIMATIONS_DELAY.toLong())
-
-            } else {
-                Handler().postDelayed({
-                    changeActivity(HomeActivity::class.java)
-                    //                        animateSplashLayout(false);
-                }, ANIMATIONS_DELAY.toLong())
-            }
         }
     }
 
