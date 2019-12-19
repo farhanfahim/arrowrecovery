@@ -32,6 +32,20 @@ object Constants {
     }
 
 
+
+    fun timeSelector(): ArrayList<DummyModel> {
+        val array: ArrayList<DummyModel> = ArrayList()
+        array.add(DummyModel("09:00 am", true))
+        array.add(DummyModel("10:00 am", false))
+        array.add(DummyModel("11:00 am", false))
+        array.add(DummyModel("12:00 am", false))
+        array.add(DummyModel("02:00 pm", false))
+        array.add(DummyModel("04:00 pm", false))
+        array.add(DummyModel("06:00 pm", false))
+        return array
+    }
+
+
     fun locationSelector(): ArrayList<SpinnerModel> {
         val array: ArrayList<SpinnerModel> = ArrayList()
         array.add(SpinnerModel("216 San Andrew St, Miami"))

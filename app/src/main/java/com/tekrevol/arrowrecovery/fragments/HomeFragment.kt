@@ -12,12 +12,16 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.callbacks.OnNewPacketReceivedListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.Events
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlin.random.Random
@@ -190,6 +194,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         daysSelectorAdapter.notifyDataSetChanged()
 
         contRefresh.performClick()
+
+
     }
+
 
 }
