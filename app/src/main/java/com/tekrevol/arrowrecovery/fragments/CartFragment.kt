@@ -11,10 +11,14 @@ import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_cart.btnDelete
+import kotlinx.android.synthetic.main.fragment_cart.cbSelectAll
 import kotlinx.android.synthetic.main.fragment_myorder.*
+import kotlinx.android.synthetic.main.fragment_notification.*
 
 class CartFragment : BaseFragment(), OnItemClickListener {
 
@@ -49,7 +53,7 @@ class CartFragment : BaseFragment(), OnItemClickListener {
 
     private fun onBind() {
         arrData.clear()
-        arrData.addAll(Constants.daysSelector())
+        arrData.addAll(Constants.notifications())
 
         recyclerViewCart.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerViewCart.adapter = cartAdapter
@@ -72,6 +76,19 @@ class CartFragment : BaseFragment(), OnItemClickListener {
             val checkoutDialogFragment = CheckoutDialogFragment()
             checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
         }
+
+        cbSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
+            arrData.forEach { it.isSelected = isChecked }
+            cartAdapter.notifyDataSetChanged()
+        }
+
+        btnDelete.setOnClickListener {
+            UIHelper.showAlertDialog("Are you sure you want to delete selected Items?", "Delete Items", { dialog, which ->
+                arrData.removeAll { it.isSelected }
+                cartAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            }, context)
+        }
     }
 
     override fun onClick(v: View?) {
@@ -81,7 +98,15 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
-
+        when(view?.id){
+            R.id.imgSelect -> {
+                arrData[position].isSelected = !arrData[position].isSelected
+                cartAdapter.notifyDataSetChanged()
+            }
+            R.id.contSelectQuality -> {}
+            R.id.imgAdd -> {}
+            R.id.imgSubtract -> {}
+        }
     }
 
 }

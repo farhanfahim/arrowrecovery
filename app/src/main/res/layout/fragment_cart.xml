@@ -15,12 +15,12 @@
         android:layout_marginRight="@dimen/x2dp"
         android:padding="@dimen/x20dp">
 
-
-        <ImageView
+        <CheckBox
+            android:id="@+id/cbSelectAll"
             android:layout_width="@dimen/x25dp"
             android:layout_height="@dimen/x25dp"
-            android:background="@drawable/bg_selectall"
-            android:padding="@dimen/x5dp"
+            android:button="@drawable/checkbox_selector"
+            android:checked="false"
             android:src="@drawable/img_selected_tick"
             android:tint="@color/colorAccent" />
 
@@ -36,6 +36,7 @@
             android:textColor="@color/txtDarkGrey" />
 
         <ImageButton
+            android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/delete"

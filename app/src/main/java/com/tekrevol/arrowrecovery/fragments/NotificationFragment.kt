@@ -98,7 +98,13 @@ class NotificationFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
+        when(view?.id){
+            R.id.imgSelect -> {
+                arrData[position].isSelected = !arrData[position].isSelected
+                notificationAdapter.notifyDataSetChanged()
+            }
 
+        }
     }
 
 

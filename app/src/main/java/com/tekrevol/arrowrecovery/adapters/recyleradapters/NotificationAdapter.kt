@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -26,14 +27,14 @@ class NotificationAdapter(private val activity: Context?, private val arrData: L
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
         val model = arrData[i]
-        with(holder){
+        with(holder) {
             bindTo(model, activity!!)
-            cbSelect?.setOnCheckedChangeListener { buttonView, isChecked -> arrData[i].isSelected = isChecked }
             setListener(this, model)
         }
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
+        holder.imgSelect.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, NotificationAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {
@@ -41,7 +42,7 @@ class NotificationAdapter(private val activity: Context?, private val arrData: L
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cbSelect = view.findViewById<CheckBox>(R.id.cbSelect)
+        val imgSelect = view.findViewById<ImageView>(R.id.imgSelect)
         val txtTitle = view.findViewById<AnyTextView>(R.id.txtTitle)
         var model: DummyModel? = null
 
@@ -53,8 +54,14 @@ class NotificationAdapter(private val activity: Context?, private val arrData: L
             this.model = model
 
             this.model?.let {
-                cbSelect.isChecked = it.isSelected
+                if (it.isSelected) {
+                    imgSelect.setImageResource(R.drawable.img_selecte_check)
+                } else {
+                    imgSelect.setImageResource(R.drawable.img_unselected_check)
+                }
+
                 txtTitle.text = it.text
+
             }
 
 

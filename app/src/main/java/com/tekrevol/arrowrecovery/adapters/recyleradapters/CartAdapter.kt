@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tekrevol.arrowrecovery.R
@@ -23,21 +25,47 @@ class CartAdapter(private val activity: Context?, private val arrData: List<Dumm
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
         val model = arrData[i]
-        setListener(holder, model)
+        with(holder) {
+            bindTo(model, activity!!)
+            setListener(this, model)
+        }
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-
-        //   holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model) })
-
+           holder.imgSelect.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
+           holder.contSelectQuality.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
+           holder.btnSubtract.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
+           holder.btnAdd.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {
         return arrData.size
     }
 
-    class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imgSelect = view.findViewById<ImageView>(R.id.imgSelect)
+        val btnAdd = view.findViewById<ImageView>(R.id.btnAdd)
+        val btnSubtract = view.findViewById<ImageView>(R.id.btnSubtract)
+        val contSelectQuality = view.findViewById<LinearLayout>(R.id.contSelectQuality)
+        var model: DummyModel? = null
 
+        /**
+         * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
+         * ViewHolder when Item is loaded.
+         */
+        fun bindTo(model: DummyModel?, context: Context) {
+            this.model = model
+
+            this.model?.let {
+                if (it.isSelected) {
+                    imgSelect.setImageResource(R.drawable.img_selecte_check)
+                } else {
+                    imgSelect.setImageResource(R.drawable.img_unselected_check)
+                }
+            }
+
+
+        }
     }
 
 }
