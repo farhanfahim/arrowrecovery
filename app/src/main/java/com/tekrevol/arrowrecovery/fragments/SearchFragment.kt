@@ -118,6 +118,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(),true)
+
     }
 
 

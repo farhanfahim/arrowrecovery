@@ -111,6 +111,7 @@
              android:background="@color/text_color_grey_mid_dark" />
  -->
         <TextView
+            android:id="@+id/txtForgot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
