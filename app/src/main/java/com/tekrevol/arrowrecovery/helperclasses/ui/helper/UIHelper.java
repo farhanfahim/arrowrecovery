@@ -1,7 +1,6 @@
 package com.tekrevol.arrowrecovery.helperclasses.ui.helper;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -20,6 +19,7 @@ import android.media.ExifInterface;
 import android.os.Build;
 import android.os.Environment;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.core.graphics.ColorUtils;
 import android.text.TextUtils;
@@ -280,6 +280,7 @@ public class UIHelper {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //  Your code when user clicked on Cancel
+                        dialog.dismiss();
                     }
                 }).create();
         dialog.show();
