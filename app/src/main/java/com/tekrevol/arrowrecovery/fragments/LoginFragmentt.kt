@@ -11,6 +11,7 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_login.*
 
 
 class LoginFragmentt : BaseFragment() {
@@ -41,6 +42,10 @@ class LoginFragmentt : BaseFragment() {
 
         txtLogin?.setOnClickListener(View.OnClickListener {
             baseActivity.addDockableFragment(OptVerification.newInstance(), true)
+        })
+
+        txtForgot?.setOnClickListener(View.OnClickListener {
+            baseActivity.addDockableFragment(ForgotFragment.newInstance(), true)
         })
 
         txt_signup?.setOnClickListener(View.OnClickListener {

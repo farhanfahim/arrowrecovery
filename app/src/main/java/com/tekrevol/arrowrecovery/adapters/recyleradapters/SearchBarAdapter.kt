@@ -28,7 +28,7 @@ class SearchBarAdapter(private val activity: Context?, private val arrData: List
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
 
-        //   holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model) })
+           holder.layoutItemSearchBar?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, null) })
 
     }
 
@@ -37,6 +37,8 @@ class SearchBarAdapter(private val activity: Context?, private val arrData: List
     }
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
+
+        var layoutItemSearchBar: LinearLayout? = view?.findViewById(R.id.layoutItemSearchBar)
 
     }
 

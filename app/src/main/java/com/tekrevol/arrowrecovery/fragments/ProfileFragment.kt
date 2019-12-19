@@ -1,10 +1,13 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -53,6 +56,14 @@ class ProfileFragment : BaseFragment() {
             baseActivity.addDockableFragment(ChangePasswordFragment.newInstance(), true)
 
         })
+
+        logout.setOnClickListener(View.OnClickListener {
+            logoutClick()
+
+
+        })
+
+
     }
 
 
