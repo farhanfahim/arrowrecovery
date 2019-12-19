@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/x10dp"
+        android:padding="@dimen/x10dp"
         android:gravity="center">
 
         <LinearLayout
