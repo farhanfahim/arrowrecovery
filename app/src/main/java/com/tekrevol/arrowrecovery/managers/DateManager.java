@@ -445,7 +445,7 @@ public class DateManager {
 
 
 
-    public static void showDatePicker(final Context context, final TextView textView, final DatePickerDialog.OnDateSetListener onDateSetListener, boolean isCurrentDateMaxiumum) {
+    public static void showDatePicker(final Context context, final TextView textView, final DatePickerDialog.OnDateSetListener onDateSetListener, boolean isCurrentDateMaxiumum, boolean isCurrentDateMinimum) {
 
         if (textView != null) {
             final Calendar myCalendar = Calendar.getInstance();
@@ -470,11 +470,18 @@ public class DateManager {
             if (isCurrentDateMaxiumum) {
                 datePickerDialog.getDatePicker().setMaxDate(myCalendar.getTimeInMillis());
             }
+
+            if (isCurrentDateMinimum) {
+                datePickerDialog.getDatePicker().setMinDate(myCalendar.getTimeInMillis());
+            }
             datePickerDialog.show();
         } else {
             UIHelper.showLongToastInCenter(context, "Unable to show Date picker");
         }
     }
+
+
+
 
     public static void showDatePicker(final Context context, final OnDatePicked onDatePicked, boolean isCurrentDateMaxiumum, boolean isCurrentDateMinimum) {
 

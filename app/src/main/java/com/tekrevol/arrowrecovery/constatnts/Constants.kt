@@ -2,6 +2,7 @@ package com.tekrevol.arrowrecovery.constatnts
 
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.SpinnerModel
 
 
 object Constants {
@@ -28,6 +29,18 @@ object Constants {
         array.add(DummyModel("6m", false))
         array.add(DummyModel("1y", false))
         array.add(DummyModel("all", false))
+        return array
+    }
+
+
+    fun locationSelector(): ArrayList<SpinnerModel> {
+        val array: ArrayList<SpinnerModel> = ArrayList()
+        array.add(SpinnerModel("216 San Andrew St, Miami, FL"))
+        array.add(SpinnerModel("216 San Andrew St, Miami, FL"))
+        array.add(SpinnerModel("216 San Andrew St, Miami, FL"))
+        array.add(SpinnerModel("216 San Andrew St, Miami, FL"))
+        array.add(SpinnerModel("216 San Andrew St, Miami, FL"))
+        array.add(SpinnerModel("216 San Andrew St, Miami, FL"))
         return array
     }
 
