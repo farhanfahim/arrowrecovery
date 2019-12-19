@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_editprofile.*
 
 public class PersonalFragment : BaseFragment() {
+    private var selectedPosition: Int = 0
+
 
     companion object {
         fun newInstance(): PersonalFragment {
@@ -36,6 +42,15 @@ public class PersonalFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+
+        contTitle.setOnClickListener {
+            UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->
+                selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                txtTitle.text = Constants.title[selectedPosition]
+                dialog.dismiss()
+            }
+        }
     }
 
     override fun onClick(v: View?) {

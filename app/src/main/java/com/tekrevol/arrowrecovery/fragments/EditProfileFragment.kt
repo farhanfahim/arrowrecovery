@@ -5,15 +5,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.appcompat.app.AlertDialog
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_editprofile.*
+import kotlinx.android.synthetic.main.fragment_product_detail.*
 
 class EditProfileFragment : BaseFragment() {
+
+    private var selectedPosition: Int = 0
 
     companion object {
 
@@ -52,6 +57,14 @@ class EditProfileFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+        contTitle.setOnClickListener {
+            UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->
+                selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                txtTitle.text = Constants.title[selectedPosition]
+                dialog.dismiss()
+            }
+        }
     }
 
     override fun onClick(v: View?) {

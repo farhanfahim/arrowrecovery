@@ -39,7 +39,7 @@
             android:gravity="start"
             android:text="Login into"
             android:textColor="@color/title_color"
-            android:textSize="30sp" />
+            android:textSize="@dimen/s25" />
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             android:gravity="start"
             android:text="your account"
             android:textColor="@color/title_color"
-            android:textSize="30sp" />
+            android:textSize="@dimen/s25" />
 
         <View
             android:layout_width="match_parent"
@@ -57,7 +57,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_fullname_login"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x60dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/s14"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
             <EditText
@@ -70,7 +71,7 @@
                 android:textColor="@color/title_color"
 
                 android:textColorHint="@color/txtGrey"
-                android:textSize="18sp" />
+                android:textSize="@dimen/s14" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -84,8 +85,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_password_login"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10dp"
+            android:textSize="@dimen/s14"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
             <EditText
@@ -98,7 +100,7 @@
                 android:textColor="@color/title_color"
 
                 android:textColorHint="@color/txtGrey"
-                android:textSize="18sp" />
+                android:textSize="@dimen/s14" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -116,7 +118,7 @@
             android:gravity="end"
             android:text="Forgot?"
             android:textColor="@color/title_color"
-            android:textSize="15sp"
+            android:textSize="@dimen/s16"
             android:textStyle="bold" />
 
         <View
@@ -154,6 +156,7 @@
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginBottom="@dimen/x10dp"
             android:gravity="center"
+            android:textSize="@dimen/s14"
             android:text="or log in with social account"
             android:textColor="@color/title_color" />
 
@@ -241,6 +244,7 @@
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/s14"
                 android:text="Don't have an account?"
                 android:textColor="@color/title_color" />
 
@@ -251,6 +255,8 @@
                 android:layout_marginLeft="5dp"
                 android:contentDescription="Sign up"
                 android:text="@string/SIgn_Up"
+                android:textSize="@dimen/s14"
+
                 android:textColor="@color/title_color" />
 
 

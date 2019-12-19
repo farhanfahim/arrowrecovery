@@ -20,8 +20,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_fullname_login"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/x10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <EditText
@@ -33,13 +34,14 @@
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/s14" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/x10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <EditText
@@ -50,7 +52,7 @@
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/s14" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -58,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x10dp"
+                android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <EditText
@@ -68,13 +71,14 @@
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/s14" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/x10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <EditText
@@ -85,7 +89,7 @@
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/s14" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -103,7 +107,9 @@
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="I have read and I accept the Terms of Use" />
+                    android:text="I have read and I accept the Terms of Use"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s14" />
 
             </LinearLayout>
 

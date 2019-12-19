@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x5dp"
                 android:text="Offline"
+                android:textSize="@dimen/s14"
                 android:textColor="@color/title_color" />
         </LinearLayout>
 
@@ -38,6 +39,7 @@
             android:layout_marginLeft="@dimen/x20dp"
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginRight="@dimen/x20dp"
+            android:textSize="@dimen/s14"
             android:layout_marginBottom="@dimen/x20dp"
             android:text="Welcome to Arrow Recovery customer support" />
 
@@ -55,6 +57,7 @@
             android:layout_marginLeft="@dimen/x20dp"
             android:layout_marginTop="@dimen/x20dp"
             android:layout_marginRight="@dimen/x20dp"
+            android:textSize="@dimen/s14"
             android:text="Dear Valued Customers, ARROW RECOVERY chat
 09:00 AM- 09:00 PM (MON-SAT). Thank You"
             android:textColor="@color/title_color" />
@@ -64,8 +67,9 @@
     <TextView
         android:id="@+id/txtLeaveMessage"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:padding="@dimen/x10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="5dp"

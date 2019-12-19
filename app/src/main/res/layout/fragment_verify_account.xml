@@ -28,7 +28,7 @@
             android:gravity="start"
             android:text="Enter the code to verify your account"
             android:textColor="@color/title_color"
-            android:textSize="@dimen/s26" />
+            android:textSize="@dimen/s25" />
 
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
@@ -48,7 +48,7 @@ the \nnumber +1 285 4849 4059"
             android:layout_width="@dimen/x200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/x40dp"
+            android:layout_marginTop="@dimen/x50dp"
             android:layout_marginBottom="@dimen/x40dp"
             android:cursorVisible="false"
             android:digits="1234567890"

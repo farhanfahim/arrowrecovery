@@ -12,10 +12,10 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:padding="@dimen/x10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/x10dp">
 
             <LinearLayout
                 android:id="@+id/layout1"
@@ -26,9 +26,9 @@
 
 
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/x20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/x20dp"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -93,11 +93,12 @@
                         android:visibility="visible">
 
                         <LinearLayout
+                            android:id="@+id/contTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
-                                android:id="@+id/txtmantracategory"
+                                android:id="@+id/txtTitle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -106,7 +107,7 @@
                                 android:textColor="@color/title_color"
                                 android:textColorHint="@color/txtGrey"
 
-                                android:textSize="18sp"
+                                android:textSize="@dimen/s14"
                                 app:typeface="@string/font_regular" />
 
                             <ImageView
@@ -132,6 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -143,13 +145,14 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -160,7 +163,7 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <RadioGroup
@@ -175,10 +178,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
-                            android:checked="true"
                             android:text="Comapny"
                             android:textColor="@color/txtDarkGrey"
-                            android:textSize="20sp" />
+                            android:textSize="@dimen/s14" />
 
                         <RadioButton
                             android:layout_width="wrap_content"
@@ -186,7 +188,7 @@
                             android:layout_marginLeft="10dp"
                             android:text="Individual"
                             android:textColor="@color/txtDarkGrey"
-                            android:textSize="20sp" />
+                            android:textSize="@dimen/s14" />
 
                     </RadioGroup>
 
@@ -194,6 +196,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -204,14 +207,14 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
-
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -222,7 +225,7 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
@@ -237,6 +240,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
+
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -247,13 +252,14 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content"
+
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -264,14 +270,16 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text=" LINE account, WhatsApp account, WeChat account"
-                        android:textColor="@color/title_color" />
+                        android:textColor="@color/title_color"
+                        android:textSize="@dimen/s14"
+                        android:layout_marginBottom="@dimen/x10dp"/>
 
 
                     <TextView
@@ -287,34 +295,40 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
+
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
                             android:layout_width="match_parent"
+
                             android:layout_height="wrap_content"
                             android:hint="Address"
                             android:inputType="textEmailAddress"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
                             android:layout_width="match_parent"
+
                             android:layout_height="wrap_content"
                             android:hint="Zip Code"
                             android:inputType="textPassword"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -322,6 +336,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -332,13 +347,14 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <EditText
@@ -349,7 +365,7 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/s14" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
