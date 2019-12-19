@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
+import kotlinx.android.synthetic.main.activity_splash.*
 
 
 class SplashActivityKotlin : AppCompatActivity() {
@@ -30,10 +31,9 @@ class SplashActivityKotlin : AppCompatActivity() {
         try {
             val manager = packageManager
             val info = manager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-
-            //   txtVersionNumber.setText("Build Version: " + info.versionName)
+            txtVersionNumber.text = "Build Version: " + info.versionName
         } catch (e: PackageManager.NameNotFoundException) {
-            //    txtVersionNumber.setText("")
+            txtVersionNumber.text = ""
             e.printStackTrace()
         }
 
