@@ -134,7 +134,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
 
         contPickupSelected.setOnClickListener {
-            UIHelper.showSpinnerDialog(fragmentManager, Constants.locationSelector(), "Select Location", txtPickupLocation, null, {}, pickupSelectedPos)
+            UIHelper.showSpinnerDialog(fragmentManager, Constants.locationSelector(), "Select Location", txtCollectionCenterLocation, null, {}, pickupSelectedPos)
         }
 
         contCollectionCenter.setOnClickListener {
@@ -168,7 +168,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     }
 
     override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
-        txtCollectionCenterLocation.text = locationName
+        txtPickupLocation.text = locationName
     }
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {

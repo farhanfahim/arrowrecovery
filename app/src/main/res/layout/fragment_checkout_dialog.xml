@@ -76,7 +76,7 @@
 
 
         <LinearLayout
-            android:id="@+id/contPickupSelected"
+            android:id="@+id/contCollectionCenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x20dp"
@@ -128,7 +128,7 @@
 
 
         <LinearLayout
-            android:id="@+id/contCollectionCenter"
+            android:id="@+id/contPickupSelected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
