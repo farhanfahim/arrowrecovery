@@ -63,8 +63,6 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
 
-
-
     }
 
     override fun getDrawerLockMode(): Int {
