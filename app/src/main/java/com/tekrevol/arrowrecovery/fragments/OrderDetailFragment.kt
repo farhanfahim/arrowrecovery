@@ -68,14 +68,21 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
         return R.layout.fragment_orderdetail
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("Order Detail")
+
     }
 
     override fun setListeners() {
-        backButtonorder.setOnClickListener(View.OnClickListener {
+ /*       backButtonorder.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
 
-        })
+        })*/
 
     }
 

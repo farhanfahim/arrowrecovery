@@ -62,13 +62,19 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
         }
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("My Order")
     }
 
     override fun setListeners() {
-        backButton.setOnClickListener(View.OnClickListener {
+  /*      backButton.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-        })
+        })*/
 
     }
 

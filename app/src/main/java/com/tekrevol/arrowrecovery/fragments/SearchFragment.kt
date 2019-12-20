@@ -106,7 +106,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         return R.layout.fragment_search
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.visibility = View.GONE
+
     }
 
     override fun setListeners() {

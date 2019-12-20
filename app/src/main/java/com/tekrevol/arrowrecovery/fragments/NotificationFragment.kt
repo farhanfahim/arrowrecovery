@@ -43,7 +43,14 @@ class NotificationFragment : BaseFragment(), OnItemClickListener {
         return R.layout.fragment_notification
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("Notification")
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,9 +61,9 @@ class NotificationFragment : BaseFragment(), OnItemClickListener {
 
     override fun setListeners() {
 
-        backButton.setOnClickListener {
+      /*  backButton.setOnClickListener {
             baseActivity.popBackStack()
-        }
+        }*/
 
         cbSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
             arrData.forEach { it.isSelected = isChecked }

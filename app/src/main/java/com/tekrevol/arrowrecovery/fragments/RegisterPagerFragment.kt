@@ -50,7 +50,9 @@ class RegisterPagerFragment : BaseFragment() {
         return R.layout.fragment_register
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.visibility = View.GONE
+
     }
 
     override fun setListeners() {

@@ -62,7 +62,15 @@ class AdvanceSearchFragment : BaseFragment() {
         return R.layout.fragment_advanced_search
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("Advanced Search")
+
+
     }
 
     override fun setListeners() {
@@ -70,9 +78,9 @@ class AdvanceSearchFragment : BaseFragment() {
         advSearch.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
         })
-        backButton.setOnClickListener(View.OnClickListener {
-            baseActivity.popBackStack()
-        })
+        /*  backButton.setOnClickListener(View.OnClickListener {
+              baseActivity.popBackStack()
+          })*/
 
         contMake.setOnClickListener(View.OnClickListener {
             UIHelper.showSpinnerDialog(this, spinnerModelArrayList, "Selected Make"

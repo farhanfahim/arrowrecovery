@@ -34,15 +34,17 @@ class ChangePasswordFragment : BaseFragment() {
         return R.layout.fragment_change_password
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("Change Password")
+
     }
 
     override fun setListeners() {
-
-
-        backButton.setOnClickListener(View.OnClickListener {
-            baseActivity.popBackStack()
-        })
 
         txtChangePass.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()

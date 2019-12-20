@@ -34,7 +34,8 @@ class LoginFragmentt : BaseFragment() {
         return R.layout.fragment_login
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.visibility = View.GONE
 
     }
 

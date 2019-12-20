@@ -6,43 +6,6 @@
     android:background="@color/c_white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/x10dp"
-        android:gravity="center"
-        android:padding="@dimen/x15dp">
-
-
-        <ImageButton
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x10dp"
-            android:background="@drawable/back"
-            android:padding="@dimen/x10dp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Advanced Search"
-            android:textColor="#000"
-            android:textSize="@dimen/s15" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x10dp"
-            android:background="@drawable/back"
-            android:padding="@dimen/x10dp"
-            android:visibility="invisible" />
-
-
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -77,11 +40,11 @@
                 android:visibility="visible">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtMake"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/s5"
                     android:layout_weight="1"
-                    android:id="@+id/txtMake"
                     android:hint="Select Make..."
                     android:padding="10dp"
                     android:singleLine="true"
@@ -120,11 +83,11 @@
                 android:visibility="visible">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtModel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/s5"
                     android:layout_weight="1"
-                    android:id="@+id/txtModel"
 
                     android:hint="Select Model..."
                     android:padding="10dp"
@@ -242,6 +205,7 @@
             android:layout_height="10dp"
             android:background="@drawable/shadowgrey" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -255,10 +219,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounded_stroke_green"
                 android:gravity="center"
-                android:padding="@dimen/x20dp"
                 android:text="Clear Selection"
                 android:textColor="@color/green_bg"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/s14"
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/advSearch"
@@ -269,10 +233,10 @@
                 android:background="@drawable/searchbar_grey"
                 android:backgroundTint="@color/green_bg"
                 android:gravity="center"
-                android:padding="@dimen/x20dp"
-                android:text="Search"
+                android:text="Place Order"
                 android:textColor="@color/c_white"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/s14" />
+
         </LinearLayout>
 
 

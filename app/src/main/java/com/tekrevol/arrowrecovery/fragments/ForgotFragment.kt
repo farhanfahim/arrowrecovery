@@ -34,16 +34,23 @@ class ForgotFragment : BaseFragment() {
         return R.layout.fragment_forgot_password
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("Forgot Password")
+
     }
 
     override fun setListeners() {
 
-        backButton.setOnClickListener(View.OnClickListener {
+      /*  backButton.setOnClickListener(View.OnClickListener {
 
             baseActivity.popBackStack()
         })
-
+*/
         txtForgotPass.setOnClickListener(View.OnClickListener {
 
             baseActivity.addDockableFragment(VerifyFragment.newInstance(), true)

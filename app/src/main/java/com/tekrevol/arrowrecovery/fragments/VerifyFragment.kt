@@ -10,7 +10,6 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
-import kotlinx.android.synthetic.main.fragment_forgot_password.backButton
 import kotlinx.android.synthetic.main.fragment_verify.*
 
 class VerifyFragment : BaseFragment() {
@@ -36,15 +35,18 @@ class VerifyFragment : BaseFragment() {
         return R.layout.fragment_verify
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+
+        titleBar.setTitle("Verify Code")
+
+
     }
 
     override fun setListeners() {
-
-        backButton.setOnClickListener(View.OnClickListener {
-
-            baseActivity.popBackStack()
-        })
 
         txtVerify.setOnClickListener(View.OnClickListener {
 

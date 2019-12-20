@@ -10,11 +10,14 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
-import kotlinx.android.synthetic.main.fragment_forgot_password.backButton
 import kotlinx.android.synthetic.main.fragment_reset.*
 import kotlinx.android.synthetic.main.fragment_verify.*
 
 class ResetFragment : BaseFragment() {
+    override fun getDrawerLockMode(): Int {
+
+        return  0;
+    }
 
     companion object {
 
@@ -28,21 +31,19 @@ class ResetFragment : BaseFragment() {
         }
     }
 
-    override fun getDrawerLockMode(): Int {
-        return 0
-
-    }
-
     override fun getFragmentLayout(): Int {
+
         return R.layout.fragment_reset
     }
 
-    override fun setTitlebar(titleBar: TitleBar?) {
+    override fun setTitlebar(titleBar: TitleBar) {
+        titleBar.visibility = View.GONE
+
     }
 
     override fun setListeners() {
 
-        backButton.setOnClickListener(View.OnClickListener {
+        backbtn.setOnClickListener(View.OnClickListener {
 
             baseActivity.popStackTill(1)
         })
@@ -51,8 +52,6 @@ class ResetFragment : BaseFragment() {
 
             baseActivity.popStackTill(1)
         })
-
-
     }
 
     override fun onClick(v: View?) {
@@ -60,7 +59,4 @@ class ResetFragment : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
-
-
 }
-

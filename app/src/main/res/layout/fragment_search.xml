@@ -15,15 +15,18 @@
         android:padding="10dp">
 
 
-        <ImageButton
-            android:layout_marginLeft="@dimen/x5dp"
+
+        <ImageView
             android:id="@+id/image"
-            android:padding="@dimen/x10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x40dp"
+            android:layout_height="@dimen/x40dp"
+            android:layout_marginLeft="@dimen/x5dp"
             android:layout_marginRight="@dimen/x10dp"
-            android:background="@drawable/back"
-             />
+            android:src="@drawable/ic_back"
+            android:tint="@color/title_color"
+            android:background="@color/transparent"
+            android:padding="@dimen/x5dp" />
+
 
         <LinearLayout
             android:layout_marginRight="@dimen/x5dp"
