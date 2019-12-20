@@ -11,6 +11,7 @@ import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.Constants.qualities
+import com.tekrevol.arrowrecovery.helperclasses.StringHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -81,10 +82,12 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
                 if (s!!.isEmpty()) {
                     edtQuantity.setText("0")
                 } else {
-                    if (s.toString().toInt() > 999) {
-                        edtQuantity.setText("999")
-                    } else if (s.toString().toInt() < 0) {
-                        edtQuantity.setText("0")
+                    if(StringHelper.IsInt_ByJonas(s.toString())){
+                        if (s.toString().toInt() > 999) {
+                            edtQuantity.setText("999")
+                        } else if (s.toString().toInt() < 0) {
+                            edtQuantity.setText("0")
+                        }
                     }
                 }
 

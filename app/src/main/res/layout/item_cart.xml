@@ -161,7 +161,7 @@
                     android:gravity="center"
                     android:visibility="visible">
 
-                    <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:id="@+id/edtQuantity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -169,6 +169,10 @@
                         android:background="@null"
                         android:gravity="center"
                         android:padding="@dimen/x10dp"
+                        android:inputType="numberDecimal"
+                        android:maxLength="3"
+                        app:maxNumber="999"
+                        app:minNumber="0"
                         android:text="2"
                         android:textColor="@color/c_black"
                         android:textColorHint="@color/c_black"

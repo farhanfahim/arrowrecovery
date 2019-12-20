@@ -15,13 +15,13 @@
         android:padding="@dimen/x10dp">
 
 
-        <ImageButton
+        <ImageView
             android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x40dp"
+            android:layout_height="@dimen/x40dp"
             android:layout_marginLeft="@dimen/x5dp"
             android:layout_marginRight="@dimen/x10dp"
-            android:background="@drawable/back"
+            android:src="@drawable/back"
             android:padding="@dimen/x10dp" />
 
         <TextView
@@ -33,14 +33,15 @@
             android:textColor="#000"
             android:textSize="@dimen/s15" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+
+        <ImageView
+            android:layout_width="@dimen/x40dp"
+            android:layout_height="@dimen/x40dp"
             android:layout_marginLeft="@dimen/x5dp"
             android:layout_marginRight="@dimen/x10dp"
-            android:background="@drawable/back"
-            android:padding="@dimen/x10dp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:padding="@dimen/x10dp" />
 
 
     </LinearLayout>
