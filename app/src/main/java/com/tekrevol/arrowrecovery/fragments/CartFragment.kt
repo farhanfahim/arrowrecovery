@@ -62,10 +62,6 @@ class CartFragment : BaseFragment(), OnItemClickListener {
 
 
         recyclerViewCart.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        (recyclerViewCart.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-        val resId = R.anim.layout_animation_fall_bottom
-        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
-        recyclerViewCart.layoutAnimation = animation
         recyclerViewCart.adapter = cartAdapter
     }
 
