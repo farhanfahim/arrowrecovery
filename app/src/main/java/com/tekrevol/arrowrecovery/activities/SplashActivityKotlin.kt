@@ -10,6 +10,7 @@ import butterknife.ButterKnife
 import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.fadeIn
 import com.mikhaellopez.rxanimation.resize
+import com.mikhaellopez.rxanimation.rotation
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import io.reactivex.disposables.CompositeDisposable
@@ -64,6 +65,7 @@ class SplashActivityKotlin : AppCompatActivity() {
     private fun changeActivity(activityClass: Class<*>) {
         RxAnimation.together(
                 imgLogo.fadeIn(ANIMATIONS_TIME_OUT),
+                imgLogo.rotation(360f, ANIMATIONS_TIME_OUT ),
                 imgLogo.resize(200, 200, ANIMATIONS_TIME_OUT)
         ).subscribe()
 
@@ -82,7 +84,7 @@ class SplashActivityKotlin : AppCompatActivity() {
                     overridePendingTransition(android.R.anim.fade_in, R.anim.fade_out)
                     // close this activity
                     finish()
-                }, ANIMATIONS_TIME_OUT.toLong())
+                }, 2000 + ANIMATIONS_TIME_OUT.toLong())
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

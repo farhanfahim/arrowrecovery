@@ -28,6 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
+                    android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
@@ -46,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
                     android:singleLine="true"
+                    android:inputType="phone"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14" />
@@ -61,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Comment:"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
