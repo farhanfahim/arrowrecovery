@@ -2,8 +2,10 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CartAdapter
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_cart.cbSelectAll
 import kotlinx.android.synthetic.main.fragment_myorder.*
 import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class CartFragment : BaseFragment(), OnItemClickListener {
 
@@ -57,7 +60,12 @@ class CartFragment : BaseFragment(), OnItemClickListener {
         arrData.clear()
         arrData.addAll(Constants.notifications())
 
+
         recyclerViewCart.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        (recyclerViewCart.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        val resId = R.anim.layout_animation_fall_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+        recyclerViewCart.layoutAnimation = animation
         recyclerViewCart.adapter = cartAdapter
     }
 
@@ -74,7 +82,7 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun setListeners() {
-        btnCheckout.setOnClickListener{
+        btnCheckout.setOnClickListener {
             val checkoutDialogFragment = CheckoutDialogFragment()
             checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
         }
@@ -100,14 +108,14 @@ class CartFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
-        when(view?.id){
+        when (view?.id) {
             R.id.imgSelect -> {
                 arrData[position].isSelected = !arrData[position].isSelected
                 cartAdapter.notifyDataSetChanged()
             }
             R.id.contSelectQuality -> {
                 UIHelper.showCheckedDialogBox(context, "Select Quality", Constants.qualities, 0) { dialog, which ->
-//                    val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                    //                    val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
 //                    txtQuality.text = Constants.qualities[selectedPosition]
                     dialog.dismiss()
                 }

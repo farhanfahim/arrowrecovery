@@ -21,22 +21,16 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
+
+        <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start|center"
-            android:visibility="gone">
+            android:layout_marginRight="@dimen/x10dp"
+            android:background="@drawable/back"
+            android:padding="@dimen/x10dp"
+            android:visibility="visible" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_back"
-                android:contentDescription="back"
-                android:padding="@dimen/x5dp" />
-
-
-        </LinearLayout>
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
@@ -225,11 +219,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/x20dp"
+            android:background="@drawable/searchbar_grey"
+            android:backgroundTint="@color/green_bg"
             android:paddingLeft="@dimen/x10dp"
             android:paddingRight="@dimen/x10dp"
             android:text="Next"
-            android:background="@drawable/searchbar_grey"
-            android:backgroundTint="@color/green_bg"
             android:textAllCaps="false"
             android:textColor="@color/c_white"
             android:textSize="@dimen/s18"
@@ -342,10 +336,9 @@
                     android:id="@+id/txt_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:contentDescription="Sign up"
-                    android:text="@string/Log_In"
                     android:padding="@dimen/x10dp"
+                    android:text="@string/Log_In"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s14" />
 

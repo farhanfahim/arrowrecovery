@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
@@ -48,6 +50,10 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
         arr.add("5")
         arr.add("6")
         recyclerViewOrderDetail.layoutManager = LinearLayoutManager(context)
+        (recyclerViewOrderDetail.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        val resId = R.anim.layout_animation_fall_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+        recyclerViewOrderDetail.layoutAnimation = animation
         recyclerViewOrderDetail.adapter = OrderDetailAdapter(context, arr, this)
 
     }

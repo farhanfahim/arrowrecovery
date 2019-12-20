@@ -71,7 +71,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="First Name"
-                    android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
@@ -89,7 +88,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Last Name"
-                    android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
@@ -134,9 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Company Name"
-                    android:inputType="textPassword"
                     android:singleLine="true"
-
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14" />
@@ -153,7 +149,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Kind of Company"
-                    android:inputType="textPassword"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"

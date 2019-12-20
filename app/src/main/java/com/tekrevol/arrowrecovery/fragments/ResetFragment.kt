@@ -44,7 +44,7 @@ class ResetFragment : BaseFragment() {
 
         backButton.setOnClickListener(View.OnClickListener {
 
-            baseActivity.popBackStack()
+            baseActivity.popStackTill(1)
         })
 
         txtResetPass.setOnClickListener(View.OnClickListener {
