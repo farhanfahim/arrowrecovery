@@ -99,6 +99,7 @@
                         android:maxLength="3"
                         app:maxNumber="999"
                         app:minNumber="0"
+                        android:digits="0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/x8dp"
                         android:text="2"
