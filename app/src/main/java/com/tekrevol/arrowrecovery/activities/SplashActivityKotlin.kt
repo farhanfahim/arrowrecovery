@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
 class SplashActivityKotlin : AppCompatActivity() {
 
     private val ANIMATIONS_DELAY = 0
-    private val ANIMATIONS_TIME_OUT: Long = 4000
+    private val ANIMATIONS_TIME_OUT: Long = 3000
     private val composite = CompositeDisposable()
     var subscribe: Disposable? = null
 
@@ -65,7 +65,7 @@ class SplashActivityKotlin : AppCompatActivity() {
     private fun changeActivity(activityClass: Class<*>) {
         RxAnimation.together(
                 imgLogo.fadeIn(ANIMATIONS_TIME_OUT),
-                imgLogo.rotation(360f, ANIMATIONS_TIME_OUT ),
+                //  imgLogo.rotation(360f, ANIMATIONS_TIME_OUT )
                 imgLogo.resize(200, 200, ANIMATIONS_TIME_OUT)
         ).subscribe()
 
@@ -84,7 +84,7 @@ class SplashActivityKotlin : AppCompatActivity() {
                     overridePendingTransition(android.R.anim.fade_in, R.anim.fade_out)
                     // close this activity
                     finish()
-                }, 2000 + ANIMATIONS_TIME_OUT.toLong())
+                }, 1000 + ANIMATIONS_TIME_OUT.toLong())
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

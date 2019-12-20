@@ -63,6 +63,8 @@ public class KeyboardHelper {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
         editText.requestFocus();
+
+
     }
 
 
