@@ -100,6 +100,7 @@ public class TitleBar extends RelativeLayout {
         btnRight3.setVisibility(GONE);
         btnRight2.setVisibility(GONE);
         btnRight1.setVisibility(GONE);
+        btnRight5.setVisibility(GONE);
         txtClearAll.setVisibility(GONE);
         containerTitlebar1.setVisibility(VISIBLE);
         txtCircle.setVisibility(GONE);
