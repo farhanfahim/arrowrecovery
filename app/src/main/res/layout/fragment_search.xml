@@ -18,10 +18,10 @@
         <ImageButton
             android:layout_marginLeft="@dimen/x5dp"
             android:id="@+id/image"
-            android:padding="@dimen/x5dp"
+            android:padding="@dimen/x10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x20dp"
+            android:layout_marginRight="@dimen/x10dp"
             android:background="@drawable/back"
              />
 

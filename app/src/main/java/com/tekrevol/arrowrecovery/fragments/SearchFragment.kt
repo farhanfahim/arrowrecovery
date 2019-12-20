@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
@@ -52,9 +54,17 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
 
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        val resId = R.anim.layout_animation_fall_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+        recyclerViewSearchList.layoutAnimation = animation
         recyclerViewSearchList.adapter = searchAdapter
 
         recyclerViewSearchItem.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        (recyclerViewSearchItem.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        val resId2 = R.anim.layout_animation_fall_bottom
+        val animation2 = AnimationUtils.loadLayoutAnimation(context, resId2)
+        recyclerViewSearchItem.layoutAnimation = animation2
         recyclerViewSearchItem.adapter = searchBarAdapter
 
         /*if (onCreated) {
@@ -118,7 +128,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(),true)
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(), true)
 
     }
 

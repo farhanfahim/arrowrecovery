@@ -2,7 +2,9 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
@@ -14,6 +16,7 @@ import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_myorder.*
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class MyOrderFragment : BaseFragment(), OnItemClickListener {
 
@@ -39,6 +42,10 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
         arrData.addAll(Constants.daysSelector())
 
         recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        (recyclerViewMyOrder.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+        val resId = R.anim.layout_animation_fall_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+        recyclerViewMyOrder.layoutAnimation = animation
         recyclerViewMyOrder.adapter = myOrderAdapter
 
     }
@@ -82,7 +89,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
 
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(),true)
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(), true)
 
     }
 }
