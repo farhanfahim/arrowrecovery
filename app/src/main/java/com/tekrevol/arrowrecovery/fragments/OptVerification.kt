@@ -46,6 +46,7 @@ class OptVerification : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
+        pinEditText.requestFocus()
         KeyboardHelper.showSoftKeyboardForcefully(context, pinEditText)
     }
 
