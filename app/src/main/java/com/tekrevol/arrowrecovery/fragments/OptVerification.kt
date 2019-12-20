@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_verify_account.*
@@ -40,6 +41,12 @@ class OptVerification : BaseFragment() {
     }
 
     override fun setTitlebar(titleBar: TitleBar?) {
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        KeyboardHelper.showSoftKeyboardForcefully(context, pinEditText)
     }
 
     override fun setListeners() {
