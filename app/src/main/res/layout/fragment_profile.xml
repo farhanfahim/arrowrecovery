@@ -267,7 +267,7 @@
                             android:layout_width="@dimen/x40dp"
                             android:layout_height="@dimen/x40dp"
                             android:gravity="center|start"
-                            android:src="@drawable/ordericon" />
+                            android:src="@drawable/changepassicon" />
 
                         <TextView
                             android:layout_width="0dp"
