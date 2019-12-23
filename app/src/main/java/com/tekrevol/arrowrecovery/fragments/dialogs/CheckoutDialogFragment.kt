@@ -118,12 +118,14 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         rgShipping.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rbPickup -> {
-                    contPickupSelected.visibility = View.VISIBLE
-                    contCollectionCenter.visibility = View.GONE
-                }
-                R.id.rbCollectionCenter -> {
+
                     contPickupSelected.visibility = View.GONE
                     contCollectionCenter.visibility = View.VISIBLE
+                }
+                R.id.rbCollectionCenter -> {
+
+                    contPickupSelected.visibility = View.VISIBLE
+                    contCollectionCenter.visibility = View.GONE
                 }
             }
         }
@@ -141,12 +143,12 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             googlePlaceHelper?.openMapsActivity()
         }
 
-        btnCancel.setOnClickListener{
+        btnCancel.setOnClickListener {
             dismiss()
         }
 
         btnPlaceOrder.setOnClickListener {
-            UIHelper.showAlertDialog( "Are you sure you want to place this order?","Place Order", { dialog, which ->
+            UIHelper.showAlertDialog("Are you sure you want to place this order?", "Place Order", { dialog, which ->
                 dialog.dismiss()
                 UIHelper.showToast(context, "Order Placed Successfully")
                 this@CheckoutDialogFragment.dismiss()

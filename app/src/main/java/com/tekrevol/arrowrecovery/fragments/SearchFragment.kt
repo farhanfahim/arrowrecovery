@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -130,7 +131,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(), true)
+        baseActivity.openActivity(ProductDetailActivity::class.java)
 
     }
 

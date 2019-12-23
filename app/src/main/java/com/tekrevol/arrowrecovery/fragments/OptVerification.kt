@@ -46,7 +46,6 @@ class OptVerification : BaseFragment() {
     override fun onResume() {
         super.onResume()
 
-        pinEditText.requestFocus()
         KeyboardHelper.showSoftKeyboardForcefully(context, pinEditText)
     }
 
@@ -54,14 +53,12 @@ class OptVerification : BaseFragment() {
 
         txtSendCode.setOnClickListener {
             showNextBuildToast()
-
         }
 
         pinEditText.setOnPinEnteredListener {
             baseActivity.finish()
             baseActivity.openActivity(HomeActivity::class.java)
         }
-
     }
 
     override fun onClick(v: View?) {
