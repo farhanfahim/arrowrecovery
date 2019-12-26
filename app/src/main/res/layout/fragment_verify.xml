@@ -31,8 +31,9 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
+            app:typeface="@string/font_regular"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@null"
@@ -51,7 +52,9 @@
             android:textSize="@dimen/s14"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <EditText
+            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                app:typeface="@string/font_light"
+
                 android:id="@+id/input_fullname_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

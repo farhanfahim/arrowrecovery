@@ -82,7 +82,8 @@
 
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <EditText
+            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                app:typeface="@string/font_light"
                 android:id="@+id/input_password_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,7 +105,8 @@
             android:textSize="@dimen/s14"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <EditText
+            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                app:typeface="@string/font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Confirm Password"

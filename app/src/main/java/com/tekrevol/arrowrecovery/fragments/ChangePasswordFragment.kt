@@ -1,13 +1,11 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_change_password.*
 
@@ -34,6 +32,12 @@ class ChangePasswordFragment : BaseFragment() {
         return R.layout.fragment_change_password
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
+
     override fun setTitlebar(titleBar: TitleBar) {
         titleBar.resetViews()
         titleBar.visibility = View.VISIBLE
@@ -51,11 +55,16 @@ class ChangePasswordFragment : BaseFragment() {
         })
     }
 
+    private fun changePassApi() {
+
+    }
+
     override fun onClick(v: View?) {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
+
 
 
 }

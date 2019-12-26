@@ -33,7 +33,8 @@
                 android:textSize="@dimen/s14" />
         </LinearLayout>
 
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/x20dp"
@@ -51,7 +52,8 @@
             android:layout_margin="@dimen/x20dp"
             android:src="@drawable/livechatarrowrecovery" />
 
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
             android:id="@+id/txtCS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -60,6 +60,8 @@
                 android:gravity="center|start"
                 android:maxLines="1"
                 android:minLines="1"
+                app:typeface="@string/font_regular"
+
                 android:text="034311"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s12" />
@@ -71,6 +73,7 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:maxLines="1"
+                app:typeface="@string/font_regular"
                 android:minLines="1"
 
                 android:text="General Motors"
@@ -85,7 +88,7 @@
                 android:gravity="center|start"
                 android:maxLines="1"
                 android:minLines="1"
-
+                app:typeface="@string/font_regular"
                 android:text="$254.89"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s12" />

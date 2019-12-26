@@ -27,6 +27,7 @@
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="0dp"
+            app:typeface="@string/font_regular"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -71,6 +72,8 @@
             android:layout_weight="1"
             android:padding="@dimen/x20dp"
             android:text="Total: $1200"
+            app:typeface="@string/font_regular"
+
             android:textColor="@color/txtDarkGrey" />
 
 

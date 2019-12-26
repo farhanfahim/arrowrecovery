@@ -23,6 +23,7 @@
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
+            app:typeface="@string/font_regular"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x30dp"
             android:gravity="start"
@@ -37,6 +38,7 @@
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginBottom="@dimen/x20dp"
             android:gravity="start"
+            app:typeface="@string/font_regular"
             android:text="We have sent you a SMS with a code to
 the \nnumber +1 285 4849 4059"
             android:textColor="@color/title_color"
@@ -59,11 +61,12 @@ the \nnumber +1 285 4849 4059"
             android:textSize="@dimen/s20"
             app:pinAnimationType="popIn" />
 
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:id="@+id/txtSendCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            app:typeface="@string/font_regular"
             android:text="@string/send_code"
             android:textColor="@color/title_color" />
 

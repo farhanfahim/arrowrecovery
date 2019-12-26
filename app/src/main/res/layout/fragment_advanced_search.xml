@@ -20,13 +20,14 @@
             android:padding="@dimen/x20dp">
 
 
-            <TextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Make"
                 android:textColor="@color/txtBlack"
-                android:textSize="@dimen/s20" />
+                android:textSize="@dimen/s20"
+                app:typeface="@string/font_regular" />
 
             <LinearLayout
                 android:id="@+id/contMake"
@@ -63,13 +64,14 @@
 
             </LinearLayout>
 
-            <TextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Model"
                 android:textColor="@color/txtBlack"
-                android:textSize="@dimen/s20" />
+                android:textSize="@dimen/s20"
+                app:typeface="@string/font_regular" />
 
             <LinearLayout
                 android:id="@+id/contModel"
@@ -108,13 +110,15 @@
             </LinearLayout>
 
 
-            <TextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Serial Year"
                 android:textColor="@color/txtBlack"
-                android:textSize="@dimen/s20" />
+
+                android:textSize="@dimen/s20"
+                app:typeface="@string/font_regular" />
 
             <LinearLayout
                 android:id="@+id/contYear"
@@ -152,13 +156,14 @@
             </LinearLayout>
 
 
-            <TextView
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Serial Number"
                 android:textColor="@color/txtBlack"
-                android:textSize="@dimen/s20" />
+                android:textSize="@dimen/s20"
+                app:typeface="@string/font_regular" />
 
             <LinearLayout
                 android:id="@+id/mantracategory"

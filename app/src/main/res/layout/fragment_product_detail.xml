@@ -34,7 +34,8 @@
                     android:maxLines="1"
                     android:text="BMW-0418189"
                     android:textColor="@color/txtBlack"
-                    android:textSize="@dimen/s22" />
+                    android:textSize="@dimen/s22"
+                    app:typeface="@string/font_regular" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -47,6 +48,7 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        app:typeface="@string/font_regular"
                         android:text="$ "
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s16" />
@@ -57,6 +59,7 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        app:typeface="@string/font_regular"
                         android:text="541.36"
                         android:textColor="@color/txtBlack"
                         android:textSize="@dimen/s16" />
@@ -94,18 +97,18 @@
                         android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:background="@drawable/rounded_stroke_grey"
+                        android:digits="0123456789"
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:maxLength="3"
-                        app:maxNumber="999"
-                        app:minNumber="0"
-                        android:digits="0123456789"
                         android:maxLines="1"
                         android:padding="@dimen/x8dp"
                         android:text="2"
                         android:textColor="@color/c_black"
                         android:textColorHint="@color/c_black"
                         android:textSize="@dimen/s12"
+                        app:maxNumber="999"
+                        app:minNumber="0"
                         app:typeface="@string/font_regular" />
 
 
@@ -114,7 +117,7 @@
                         android:layout_width="@dimen/x30dp"
                         android:layout_height="@dimen/x30dp"
                         android:padding="@dimen/x8dp"
-                        android:src="@drawable/plus"/>
+                        android:src="@drawable/plus" />
 
                 </LinearLayout>
 
@@ -124,8 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/x8dp"
-                    android:gravity="center"
                     android:background="@drawable/rounded_stroke_blue"
+                    android:gravity="center"
                     android:visibility="visible">
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
@@ -175,6 +178,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="Year"
                     android:textColor="@color/txtGrey"
                     android:textSize="@dimen/s14" />
@@ -186,6 +190,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="2014"
+                    app:typeface="@string/font_regular"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16" />
 
@@ -204,6 +209,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="Make"
                     android:textColor="@color/txtGrey"
                     android:textSize="@dimen/s14" />
@@ -214,6 +220,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="BMW"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16" />
@@ -240,6 +247,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="Model"
                     android:textColor="@color/txtGrey"
                     android:textSize="@dimen/s14" />
@@ -250,6 +258,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="5 Series"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16" />
@@ -269,6 +278,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="Reference"
                     android:textColor="@color/txtGrey"
                     android:textSize="@dimen/s14" />
@@ -279,6 +289,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    app:typeface="@string/font_regular"
                     android:text="0418189"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16" />
@@ -312,11 +323,13 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Notes"
+                app:typeface="@string/font_regular"
                 android:textColor="@color/txtGrey"
                 android:textSize="@dimen/s14" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="wrap_content"
+                app:typeface="@string/font_regular"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.

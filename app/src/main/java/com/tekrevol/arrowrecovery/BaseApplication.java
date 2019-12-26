@@ -9,7 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
+
 import androidx.multidex.MultiDexApplication;
+
 import android.util.Log;
 import android.util.Pair;
 
@@ -23,6 +25,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+import io.github.inflationx.calligraphy3.CalligraphyConfig;
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
+import io.github.inflationx.viewpump.ViewPump;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.reactivex.subjects.PublishSubject;
 
 /**
@@ -43,6 +49,9 @@ public class BaseApplication extends MultiDexApplication implements Application.
 
         mContext = this;
         applicationName = getApplicationName(this);
+
+        configureCalligraphyLibrary();
+
         // TODO: 12/20/2017 Enable it to use Calligraphy font library
 //        configureCalligraphyLibrary();
 
@@ -81,6 +90,17 @@ public class BaseApplication extends MultiDexApplication implements Application.
                 .memoryCacheSize(2 * 1024 * 1024)
                 .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    private void configureCalligraphyLibrary() {
+        ViewPump.init(ViewPump.builder()
+                .addInterceptor(new CalligraphyInterceptor(
+                        new CalligraphyConfig.Builder()
+                                .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                                .setFontAttrId(R.attr.fontPath)
+                                .build()))
+                .build());
+
     }
 
     /**
@@ -172,6 +192,11 @@ public class BaseApplication extends MultiDexApplication implements Application.
             isInBackground = true;
 
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     public static String getApplicationName() {

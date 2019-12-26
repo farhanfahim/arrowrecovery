@@ -1,11 +1,15 @@
 package com.tekrevol.arrowrecovery.models.receiving_model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 import com.tekrevol.arrowrecovery.models.SpinnerModel;
 import com.tekrevol.arrowrecovery.models.UserDetails;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class UserModel {
@@ -149,4 +153,5 @@ public class UserModel {
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);
     }
+
 }

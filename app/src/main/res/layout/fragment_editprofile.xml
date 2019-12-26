@@ -77,13 +77,14 @@
                     </RelativeLayout>
 
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x20dp"
                         android:text="Personal Information"
                         android:textColor="@color/green_bg"
-                        android:textSize="@dimen/x20dp" />
+                        android:textSize="@dimen/x20dp"
+                        app:typeface="@string/font_medium" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -108,7 +109,7 @@
                                 android:textColorHint="@color/txtGrey"
 
                                 android:textSize="@dimen/s14"
-                                app:typeface="@string/font_regular" />
+                                app:typeface="@string/font_light" />
 
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -136,7 +137,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:id="@+id/input_fullname_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -145,7 +146,8 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -155,7 +157,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Last Name"
@@ -163,7 +165,8 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <RadioGroup
@@ -199,7 +202,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Company Name"
@@ -207,7 +210,8 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -217,7 +221,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Kind of Company"
@@ -225,16 +229,18 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x20dp"
                         android:text="Contact Information"
                         android:textColor="@color/green_bg"
-                        android:textSize="@dimen/x20dp" />
+                        android:textSize="@dimen/x20dp"
+                        app:typeface="@string/font_medium" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -244,7 +250,8 @@
 
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Phone Number"
@@ -252,7 +259,8 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -262,7 +270,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Comment:"
@@ -270,25 +278,29 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/x10dp"
                         android:text=" LINE account, WhatsApp account, WeChat account"
                         android:textColor="@color/title_color"
                         android:textSize="@dimen/s14"
-                        android:layout_marginBottom="@dimen/x10dp"/>
+                        app:typeface="@string/font_regular" />
 
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x20dp"
                         android:text="Address Information"
                         android:textColor="@color/green_bg"
-                        android:textSize="@dimen/x20dp" />
+                        android:textSize="@dimen/x20dp"
+                        app:typeface="@string/font_medium" />
 
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -299,16 +311,17 @@
 
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
-
                             android:layout_height="wrap_content"
+
                             android:hint="Address"
                             android:inputType="textEmailAddress"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -319,16 +332,17 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
-
                             android:layout_height="wrap_content"
+
                             android:hint="Zip Code"
                             android:inputType="textPassword"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -339,7 +353,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="City"
@@ -347,7 +361,8 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -357,7 +372,7 @@
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                        <EditText
+                        <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Country"
@@ -365,7 +380,8 @@
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 

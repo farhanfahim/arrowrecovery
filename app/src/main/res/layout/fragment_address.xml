@@ -25,17 +25,18 @@
                 android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                <EditText
+                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:id="@+id/input_fullname_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
-                    android:maxLength="200"
                     android:inputType="textPostalAddress"
+                    android:maxLength="200"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -45,16 +46,17 @@
                 android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                <EditText
+                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Zip Code"
-                    android:singleLine="true"
-                    android:maxLength="10"
                     android:inputType="text"
+                    android:maxLength="10"
+                    android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -65,16 +67,17 @@
                 android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                <EditText
+                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
                     android:inputType="text"
-                    android:singleLine="true"
                     android:maxLength="30"
+                    android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -84,16 +87,17 @@
                 android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                <EditText
+                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Country"
-                    android:singleLine="true"
-                    android:maxLength="30"
                     android:inputType="text"
+                    android:maxLength="30"
+                    android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -113,7 +117,9 @@
                     android:layout_height="wrap_content"
                     android:text="I have read and I accept the Terms of Use"
                     android:textColor="@color/title_color"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_medium"
+                    />
 
             </LinearLayout>
 

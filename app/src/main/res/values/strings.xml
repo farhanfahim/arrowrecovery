@@ -3,9 +3,16 @@
 
 
 
+    <string name="font_light">sf-ui-display-light-58646b33e0551.otf</string>
+    <string name="font_regular">SF-UI-Display-Regular.otf</string>
+    <string name="font_medium">sf-ui-display-medium-58646be638f96.otf</string>
+    <string name="font_semibold">sf-ui-display-semibold-58646eddcae92.otf</string>
+    <string name="font_bold">sf-ui-display-bold-58646a511e3d9.otf</string>
+
+<!--
     <string name="font_regular">Roboto-Light_D.ttf</string>
     <string name="font_bold">Roboto-Medium_2.ttf</string>
-    <string name="font_medium">Roboto-Regular_1B</string>
+    <string name="font_medium">Roboto-Regular_1B</string>-->
     <!--<string name="font_bold">Roboto-Regular_1B.ttf</string>-->
 
     <string name="pick_image_intent_text">Choose an image</string>

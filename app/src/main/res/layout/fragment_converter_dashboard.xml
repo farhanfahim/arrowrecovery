@@ -84,21 +84,23 @@
                     android:gravity="center|start"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        app:typeface="@string/font_medium"
                         android:text="Popular Catalytic Converters"
                         android:textColor="@color/title_color"
                         android:textSize="@dimen/s24" />
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        app:typeface="@string/font_regular"
                         android:text="7743 items found"
                         android:textColor="@color/title_grey"
                         android:textSize="@dimen/s16" />

@@ -33,6 +33,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:gravity="center|start"
+            app:typeface="@string/font_regular"
             android:text="Select All"
             android:textColor="@color/txtDarkGrey" />
 

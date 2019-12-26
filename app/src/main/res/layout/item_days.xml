@@ -22,7 +22,8 @@
         android:paddingBottom="@dimen/x3dp"
         app:corner_radius="@dimen/x12dp">
 
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
             android:id="@+id/txtDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

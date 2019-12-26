@@ -38,6 +38,8 @@
             android:layout_marginTop="@dimen/x20dp"
             android:gravity="start"
             android:text="Login into"
+
+            app:typeface="@string/font_regular"
             android:textColor="@color/title_color"
             android:textSize="@dimen/s25" />
 
@@ -46,6 +48,8 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="your account"
+
+            app:typeface="@string/font_regular"
             android:textColor="@color/title_color"
             android:textSize="@dimen/s25" />
 
@@ -61,11 +65,13 @@
             android:textSize="@dimen/s14"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <EditText
+            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 android:id="@+id/input_fullname_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username/Email"
+
+                app:typeface="@string/font_light"
                 android:singleLine="true"
                 android:textColor="@color/title_color"
                 android:textColorHint="@color/txtGrey"
@@ -88,11 +94,13 @@
             android:textSize="@dimen/s14"
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-            <EditText
+            <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 android:id="@+id/input_password_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                app:typeface="@string/font_light"
+
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="@color/title_color"
@@ -109,16 +117,16 @@
              android:layout_marginBottom="10dp"
              android:background="@color/text_color_grey_mid_dark" />
  -->
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:id="@+id/txtForgot"
+            app:typeface="@string/font_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
             android:gravity="end"
             android:text="Forgot?"
             android:textColor="@color/title_color"
-            android:textSize="@dimen/s16"
-            android:textStyle="bold" />
+            android:textSize="@dimen/s16" />
 
         <View
             android:layout_width="match_parent"
@@ -165,12 +173,13 @@
             app:shadowHeight="@dimen/x1dp" />
 
 
-        <TextView
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginBottom="@dimen/x10dp"
             android:gravity="center"
+            app:typeface="@string/font_regular"
             android:text="or log in with social account"
             android:textColor="@color/title_color"
             android:textSize="@dimen/s14" />
@@ -258,6 +267,7 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="wrap_content"
+                app:typeface="@string/font_regular"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account?"
                 android:textColor="@color/title_color"
@@ -269,6 +279,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="Sign up"
                 android:text="@string/SIgn_Up"
+                app:typeface="@string/font_regular"
                 android:textColor="@color/title_color"
                 android:padding="@dimen/x10dp"
                 android:textSize="@dimen/s14" />

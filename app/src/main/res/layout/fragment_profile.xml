@@ -71,7 +71,8 @@
 
                     </RelativeLayout>
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        app:typeface="@string/font_regular"
                         android:id="@+id/txtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -91,7 +92,8 @@
                         android:textSize="15sp"
                         android:visibility="gone" />
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        app:typeface="@string/font_regular"
                         android:id="@+id/txtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -109,13 +111,15 @@
                         android:orientation="horizontal">
 
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Email: "
                             android:textSize="@dimen/s14" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:id="@+id/txtEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -139,13 +143,15 @@
                         android:orientation="horizontal">
 
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Address: "
                             android:textSize="@dimen/s14" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:id="@+id/txtAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -172,7 +178,8 @@
 
                     </LinearLayout>
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        app:typeface="@string/font_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x10dp"
@@ -181,7 +188,8 @@
                         android:text="About: "
                         android:textSize="@dimen/s14" />
 
-                    <TextView
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        app:typeface="@string/font_regular"
                         android:id="@+id/txtAbout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -231,7 +239,8 @@
                             android:gravity="center|start"
                             android:src="@drawable/ordericon" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -269,7 +278,8 @@
                             android:gravity="center|start"
                             android:src="@drawable/changepassicon" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -308,7 +318,8 @@
                             android:gravity="center|start"
                             android:src="@drawable/notificationiconprof" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -346,7 +357,8 @@
                             android:gravity="center|start"
                             android:src="@drawable/privacyicon" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -384,7 +396,8 @@
                             android:gravity="center|start"
                             android:src="@drawable/ordericon" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -422,7 +435,8 @@
                             android:gravity="center|start"
                             android:src="@drawable/logouticon" />
 
-                        <TextView
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"

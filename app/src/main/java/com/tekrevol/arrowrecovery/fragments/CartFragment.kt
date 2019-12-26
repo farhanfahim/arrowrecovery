@@ -2,14 +2,10 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.AdapterView
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CartAdapter
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -20,10 +16,6 @@ import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_cart.btnDelete
 import kotlinx.android.synthetic.main.fragment_cart.cbSelectAll
-import kotlinx.android.synthetic.main.fragment_myorder.*
-import kotlinx.android.synthetic.main.fragment_notification.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
-import kotlinx.android.synthetic.main.fragment_search.*
 
 class CartFragment : BaseFragment(), OnItemClickListener {
 
@@ -79,6 +71,8 @@ class CartFragment : BaseFragment(), OnItemClickListener {
 
     override fun setListeners() {
         btnCheckout.setOnClickListener {
+           /* val checkoutDialogFragment = CheckoutDialogFragment()
+            checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")*/
             val checkoutDialogFragment = CheckoutDialogFragment()
             checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
         }

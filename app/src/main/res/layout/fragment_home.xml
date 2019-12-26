@@ -25,6 +25,7 @@
                 android:layout_margin="@dimen/x20dp"
                 android:padding="@dimen/x8dp"
                 app:disableColor="@color/transparent"
+                app:fontFamily="@string/font_bold"
                 app:selectedColor="@color/transparent"
                 app:selectedTab="1"
                 app:selectedTextColor="@color/colorAccent"
@@ -59,7 +60,8 @@
                     android:gravity="center|start"
                     android:text="1397.00"
                     android:textColor="@color/green_bg"
-                    android:textSize="@dimen/s30" />
+                    android:textSize="@dimen/s30"
+                    app:typeface="@string/font_regular" />
 
 
                 <RelativeLayout
@@ -111,7 +113,8 @@
                 android:gravity="center|start"
                 android:text="$/Oz t"
                 android:textColor="@color/txtGrey"
-                android:textSize="@dimen/s20" />
+                android:textSize="@dimen/s20"
+                app:typeface="@string/font_regular" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -173,7 +176,8 @@
                         android:layout_marginBottom="5dp"
                         android:text="Platinum"
                         android:textColor="@color/title_color"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        app:typeface="@string/font_medium" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -204,7 +208,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="82%"
                                 android:textColor="@color/title_color"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                app:typeface="@string/font_regular" />
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
@@ -212,7 +217,8 @@
                                 android:layout_marginTop="@dimen/x5dp"
                                 android:text="5.73042 $/Oz t"
                                 android:textColor="@color/txtGrey"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                app:typeface="@string/font_regular" />
 
                         </LinearLayout>
 
@@ -241,7 +247,8 @@
                         android:layout_marginBottom="5dp"
                         android:text="Palladium"
                         android:textColor="@color/title_color"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        app:typeface="@string/font_medium" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -273,7 +280,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="-50%"
                                 android:textColor="@color/title_color"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                app:typeface="@string/font_regular" />
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
@@ -281,7 +289,8 @@
                                 android:layout_marginTop="@dimen/x5dp"
                                 android:text="5.73042 $/Oz t"
                                 android:textColor="@color/txtGrey"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                app:typeface="@string/font_regular" />
 
                         </LinearLayout>
 
@@ -310,7 +319,8 @@
                         android:layout_marginBottom="5dp"
                         android:text="Rhodium"
                         android:textColor="@color/title_color"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        app:typeface="@string/font_medium" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -341,7 +351,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="22%"
                                 android:textColor="@color/title_color"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                app:typeface="@string/font_regular" />
 
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
@@ -349,7 +360,8 @@
                                 android:layout_marginTop="@dimen/x5dp"
                                 android:text="5.73042 $/Oz t"
                                 android:textColor="@color/txtGrey"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                app:typeface="@string/font_regular" />
 
                         </LinearLayout>
 

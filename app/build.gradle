@@ -133,6 +133,9 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     implementation 'com.mikhaellopez:rxanimation:0.0.7'
+
+    implementation 'io.github.inflationx:calligraphy3:3.1.1'
+    implementation 'io.github.inflationx:viewpump:2.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -30,7 +30,9 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+
                     android:id="@+id/txtMake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,7 +45,8 @@
                     android:textColor="@color/title_color" />
 
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
                     android:id="@+id/txtModel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,7 +85,9 @@
                 android:padding="@dimen/x10dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -92,7 +97,9 @@
                     android:textAllCaps="true"
                     android:textColor="@color/title_color" />
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+
                     android:id="@+id/txtPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

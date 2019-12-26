@@ -6,25 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/c_white">
 
-    <!--  <ImageView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scaleType=""
-          android:contentDescription="Splash"
-          android:src="@drawable/splash" />-->
-
-
     <ImageView
-        android:layout_marginTop="@dimen/x10dp"
         android:id="@+id/btnBack"
         android:layout_width="@dimen/x40dp"
         android:layout_height="@dimen/x40dp"
         android:layout_marginLeft="@dimen/x10dp"
+        android:layout_marginTop="@dimen/x10dp"
         android:layout_marginRight="@dimen/x10dp"
-        android:src="@drawable/ic_back"
-        android:tint="@color/title_color"
         android:background="@color/transparent"
-        android:padding="@dimen/x5dp" />
+        android:padding="@dimen/x5dp"
+        android:src="@drawable/ic_back"
+        android:tint="@color/title_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,11 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x30dp"
-            android:gravity="start"
             android:layout_marginBottom="@dimen/x15dp"
+            android:gravity="start"
             android:text="Create your account"
             android:textColor="@color/title_color"
-            android:textSize="@dimen/s25" />
+            android:textSize="@dimen/s25"
+            app:typeface="@string/font_regular" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,14 +55,15 @@
                     android:layout_weight="1"
                     android:src="@drawable/accountlogo" />
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Account"
                     android:textColor="@color/title_color"
+                    android:textSize="@dimen/s14"
 
-                    android:textSize="@dimen/s14" />
+                    app:typeface="@string/font_regular" />
             </LinearLayout>
 
 
@@ -94,15 +88,16 @@
                     android:layout_weight="1"
                     android:src="@drawable/personallogogrey" />
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtPersonal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Personal"
                     android:textColor="@color/star_grey"
+                    android:textSize="@dimen/s14"
 
-                    android:textSize="@dimen/s14" />
+                    app:typeface="@string/font_regular" />
             </LinearLayout>
 
 
@@ -127,15 +122,16 @@
                     android:layout_weight="1"
                     android:src="@drawable/contactlogogrey" />
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtContact"
-
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Contact"
                     android:textColor="@color/star_grey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
             </LinearLayout>
 
             <View
@@ -160,15 +156,16 @@
                     android:layout_weight="1"
                     android:src="@drawable/addressgrey" />
 
-                <TextView
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtAddress"
-
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
                     android:gravity="bottom|center"
                     android:text="Address"
                     android:textColor="@color/star_grey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
             </LinearLayout>
 
 
@@ -237,6 +234,7 @@
                 android:layout_marginTop="@dimen/x5dp"
                 android:layout_marginBottom="@dimen/x5dp"
                 android:gravity="center"
+                app:typeface="@string/font_regular"
                 android:text="or sign up with social account"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s14" />
@@ -320,6 +318,7 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="wrap_content"
+                    app:typeface="@string/font_regular"
 
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -333,6 +332,7 @@
                     android:contentDescription="Sign up"
                     android:padding="@dimen/x10dp"
                     android:text="@string/Log_In"
+                    app:typeface="@string/font_regular"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s14" />
 
