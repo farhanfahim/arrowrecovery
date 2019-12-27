@@ -25,7 +25,6 @@
                 android:layout_margin="@dimen/x20dp"
                 android:padding="@dimen/x8dp"
                 app:disableColor="@color/transparent"
-                app:fontFamily="@string/font_bold"
                 app:selectedColor="@color/transparent"
                 app:selectedTab="1"
                 app:selectedTextColor="@color/colorAccent"
