@@ -1,22 +1,28 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_RESET_PASSWORD
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.sending_model.ResetPasswordSendingModel
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_forgot_password.*
 import kotlinx.android.synthetic.main.fragment_reset.*
-import kotlinx.android.synthetic.main.fragment_verify.*
+import retrofit2.Call
 
 class ResetFragment : BaseFragment() {
+
+    var webCall: Call<WebResponse<Any>>? = null
+
     override fun getDrawerLockMode(): Int {
 
-        return  0;
+        return 0;
     }
 
     companion object {
@@ -37,20 +43,51 @@ class ResetFragment : BaseFragment() {
     }
 
     override fun setTitlebar(titleBar: TitleBar) {
-        titleBar.visibility = View.GONE
+        titleBar.resetViews()
+        titleBar.visibility = View.VISIBLE
+        titleBar.hide()
+        titleBar.showBackButton(activity)
+        titleBar.setTitle("Reset Password")
 
     }
 
     override fun setListeners() {
 
-        backbtn.setOnClickListener(View.OnClickListener {
-
-            baseActivity.popStackTill(1)
-        })
-
         txtResetPass.setOnClickListener(View.OnClickListener {
 
-            baseActivity.popStackTill(1)
+            resetpasswordAPI()
+        })
+    }
+
+    private fun resetpasswordAPI() {
+
+        if (!inputNewPass.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter valid new password")
+            return
+        }
+        if (!inputConfirmPass.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter valid confirm password")
+            return
+        }
+
+        val txtEmail: String
+        val code: String
+        txtEmail = sharedPreferenceManager.getString(AppConstants.KEY_CURRENT_USER_EMAIL)
+
+        code = sharedPreferenceManager.getString(AppConstants.KEY_CODE)
+
+        val resetPasswordSendingModel = ResetPasswordSendingModel()
+        resetPasswordSendingModel.setPassword(inputNewPass.getStringTrimmed())
+        resetPasswordSendingModel.setEmail(txtEmail)
+        resetPasswordSendingModel.setVerificationCode(code)
+        resetPasswordSendingModel.setPassword(inputConfirmPass.getStringTrimmed())
+
+        webCall = getBaseWebServices(true).postAPIAnyObject(PATH_RESET_PASSWORD, resetPasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                UIHelper.showAlertDialogWithCallback(webResponse.message, "Reset Password", DialogInterface.OnClickListener { dialog, which -> baseActivity.popStackTill(LoginFragment::class.java.simpleName) }, context)
+            }
+
+            override fun onError(`object`: Any?) {}
         })
     }
 
@@ -59,4 +96,12 @@ class ResetFragment : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
+
+    override fun onDestroyView() {
+        if (webCall != null) {
+            webCall!!.cancel()
+        }
+        super.onDestroyView()
+    }
+
 }

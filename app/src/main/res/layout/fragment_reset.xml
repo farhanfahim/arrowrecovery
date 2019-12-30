@@ -6,44 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/c_white">
 
-    <LinearLayout
-        android:id="@+id/layout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="@dimen/x10dp">
-
-
-        <ImageView
-            android:id="@+id/backbtn"
-            android:layout_width="@dimen/x40dp"
-            android:layout_height="@dimen/x40dp"
-            android:layout_marginLeft="@dimen/x5dp"
-            android:layout_marginRight="@dimen/x10dp"
-            android:src="@drawable/ic_back"
-            android:tint="@color/title_color"
-            android:background="@color/transparent"
-            android:padding="@dimen/x5dp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Reset Password"
-            android:textColor="#000"
-            android:textSize="@dimen/s15" />
-
-        <ImageView
-            android:layout_width="@dimen/x40dp"
-            android:layout_height="@dimen/x40dp"
-            android:layout_marginLeft="@dimen/x5dp"
-            android:layout_marginRight="@dimen/x10dp"
-            android:tint="@color/title_color"
-            android:padding="@dimen/x5dp" />
-    </LinearLayout>
-
 
     <LinearLayout
 
@@ -84,7 +46,7 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 app:typeface="@string/font_light"
-                android:id="@+id/input_password_login"
+                android:id="@+id/inputNewPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="New Password"
@@ -112,6 +74,7 @@
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:singleLine="true"
+                android:id="@+id/inputConfirmPass"
                 android:textColor="@color/title_color"
                 android:textColorHint="@color/txtGrey"
                 android:textSize="@dimen/s14" />

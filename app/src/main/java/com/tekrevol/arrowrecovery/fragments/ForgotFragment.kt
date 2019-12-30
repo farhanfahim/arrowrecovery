@@ -1,17 +1,24 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
+import kotlinx.android.synthetic.main.fragment_profile.*
+import retrofit2.Call
+import java.util.*
 
 class ForgotFragment : BaseFragment() {
+
+    var webCall: Call<WebResponse<Any>>? = null
 
     companion object {
 
@@ -46,16 +53,39 @@ class ForgotFragment : BaseFragment() {
 
     override fun setListeners() {
 
-      /*  backButton.setOnClickListener(View.OnClickListener {
-
-            baseActivity.popBackStack()
-        })
-*/
         txtForgotPass.setOnClickListener(View.OnClickListener {
 
             baseActivity.addDockableFragment(VerifyFragment.newInstance(), true)
         })
 
+        txtForgotPass.setOnClickListener(View.OnClickListener {
+            forgotPasswordAPI()
+
+        })
+
+    }
+
+    private fun forgotPasswordAPI() {
+
+        if (!inputEmail.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter valid email address")
+            return
+        }
+
+        sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_EMAIL, txtEmail.getStringTrimmed())
+        // key , fileTypeValue
+        // key , fileTypeValue
+        val query: MutableMap<String, Any> = HashMap()
+        query[WebServiceConstants.Q_PARAM_EMAIL] = txtEmail.getStringTrimmed()
+
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_FORGET_PASSWORD, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                UIHelper.showToast(context, webResponse.message)
+                baseActivity.addDockableFragment(VerifyFragment.newInstance(), true)
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
 
     }
 
@@ -66,5 +96,11 @@ class ForgotFragment : BaseFragment() {
     }
 
 
+    override fun onDestroyView() {
+        if (webCall != null) {
+            webCall!!.cancel()
+        }
+        super.onDestroyView()
+    }
 }
 

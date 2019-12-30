@@ -26,12 +26,14 @@ import com.tekrevol.arrowrecovery.activities.HomeActivity;
 import com.tekrevol.arrowrecovery.activities.MainActivity;
 import com.tekrevol.arrowrecovery.callbacks.GenericClickableInterface;
 import com.tekrevol.arrowrecovery.constatnts.AppConstants;
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes;
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper;
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.arrowrecovery.libraries.residemenu.ResideMenu;
 import com.tekrevol.arrowrecovery.managers.DateManager;
 import com.tekrevol.arrowrecovery.managers.FileManager;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices;
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
 
@@ -261,5 +263,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
             }
         }, "No", getContext());
+    }
+
+    public WebServices getBaseWebServices(boolean isShowLoader){
+        return new WebServices(getBaseActivity(),getToken(), BaseURLTypes.BASE_URL,isShowLoader);
     }
 }
