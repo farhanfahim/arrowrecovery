@@ -1,22 +1,19 @@
 package com.tekrevol.arrowrecovery.activities
 
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Pair
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.google.gson.Gson
 import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.callbacks.GenericClickableInterface
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.fragments.LeftSideMenuFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.fragments.abstracts.GenericDialogFragment
-import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.widget.TitleBar
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -25,6 +22,7 @@ abstract class BaseActivity : AppCompatActivity() {
     var titleBar: TitleBar? = null
         protected set
     val leftSideMenuFragment: LeftSideMenuFragment? = null
+    private var gson: Gson? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +32,18 @@ abstract class BaseActivity : AppCompatActivity() {
         drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment()
+        gson = GsonFactory.getSimpleGson()
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 //        }
 
     }
+
+    open fun getGson(): Gson? {
+        return gson
+    }
+
 
     /**
      * Give Resource id of the view you want to inflate

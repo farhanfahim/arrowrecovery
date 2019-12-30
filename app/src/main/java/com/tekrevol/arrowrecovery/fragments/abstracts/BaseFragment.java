@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tekrevol.arrowrecovery.BaseApplication;
 import com.tekrevol.arrowrecovery.activities.HomeActivity;
 import com.tekrevol.arrowrecovery.activities.MainActivity;
@@ -268,4 +269,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public WebServices getBaseWebServices(boolean isShowLoader){
         return new WebServices(getBaseActivity(),getToken(), BaseURLTypes.BASE_URL,isShowLoader);
     }
+
+    public Gson getGson() {
+        return getBaseActivity().getGson();
+    }
+
 }
