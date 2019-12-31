@@ -131,30 +131,6 @@
             android:layout_height="0dp"
             android:layout_weight="0.5" />
 
-
-        <!--
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />-->
-        <!--
-                <TextView
-                    android:id="@+id/txtLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/searchbar_grey"
-                    android:backgroundTint="@color/green_bg"
-                    android:gravity="center"
-                    android:text="Log in"
-                    android:textAllCaps="false"
-                    android:textColor="@color/c_white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />-->
-
         <info.hoang8f.widget.FButton
             android:id="@+id/txtLogin"
             android:layout_width="match_parent"

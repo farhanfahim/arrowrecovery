@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -51,12 +50,22 @@ class LoginFragmentt : BaseFragment() {
             baseActivity.addDockableFragment(ForgotFragment.newInstance(), true)
         })
 
+        btnLogin.setOnClickListener(View.OnClickListener {
+            loginFacebookAPI()
+        })
+
         txt_signup.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
             baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(), true)
         })
 
     }
+
+    private fun loginFacebookAPI() {
+        mainActivity.fbSignIn()
+    }
+
+
 
     private fun loginUpAPI() {
 

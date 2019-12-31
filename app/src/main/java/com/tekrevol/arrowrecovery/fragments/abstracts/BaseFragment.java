@@ -274,4 +274,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         return getBaseActivity().getGson();
     }
 
+
+    public MainActivity getMainActivity() {
+        return (MainActivity) getActivity();
+    }
+
 }
