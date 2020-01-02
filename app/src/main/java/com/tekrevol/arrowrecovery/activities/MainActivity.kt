@@ -2,13 +2,26 @@ package com.tekrevol.arrowrecovery.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.view.GravityCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.android.libraries.places.internal.it
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.modules.facebooklogin.FacebookHelper
 import com.modules.facebooklogin.FacebookResponse
 import com.modules.facebooklogin.FacebookUser
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
@@ -25,7 +38,11 @@ class MainActivity : BaseActivity(), FacebookResponse {
         super.onNewIntent(intent)
     }
 
-    var sharedPreferenceManager: SharedPreferenceManager? = null
+    val RC_SIGN_IN: Int = 1
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var mGoogleSignInOptions: GoogleSignInOptions
+    private var sharedPreferenceManager: SharedPreferenceManager? = null
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private var mFbHelper: FacebookHelper? = null
 
@@ -34,20 +51,61 @@ class MainActivity : BaseActivity(), FacebookResponse {
         //        setContentView(R.layout.activity_main);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
+        firebaseAuth = FirebaseAuth.getInstance()
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this)
 
         mFbHelper = FacebookHelper(this,
                 "id,name,email,gender,birthday,picture",
                 this)
 
+        mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        // Build a GoogleSignInClient with the options specified by gso.
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
 
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mFbHelper!!.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account)
+            } catch (e: ApiException) {
+                Toast.makeText(this, e.toString() + "------------", Toast.LENGTH_LONG).show()
+                Log.d("error", e.toString())
+            }
+        } else {
+            mFbHelper!!.onActivityResult(requestCode, resultCode, data)
+
+        }
+
+    }
+
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        val email = account?.email
+        val namee = account?.displayName
+        val userid = account?.id
+        var imUrl = ""
+        imUrl = if (account?.photoUrl == null || account.photoUrl.toString().isEmpty()) { //set default image
+            WebServiceConstants.IMAGE_BASE_URL
+        } else {
+            account.photoUrl.toString() //photo_url is String
+        }
+       // val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+        /*firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(this, "Google sign in successful:(", Toast.LENGTH_LONG).show()
+
+            } else {
+                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+            }
+        }*/
     }
 
     override val viewId: Int = R.layout.activity_main
@@ -55,7 +113,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
     override val drawerLayoutId: Int = R.id.drawer_layout
     override val dockableFragmentId: Int = R.id.contMain
     override val drawerFragmentId: Int = R.id.contDrawer
-
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
@@ -110,6 +167,11 @@ class MainActivity : BaseActivity(), FacebookResponse {
         mFbHelper?.performSignIn(this)
     }
 
+    fun googleSignIn() {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
     override fun onFbSignInSuccess() {
     }
 
@@ -142,5 +204,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
     override fun onFbSignInFail() {
     }
+
 
 }

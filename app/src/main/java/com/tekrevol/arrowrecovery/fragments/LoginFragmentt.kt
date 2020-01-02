@@ -50,8 +50,12 @@ class LoginFragmentt : BaseFragment() {
             baseActivity.addDockableFragment(ForgotFragment.newInstance(), true)
         })
 
-        btnLogin.setOnClickListener(View.OnClickListener {
+        btnfbLogin.setOnClickListener(View.OnClickListener {
             loginFacebookAPI()
+        })
+
+        btngoogleLogin.setOnClickListener(View.OnClickListener {
+            loginGoogleAPI()
         })
 
         txt_signup.setOnClickListener(View.OnClickListener {
@@ -65,6 +69,9 @@ class LoginFragmentt : BaseFragment() {
         mainActivity.fbSignIn()
     }
 
+    private fun loginGoogleAPI() {
+        mainActivity.googleSignIn()
+    }
 
 
     private fun loginUpAPI() {

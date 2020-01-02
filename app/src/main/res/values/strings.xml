@@ -56,6 +56,7 @@
     <string name="SIgn_Up"><u>Sign up</u></string>
     <string name="Log_In"><u>Log In</u></string>
     <string name="send_code"><u>Send a new code</u></string>
+    <string name="app_id">AIzaSyDGGfCKmS11p7VKXi-hXaGNDkIY8ForUJs</string>
     <string name="google_maps_key">AIzaSyCkoOvnd1_eougL23wAx7DP65C_duaJRjQ</string>
 
 </resources>

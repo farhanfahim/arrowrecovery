@@ -164,7 +164,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnfbLogin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -197,6 +197,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/btngoogleLogin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

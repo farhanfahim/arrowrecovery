@@ -110,7 +110,6 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-core:16.0.9'
 
 
 //    implementation 'com.github.apache:commons-io:2.5'
@@ -138,6 +137,8 @@ dependencies {
     implementation 'io.github.inflationx:viewpump:2.0.3'
 
     implementation project(path: ':facebookloginsdk')
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
 }
 
