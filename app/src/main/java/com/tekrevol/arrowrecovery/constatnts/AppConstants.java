@@ -21,7 +21,6 @@ import com.tekrevol.arrowrecovery.BaseApplication;
 
 import static android.provider.Settings.Secure.getString;
 
-
 /**
  * Created by khanhamza on 4/20/2017.
  */
@@ -30,8 +29,6 @@ public class AppConstants {
 
     // Temporary User
     public static String tempUserName = "Developer/Tester";
-
-
     /**
      * Static Booleans
      */
@@ -41,7 +38,6 @@ public class AppConstants {
     /**
      * Date Formats
      */
-
     public static final String INPUT_DATE_FORMAT = "yyyy-dd-MM hh:mm:ss";
     public static final String INPUT_DATE_FORMAT_AM_PM = "yyyy-dd-MM hh:mm:ss a";
     public static final String OUTPUT_DATE_FORMAT = "EEEE dd,yyyy";
@@ -57,7 +53,6 @@ public class AppConstants {
     public static final String FORMAT_PEOPLESOFT = "yyyy-MM-dd";
     public static final String FORMAT_DATE_SHOW = "MMM dd, yyyy";
     public static final String FORMAT_DATE_SEND = "dd/MM/yyyy HH:mm:ss";
-
 
     /**
      * Path to save Media
@@ -121,7 +116,8 @@ public class AppConstants {
      * Data Static Strings
      */
 
-    public static String SOCIAL_MEDIA_PLATFORM_FACEBOOK = "android";
+    public static String SOCIAL_MEDIA_PLATFORM_FACEBOOK = "facebook";
+    public static String SOCIAL_MEDIA_PLATFORM_GOOGLE = "google";
 
     public static String AboutUs = "<What is Lorem Ipsum?\n" +
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n" +

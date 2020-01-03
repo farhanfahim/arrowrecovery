@@ -24,6 +24,7 @@ import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
+import com.tekrevol.arrowrecovery.fragments.OptVerification
 import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
@@ -48,7 +49,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //        setContentView(R.layout.activity_main);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -61,10 +61,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
         mGoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
-        // Build a GoogleSignInClient with the options specified by gso.
-        // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
-
     }
 
 
@@ -77,7 +74,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                Toast.makeText(this, e.toString() + "------------", Toast.LENGTH_LONG).show()
                 Log.d("error", e.toString())
             }
         } else {
@@ -89,7 +85,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val email = account?.email
-        val namee = account?.displayName
+        val name = account?.displayName
         val userid = account?.id
         var imUrl = ""
         imUrl = if (account?.photoUrl == null || account.photoUrl.toString().isEmpty()) { //set default image
@@ -97,15 +93,30 @@ class MainActivity : BaseActivity(), FacebookResponse {
         } else {
             account.photoUrl.toString() //photo_url is String
         }
-       // val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-        /*firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Toast.makeText(this, "Google sign in successful:(", Toast.LENGTH_LONG).show()
+        var socialLoginSendingModel = SocialLoginSendingModel()
+        socialLoginSendingModel.setClientId(userid)
+        socialLoginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
+        socialLoginSendingModel.setEmail(email)
+        socialLoginSendingModel.setImage(imUrl)
+        socialLoginSendingModel.setPlatform(AppConstants.SOCIAL_MEDIA_PLATFORM_GOOGLE)
+        socialLoginSendingModel.setUsername(name)
+        socialLoginSendingModel.setToken("abc123")
+        socialLoginSendingModel.setDeviceToken("abc123")
+        WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
+                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
+                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
+                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
-            } else {
-                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
+                mFbHelper!!.performSignOut()
+                addDockableFragment(OptVerification.newInstance(), true)
+
             }
-        }*/
+
+            override fun onError(`object`: Any?) {}
+        })
+
     }
 
     override val viewId: Int = R.layout.activity_main
@@ -179,7 +190,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
     }
 
     override fun onFbProfileReceived(facebookUser: FacebookUser) {
-        val socialLoginSendingModel = SocialLoginSendingModel()
+        var socialLoginSendingModel = SocialLoginSendingModel()
         socialLoginSendingModel.setClientId(facebookUser.facebookID)
         socialLoginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
         socialLoginSendingModel.setEmail(facebookUser.email)
@@ -196,6 +207,8 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
                 mFbHelper!!.performSignOut()
+                addDockableFragment(OptVerification.newInstance(), true)
+
             }
 
             override fun onError(`object`: Any?) {}

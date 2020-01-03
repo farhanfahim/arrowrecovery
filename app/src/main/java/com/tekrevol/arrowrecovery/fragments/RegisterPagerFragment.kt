@@ -25,13 +25,10 @@ import retrofit2.Call
 
 private var adapter: RegisterPagerAdapter? = null
 
-
 class RegisterPagerFragment : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
-
     var positionToSelect: Int = 0
-
 
     companion object {
         fun newInstance(): Fragment {
@@ -100,7 +97,6 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun signUpApi() {
 
-
         var signupSendingModel = SignupSendingModel()
         signupSendingModel.setDeviceToken("abc")
         signupSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
@@ -108,22 +104,18 @@ class RegisterPagerFragment : BaseFragment() {
         signupSendingModel.setName(inputFirstname.getStringTrimmed())
         signupSendingModel.setPassword(inputPasswordReg.getStringTrimmed())
         signupSendingModel.setPasswordConfirmation(inputConfirmPassReg.getStringTrimmed())
-
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signupSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
-                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-
+                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser())
+                sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId())
+                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken())
                 baseActivity.addDockableFragment(OptVerification.newInstance(), true)
-
             }
 
             override fun onError(`object`: Any?) {}
         })
-
     }
 
     private fun contactDetails(positionToSelect: Int) {
@@ -204,8 +196,7 @@ class RegisterPagerFragment : BaseFragment() {
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
         setCurrentItemByPosition(positionToSelect)
-
-        //        tabs.setupWithViewPager(viewpager);
+        //tabs.setupWithViewPager(viewpager);
     }
 
     fun setCurrentItemByPosition(position: Int) {
