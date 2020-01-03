@@ -137,7 +137,7 @@ public class AppConstants {
 
     public static final String NO_RECORD_FOUND = "No Record Found";
 
-    public static String DEVICE_OS_ANDROID = "ANDROID";
+    public static String DEVICE_OS_ANDROID = "android";
 
 
     private static String getDeviceID(Context context) {

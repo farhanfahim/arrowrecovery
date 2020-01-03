@@ -40,13 +40,12 @@ public class WebServiceConstants {
 //    public static final String IMAGE_BASE_URL = "http://papp.servstaging.com/api/resize/";
 
     // DEV
-    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
-    public static final String IMAGE_BASE_URL = "http://papp.apps.fomarkmedia.com/api/resize/";
+//    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
+//    public static final String IMAGE_BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/api/v1/";
 
     // LOCAL MACHINE
-//    public static final String BASE_URL = "http://192.168.29.49/papp/";
-//    public static final String IMAGE_BASE_URL = "http://192.168.29.49/papp/api/resize/";
-
+    public static final String BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/";
+    public static final String IMAGE_BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/api/resize";
 
 
     /**
@@ -75,12 +74,12 @@ public class WebServiceConstants {
     public static final String PATH_DECLINE_SESSION = "decline-session-request/";
     public static final String PATH_COMPLETE_SESSION = "complete-session/";
     public static final String PATH_START_SESSION = "start-session/";
-    public static final String PATH_FORGET_PASSWORD= "forget-password";
-    public static final String PATH_VERIFY_RESET_CODE= "verify-reset-code";
-    public static final String PATH_RESET_PASSWORD= "reset-password";
-    public static final String PATH_PAGES= "pages";
-    public static final String PATH_SOCIAL_LOGIN= "social_login";
-    public static final String PATH_VERIFY_COMPLETED_SESSION= "verify-completed-session/";
+    public static final String PATH_FORGET_PASSWORD = "forget-password";
+    public static final String PATH_VERIFY_RESET_CODE = "verify-reset-code";
+    public static final String PATH_RESET_PASSWORD = "reset-password";
+    public static final String PATH_PAGES = "pages";
+    public static final String PATH_SOCIAL_LOGIN = "social_login";
+    public static final String PATH_VERIFY_COMPLETED_SESSION = "verify-completed-session/";
     public static final String PATH_CHANGE_PASSWORD = "change-password";
 
 

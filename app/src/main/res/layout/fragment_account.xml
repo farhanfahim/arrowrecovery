@@ -24,7 +24,7 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    android:id="@+id/input_fullname_login"
+                    android:id="@+id/inputUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
@@ -49,6 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
+                    android:id="@+id/inputPasswordReg"
                     android:inputType="textPassword"
                     android:maxLength="50"
                     android:singleLine="true"
@@ -68,6 +69,7 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:layout_width="match_parent"
+                    android:id="@+id/inputConfirmPassReg"
                     android:layout_height="wrap_content"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"

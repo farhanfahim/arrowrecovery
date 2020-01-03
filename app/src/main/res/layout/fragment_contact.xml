@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,7 +15,6 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_layout_fullname_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x10dp"
@@ -25,7 +23,7 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     app:typeface="@string/font_light"
-                    android:id="@+id/input_fullname_login"
+                    android:id="@+id/inputEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
@@ -50,6 +48,7 @@
                     android:hint="Phone Number"
                     android:singleLine="true"
                     android:inputType="phone"
+                    android:id="@+id/inputPhoneNo"
                     app:typeface="@string/font_light"
                     android:maxLength="50"
                     android:textColor="@color/title_color"
@@ -73,6 +72,7 @@
                     android:lines="5"
                     android:maxLines="5"
                     android:gravity="start"
+                    android:id="@+id/inputComment"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14" />

@@ -72,11 +72,11 @@ class ForgotFragment : BaseFragment() {
             return
         }
 
-        sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_EMAIL, txtEmail.getStringTrimmed())
+        sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_EMAIL, inputEmail.getStringTrimmed())
         // key , fileTypeValue
         // key , fileTypeValue
         val query: MutableMap<String, Any> = HashMap()
-        query[WebServiceConstants.Q_PARAM_EMAIL] = txtEmail.getStringTrimmed()
+        query[WebServiceConstants.Q_PARAM_EMAIL] = inputEmail.getStringTrimmed()
 
         webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_FORGET_PASSWORD, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

@@ -43,6 +43,7 @@ class ChangePasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        inputNewPass.addValidator(PasswordValidation())
         inputConfirmPass.addValidator(PasswordValidation(inputNewPass))
     }
 
