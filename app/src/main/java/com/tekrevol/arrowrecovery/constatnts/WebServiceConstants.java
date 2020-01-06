@@ -81,6 +81,7 @@ public class WebServiceConstants {
     public static final String PATH_SOCIAL_LOGIN = "social_login";
     public static final String PATH_VERIFY_COMPLETED_SESSION = "verify-completed-session/";
     public static final String PATH_CHANGE_PASSWORD = "change-password";
+    public static final String PATH_RESENDOTP = "resend-otp";
 
 
     /**
