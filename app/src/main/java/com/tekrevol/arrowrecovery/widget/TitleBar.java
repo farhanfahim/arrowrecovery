@@ -19,6 +19,7 @@ import com.tekrevol.arrowrecovery.activities.BaseActivity;
 import com.tekrevol.arrowrecovery.activities.HomeActivity;
 
 import com.tekrevol.arrowrecovery.R;
+import com.tekrevol.arrowrecovery.activities.MainActivity;
 import com.tekrevol.arrowrecovery.libraries.residemenu.ResideMenu;
 
 
@@ -249,7 +250,7 @@ public class TitleBar extends RelativeLayout {
     }
 
 
-    public void showEditProfile(final HomeActivity homeActivity, OnClickListener onClickListener) {
+    public void showEditProfile(OnClickListener onClickListener) {
         btnRightNotification.setVisibility(GONE);
         img.setVisibility(GONE);
         btnRightSearch.setVisibility(GONE);
@@ -273,6 +274,17 @@ public class TitleBar extends RelativeLayout {
     }
 
     public void showSaveButton(final HomeActivity homeActivity, OnClickListener onClickListener) {
+        btnRightNotification.setVisibility(GONE);
+        img.setVisibility(GONE);
+        btnRightSearch.setVisibility(GONE);
+        btnRight5.setVisibility(VISIBLE);
+        this.btnRight5.setText("SAVE");
+        this.btnRight5.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        btnRight5.setOnClickListener(onClickListener);
+
+    }
+
+    public void showSaveButton1(final MainActivity homeActivity, OnClickListener onClickListener) {
         btnRightNotification.setVisibility(GONE);
         img.setVisibility(GONE);
         btnRightSearch.setVisibility(GONE);

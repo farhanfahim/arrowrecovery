@@ -165,12 +165,11 @@ public class BaseApplication extends MultiDexApplication implements Application.
 
     @Override
     public void onActivityPaused(Activity activity) {
-        Log.e("abc", "onActivityPaused " + activity.toString());
+
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-        Log.e("abc", "onActivityStopped " + activity.toString());
 
     }
 

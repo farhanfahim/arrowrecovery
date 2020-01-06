@@ -63,7 +63,7 @@ public class AppConstants {
     public static final String DOC_PATH = ROOT_PATH + "/Docs";
 
     public static String getUserFolderPath(Context context) {
-        return DOC_PATH + "/" + SharedPreferenceManager.getInstance(context).getCurrentUser().getUserDetails().getFullName();
+        return DOC_PATH + "/" + SharedPreferenceManager.getInstance(context).getCurrentUser().getUserDetails().getFirstName();
     }
 
 

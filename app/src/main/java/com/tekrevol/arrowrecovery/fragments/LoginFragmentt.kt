@@ -5,8 +5,10 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
@@ -60,7 +62,7 @@ class LoginFragmentt : BaseFragment() {
 
         txt_signup.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(), true)
+            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin,0), true)
         })
 
     }
@@ -108,10 +110,16 @@ class LoginFragmentt : BaseFragment() {
                     sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
                     sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
-                    baseActivity.addDockableFragment(OptVerification.newInstance(), true)
-
-                    /*baseActivity.openActivity(HomeActivity::class.java)
-                    baseActivity.finish()*/
+                    if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired,1), true)
+                    } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(OptVerification.newInstance(), true)
+                    } else {
+                        baseActivity.finish()
+                        baseActivity.openActivity(HomeActivity::class.java)
+                    }
                 }
 
                 override fun onError(`object`: Any?) {}

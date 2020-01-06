@@ -18,7 +18,7 @@ class OptVerification : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
     }
 
     companion object {
@@ -41,6 +41,8 @@ class OptVerification : BaseFragment() {
     }
 
     override fun setTitlebar(titleBar: TitleBar?) {
+        titleBar?.visibility = View.GONE
+
     }
 
     override fun onResume() {

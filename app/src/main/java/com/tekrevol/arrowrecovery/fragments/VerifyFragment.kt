@@ -80,7 +80,7 @@ class VerifyFragment : BaseFragment() {
     }
 
     private fun verifycodeAPI() {
-        val resetPasswordSendingModel = ResetPasswordSendingModel()
+        var resetPasswordSendingModel = ResetPasswordSendingModel()
         resetPasswordSendingModel.setVerificationCode(inputCode.getStringTrimmed())
 
         sharedPreferenceManager.putValue(AppConstants.KEY_CODE, inputCode.getStringTrimmed())

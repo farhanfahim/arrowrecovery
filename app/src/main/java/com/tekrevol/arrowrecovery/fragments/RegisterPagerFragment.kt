@@ -9,10 +9,14 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.RegisterPagerAdapter
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.UserDetails
+import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
+import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.sending_model.SignupSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
@@ -29,12 +33,14 @@ class RegisterPagerFragment : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
+    lateinit var fragmentName: FragmentName
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(fragmentName: FragmentName, positionToSelect: Int): Fragment {
             val args = Bundle()
             val fragment = RegisterPagerFragment()
-            fragment.positionToSelect = 0
+            fragment.positionToSelect = positionToSelect
+            fragment.fragmentName = fragmentName
             fragment.arguments = args
             return fragment
         }
@@ -50,6 +56,10 @@ class RegisterPagerFragment : BaseFragment() {
         } else {
             adapter = RegisterPagerAdapter(childFragmentManager)
             setViewPagerAdapter()
+        }
+
+        if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+            setCurrentItemByPosition(positionToSelect)
         }
 
     }
@@ -75,6 +85,14 @@ class RegisterPagerFragment : BaseFragment() {
             baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
         }
 
+        btnfb.setOnClickListener(View.OnClickListener {
+            loginFacebookAPI()
+        })
+
+        btngoogle.setOnClickListener(View.OnClickListener {
+            loginGoogleAPI()
+        })
+
         btnnext.setOnClickListener {
             if (positionToSelect < 3) {
                 if (positionToSelect.equals(0)) {
@@ -85,14 +103,55 @@ class RegisterPagerFragment : BaseFragment() {
                     contactDetails(positionToSelect)
                 }
             } else {
-                signUpApi()
+                if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+                    updateProfileApi()
+
+                } else {
+                    signUpApi()
+                }
             }
         }
 
         btnBack.setOnClickListener {
-            setCurrentItemByPosition(positionToSelect - 1)
-        }
+            if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+                if (positionToSelect > 1) {
+                    setCurrentItemByPosition(positionToSelect - 1)
 
+                }
+            } else {
+                setCurrentItemByPosition(positionToSelect - 1)
+
+            }
+        }
+    }
+
+    private fun updateProfileApi() {
+
+        val editProfileSendingModel = EditProfileSendingModel()
+        editProfileSendingModel.setName(inputFirstname.getStringTrimmed())
+
+        getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
+                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
+                val currentUser: UserModel = sharedPreferenceManager.currentUser
+                currentUser.setUserDetails(userDetails)
+                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
+
+                baseActivity.addDockableFragment(OptVerification.newInstance(), true)
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+
+    }
+
+    private fun loginGoogleAPI() {
+        mainActivity.googleSignIn()
+    }
+
+    private fun loginFacebookAPI() {
+        mainActivity.fbSignIn()
     }
 
     private fun signUpApi() {
@@ -100,10 +159,11 @@ class RegisterPagerFragment : BaseFragment() {
         var signupSendingModel = SignupSendingModel()
         signupSendingModel.setDeviceToken("abc")
         signupSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
-        signupSendingModel.setEmail(inputEmail.getStringTrimmed())
         signupSendingModel.setName(inputFirstname.getStringTrimmed())
+        signupSendingModel.setEmail(inputEmail.getStringTrimmed())
         signupSendingModel.setPassword(inputPasswordReg.getStringTrimmed())
         signupSendingModel.setPasswordConfirmation(inputConfirmPassReg.getStringTrimmed())
+
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signupSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
@@ -120,9 +180,11 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun contactDetails(positionToSelect: Int) {
 
-        if (!inputEmail.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your email")
-            return
+        if (fragmentName.equals(FragmentName.SimpleLogin)) {
+            if (!inputEmail.testValidity()) {
+                UIHelper.showAlertDialog(context, "Please enter your email")
+                return
+            }
         }
 
         if (!inputPhoneNo.testValidity()) {
@@ -142,6 +204,10 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun personalDetails(positionToSelect: Int) {
 
+        if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+            emailLayout.visibility = View.GONE
+        }
+
         if (txtTitle.getStringTrimmed().isEmpty()) {
             UIHelper.showAlertDialog(context, "Please select title")
             return
@@ -155,6 +221,7 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please enter last name")
             return
         }
+
         setCurrentItemByPosition(positionToSelect + 1)
 
     }
@@ -231,11 +298,9 @@ class RegisterPagerFragment : BaseFragment() {
                 btnBack.visibility = View.VISIBLE
                 socialloginLayout.visibility = View.GONE
 
-
             }
         }
     }
-
 
     private fun resetStates() {
         viewPersonal.setBackgroundColor(resources.getColor(R.color.star_grey))
@@ -282,7 +347,6 @@ class RegisterPagerFragment : BaseFragment() {
             }
         }
     }
-
 
 }
 

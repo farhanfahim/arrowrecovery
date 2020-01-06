@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.view.GravityCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -12,18 +11,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.libraries.places.internal.it
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.modules.facebooklogin.FacebookHelper
 import com.modules.facebooklogin.FacebookResponse
 import com.modules.facebooklogin.FacebookUser
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
-import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
+import com.tekrevol.arrowrecovery.enums.FragmentName
+import com.tekrevol.arrowrecovery.fragments.EditProfileFragment
 import com.tekrevol.arrowrecovery.fragments.OptVerification
 import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -109,9 +107,16 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
 
-                mFbHelper!!.performSignOut()
-                addDockableFragment(OptVerification.newInstance(), true)
-
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
+                    popBackStack()
+                    addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
+                    popBackStack()
+                    addDockableFragment(OptVerification.newInstance(), true)
+                } else {
+                    finish()
+                    openActivity(HomeActivity::class.java)
+                }
             }
 
             override fun onError(`object`: Any?) {}
@@ -134,7 +139,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
     private fun initFragments() {
         if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
-            addDockableFragment(RegisterPagerFragment.newInstance(), false)
+            addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), false)
         } else {
             openActivity(HomeActivity::class.java)
             finish()
@@ -205,10 +210,18 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                mFbHelper?.performSignOut()
 
-                mFbHelper!!.performSignOut()
-                addDockableFragment(OptVerification.newInstance(), true)
-
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
+                    popBackStack()
+                    addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
+                    popBackStack()
+                    addDockableFragment(OptVerification.newInstance(), true)
+                } else {
+                    finish()
+                    openActivity(HomeActivity::class.java)
+                }
             }
 
             override fun onError(`object`: Any?) {}

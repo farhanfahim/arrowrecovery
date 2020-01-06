@@ -106,7 +106,7 @@ class DashboardPagerFragment : BaseFragment() {
 
     private fun setProfileTitleBar() {
         dashboardTitleBar.setTitle("Profile")
-        dashboardTitleBar.showEditProfile(homeActivity, View.OnClickListener {
+        dashboardTitleBar.showEditProfile(View.OnClickListener {
 
             baseActivity.addDockableFragment(EditProfileFragment.newInstance(), false)
 

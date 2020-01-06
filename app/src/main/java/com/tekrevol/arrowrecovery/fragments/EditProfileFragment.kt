@@ -33,10 +33,7 @@ class EditProfileFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        imgCamera.setOnClickListener(View.OnClickListener {
 
-            UIHelper.cropImagePicker(homeActivity, this)
-        })
     }
 
     override fun getDrawerLockMode(): Int {
@@ -57,6 +54,11 @@ class EditProfileFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+        imgCamera.setOnClickListener(View.OnClickListener {
+
+            UIHelper.cropImagePicker(homeActivity, this)
+        })
 
         contTitle.setOnClickListener {
             UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->

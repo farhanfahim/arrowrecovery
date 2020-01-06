@@ -7,11 +7,8 @@ import com.google.gson.annotations.SerializedName;
 public class UserDetails {
 
     @Expose
-    @SerializedName("total_points")
-    private int totalPoints;
-    @Expose
-    @SerializedName("agency")
-    private String agency;
+    @SerializedName("image_url")
+    private String imageUrl;
     @Expose
     @SerializedName("is_social_login")
     private int isSocialLogin;
@@ -19,20 +16,75 @@ public class UserDetails {
     @SerializedName("email_updates")
     private int emailUpdates;
     @Expose
+    @SerializedName("is_verified")
+    private int isVerified;
+    @Expose
+    @SerializedName("is_completed")
+    private int isCompleted;
+    @Expose
     @SerializedName("image")
-    private String image = "";
+    private String image;
     @Expose
-    @SerializedName("gender")
-    private int gender;
+    @SerializedName("address")
+    private String address;
     @Expose
-    @SerializedName("designation")
-    private String designation;
+    @SerializedName("phone")
+    private String phone;
     @Expose
     @SerializedName("last_name")
     private String lastName;
     @Expose
     @SerializedName("first_name")
     private String firstName;
+    @Expose
+    @SerializedName("id")
+    private int id;
+
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public int getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(int isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public int getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(int isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Expose
+    @SerializedName("total_points")
+    private int totalPoints;
+    @Expose
+    @SerializedName("agency")
+    private String agency;
+    @Expose
+    @SerializedName("gender")
+    private int gender;
+    @Expose
+    @SerializedName("designation")
+    private String designation;
     @Expose
     @SerializedName("full_name")
     private String fullName;
@@ -49,9 +101,6 @@ public class UserDetails {
     @SerializedName("department_id")
     private int departmentId;
     @Expose
-    @SerializedName("id")
-    private int id;
-    @Expose
     @SerializedName("avg_rating")
     private double avgRating;
     @Expose
@@ -60,9 +109,6 @@ public class UserDetails {
     @Expose
     @SerializedName("about")
     private String about;
-    @Expose
-    @SerializedName("address")
-    private String address;
     @Expose
     @SerializedName("dob")
     private String dob;
