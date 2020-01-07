@@ -59,7 +59,7 @@ class RegisterPagerFragment : BaseFragment() {
             setViewPagerAdapter()
         }
 
-        if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+        if (fragmentName == FragmentName.RegistrationRequired) {
             setCurrentItemByPosition(positionToSelect)
         }
 
@@ -86,27 +86,24 @@ class RegisterPagerFragment : BaseFragment() {
             baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
         }
 
-        btnfb.setOnClickListener(View.OnClickListener {
+        btnfb.setOnClickListener {
             loginFacebookAPI()
-        })
+        }
 
-        btngoogle.setOnClickListener(View.OnClickListener {
+        btngoogle.setOnClickListener {
             loginGoogleAPI()
-        })
+        }
 
         btnnext.setOnClickListener {
             if (positionToSelect < 3) {
-                if (positionToSelect.equals(0)) {
-                    accountDetails(positionToSelect)
-                } else if (positionToSelect.equals(1)) {
-                    personalDetails(positionToSelect)
-                } else if (positionToSelect.equals(2)) {
-                    contactDetails(positionToSelect)
+                when (positionToSelect) {
+                    0 -> accountDetails(positionToSelect)
+                    1 -> personalDetails(positionToSelect)
+                    2 -> contactDetails(positionToSelect)
                 }
             } else {
-                if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+                if (fragmentName == FragmentName.RegistrationRequired) {
                     updateProfileApi()
-
                 } else {
                     signUpApi()
                 }
@@ -114,10 +111,9 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         btnBack.setOnClickListener {
-            if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+            if (fragmentName == FragmentName.RegistrationRequired) {
                 if (positionToSelect > 1) {
                     setCurrentItemByPosition(positionToSelect - 1)
-
                 }
             } else {
                 setCurrentItemByPosition(positionToSelect - 1)
@@ -130,15 +126,15 @@ class RegisterPagerFragment : BaseFragment() {
 
         val editProfileSendingModel = EditProfileSendingModel()
         editProfileSendingModel.email = (sharedPreferenceManager.currentUser.email)
-        editProfileSendingModel.phone = (inputPhoneNo.getStringTrimmed())
-        editProfileSendingModel.firstName = (inputFirstname.getStringTrimmed())
-        editProfileSendingModel.lastName = (inputLastname.getStringTrimmed())
-        editProfileSendingModel.address = (inputAddress.getStringTrimmed())
-        editProfileSendingModel.zipCode = (inputZipCode.getStringTrimmed())
-        editProfileSendingModel.company = (txtCompanyName.getStringTrimmed())
+        editProfileSendingModel.phone = (inputPhoneNo.stringTrimmed)
+        editProfileSendingModel.firstName = (inputFirstname.stringTrimmed)
+        editProfileSendingModel.lastName = (inputLastname.stringTrimmed)
+        editProfileSendingModel.address = (inputAddress.stringTrimmed)
+        editProfileSendingModel.zipCode = (inputZipCode.stringTrimmed)
+        editProfileSendingModel.company = (txtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (inputFirstname.stringTrimmed)
         editProfileSendingModel.stateId = (1)
-        editProfileSendingModel.city = (inputCity.getStringTrimmed())
+        editProfileSendingModel.city = (inputCity.stringTrimmed)
 
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -146,7 +142,7 @@ class RegisterPagerFragment : BaseFragment() {
                 val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
 //                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                 val currentUser: UserModel = sharedPreferenceManager.currentUser
-                currentUser.setUserDetails(userDetails)
+                currentUser.userDetails = userDetails
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
 
                 if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
@@ -188,30 +184,30 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
-        var signupSendingModel = SignupSendingModel()
-        signupSendingModel.deviceToken = ("abc")
-        signupSendingModel.name = (inputUsername.stringTrimmed)
-        signupSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
-        signupSendingModel.email = (inputEmail.getStringTrimmed())
-        signupSendingModel.phone = (inputPhoneNo.getStringTrimmed())
-        signupSendingModel.firstName = (inputFirstname.getStringTrimmed())
-        signupSendingModel.lastName = (inputLastname.getStringTrimmed())
-        signupSendingModel.address = (inputAddress.getStringTrimmed())
-        signupSendingModel.zipCode = (inputZipCode.getStringTrimmed())
-        signupSendingModel.company = (txtCompanyName.getStringTrimmed())
-        signupSendingModel.stateId = (1)
-        signupSendingModel.city = (inputCity.getStringTrimmed())
-        signupSendingModel.password = (inputPasswordReg.getStringTrimmed())
-        signupSendingModel.passwordConfirmation = (inputConfirmPassReg.getStringTrimmed())
-        signupSendingModel.isCompleted = (1)
+        var signUpSendingModel = SignupSendingModel()
+        signUpSendingModel.deviceToken = ("abc")
+        signUpSendingModel.name = (inputUsername.stringTrimmed)
+        signUpSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
+        signUpSendingModel.email = (inputEmail.stringTrimmed)
+        signUpSendingModel.phone = (inputPhoneNo.stringTrimmed)
+        signUpSendingModel.firstName = (inputFirstname.stringTrimmed)
+        signUpSendingModel.lastName = (inputLastname.stringTrimmed)
+        signUpSendingModel.address = (inputAddress.stringTrimmed)
+        signUpSendingModel.zipCode = (inputZipCode.stringTrimmed)
+        signUpSendingModel.company = (txtCompanyName.stringTrimmed)
+        signUpSendingModel.stateId = (1)
+        signUpSendingModel.city = (inputCity.stringTrimmed)
+        signUpSendingModel.password = (inputPasswordReg.stringTrimmed)
+        signUpSendingModel.passwordConfirmation = (inputConfirmPassReg.stringTrimmed)
+        signUpSendingModel.isCompleted = (1)
 
-        webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signupSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser())
-                sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId())
-                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken())
+                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
                 if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
                 {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
@@ -225,7 +221,7 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun contactDetails(positionToSelect: Int) {
 
-        if (fragmentName.equals(FragmentName.SimpleLogin)) {
+        if (fragmentName == FragmentName.SimpleLogin) {
             if (!inputEmail.testValidity()) {
                 UIHelper.showAlertDialog(context, "Please enter your email")
                 return
@@ -233,11 +229,11 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         if (!inputPhoneNo.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your phoneno")
+            UIHelper.showAlertDialog(context, "Please enter your phone no")
             return
         }
         val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Is " + inputPhoneNo.stringTrimmed + " your valid phone no? ")
+        builder.setMessage("Is " + inputPhoneNo.stringTrimmed + "your valid phone no? ")
                 .setTitle("Alert")
                 .setCancelable(true)
                 .setNegativeButton("No"
@@ -249,16 +245,17 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun personalDetails(positionToSelect: Int) {
 
-        if (fragmentName.equals(FragmentName.RegistrationRequired)) {
+        if (fragmentName == FragmentName.RegistrationRequired) {
             emailLayout.visibility = View.GONE
+
         }
 
-        if (txtTitle.getStringTrimmed().isEmpty()) {
+        if (txtTitle.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please select title")
             return
         }
-        if (txtCompanyName.getStringTrimmed().isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please  enter your country name")
+        if (txtCompanyName.stringTrimmed.isEmpty()) {
+            UIHelper.showAlertDialog(context, "Please enter your company name")
             return
         }
 
@@ -276,6 +273,9 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     private fun accountDetails(positionToSelect: Int) {
+
+
+
 
         if (!inputUsername.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter username")
@@ -316,6 +316,7 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     fun setCurrentItemByPosition(position: Int) {
+
         positionToSelect = position
         resetStates()
         setStates()

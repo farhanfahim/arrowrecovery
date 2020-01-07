@@ -22,6 +22,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_SOCIAL_LOG
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.OtpVerification
+import com.tekrevol.arrowrecovery.fragments.PersonalFragment
 import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
@@ -32,9 +33,6 @@ import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 
 class MainActivity : BaseActivity(), FacebookResponse {
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-    }
 
     val RC_SIGN_IN: Int = 1
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -91,20 +89,20 @@ class MainActivity : BaseActivity(), FacebookResponse {
             account.photoUrl.toString() //photo_url is String
         }
         var socialLoginSendingModel = SocialLoginSendingModel()
-        socialLoginSendingModel.setClientId(userid)
-        socialLoginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
-        socialLoginSendingModel.setEmail(email)
-        socialLoginSendingModel.setImage(imUrl)
-        socialLoginSendingModel.setPlatform(AppConstants.SOCIAL_MEDIA_PLATFORM_GOOGLE)
-        socialLoginSendingModel.setUsername(name)
-        socialLoginSendingModel.setToken("abc123")
-        socialLoginSendingModel.setDeviceToken("abc123")
+        socialLoginSendingModel.clientId = userid
+        socialLoginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
+        socialLoginSendingModel.email = email
+        socialLoginSendingModel.image = imUrl
+        socialLoginSendingModel.platform = AppConstants.SOCIAL_MEDIA_PLATFORM_GOOGLE
+        socialLoginSendingModel.username = name
+        socialLoginSendingModel.token = "abc123"
+        socialLoginSendingModel.deviceToken = "abc123"
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
-                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                 if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
                     popBackStack()
@@ -153,13 +151,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        //        if (DeviceUtils.isRooted(getApplicationContext())) {
-//            showAlertDialogAndExitApp("This device is rooted. You can't use this app.");
-//        }
-    }
-
     override fun onBackPressed() {
         /**
          * Show Close app popup if no or single fragment is in stack. otherwise check if drawer is open. Close it..
@@ -203,29 +194,34 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
     override fun onFbProfileReceived(facebookUser: FacebookUser) {
         var socialLoginSendingModel = SocialLoginSendingModel()
-        socialLoginSendingModel.setClientId(facebookUser.facebookID)
-        socialLoginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
-        socialLoginSendingModel.setEmail(facebookUser.email)
-        socialLoginSendingModel.setImage(facebookUser.profilePic)
-        socialLoginSendingModel.setPlatform(AppConstants.SOCIAL_MEDIA_PLATFORM_FACEBOOK)
-        socialLoginSendingModel.setUsername(facebookUser.name)
-        socialLoginSendingModel.setToken("abc123")
-        socialLoginSendingModel.setDeviceToken("abc123")
+        socialLoginSendingModel.clientId = facebookUser.facebookID
+        socialLoginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
+        socialLoginSendingModel.email = facebookUser.email
+        socialLoginSendingModel.image = facebookUser.profilePic
+        socialLoginSendingModel.platform = AppConstants.SOCIAL_MEDIA_PLATFORM_FACEBOOK
+        socialLoginSendingModel.username = facebookUser.name
+        socialLoginSendingModel.token = "abc123"
+        socialLoginSendingModel.deviceToken = "abc123"
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
-                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
                 // mFbHelper?.performSignOut()
 
-                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
-                    popBackStack()
-                    addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
-                } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
-                    finish()
-                    openActivity(HomeActivity::class.java)
-                } else {
+                when {
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0 -> {
+                        popBackStack()
+                        addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                    }
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
+
+                        finish()
+                        openActivity(HomeActivity::class.java)
+                    }
+                    else -> {
+                    }
                 }
             }
 
