@@ -78,10 +78,12 @@ class OptVerification : BaseFragment() {
     override fun setListeners() {
 
         txtSendCode.setOnClickListener {
-            showNextBuildToast()
+            sendOtp()
         }
 
         pinEditText.setOnPinEnteredListener {
+
+
             baseActivity.finish()
             baseActivity.openActivity(HomeActivity::class.java)
         }
