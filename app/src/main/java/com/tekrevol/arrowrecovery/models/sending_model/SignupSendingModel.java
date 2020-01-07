@@ -7,6 +7,9 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 public class SignupSendingModel {
 
     @Expose
+    @SerializedName("is_completed")
+    private int isCompleted;
+    @Expose
     @SerializedName("device_type")
     private String deviceType;
     @Expose
@@ -27,6 +30,27 @@ public class SignupSendingModel {
     @Expose
     @SerializedName("phone")
     private String phone;
+    @Expose
+    @SerializedName("last_name")
+    private String lastName;
+    @Expose
+    @SerializedName("first_name")
+    private String firstName;
+    @Expose
+    @SerializedName("state_id")
+    private int stateId;
+    @Expose
+    @SerializedName("zip_code")
+    private String zipCode;
+    @Expose
+    @SerializedName("city")
+    private String city;
+    @Expose
+    @SerializedName("address")
+    private String address;
+    @Expose
+    @SerializedName("company")
+    private String company;
 
     public String getPhone() {
         return phone;
@@ -60,6 +84,16 @@ public class SignupSendingModel {
         this.passwordConfirmation = passwordConfirmation;
     }
 
+    public int getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(int isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
+
+
     public String getPassword() {
         return password;
     }
@@ -82,6 +116,62 @@ public class SignupSendingModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public int getStateId() {
+        return stateId;
+    }
+
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     @Override

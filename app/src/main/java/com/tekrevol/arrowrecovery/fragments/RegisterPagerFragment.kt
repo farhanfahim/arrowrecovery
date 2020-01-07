@@ -22,6 +22,7 @@ import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_account.*
+import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -128,18 +129,25 @@ class RegisterPagerFragment : BaseFragment() {
     private fun updateProfileApi() {
 
         val editProfileSendingModel = EditProfileSendingModel()
-        editProfileSendingModel.setName(inputFirstname.getStringTrimmed())
-        editProfileSendingModel.setPhone(inputPhoneNo.getStringTrimmed())
+        editProfileSendingModel.email = (sharedPreferenceManager.currentUser.email)
+        editProfileSendingModel.phone = (inputPhoneNo.getStringTrimmed())
+        editProfileSendingModel.firstName = (inputFirstname.getStringTrimmed())
+        editProfileSendingModel.lastName = (inputLastname.getStringTrimmed())
+        editProfileSendingModel.address = (inputAddress.getStringTrimmed())
+        editProfileSendingModel.zipCode = (inputZipCode.getStringTrimmed())
+        editProfileSendingModel.company = (txtCompanyName.getStringTrimmed())
+        editProfileSendingModel.name = (inputFirstname.stringTrimmed)
+        editProfileSendingModel.stateId = (1)
+        editProfileSendingModel.city = (inputCity.getStringTrimmed())
 
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
-                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
+//                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                 val currentUser: UserModel = sharedPreferenceManager.currentUser
                 currentUser.setUserDetails(userDetails)
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
-
                 baseActivity.addDockableFragment(OptVerification.newInstance(), true)
             }
 
@@ -158,14 +166,39 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun signUpApi() {
 
+
+        if (!inputAddress.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your address")
+            return
+
+        }
+
+        if (!inputZipCode.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter zipCode")
+            return
+
+        }
+        if (!inputCity.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your city")
+            return
+        }
+
         var signupSendingModel = SignupSendingModel()
-        signupSendingModel.setDeviceToken("abc")
-        signupSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
-        signupSendingModel.setName(inputFirstname.getStringTrimmed())
-        signupSendingModel.setEmail(inputEmail.getStringTrimmed())
-        signupSendingModel.setPhone(inputPhoneNo.getStringTrimmed())
-        signupSendingModel.setPassword(inputPasswordReg.getStringTrimmed())
-        signupSendingModel.setPasswordConfirmation(inputConfirmPassReg.getStringTrimmed())
+        signupSendingModel.deviceToken = ("abc")
+        signupSendingModel.name = (inputUsername.stringTrimmed)
+        signupSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
+        signupSendingModel.email = (inputEmail.getStringTrimmed())
+        signupSendingModel.phone = (inputPhoneNo.getStringTrimmed())
+        signupSendingModel.firstName = (inputFirstname.getStringTrimmed())
+        signupSendingModel.lastName = (inputLastname.getStringTrimmed())
+        signupSendingModel.address = (inputAddress.getStringTrimmed())
+        signupSendingModel.zipCode = (inputZipCode.getStringTrimmed())
+        signupSendingModel.company = (txtCompanyName.getStringTrimmed())
+        signupSendingModel.stateId = (1)
+        signupSendingModel.city = (inputCity.getStringTrimmed())
+        signupSendingModel.password = (inputPasswordReg.getStringTrimmed())
+        signupSendingModel.passwordConfirmation = (inputConfirmPassReg.getStringTrimmed())
+        signupSendingModel.isCompleted = (1)
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signupSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -213,6 +246,10 @@ class RegisterPagerFragment : BaseFragment() {
 
         if (txtTitle.getStringTrimmed().isEmpty()) {
             UIHelper.showAlertDialog(context, "Please select title")
+            return
+        }
+        if (txtCompanyName.getStringTrimmed().isEmpty()) {
+            UIHelper.showAlertDialog(context, "Please  enter your country name")
             return
         }
 

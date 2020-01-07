@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
-                    android:id="@+id/inputZipCity"
+                    android:id="@+id/inputCity"
                     android:inputType="text"
                     android:maxLength="30"
                     android:singleLine="true"

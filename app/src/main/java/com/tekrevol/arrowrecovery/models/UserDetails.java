@@ -1,11 +1,14 @@
 package com.tekrevol.arrowrecovery.models;
 
-import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class UserDetails {
 
+    @Expose
+    @SerializedName("full_name")
+    private String fullName;
     @Expose
     @SerializedName("image_url")
     private String imageUrl;
@@ -16,6 +19,9 @@ public class UserDetails {
     @SerializedName("email_updates")
     private int emailUpdates;
     @Expose
+    @SerializedName("is_approved")
+    private int isApproved;
+    @Expose
     @SerializedName("is_verified")
     private int isVerified;
     @Expose
@@ -25,8 +31,17 @@ public class UserDetails {
     @SerializedName("image")
     private String image;
     @Expose
+    @SerializedName("zip_code")
+    private String zipCode;
+    @Expose
+    @SerializedName("city")
+    private String city;
+    @Expose
     @SerializedName("address")
     private String address;
+    @Expose
+    @SerializedName("company")
+    private String company;
     @Expose
     @SerializedName("phone")
     private String phone;
@@ -37,57 +52,14 @@ public class UserDetails {
     @SerializedName("first_name")
     private String firstName;
     @Expose
+    @SerializedName("state_id")
+    private int stateId;
+    @Expose
     @SerializedName("id")
     private int id;
-
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public int getIsVerified() {
-        return isVerified;
-    }
-
-    public void setIsVerified(int isVerified) {
-        this.isVerified = isVerified;
-    }
-
-    public int getIsCompleted() {
-        return isCompleted;
-    }
-
-    public void setIsCompleted(int isCompleted) {
-        this.isCompleted = isCompleted;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @Expose
-    @SerializedName("total_points")
-    private int totalPoints;
-    @Expose
-    @SerializedName("agency")
-    private String agency;
-    @Expose
-    @SerializedName("gender")
-    private int gender;
     @Expose
     @SerializedName("designation")
     private String designation;
-    @Expose
-    @SerializedName("full_name")
-    private String fullName;
     @Expose
     @SerializedName("category_id")
     private int categoryId;
@@ -98,20 +70,8 @@ public class UserDetails {
     @SerializedName("parent_id")
     private int parentId;
     @Expose
-    @SerializedName("department_id")
-    private int departmentId;
-    @Expose
-    @SerializedName("avg_rating")
-    private double avgRating;
-    @Expose
-    @SerializedName("review_count")
-    private int review_count;
-    @Expose
     @SerializedName("about")
     private String about;
-    @Expose
-    @SerializedName("dob")
-    private String dob;
     @Expose
     @SerializedName("lat")
     private double lat;
@@ -119,76 +79,57 @@ public class UserDetails {
     @SerializedName("lng")
     private double lng;
 
-    public String getDob() {
-        return dob;
+    @Override
+    public String toString() {
+        return GsonFactory.getSimpleGson().toJson(this);
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public int getIsApproved() {
+        return isApproved;
     }
 
-    public String getAddress() {
-        return address;
+    public void setIsApproved(int isApproved) {
+        this.isApproved = isApproved;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public double getLat() {
-        return lat;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public String getCity() {
+        return city;
     }
 
-    public double getLng() {
-        return lng;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
+    public String getCompany() {
+        return company;
     }
 
-    public double getAvgRating() {
-        return avgRating;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public void setAvgRating(double avgRating) {
-        this.avgRating = avgRating;
+    public int getStateId() {
+        return stateId;
     }
 
-    public int getReview_count() {
-        return review_count;
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
     }
 
-    public void setReview_count(int review_count) {
-        this.review_count = review_count;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
-    public int getTotalPoints() {
-        return totalPoints;
-    }
-
-    public void setTotalPoints(int totalPoints) {
-        this.totalPoints = totalPoints;
-    }
-
-    public String getAgency() {
-        return agency;
-    }
-
-    public void setAgency(String agency) {
-        this.agency = agency;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public int getIsSocialLogin() {
@@ -207,6 +148,22 @@ public class UserDetails {
         this.emailUpdates = emailUpdates;
     }
 
+    public int getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(int isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public int getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(int isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
     public String getImage() {
         return image;
     }
@@ -215,20 +172,20 @@ public class UserDetails {
         this.image = image;
     }
 
-    public int getGender() {
-        return gender;
+    public String getAddress() {
+        return address;
     }
 
-    public void setGender(int gender) {
-        this.gender = gender;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getDesignation() {
-        return designation;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setDesignation(String designation) {
-        this.designation = designation;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getLastName() {
@@ -245,6 +202,14 @@ public class UserDetails {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getFullName() {
@@ -279,24 +244,27 @@ public class UserDetails {
         this.parentId = parentId;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public String getAbout() {
+        return about;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setAbout(String about) {
+        this.about = about;
     }
 
-    public int getId() {
-        return id;
+    public double getLat() {
+        return lat;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    @Override
-    public String toString() {
-        return GsonFactory.getSimpleGson().toJson(this);
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 }
