@@ -82,8 +82,6 @@ class OptVerification : BaseFragment() {
         }
 
         pinEditText.setOnPinEnteredListener {
-
-
             baseActivity.finish()
             baseActivity.openActivity(HomeActivity::class.java)
         }

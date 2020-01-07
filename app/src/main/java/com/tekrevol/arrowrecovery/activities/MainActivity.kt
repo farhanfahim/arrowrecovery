@@ -210,7 +210,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-                mFbHelper?.performSignOut()
+               // mFbHelper?.performSignOut()
 
                 if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
                     popBackStack()

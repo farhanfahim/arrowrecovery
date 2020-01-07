@@ -193,11 +193,6 @@ public class BaseApplication extends MultiDexApplication implements Application.
         }
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
-    }
-
     public static String getApplicationName() {
         return applicationName;
     }
