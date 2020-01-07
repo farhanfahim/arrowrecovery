@@ -17,6 +17,18 @@ public class EditProfileSendingModel {
     @SerializedName("name")
     private String name;
 
+    @Expose
+    @SerializedName("phone")
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);

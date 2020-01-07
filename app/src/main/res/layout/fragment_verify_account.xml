@@ -33,14 +33,14 @@
 
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:id="@+id/txtPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/x10dp"
             android:layout_marginBottom="@dimen/x20dp"
             android:gravity="start"
             app:typeface="@string/font_regular"
-            android:text="We have sent you a SMS with a code to
-the \nnumber +1 285 4849 4059"
+            android:text=""
             android:textColor="@color/title_color"
             android:textSize="@dimen/s14" />
 

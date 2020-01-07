@@ -129,6 +129,8 @@ class RegisterPagerFragment : BaseFragment() {
 
         val editProfileSendingModel = EditProfileSendingModel()
         editProfileSendingModel.setName(inputFirstname.getStringTrimmed())
+        editProfileSendingModel.setPhone(inputPhoneNo.getStringTrimmed())
+
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -161,6 +163,7 @@ class RegisterPagerFragment : BaseFragment() {
         signupSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
         signupSendingModel.setName(inputFirstname.getStringTrimmed())
         signupSendingModel.setEmail(inputEmail.getStringTrimmed())
+        signupSendingModel.setPhone(inputPhoneNo.getStringTrimmed())
         signupSendingModel.setPassword(inputPasswordReg.getStringTrimmed())
         signupSendingModel.setPasswordConfirmation(inputConfirmPassReg.getStringTrimmed())
 
