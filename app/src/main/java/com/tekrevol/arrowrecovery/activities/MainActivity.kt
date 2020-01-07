@@ -21,8 +21,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.enums.FragmentName
-import com.tekrevol.arrowrecovery.fragments.EditProfileFragment
-import com.tekrevol.arrowrecovery.fragments.OptVerification
+import com.tekrevol.arrowrecovery.fragments.OtpVerification
 import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
@@ -112,7 +111,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                     addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                 } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
                     popBackStack()
-                    addDockableFragment(OptVerification.newInstance(), true)
+                    addDockableFragment(OtpVerification.newInstance(), true)
                 } else {
                     finish()
                     openActivity(HomeActivity::class.java)
@@ -146,7 +145,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
             } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
                 popBackStack()
-                addDockableFragment(OptVerification.newInstance(), true)
+                addDockableFragment(OtpVerification.newInstance(), true)
             } else {
                 openActivity(HomeActivity::class.java)
                 finish()
@@ -224,11 +223,9 @@ class MainActivity : BaseActivity(), FacebookResponse {
                     popBackStack()
                     addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                 } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
-                    popBackStack()
-                    addDockableFragment(OptVerification.newInstance(), true)
-                } else {
                     finish()
                     openActivity(HomeActivity::class.java)
+                } else {
                 }
             }
 

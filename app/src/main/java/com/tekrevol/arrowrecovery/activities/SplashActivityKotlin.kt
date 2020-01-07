@@ -6,15 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
 import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.fadeIn
 import com.mikhaellopez.rxanimation.resize
-import com.mikhaellopez.rxanimation.rotation
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.enums.FragmentName
-import com.tekrevol.arrowrecovery.fragments.OptVerification
-import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

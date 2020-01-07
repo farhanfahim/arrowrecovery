@@ -11,15 +11,19 @@ import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.sending_model.ChangePasswordSendingModel
+import com.tekrevol.arrowrecovery.models.sending_model.OtpModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_change_password.*
 import kotlinx.android.synthetic.main.fragment_verify_account.*
 import retrofit2.Call
 import java.util.*
 
-class OptVerification : BaseFragment() {
+class OtpVerification : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
+    var webCallVerify: Call<WebResponse<Any>>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,7 +34,6 @@ class OptVerification : BaseFragment() {
 
     private fun sendOtp() {
 
-        // key , fileTypeValue
         var query: HashMap<String, Any> = HashMap<String, Any>()
         webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_RESENDOTP, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -47,7 +50,7 @@ class OptVerification : BaseFragment() {
 
             val args = Bundle()
 
-            val fragment = OptVerification()
+            val fragment = OtpVerification()
             fragment.arguments = args
             return fragment
         }
@@ -79,8 +82,21 @@ class OptVerification : BaseFragment() {
         }
 
         pinEditText.setOnPinEnteredListener {
+
+            var otpModel = OtpModel()
+            otpModel.otp = pinEditText.text.toString()
+
+            webCallVerify = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFYOTP, otpModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                override fun requestDataResponse(webResponse: WebResponse<Any>) {
+                    UIHelper.showToast(context, webResponse.message)
+             //       activity?.supportFragmentManager?.popBackStack()
+                }
+
+                override fun onError(`object`: Any?) {}
+            })
+/*
             baseActivity.finish()
-            baseActivity.openActivity(HomeActivity::class.java)
+            baseActivity.openActivity(HomeActivity::class.java)*/
         }
     }
 
@@ -89,5 +105,17 @@ class OptVerification : BaseFragment() {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    }
+
+
+    override fun onDestroyView() {
+        if (webCall != null) {
+            webCall!!.cancel()
+        }
+
+        if (webCallVerify != null) {
+            webCallVerify!!.cancel()
+        }
+        super.onDestroyView()
     }
 }

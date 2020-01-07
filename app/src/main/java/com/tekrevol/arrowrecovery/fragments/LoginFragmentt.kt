@@ -115,7 +115,7 @@ class LoginFragmentt : BaseFragment() {
                         baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired,1), true)
                     } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OptVerification.newInstance(), true)
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
                     } else {
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)

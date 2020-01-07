@@ -148,7 +148,12 @@ class RegisterPagerFragment : BaseFragment() {
                 val currentUser: UserModel = sharedPreferenceManager.currentUser
                 currentUser.setUserDetails(userDetails)
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
-                baseActivity.addDockableFragment(OptVerification.newInstance(), true)
+
+                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
+                {
+                    baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+
+                }
             }
 
             override fun onError(`object`: Any?) {}
@@ -207,7 +212,11 @@ class RegisterPagerFragment : BaseFragment() {
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser())
                 sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId())
                 sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken())
-                baseActivity.addDockableFragment(OptVerification.newInstance(), true)
+                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
+                {
+                    baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+
+                }
             }
 
             override fun onError(`object`: Any?) {}
