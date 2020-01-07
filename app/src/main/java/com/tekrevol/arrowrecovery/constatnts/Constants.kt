@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.constatnts
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.SpinnerModel
+import com.tekrevol.arrowrecovery.models.States
 
 
 object Constants {
@@ -76,6 +77,7 @@ object Constants {
         array.add(DummyModel("Model 5", false))
         return array
     }
+
 
     fun carYearSelector(): ArrayList<DummyModel> {
         val array: ArrayList<DummyModel> = ArrayList()
