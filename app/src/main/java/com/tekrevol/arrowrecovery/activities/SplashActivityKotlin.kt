@@ -12,6 +12,9 @@ import com.mikhaellopez.rxanimation.fadeIn
 import com.mikhaellopez.rxanimation.resize
 import com.mikhaellopez.rxanimation.rotation
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.enums.FragmentName
+import com.tekrevol.arrowrecovery.fragments.OptVerification
+import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -54,7 +57,14 @@ class SplashActivityKotlin : AppCompatActivity() {
 
         } else {
             Handler().postDelayed({
-                changeActivity(HomeActivity::class.java)
+
+                if ((SharedPreferenceManager.getInstance(applicationContext).currentUser.userDetails.isCompleted)!!.equals(0)) {
+                    changeActivity(MainActivity::class.java)
+                } else if ((SharedPreferenceManager.getInstance(applicationContext).currentUser?.userDetails?.isVerified)!!.equals(0)) {
+                    changeActivity(MainActivity::class.java)
+                } else {
+                    changeActivity(HomeActivity::class.java)
+                }
                 //                        animateSplashLayout(false);
             }, ANIMATIONS_DELAY.toLong())
         }

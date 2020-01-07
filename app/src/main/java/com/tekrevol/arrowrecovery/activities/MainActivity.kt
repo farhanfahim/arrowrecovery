@@ -141,8 +141,16 @@ class MainActivity : BaseActivity(), FacebookResponse {
         if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
             addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), false)
         } else {
-            openActivity(HomeActivity::class.java)
-            finish()
+            if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
+                popBackStack()
+                addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+            } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
+                popBackStack()
+                addDockableFragment(OptVerification.newInstance(), true)
+            } else {
+                openActivity(HomeActivity::class.java)
+                finish()
+            }
         }
     }
 
@@ -210,7 +218,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-               // mFbHelper?.performSignOut()
+                // mFbHelper?.performSignOut()
 
                 if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
                     popBackStack()
