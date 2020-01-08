@@ -46,6 +46,7 @@ class RegisterPagerFragment : BaseFragment() {
     var positionToSelect: Int = 0
     lateinit var fragmentName: FragmentName
 
+
     companion object {
         fun newInstance(fragmentName: FragmentName, positionToSelect: Int): Fragment {
             val args = Bundle()
@@ -68,7 +69,7 @@ class RegisterPagerFragment : BaseFragment() {
             setViewPagerAdapter()
         }
 
-        if (fragmentName == FragmentName.RegistrationRequired) {
+        if (fragmentName.equals(FragmentName.RegistrationRequired)) {
             setCurrentItemByPosition(positionToSelect)
         }
 
@@ -156,8 +157,7 @@ class RegisterPagerFragment : BaseFragment() {
                 currentUser.userDetails = userDetails
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
 
-                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
-                {
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
 
                 }
@@ -228,8 +228,7 @@ class RegisterPagerFragment : BaseFragment() {
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                 sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                 sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 1)
-                {
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
 
                 }
@@ -282,7 +281,6 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         if (!inputFirstname.testValidity()) {
-
             UIHelper.showAlertDialog(context, "Please enter first name")
             return
         }
@@ -296,6 +294,7 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     private fun accountDetails(positionToSelect: Int) {
+
 
         if (!inputUsername.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter username")
@@ -332,7 +331,6 @@ class RegisterPagerFragment : BaseFragment() {
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
         setCurrentItemByPosition(positionToSelect)
-        //tabs.setupWithViewPager(viewpager);
     }
 
     fun setCurrentItemByPosition(position: Int) {
@@ -342,6 +340,7 @@ class RegisterPagerFragment : BaseFragment() {
         setStates()
         viewpager.setCurrentItem(position, true)
 
+
         when (positionToSelect) {
             0 -> {
                 title.text = "Account Information"
@@ -350,6 +349,11 @@ class RegisterPagerFragment : BaseFragment() {
                 socialloginLayout.visibility = View.VISIBLE
             }
             1 -> {
+
+                if (fragmentName == FragmentName.RegistrationRequired) {
+
+                    var x: String = sharedPreferenceManager.currentUser.userDetails.firstName
+                }
                 socialloginLayout.visibility = View.GONE
                 title.text = "Personal Information"
                 btnnext.text = "Next"

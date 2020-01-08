@@ -28,7 +28,7 @@ class OtpVerification : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        txtPhone.text = "We have sent you a SMS with a code to the number " + sharedPreferenceManager.currentUser.userDetails.phone
+        txtPhone.text = "We have sent you a SMS with a code to the number " + sharedPreferenceManager.currentUser.userDetails.phone+ " and your email "+sharedPreferenceManager.currentUser.email
         sendOtp()
     }
 
@@ -89,13 +89,13 @@ class OtpVerification : BaseFragment() {
             webCallVerify = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFYOTP, otpModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
+
                     baseActivity.finish()
                     baseActivity.openActivity(HomeActivity::class.java)
                 }
 
                 override fun onError(`object`: Any?) {}
             })
-
         }
     }
 
@@ -105,6 +105,7 @@ class OtpVerification : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
+
 
     override fun onDestroyView() {
         if (webCall != null) {

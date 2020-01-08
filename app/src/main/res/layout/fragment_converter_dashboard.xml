@@ -129,7 +129,7 @@
                 android:paddingTop="@dimen/x10dp"
                 android:paddingBottom="@dimen/x10dp">
 
-                <androidx.recyclerview.widget.RecyclerView
+                <com.todkars.shimmer.ShimmerRecyclerView
                     android:id="@+id/rvCategories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                     app:reverseLayout="false"
                     tools:listitem="@layout/item_categories">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                </com.todkars.shimmer.ShimmerRecyclerView>
 
 
             </LinearLayout>

@@ -3,32 +3,45 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.AdapterView
 import android.widget.ImageView
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.reflect.TypeToken
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.CategorySelectorAdapter
+import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.CategorySelectorShimmerAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
+import retrofit2.Call
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickListener {
+class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickListener, PagingDelegate.OnPageListener {
 
 
-    private var arrCategories: ArrayList<DummyModel> = ArrayList()
+    private var arrCategories: ArrayList<VehicleMakeModel> = ArrayList()
     private var arrConverters: ArrayList<DummyModel> = ArrayList()
-    private lateinit var categorySelectorAdapter: CategorySelectorAdapter
+    private lateinit var categorySelectorAdapter: CategorySelectorShimmerAdapter
     private lateinit var converterItemAdapter: ConverterItemAdapter
+    var categoriesCall: Call<WebResponse<Any>>? = null
 
     companion object {
 
@@ -58,7 +71,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        categorySelectorAdapter = CategorySelectorAdapter(context!!, arrCategories, this)
+        categorySelectorAdapter = CategorySelectorShimmerAdapter(context!!, arrCategories, this)
         converterItemAdapter = ConverterItemAdapter(context!!, arrConverters, this)
 
     }
@@ -87,16 +100,66 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         carouselView.pageCount = Constants.sampleConverterBanners.size
 
         arrCategories.clear()
-        arrCategories.addAll(Constants.categorySelector())
 
-        rvCategories.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        rvCategories.adapter = categorySelectorAdapter
+        //arrCategories.addAll(Constants.categorySelector())
+
+//        rvCategories.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        rvCategories.adapter = categorySelectorAdapter
+
+        val mLayoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        rvCategories.setLayoutManager(mLayoutManager1)
+        (rvCategories.getItemAnimator() as DefaultItemAnimator).supportsChangeAnimations = false
+
+        val pagingDelegate: PagingDelegate = PagingDelegate.Builder(categorySelectorAdapter)
+                .attachTo(rvCategories)
+                .listenWith(this@ConverterDashboardFragment)
+                .build()
+        rvCategories.setAdapter(categorySelectorAdapter)
+        rvCategories.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
 
         arrConverters.clear()
         arrConverters.addAll(Constants.categorySelector())
 
         rvConverters.layoutManager = GridLayoutManager(context, 2)
         rvConverters.adapter = converterItemAdapter
+
+        getVehicle()
+
+
+    }
+
+    private fun getVehicle() {
+
+
+        rvCategories.showShimmer()
+        val mquery: Map<String, Any> = HashMap()
+
+        categoriesCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<VehicleMakeModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+//                val mediaModel: VehicleMakeModel = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), MediaModel::class.java)
+                // arrCategory.clear();
+
+                rvCategories.hideShimmer()
+
+                arrCategories.addAll(arrayList)
+                categorySelectorAdapter.notifyDataSetChanged()
+                onDonePaging()
+            }
+
+            override fun onError(`object`: Any?) {
+                if (rvCategories == null) {
+                    return
+                }
+                rvCategories.hideShimmer()
+            }
+        })
+
     }
 
     override fun setListeners() {
@@ -134,6 +197,13 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             rvCategories.scrollToPosition(position)
         }
 
+
+    }
+
+    override fun onDonePaging() {
+    }
+
+    override fun onPage(offset: Int) {
 
     }
 

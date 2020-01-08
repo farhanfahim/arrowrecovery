@@ -33,6 +33,10 @@ public class PersonalFragment : BaseFragment() {
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun getFragmentLayout(): Int {
         return R.layout.fragment_personal
 
