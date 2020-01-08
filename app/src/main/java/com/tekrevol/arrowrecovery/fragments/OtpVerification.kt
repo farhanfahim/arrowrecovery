@@ -89,14 +89,13 @@ class OtpVerification : BaseFragment() {
             webCallVerify = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFYOTP, otpModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
-             //       activity?.supportFragmentManager?.popBackStack()
+                    baseActivity.finish()
+                    baseActivity.openActivity(HomeActivity::class.java)
                 }
 
                 override fun onError(`object`: Any?) {}
             })
-/*
-            baseActivity.finish()
-            baseActivity.openActivity(HomeActivity::class.java)*/
+
         }
     }
 
@@ -106,7 +105,6 @@ class OtpVerification : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
-
 
     override fun onDestroyView() {
         if (webCall != null) {

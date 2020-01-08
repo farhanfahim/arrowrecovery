@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.common.reflect.TypeToken
@@ -21,37 +22,34 @@ import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_editprofile.*
 import retrofit2.Call
 import java.util.ArrayList
 import java.util.HashMap
 
 public class AddressFragment : BaseFragment() {
-    private var selectedPosition: Int = 0
-
 
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
 
-
     var webCall: Call<WebResponse<Any>>? = null
-
-    private var arrData: ArrayList<States> = ArrayList<States>()
-    private var listOfStates = ArrayList<States>()
-
 
     override fun getDrawerLockMode(): Int {
         return 0
 
     }
 
+
     companion object {
+
+        var arrData: ArrayList<States> = ArrayList()
+
         fun newInstance(): AddressFragment {
             val args = Bundle()
 
             val fragment = AddressFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
+
     }
 
 
@@ -75,11 +73,7 @@ public class AddressFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //arrData = ArrayList<States>()
-
         getStates()
-
-
 
     }
 
@@ -94,8 +88,6 @@ public class AddressFragment : BaseFragment() {
         val query: MutableMap<String, Any> = HashMap()
         webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_PARAM_STATES, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                UIHelper.showToast(context, webResponse.message)
-
 
                 val type = object : com.google.gson.reflect.TypeToken<ArrayList<States>>() {
 
@@ -104,11 +96,11 @@ public class AddressFragment : BaseFragment() {
                 arrData = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
 
-                
                 spinnerModelArrayList.clear()
 
-                for (categories in arrData) {
-                    spinnerModelArrayList.add(SpinnerModel(categories.name))
+                for (states in arrData) {
+                    spinnerModelArrayList.add(SpinnerModel(states.name))
+                    //spinnerModelArrayList.add(SpinnerModel(categories.id))
                 }
             }
 
@@ -116,5 +108,7 @@ public class AddressFragment : BaseFragment() {
         })
 
     }
+
+
 
 }

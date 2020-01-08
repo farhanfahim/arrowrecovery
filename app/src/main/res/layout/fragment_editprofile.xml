@@ -36,7 +36,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="130dp">
 
-
                         <RelativeLayout
                             android:id="@+id/img_pic"
                             android:layout_width="120dp"
@@ -130,7 +129,7 @@
 
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/input_layout_fullname_login"
+                        android:id="@+id/input_layoutFullNameLogin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
@@ -138,11 +137,11 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                            android:id="@+id/input_fullname_login"
+                            android:id="@+id/inputFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="First Name"
-                            android:inputType="textEmailAddress"
+                            android:inputType="textPersonName"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -158,10 +157,11 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/inputLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Last Name"
-                            android:inputType="textEmailAddress"
+                            android:inputType="textPersonName"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -178,6 +178,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/radio_btn_company"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -203,10 +204,11 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/inputCompany"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Company Name"
-                            android:inputType="textPassword"
+                            android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -225,7 +227,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Kind of Company"
-                            android:inputType="textPassword"
+                            android:inputType="text"
+                            android:id="@+id/txtKindCompany"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -245,9 +248,10 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:layout_marginBottom="@dimen/x10dp"
-                        android:textSize="@dimen/s14"
 
+                        android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
@@ -255,7 +259,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Phone Number"
-                            android:inputType="textPassword"
+                            android:inputType="number"
+                            android:id="@+id/inputPhoneNo"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -274,7 +279,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Comment:"
-                            android:inputType="textPassword"
+                            android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -314,9 +319,9 @@
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/inputAddress"
                             android:hint="Address"
-                            android:inputType="textEmailAddress"
+                            android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -328,16 +333,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
-
                         android:textSize="@dimen/s14"
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/inputZipCode"
                             android:hint="Zip Code"
-                            android:inputType="textPassword"
+                            android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -357,13 +361,57 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="City"
-                            android:inputType="textPassword"
+                            android:id="@+id/inputCity"
+                            android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
                             android:textSize="@dimen/s14"
                             app:typeface="@string/font_light" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="10dp"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:id="@+id/contState"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                                android:id="@+id/txtState"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="Select State..."
+                                android:padding="5dp"
+                                android:textColor="@color/title_color"
+                                android:textColorHint="@color/txtGrey"
+
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_light" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Select category"
+                                android:padding="@dimen/x10dp"
+                                android:src="@drawable/spinner" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginBottom="@dimen/x10dp"
+                            android:background="@color/txtGrey" />
+
+
+                    </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -376,7 +424,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Country"
-                            android:inputType="textPassword"
+                            android:inputType="text"
+                            android:id="@+id/inputCountry"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"

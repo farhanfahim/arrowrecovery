@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
@@ -13,7 +14,10 @@ import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.SpinnerModel
+import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.UserDetails
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
@@ -27,10 +31,16 @@ import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
+import java.util.ArrayList
+import java.util.HashMap
 
 private var adapter: RegisterPagerAdapter? = null
 
 class RegisterPagerFragment : BaseFragment() {
+
+    private var spinnerModelArrayList = ArrayList<SpinnerModel>()
+
+
 
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
@@ -46,7 +56,6 @@ class RegisterPagerFragment : BaseFragment() {
             return fragment
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -95,11 +104,13 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         btnnext.setOnClickListener {
+
             if (positionToSelect < 3) {
                 when (positionToSelect) {
                     0 -> accountDetails(positionToSelect)
                     1 -> personalDetails(positionToSelect)
                     2 -> contactDetails(positionToSelect)
+
                 }
             } else {
                 if (fragmentName == FragmentName.RegistrationRequired) {
@@ -133,7 +144,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.zipCode = (inputZipCode.stringTrimmed)
         editProfileSendingModel.company = (txtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (inputFirstname.stringTrimmed)
-        editProfileSendingModel.stateId = (1)
+        editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.city = (inputCity.stringTrimmed)
 
 
@@ -183,6 +194,14 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please enter your city")
             return
         }
+        if (txtState.stringTrimmed.isEmpty()) {
+            UIHelper.showAlertDialog(context, "Please select state")
+            return
+        }
+        if (!checked.isChecked){
+            UIHelper.showAlertDialog(context, "please accept term of use")
+            return
+        }
 
         var signUpSendingModel = SignupSendingModel()
         signUpSendingModel.deviceToken = ("abc")
@@ -195,11 +214,12 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.address = (inputAddress.stringTrimmed)
         signUpSendingModel.zipCode = (inputZipCode.stringTrimmed)
         signUpSendingModel.company = (txtCompanyName.stringTrimmed)
-        signUpSendingModel.stateId = (1)
+        signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (inputCity.stringTrimmed)
         signUpSendingModel.password = (inputPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (inputConfirmPassReg.stringTrimmed)
         signUpSendingModel.isCompleted = (1)
+
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -208,7 +228,7 @@ class RegisterPagerFragment : BaseFragment() {
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                 sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                 sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
+                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 1)
                 {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
 
@@ -218,6 +238,9 @@ class RegisterPagerFragment : BaseFragment() {
             override fun onError(`object`: Any?) {}
         })
     }
+
+
+
 
     private fun contactDetails(positionToSelect: Int) {
 
@@ -244,7 +267,6 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     private fun personalDetails(positionToSelect: Int) {
-
         if (fragmentName == FragmentName.RegistrationRequired) {
             emailLayout.visibility = View.GONE
 
@@ -260,6 +282,7 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         if (!inputFirstname.testValidity()) {
+
             UIHelper.showAlertDialog(context, "Please enter first name")
             return
         }
@@ -273,9 +296,6 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     private fun accountDetails(positionToSelect: Int) {
-
-
-
 
         if (!inputUsername.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter username")
@@ -396,6 +416,18 @@ class RegisterPagerFragment : BaseFragment() {
                 txtAddress.setTextColor(resources.getColor(R.color.c_black))
             }
         }
+    }
+
+
+
+    private fun getIdFromSpinner(): Int {
+
+        for (states in AddressFragment.arrData) {
+            if (states.name == txtState.stringTrimmed) {
+                return states.id
+            }
+        }
+        return -1
     }
 
 }

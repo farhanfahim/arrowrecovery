@@ -1,15 +1,11 @@
 package com.tekrevol.arrowrecovery.models.receiving_model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 import com.tekrevol.arrowrecovery.models.SpinnerModel;
 import com.tekrevol.arrowrecovery.models.UserDetails;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class UserModel {
@@ -47,6 +43,17 @@ public class UserModel {
     @Expose
     @SerializedName("id")
     private int id;
+    @Expose
+    @SerializedName("country")
+    private String country;
+    @Expose
+    @SerializedName("kind_of_company")
+    private String kindOfCompany;
+    @Expose
+    @SerializedName("name")
+    private String name;
+
+
 
     transient boolean isSelected = false;
 
@@ -147,6 +154,30 @@ public class UserModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getKindOfCompany() {
+        return kindOfCompany;
+    }
+
+    public void setKindOfCompany(String kindOfCompany) {
+        this.kindOfCompany = kindOfCompany;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

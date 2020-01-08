@@ -186,6 +186,7 @@
                         android:layout_marginTop="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:text="About: "
+                        android:visibility="gone"
                         android:textSize="@dimen/s14" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
@@ -193,6 +194,7 @@
                         android:id="@+id/txtAbout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:layout_marginBottom="@dimen/x10dp"

@@ -31,6 +31,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.sending_model.SocialLoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import kotlinx.android.synthetic.main.fragment_personal.*
 
 class MainActivity : BaseActivity(), FacebookResponse {
 
@@ -208,19 +209,21 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                 sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                 // mFbHelper?.performSignOut()
 
                 when {
-                    (sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0 -> {
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isCompleted) == 0 -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                     }
-                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
-
-                        finish()
-                        openActivity(HomeActivity::class.java)
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified) == 0 -> {
+                        popBackStack()
+                        addDockableFragment(OtpVerification.newInstance(),true)
                     }
                     else -> {
+                        finish()
+                        openActivity(HomeActivity::class.java)
                     }
                 }
             }

@@ -10,14 +10,18 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants.AboutUs
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.image
 
 class ProfileFragment : BaseFragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUserData()
 
     }
 
@@ -28,7 +32,7 @@ class ProfileFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = ProfileFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -74,6 +78,28 @@ class ProfileFragment : BaseFragment() {
 
         contTermsAndConditions.setOnClickListener {
             baseActivity.addDockableFragment(GenericContentFragment.newInstance("Terms and Conditions", AboutUs), true)
+        }
+
+
+    }
+
+    private fun setUserData(){
+        ImageLoaderHelper.loadImageWithAnimations(image, currentUser.userDetails.imageUrl, true)
+        var userName = sharedPreferenceManager.currentUser.name
+        val fullName = sharedPreferenceManager.currentUser.userDetails.fullName
+        val userEmail = sharedPreferenceManager.currentUser.email
+        val address = sharedPreferenceManager.currentUser.userDetails.address
+        val city = sharedPreferenceManager.currentUser.userDetails.city
+        val country = sharedPreferenceManager.currentUser.country
+
+        ImageLoaderHelper.loadImageWithAnimations(image, currentUser.userDetails.imageUrl, true)
+        txtName.text = fullName
+        txtUsername.text = userName
+        txtEmail.text = userEmail
+        if (country != null){
+            txtAddress.text = "$address, $city, $country"
+        }else{
+            txtAddress.text = "$address, $city"
         }
 
 
