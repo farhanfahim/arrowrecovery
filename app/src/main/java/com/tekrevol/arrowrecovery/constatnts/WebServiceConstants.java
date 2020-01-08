@@ -109,7 +109,8 @@ public class WebServiceConstants {
     public static final String Q_PARAM_EMAIL = "email";
     public static final String Q_PARAM_SLUG = "slug";
     public static final String Q_PARAM_STATES = "states";
-
+    public static final String Q_PARAM_VEHICLEMAKE = "vehicle-makes";
+    public static final String Q_VEHICLE_MAKES = "vehicle-makes";
 
     /**
      * STATUS

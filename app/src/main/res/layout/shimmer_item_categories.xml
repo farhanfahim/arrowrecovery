@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contParent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x5dp"
+    android:background="@color/material_grey600"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/x15dp"
+    android:paddingTop="@dimen/x4dp"
+    android:paddingRight="@dimen/x15dp"
+    android:paddingBottom="@dimen/x4dp"
+    app:corner_radius="@dimen/x12dp">
+
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
+        app:typeface="@string/font_regular"
+        android:id="@+id/txtCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-------"
+        android:textColor="@color/c_white" />
+
+</com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

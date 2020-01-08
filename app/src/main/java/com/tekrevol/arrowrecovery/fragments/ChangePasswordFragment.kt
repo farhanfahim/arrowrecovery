@@ -26,7 +26,7 @@ class ChangePasswordFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = ChangePasswordFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -87,9 +87,9 @@ class ChangePasswordFragment : BaseFragment() {
 
         var changePasswordSendingModel = ChangePasswordSendingModel()
         changePasswordSendingModel.authorization = token
-        changePasswordSendingModel.currentPassword = inputCurrentPass.getStringTrimmed()
-        changePasswordSendingModel.password = inputNewPass.getStringTrimmed()
-        changePasswordSendingModel.passwordConfirmation = inputConfirmPass.getStringTrimmed()
+        changePasswordSendingModel.currentPassword = inputCurrentPass.stringTrimmed
+        changePasswordSendingModel.password = inputNewPass.stringTrimmed
+        changePasswordSendingModel.passwordConfirmation = inputConfirmPass.stringTrimmed
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_CHANGE_PASSWORD, changePasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any>) {

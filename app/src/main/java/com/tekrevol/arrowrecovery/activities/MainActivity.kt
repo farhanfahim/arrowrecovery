@@ -104,16 +104,23 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
-                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
-                    popBackStack()
-                    addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
-                } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
-                    popBackStack()
-                    addDockableFragment(OtpVerification.newInstance(), true)
-                } else {
-                    finish()
-                    openActivity(HomeActivity::class.java)
+                when {
+                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0) -> {
+                        popBackStack()
+                        addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                    }
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
+
+                        popBackStack()
+                        addDockableFragment(OtpVerification.newInstance(), true)
+
+                    }
+                    else -> {
+                        finish()
+                        openActivity(HomeActivity::class.java)
+                    }
                 }
+
             }
 
             override fun onError(`object`: Any?) {}
@@ -135,18 +142,28 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
 
     private fun initFragments() {
-        if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
-            addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), false)
-        } else {
-            if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
-                popBackStack()
-                addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
-            } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
-                popBackStack()
-                addDockableFragment(OtpVerification.newInstance(), true)
-            } else {
-                openActivity(HomeActivity::class.java)
-                finish()
+
+        when {
+            (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) ->
+                addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), false)
+
+            else -> {
+                when {
+                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0) -> {
+                        popBackStack()
+                        addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                    }
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
+
+                        popBackStack()
+                        addDockableFragment(OtpVerification.newInstance(), true)
+
+                    }
+                    else -> {
+                        finish()
+                        openActivity(HomeActivity::class.java)
+                    }
+                }
             }
         }
     }
@@ -211,16 +228,19 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 // mFbHelper?.performSignOut()
 
                 when {
-                    (sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0 -> {
+                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0) -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                     }
                     (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
 
-                        finish()
-                        openActivity(HomeActivity::class.java)
+                        popBackStack()
+                        addDockableFragment(OtpVerification.newInstance(), true)
+
                     }
                     else -> {
+                        finish()
+                        openActivity(HomeActivity::class.java)
                     }
                 }
             }

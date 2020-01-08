@@ -13,7 +13,10 @@ import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.SpinnerModel
+import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.UserDetails
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
@@ -27,6 +30,8 @@ import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
+import java.util.ArrayList
+import java.util.HashMap
 
 private var adapter: RegisterPagerAdapter? = null
 
@@ -35,6 +40,8 @@ class RegisterPagerFragment : BaseFragment() {
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
     lateinit var fragmentName: FragmentName
+    var idFromSpinner = 0
+
 
     companion object {
         fun newInstance(fragmentName: FragmentName, positionToSelect: Int): Fragment {
@@ -59,11 +66,12 @@ class RegisterPagerFragment : BaseFragment() {
             setViewPagerAdapter()
         }
 
-        if (fragmentName == FragmentName.RegistrationRequired) {
+        if (fragmentName.equals(FragmentName.RegistrationRequired)) {
             setCurrentItemByPosition(positionToSelect)
         }
 
     }
+
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -145,8 +153,7 @@ class RegisterPagerFragment : BaseFragment() {
                 currentUser.userDetails = userDetails
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
 
-                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
-                {
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
 
                 }
@@ -208,8 +215,7 @@ class RegisterPagerFragment : BaseFragment() {
                 sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                 sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                 sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                if((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1))
-                {
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
 
                 }
@@ -275,8 +281,6 @@ class RegisterPagerFragment : BaseFragment() {
     private fun accountDetails(positionToSelect: Int) {
 
 
-
-
         if (!inputUsername.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter username")
             return
@@ -306,13 +310,13 @@ class RegisterPagerFragment : BaseFragment() {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
+
     private fun setViewPagerAdapter() {
 
         viewpager.adapter = adapter
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
         setCurrentItemByPosition(positionToSelect)
-        //tabs.setupWithViewPager(viewpager);
     }
 
     fun setCurrentItemByPosition(position: Int) {
@@ -322,6 +326,7 @@ class RegisterPagerFragment : BaseFragment() {
         setStates()
         viewpager.setCurrentItem(position, true)
 
+
         when (positionToSelect) {
             0 -> {
                 title.text = "Account Information"
@@ -330,6 +335,11 @@ class RegisterPagerFragment : BaseFragment() {
                 socialloginLayout.visibility = View.VISIBLE
             }
             1 -> {
+
+                if (fragmentName == FragmentName.RegistrationRequired) {
+
+                    var x: String = sharedPreferenceManager.currentUser.userDetails.firstName
+                }
                 socialloginLayout.visibility = View.GONE
                 title.text = "Personal Information"
                 btnnext.text = "Next"

@@ -140,6 +140,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
+    implementation 'com.facebook.shimmer:shimmer:0.4.0'
+    implementation 'com.github.hamzaahmedkhan:ShimmerRecyclerView:v0.4.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
