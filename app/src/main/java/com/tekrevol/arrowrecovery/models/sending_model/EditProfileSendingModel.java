@@ -59,6 +59,10 @@ public class EditProfileSendingModel {
     @SerializedName("company")
     private String company;
 
+    @Expose
+    @SerializedName("title")
+    private String title;
+
     public String getPhone() {
         return phone;
     }
@@ -198,5 +202,13 @@ public class EditProfileSendingModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

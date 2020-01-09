@@ -1,24 +1,44 @@
 package com.tekrevol.arrowrecovery.activities
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.zzd.getToken
 import com.google.android.material.snackbar.Snackbar
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.Constants.qualities
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes
+import com.tekrevol.arrowrecovery.fragments.EditProfileFragment
+import com.tekrevol.arrowrecovery.fragments.OtpVerification
+import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.StringHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.SpinnerModel
+import com.tekrevol.arrowrecovery.models.States
+import com.tekrevol.arrowrecovery.models.UserDetails
+import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
+import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
+import retrofit2.Call
+import java.util.ArrayList
+import java.util.HashMap
 
 class ProductDetailActivity : AppCompatActivity(), ImageListener {
     private var selectedPosition: Int = 0
+    var webCall: Call<WebResponse<Any>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

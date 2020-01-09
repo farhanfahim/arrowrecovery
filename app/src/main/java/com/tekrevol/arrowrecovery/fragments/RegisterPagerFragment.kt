@@ -142,11 +142,13 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.firstName = (inputFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (inputLastname.stringTrimmed)
         editProfileSendingModel.address = (inputAddress.stringTrimmed)
+        editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.zipCode = (inputZipCode.stringTrimmed)
         editProfileSendingModel.company = (txtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (inputFirstname.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.city = (inputCity.stringTrimmed)
+        editProfileSendingModel.title = (txtTitle.stringTrimmed)
 
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -219,6 +221,7 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.password = (inputPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (inputConfirmPassReg.stringTrimmed)
         signUpSendingModel.isCompleted = (1)
+        signUpSendingModel.title = txtTitle.stringTrimmed
 
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {

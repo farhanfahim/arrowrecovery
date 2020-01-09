@@ -146,7 +146,7 @@
             </LinearLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/rvConverters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                 app:spanCount="2"
                 tools:listitem="@layout/item_converter">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </com.todkars.shimmer.ShimmerRecyclerView>
 
 
         </LinearLayout>

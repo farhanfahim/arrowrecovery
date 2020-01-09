@@ -16,14 +16,14 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CategorySelectorShimmerAdapter
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemAdapter
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
@@ -38,10 +38,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
     private var arrCategories: ArrayList<VehicleMakeModel> = ArrayList()
-    private var arrConverters: ArrayList<DummyModel> = ArrayList()
+    private var arrConverters: ArrayList<ProductDetailModel> = ArrayList()
     private lateinit var categorySelectorAdapter: CategorySelectorShimmerAdapter
-    private lateinit var converterItemAdapter: ConverterItemAdapter
-    var categoriesCall: Call<WebResponse<Any>>? = null
+    private lateinit var converterItemShimmerAdapter: ConverterItemShimmerAdapter
+    var webCall: Call<WebResponse<Any>>? = null
 
     companion object {
 
@@ -72,7 +72,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         super.onCreate(savedInstanceState)
 
         categorySelectorAdapter = CategorySelectorShimmerAdapter(context!!, arrCategories, this)
-        converterItemAdapter = ConverterItemAdapter(context!!, arrConverters, this)
+        converterItemShimmerAdapter = ConverterItemShimmerAdapter(context!!, arrConverters, this)
 
     }
 
@@ -100,6 +100,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         carouselView.pageCount = Constants.sampleConverterBanners.size
 
         arrCategories.clear()
+        arrConverters.clear()
 
         //arrCategories.addAll(Constants.categorySelector())
 
@@ -117,13 +118,26 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvCategories.setAdapter(categorySelectorAdapter)
         rvCategories.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
 
-        arrConverters.clear()
-        arrConverters.addAll(Constants.categorySelector())
+        //
+        //arrConverters.addAll()
 
-        rvConverters.layoutManager = GridLayoutManager(context, 2)
-        rvConverters.adapter = converterItemAdapter
+
+        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2,RecyclerView.VERTICAL,false)
+        rvConverters.setLayoutManager(mLayoutManager2)
+        (rvConverters.getItemAnimator() as DefaultItemAnimator).supportsChangeAnimations = false
+
+        val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
+                .attachTo(rvCategories)
+                .listenWith(this@ConverterDashboardFragment)
+                .build()
+        rvConverters.setAdapter(converterItemShimmerAdapter)
+        rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
+
+//        rvConverters.layoutManager = GridLayoutManager(context, 2)
+//        rvConverters.adapter = converterItemShimmerAdapter
 
         getVehicle()
+        getProductDetail()
 
 
     }
@@ -134,7 +148,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvCategories.showShimmer()
         val mquery: Map<String, Any> = HashMap()
 
-        categoriesCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
@@ -181,7 +195,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        if (type == ConverterItemAdapter::class.java.simpleName) {
+        if (type == ConverterItemShimmerAdapter::class.java.simpleName) {
             when (view?.id) {
                 R.id.contParent -> {
                     baseActivity.openActivity(ProductDetailActivity::class.java)
@@ -200,11 +214,44 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
+
+
     override fun onDonePaging() {
     }
 
     override fun onPage(offset: Int) {
 
+    }
+
+    private fun getProductDetail() {
+
+        rvConverters.showShimmer()
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_MAKE_ID] = 2
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+                rvConverters.hideShimmer()
+
+                arrConverters.addAll(arrayList)
+                converterItemShimmerAdapter.notifyDataSetChanged()
+                onDonePaging()
+
+
+            }
+
+            override fun onError(`object`: Any?) {
+                if (rvConverters == null) {
+                    return
+                }
+                rvConverters.hideShimmer()
+            }
+        })
     }
 
 }

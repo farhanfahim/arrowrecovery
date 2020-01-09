@@ -5,20 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.widget.AnyTextView
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 
 /**
  */
-class ConverterItemAdapter(private val activity: Context, private val arrData: List<DummyModel>, private val onItemClick: OnItemClickListener) : RecyclerView.Adapter<ConverterItemAdapter.ViewHolder>() {
+class ConverterItemShimmerAdapter(private val activity: Context, private val arrData: List<ProductDetailModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
@@ -26,20 +24,38 @@ class ConverterItemAdapter(private val activity: Context, private val arrData: L
         return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, i: Int) {
-        val model = arrData[i]
-        with(holder) {
-            bindTo(model, activity)
-            setListener(this, model)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        if (holder is ViewHolder) {
+            val model = arrData[position]
+
+            val viewHolder: ViewHolder = holder
+            with(viewHolder)
+            {
+
+                bindTo(model, activity)
+                setListener(viewHolder, model)
+            }
         }
+
+
     }
 
-    private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contParent.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemAdapter::class.java.simpleName) }
-        holder.contAddToCart.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemAdapter::class.java.simpleName) }
+    private fun setListener(holder: ViewHolder, model: ProductDetailModel?) {
+        holder.contParent.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemShimmerAdapter::class.java.simpleName) }
+        holder.contAddToCart.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, ConverterItemShimmerAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {
+        return arrData.size
+    }
+
+    override fun getPagingLayout(): Int {
+
+        return R.layout.item_categories
+    }
+
+    override fun getPagingItemCount(): Int {
         return arrData.size
     }
 
@@ -50,17 +66,18 @@ class ConverterItemAdapter(private val activity: Context, private val arrData: L
         val txtModel = view.findViewById<TextView>(R.id.txtModel)
         val txtPrice = view.findViewById<TextView>(R.id.txtPrice)
         val imgConverter = view.findViewById<ImageView>(R.id.imgConverter)
-        var model: DummyModel? = null
+        var model: ProductDetailModel? = null
 
         /**
          * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
          * ViewHolder when Item is loaded.
          */
-        fun bindTo(model: DummyModel?, context: Context) {
+
+        fun bindTo(model: ProductDetailModel?, context: Context) {
             this.model = model
 
             this.model?.let {
-                txtMake.text = it.text
+                txtMake.text = it.name
             }
 
 

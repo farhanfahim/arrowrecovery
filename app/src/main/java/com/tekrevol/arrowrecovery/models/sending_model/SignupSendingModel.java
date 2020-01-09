@@ -51,6 +51,9 @@ public class SignupSendingModel {
     @Expose
     @SerializedName("company")
     private String company;
+    @Expose
+    @SerializedName("title")
+    private String title;
 
     public String getPhone() {
         return phone;
@@ -177,5 +180,13 @@ public class SignupSendingModel {
     @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

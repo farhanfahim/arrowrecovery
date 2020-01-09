@@ -3,7 +3,9 @@ package com.tekrevol.arrowrecovery.fragments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -28,17 +30,6 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_editprofile.*
-import kotlinx.android.synthetic.main.fragment_editprofile.contState
-import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
-import kotlinx.android.synthetic.main.fragment_editprofile.image
-import kotlinx.android.synthetic.main.fragment_editprofile.inputAddress
-import kotlinx.android.synthetic.main.fragment_editprofile.inputCity
-import kotlinx.android.synthetic.main.fragment_editprofile.inputCountry
-import kotlinx.android.synthetic.main.fragment_editprofile.inputPhoneNo
-import kotlinx.android.synthetic.main.fragment_editprofile.inputZipCode
-import kotlinx.android.synthetic.main.fragment_editprofile.txtKindCompany
-import kotlinx.android.synthetic.main.fragment_editprofile.txtState
-import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
 import retrofit2.Call
 import java.io.File
 import java.util.ArrayList
@@ -53,6 +44,8 @@ class EditProfileFragment : BaseFragment() {
 
     companion object {
 
+        var arrData: ArrayList<States> = ArrayList()
+
         fun newInstance(): EditProfileFragment {
 
             val args = Bundle()
@@ -63,11 +56,15 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         getStates()
         setFields()
 
     }
+
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -94,10 +91,10 @@ class EditProfileFragment : BaseFragment() {
             UIHelper.showSpinnerDialog(this@EditProfileFragment, spinnerModelArrayList, "Selected States", txtState, null, null, IntWrapper(0))
         }
 
-        imgCamera.setOnClickListener(View.OnClickListener {
+        imgCamera.setOnClickListener {
 
             UIHelper.cropImagePicker(homeActivity, this)
-        })
+        }
 
         contTitle.setOnClickListener {
             UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->
@@ -114,7 +111,6 @@ class EditProfileFragment : BaseFragment() {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -129,8 +125,6 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
-
-
     private fun setImageAfterResult(uploadFilePath: String) {
         activity!!.runOnUiThread {
             try {
@@ -141,8 +135,8 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
-
     private fun setFields(){
+
         ImageLoaderHelper.loadImageWithAnimations(image, currentUser.userDetails.imageUrl, true)
         txtTitle.text = sharedPreferenceManager.currentUser.userDetails.title
         inputFirstName.setText(sharedPreferenceManager.currentUser.userDetails.firstName)
@@ -159,7 +153,7 @@ class EditProfileFragment : BaseFragment() {
     }
 
 
-    fun editProfileCall() {
+    private fun editProfileCall() {
         // Validations
 
         if (txtTitle.stringTrimmed.isEmpty()) {
@@ -228,6 +222,8 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.name = (inputFirstName.stringTrimmed)
         editProfileSendingModel.city = (inputCity.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
+        editProfileSendingModel.isCompleted = (1)
+        editProfileSendingModel.title = txtTitle.stringTrimmed
 
 
 
@@ -259,12 +255,12 @@ class EditProfileFragment : BaseFragment() {
 
                 }.type
 
-                AddressFragment.arrData = GsonFactory.getSimpleGson()
+                arrData = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
 
                 spinnerModelArrayList.clear()
 
-                for (states in AddressFragment.arrData) {
+                for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                     //spinnerModelArrayList.add(SpinnerModel(categories.id))
                 }
@@ -277,21 +273,21 @@ class EditProfileFragment : BaseFragment() {
 
     private fun getIdFromSpinner(): Int {
 
-        for (states in AddressFragment.arrData) {
+        for (states in arrData) {
             if (states.name == txtState.stringTrimmed) {
                 return states.id
             }
         }
         return -1
     }
-    private fun getNameFromSpinner(): String? {
 
-        for (states in AddressFragment.arrData) {
+    private fun getNameFromSpinner(): String? {
+        for (states in arrData) {
             if (states.id == sharedPreferenceManager.currentUser.userDetails.stateId) {
                 return states.name
             }
         }
-        return null
+        return ""
     }
 
 }

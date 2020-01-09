@@ -23,7 +23,7 @@ public class PersonalFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = PersonalFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }

@@ -12,7 +12,6 @@ import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.image
 
