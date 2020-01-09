@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
@@ -37,10 +38,13 @@ private var adapter: RegisterPagerAdapter? = null
 
 class RegisterPagerFragment : BaseFragment() {
 
+    private var spinnerModelArrayList = ArrayList<SpinnerModel>()
+
+
+
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
     lateinit var fragmentName: FragmentName
-    var idFromSpinner = 0
 
 
     companion object {
@@ -53,7 +57,6 @@ class RegisterPagerFragment : BaseFragment() {
             return fragment
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,7 +74,6 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
     }
-
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -103,11 +105,13 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         btnnext.setOnClickListener {
+
             if (positionToSelect < 3) {
                 when (positionToSelect) {
                     0 -> accountDetails(positionToSelect)
                     1 -> personalDetails(positionToSelect)
                     2 -> contactDetails(positionToSelect)
+
                 }
             } else {
                 if (fragmentName == FragmentName.RegistrationRequired) {
@@ -141,7 +145,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.zipCode = (inputZipCode.stringTrimmed)
         editProfileSendingModel.company = (txtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (inputFirstname.stringTrimmed)
-        editProfileSendingModel.stateId = (1)
+        editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.city = (inputCity.stringTrimmed)
 
 
@@ -190,6 +194,14 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please enter your city")
             return
         }
+        if (txtState.stringTrimmed.isEmpty()) {
+            UIHelper.showAlertDialog(context, "Please select state")
+            return
+        }
+        if (!checked.isChecked){
+            UIHelper.showAlertDialog(context, "please accept term of use")
+            return
+        }
 
         var signUpSendingModel = SignupSendingModel()
         signUpSendingModel.deviceToken = ("abc")
@@ -202,11 +214,12 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.address = (inputAddress.stringTrimmed)
         signUpSendingModel.zipCode = (inputZipCode.stringTrimmed)
         signUpSendingModel.company = (txtCompanyName.stringTrimmed)
-        signUpSendingModel.stateId = (1)
+        signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (inputCity.stringTrimmed)
         signUpSendingModel.password = (inputPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (inputConfirmPassReg.stringTrimmed)
         signUpSendingModel.isCompleted = (1)
+
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -224,6 +237,9 @@ class RegisterPagerFragment : BaseFragment() {
             override fun onError(`object`: Any?) {}
         })
     }
+
+
+
 
     private fun contactDetails(positionToSelect: Int) {
 
@@ -250,7 +266,6 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     private fun personalDetails(positionToSelect: Int) {
-
         if (fragmentName == FragmentName.RegistrationRequired) {
             emailLayout.visibility = View.GONE
 
@@ -309,7 +324,6 @@ class RegisterPagerFragment : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
-
 
     private fun setViewPagerAdapter() {
 
@@ -406,6 +420,18 @@ class RegisterPagerFragment : BaseFragment() {
                 txtAddress.setTextColor(resources.getColor(R.color.c_black))
             }
         }
+    }
+
+
+
+    private fun getIdFromSpinner(): Int {
+
+        for (states in AddressFragment.arrData) {
+            if (states.name == txtState.stringTrimmed) {
+                return states.id
+            }
+        }
+        return -1
     }
 
 }

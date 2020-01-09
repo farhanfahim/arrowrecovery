@@ -78,6 +78,9 @@ public class UserDetails {
     @Expose
     @SerializedName("lng")
     private double lng;
+    @Expose
+    @SerializedName("title")
+    private String title;
 
     @Override
     public String toString() {
@@ -266,5 +269,13 @@ public class UserDetails {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

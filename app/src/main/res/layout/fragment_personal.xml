@@ -48,7 +48,6 @@
                     android:padding="5dp"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_light" />
 
@@ -126,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="Comapny"
+                android:text="Company"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s14" />
 

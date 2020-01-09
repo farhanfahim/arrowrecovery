@@ -26,7 +26,7 @@ class AdvanceSearchFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = AdvanceSearchFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
