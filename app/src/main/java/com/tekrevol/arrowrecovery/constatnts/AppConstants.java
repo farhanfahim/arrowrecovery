@@ -104,6 +104,7 @@ public class AppConstants {
     public static final String KEY_IS_PIN_ENABLE = "is_pin_enable";
     public static final String KEY_CURRENT_LOCATION = "current_location";
     public static final String KEY_CURRENT_USER_EMAIL = "userEmail";
+    public static final String KEY_IS_VERIFIED = "verified";
 
 
     /**

@@ -62,7 +62,7 @@ class LoginFragmentt : BaseFragment() {
 
         txt_signup.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin,0), true)
+            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), true)
         })
 
     }
@@ -106,19 +106,25 @@ class LoginFragmentt : BaseFragment() {
 */
                     var userModelWrapper: UserModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper::class.java)
 
-                    sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
-                    sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.getUser().getId());
-                    sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
+                    when {
+                        (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                        }
+                        (userModelWrapper.user.userDetails.isVerified) == 0 -> {
 
-                    if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(0)) {
-                        baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired,1), true)
-                    } else if ((sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!!.equals(0)) {
-                        baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
-                    } else {
-                        baseActivity.finish()
-                        baseActivity.openActivity(HomeActivity::class.java)
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+
+                        }
+                        (userModelWrapper.user.userDetails.isApproved) == 0 -> {
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                        }
+                        else -> {
+                            baseActivity.finish()
+                            baseActivity.openActivity(HomeActivity::class.java)
+                        }
                     }
                 }
 

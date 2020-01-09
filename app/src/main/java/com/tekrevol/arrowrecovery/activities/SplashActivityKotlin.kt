@@ -10,6 +10,8 @@ import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.fadeIn
 import com.mikhaellopez.rxanimation.resize
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_IS_VERIFIED
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -50,17 +52,11 @@ class SplashActivityKotlin : AppCompatActivity() {
                 changeActivity(MainActivity::class.java)
             }, ANIMATIONS_DELAY.toLong())
 
-        } else {
+        } else if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(true)) {
             Handler().postDelayed({
 
-                if ((SharedPreferenceManager.getInstance(applicationContext).currentUser.userDetails.isCompleted)!!.equals(0)) {
-                    changeActivity(MainActivity::class.java)
-                } else if ((SharedPreferenceManager.getInstance(applicationContext).currentUser?.userDetails?.isVerified)!!.equals(0)) {
-                    changeActivity(MainActivity::class.java)
-                } else {
-                    changeActivity(HomeActivity::class.java)
-                }
-                //                        animateSplashLayout(false);
+                changeActivity(HomeActivity::class.java)
+
             }, ANIMATIONS_DELAY.toLong())
         }
 

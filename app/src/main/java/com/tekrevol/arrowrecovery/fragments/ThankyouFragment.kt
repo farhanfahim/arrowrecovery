@@ -6,6 +6,9 @@ import android.widget.AdapterView
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_thankyou.*
+import kotlinx.android.synthetic.main.fragment_verify_account.*
+import kotlinx.android.synthetic.main.item_cart.*
 
 class ThankyouFragment : BaseFragment() {
 
@@ -33,6 +36,11 @@ class ThankyouFragment : BaseFragment() {
     }
 
     override fun setListeners() {
+
+        txtBackToLogin.setOnClickListener(View.OnClickListener {
+            baseActivity.popBackStack()
+            baseActivity.addDockableFragment(LoginFragment.newInstance(),true)
+        })
     }
 
     override fun onClick(v: View?) {

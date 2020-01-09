@@ -41,7 +41,6 @@ class RegisterPagerFragment : BaseFragment() {
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
 
 
-
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
     lateinit var fragmentName: FragmentName
@@ -159,7 +158,6 @@ class RegisterPagerFragment : BaseFragment() {
 
                 if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
                     baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
-
                 }
             }
 
@@ -198,7 +196,7 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please select state")
             return
         }
-        if (!checked.isChecked){
+        if (!checked.isChecked) {
             UIHelper.showAlertDialog(context, "please accept term of use")
             return
         }
@@ -237,8 +235,6 @@ class RegisterPagerFragment : BaseFragment() {
             override fun onError(`object`: Any?) {}
         })
     }
-
-
 
 
     private fun contactDetails(positionToSelect: Int) {
@@ -421,7 +417,6 @@ class RegisterPagerFragment : BaseFragment() {
             }
         }
     }
-
 
 
     private fun getIdFromSpinner(): Int {

@@ -54,7 +54,6 @@ public class UserModel {
     private String name;
 
 
-
     transient boolean isSelected = false;
 
     public boolean isSelected() {
@@ -64,6 +63,17 @@ public class UserModel {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    transient boolean isLoginVerified = false;
+
+    public boolean isLoginVerified() {
+        return isLoginVerified;
+    }
+
+    public void setLoginVerified(boolean loginVerified) {
+        isLoginVerified = loginVerified;
+    }
+
 
     public int getRoles_csv() {
         if (roles_csv == null || roles_csv.isEmpty()) {

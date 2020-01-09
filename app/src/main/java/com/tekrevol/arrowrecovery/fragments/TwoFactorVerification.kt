@@ -6,21 +6,23 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.sending_model.ChangePasswordSendingModel
+import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.OtpModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_change_password.*
+import kotlinx.android.synthetic.main.fragment_thankyou.*
 import kotlinx.android.synthetic.main.fragment_verify_account.*
 import retrofit2.Call
+import java.io.File
 import java.util.*
 
-class OtpVerification : BaseFragment() {
+class TwoFactorVerification : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
     var webCallVerify: Call<WebResponse<Any>>? = null
@@ -50,7 +52,7 @@ class OtpVerification : BaseFragment() {
 
             val args = Bundle()
 
-            val fragment = OtpVerification()
+            val fragment = TwoFactorVerification()
             fragment.arguments = args
             return fragment
         }
@@ -77,6 +79,12 @@ class OtpVerification : BaseFragment() {
 
     override fun setListeners() {
 
+
+        txtBackToLoginScreen.setOnClickListener(View.OnClickListener {
+            baseActivity.popBackStack()
+            baseActivity.addDockableFragment(LoginFragment.newInstance(),true)
+        })
+
         txtSendCode.setOnClickListener {
             sendOtp()
         }
@@ -89,9 +97,11 @@ class OtpVerification : BaseFragment() {
             webCallVerify = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFYOTP, otpModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
-
-                    baseActivity.popBackStack()
-                    baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                    sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, 1)
+                    val userModel = UserModel()
+                    userModel.setLoginVerified(true)
+                    baseActivity.finish()
+                    baseActivity.openActivity(HomeActivity::class.java)
                 }
 
                 override fun onError(`object`: Any?) {}

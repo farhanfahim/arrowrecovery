@@ -21,9 +21,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_SOCIAL_LOGIN
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.enums.FragmentName
-import com.tekrevol.arrowrecovery.fragments.OtpVerification
-import com.tekrevol.arrowrecovery.fragments.PersonalFragment
-import com.tekrevol.arrowrecovery.fragments.RegisterPagerFragment
+import com.tekrevol.arrowrecovery.fragments.*
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
@@ -100,22 +98,28 @@ class MainActivity : BaseActivity(), FacebookResponse {
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
-                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-
                 when {
-                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0) -> {
+                    ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).currentUser.isLoginVerified) -> {
+                        popBackStack()
+                        addDockableFragment(TwoFactorVerification.newInstance(), true)
+                    }
+                    (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                     }
-                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
-
+                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
                         popBackStack()
                         addDockableFragment(OtpVerification.newInstance(), true)
-
+                    }
+                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                        popBackStack()
+                        addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
                     else -> {
+                        sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                         finish()
                         openActivity(HomeActivity::class.java)
                     }
@@ -149,11 +153,11 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
             else -> {
                 when {
-                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0) -> {
+                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted) == 0) -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                     }
-                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
+                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified) == 0 -> {
 
                         popBackStack()
                         addDockableFragment(OtpVerification.newInstance(), true)
@@ -222,21 +226,20 @@ class MainActivity : BaseActivity(), FacebookResponse {
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
-                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                // mFbHelper?.performSignOut()
-
                 when {
-                    ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!! == 0) -> {
+                    (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                     }
-                    (sharedPreferenceManager?.currentUser?.userDetails?.isVerified)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
 
                         popBackStack()
                         addDockableFragment(OtpVerification.newInstance(), true)
 
+                    }
+                    (userModelWrapper.user.userDetails.isApproved) == 0 -> {
+                        popBackStack()
+                        addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
                     else -> {
                         finish()

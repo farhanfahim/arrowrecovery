@@ -7,8 +7,9 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="@dimen/x100dp"
-        android:layout_height="@dimen/x100dp" />
+        android:layout_width="wrap_content"
+        android:src="@drawable/ty"
+        android:layout_height="wrap_content" />
 
     <com.tekrevol.arrowrecovery.widget.AnyTextView
         android:layout_width="wrap_content"
@@ -46,7 +47,6 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/txtBackToLogin"
-        app:shadowHeight="@dimen/x1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/x20dp"
@@ -57,7 +57,8 @@
         android:text="Back to Login"
         android:textAllCaps="false"
         android:textColor="@color/c_white"
-        android:textSize="@dimen/s18" />
+        android:textSize="@dimen/s18"
+        app:shadowHeight="@dimen/x1dp" />
 
 
 </LinearLayout>
