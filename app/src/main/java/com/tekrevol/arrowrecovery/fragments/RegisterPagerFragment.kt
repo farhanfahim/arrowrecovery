@@ -3,7 +3,6 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
@@ -15,10 +14,8 @@ import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
-import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.UserDetails
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
@@ -33,13 +30,14 @@ import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
 import java.util.ArrayList
-import java.util.HashMap
 
 private var adapter: RegisterPagerAdapter? = null
 
 class RegisterPagerFragment : BaseFragment() {
 
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
+
+    var email:String = ""
 
 
     var webCall: Call<WebResponse<Any>>? = null
@@ -48,11 +46,12 @@ class RegisterPagerFragment : BaseFragment() {
 
 
     companion object {
-        fun newInstance(fragmentName: FragmentName, positionToSelect: Int): Fragment {
+        fun newInstance(fragmentName: FragmentName, email: String,positionToSelect: Int): Fragment {
             val args = Bundle()
             val fragment = RegisterPagerFragment()
             fragment.positionToSelect = positionToSelect
             fragment.fragmentName = fragmentName
+            fragment.email = email
             fragment.arguments = args
             return fragment
         }
@@ -137,7 +136,7 @@ class RegisterPagerFragment : BaseFragment() {
     private fun updateProfileApi() {
 
         val editProfileSendingModel = EditProfileSendingModel()
-        editProfileSendingModel.email = (sharedPreferenceManager.currentUser.email)
+        editProfileSendingModel.email = (email)
         editProfileSendingModel.phone = (inputPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (inputFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (inputLastname.stringTrimmed)
@@ -149,27 +148,29 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.city = (inputCity.stringTrimmed)
         editProfileSendingModel.title = (txtTitle.stringTrimmed)
+        var email:String = inputEmail.stringTrimmed
+        var phone:String = inputPhoneNo.stringTrimmed
 
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
-//                val currentUser: UserModel = sharedPreferenceManager.currentUser
-//                currentUser.userDetails = userDetails
+                val currentUser: UserModel = sharedPreferenceManager.currentUser
+                currentUser.userDetails = userDetails
 //                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
 
                 when {
 
-                    (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                    (currentUser.userDetails.isCompleted == 0) -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
                     }
-                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                    (currentUser.userDetails.isVerified)!! == 0 -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(email,phone), true)
                     }
-                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                    (currentUser.userDetails.isApproved)!! == 0 -> {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
@@ -229,6 +230,8 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.name = (inputUsername.stringTrimmed)
         signUpSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
         signUpSendingModel.email = (inputEmail.stringTrimmed)
+        var email:String = inputEmail.stringTrimmed
+        var phone:String = inputPhoneNo.stringTrimmed
         signUpSendingModel.phone = (inputPhoneNo.stringTrimmed)
         signUpSendingModel.firstName = (inputFirstname.stringTrimmed)
         signUpSendingModel.lastName = (inputLastname.stringTrimmed)
@@ -251,11 +254,11 @@ class RegisterPagerFragment : BaseFragment() {
 
                     (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
                     }
                     (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(email,phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                         baseActivity.popBackStack()

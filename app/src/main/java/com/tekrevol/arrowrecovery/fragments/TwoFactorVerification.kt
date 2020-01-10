@@ -1,6 +1,7 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
@@ -100,6 +101,8 @@ class TwoFactorVerification : BaseFragment() {
                     if(webResponse.isSuccess)
                     {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, "1")
+                        Log.d("verify",sharedPreferenceManager.getString(AppConstants.KEY_IS_VERIFIED))
+
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)
                     }

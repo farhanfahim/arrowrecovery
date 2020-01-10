@@ -45,7 +45,7 @@ public class WebServiceConstants {
 
     // LOCAL MACHINE
     public static final String BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/";
-    public static final String IMAGE_BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/api/resize";
+    public static final String IMAGE_BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/api/resize/";
 
 
     /**
