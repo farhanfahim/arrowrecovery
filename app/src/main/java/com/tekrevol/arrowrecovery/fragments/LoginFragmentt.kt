@@ -99,11 +99,34 @@ class LoginFragmentt : BaseFragment() {
                     UIHelper.showToast(context, webResponse.message)
 
                     var userModelWrapper: UserModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper::class.java)
-                    sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                    /*sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                     sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                    sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                    baseActivity.popBackStack()
-                    baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
+                    sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
+
+                    when {
+
+                        (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                        }
+                        (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                        }
+                        (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                        }
+                        else -> {
+                            sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+                            baseActivity.popBackStack()
+                            baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
+                        }
+                    }
+
+
 
 
                 }
