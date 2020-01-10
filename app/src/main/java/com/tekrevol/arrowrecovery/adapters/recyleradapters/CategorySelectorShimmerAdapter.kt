@@ -72,7 +72,6 @@ class CategorySelectorShimmerAdapter(private val activity: Context, private val 
          */
         fun bindTo(model: VehicleMakeModel?, context: Context) {
             this.model = model
-
             this.model?.let {
                 txtCategory?.text = it.name
                 if (it.isSelected) {
