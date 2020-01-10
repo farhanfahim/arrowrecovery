@@ -73,5 +73,22 @@
 
     </LinearLayout>
 
+    <info.hoang8f.widget.FButton
+        android:layout_alignParentBottom="true"
+        android:id="@+id/txtBackToLoginScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x20dp"
+        android:background="@drawable/searchbar_grey"
+        android:backgroundTint="@color/green_bg"
+        android:paddingLeft="@dimen/x10dp"
+        android:paddingRight="@dimen/x10dp"
+        android:text="Back to Login"
+        android:textAllCaps="false"
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/s18"
+        app:shadowHeight="@dimen/x1dp" />
+
+
 
 </RelativeLayout>

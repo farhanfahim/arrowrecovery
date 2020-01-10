@@ -6,6 +6,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class UserDetails {
 
+
     @Expose
     @SerializedName("full_name")
     private String fullName;
@@ -24,6 +25,7 @@ public class UserDetails {
     @Expose
     @SerializedName("is_verified")
     private int isVerified;
+
     @Expose
     @SerializedName("is_completed")
     private int isCompleted;
@@ -81,6 +83,14 @@ public class UserDetails {
     @Expose
     @SerializedName("title")
     private String title;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
