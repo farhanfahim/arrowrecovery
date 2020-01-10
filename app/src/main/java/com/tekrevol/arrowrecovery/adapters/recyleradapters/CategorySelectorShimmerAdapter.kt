@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
 import com.tekrevol.arrowrecovery.R
@@ -27,6 +28,9 @@ class CategorySelectorShimmerAdapter(private val activity: Context, private val 
         super.onBindViewHolder(holder, position)
         if (holder is ViewHolder) {
             val model = arrData[position]
+            if (arrData[position].equals(0)){
+
+            }
 
             val viewHolder: ViewHolder = holder as ViewHolder
             with(viewHolder)

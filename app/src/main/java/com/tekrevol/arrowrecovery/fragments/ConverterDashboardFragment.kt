@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
@@ -42,6 +44,9 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private lateinit var categorySelectorAdapter: CategorySelectorShimmerAdapter
     private lateinit var converterItemShimmerAdapter: ConverterItemShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
+    var itemPos:Int = 0
+    //lateinit var txtTotalItems:AnyTextView
+
 
     companion object {
 
@@ -108,14 +113,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //        rvCategories.adapter = categorySelectorAdapter
 
         val mLayoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        rvCategories.setLayoutManager(mLayoutManager1)
-        (rvCategories.getItemAnimator() as DefaultItemAnimator).supportsChangeAnimations = false
+        rvCategories.layoutManager = mLayoutManager1
+        (rvCategories.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
         val pagingDelegate: PagingDelegate = PagingDelegate.Builder(categorySelectorAdapter)
                 .attachTo(rvCategories)
                 .listenWith(this@ConverterDashboardFragment)
                 .build()
-        rvCategories.setAdapter(categorySelectorAdapter)
+        rvCategories.adapter = categorySelectorAdapter
         rvCategories.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
 
         //
@@ -137,7 +142,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //        rvConverters.adapter = converterItemShimmerAdapter
 
         getVehicle()
-        getProductDetail()
+        //getProductDetail(1)
 
 
     }
@@ -192,7 +197,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         }
     }
 
-
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
         if (type == ConverterItemShimmerAdapter::class.java.simpleName) {
@@ -205,16 +209,20 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 }
             }
         } else {
+            var vehicleMakeModel = anyObject as VehicleMakeModel
+            itemPos = vehicleMakeModel.id
+
+            //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
+
+            getProductDetail(itemPos)
+
             arrCategories.forEach { it.isSelected = false }
             arrCategories[position].isSelected = true
             categorySelectorAdapter.notifyDataSetChanged()
             rvCategories.scrollToPosition(position)
         }
 
-
     }
-
-
 
     override fun onDonePaging() {
     }
@@ -223,12 +231,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    private fun getProductDetail() {
+    private fun getProductDetail(item:Int) {
 
         rvConverters.showShimmer()
 
         val queryMap = HashMap<String, Any>()
-        queryMap[WebServiceConstants.Q_MAKE_ID] = 2
+        queryMap[WebServiceConstants.Q_MAKE_ID] = item
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -239,6 +247,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
                 rvConverters.hideShimmer()
 
+                arrConverters.clear()
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 onDonePaging()
