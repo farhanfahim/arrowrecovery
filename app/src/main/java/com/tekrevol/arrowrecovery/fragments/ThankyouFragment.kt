@@ -39,7 +39,7 @@ class ThankyouFragment : BaseFragment() {
 
         txtBackToLogin.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragment.newInstance(),true)
+            baseActivity.addDockableFragment(LoginFragmentt.newInstance(),true)
         })
     }
 

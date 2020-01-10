@@ -12,6 +12,7 @@ import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 
 /**
@@ -78,8 +79,9 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
 
             this.model?.let {
                 txtMake.text = it.name
+                txtModel.text = it.car_variation
+                ImageLoaderHelper.loadImageWithouAnimationByPath(imgConverter, it.feature_image, true)
             }
-
 
         }
     }

@@ -82,7 +82,7 @@ class TwoFactorVerification : BaseFragment() {
 
         txtBackToLoginScreen.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragment.newInstance(),true)
+            baseActivity.addDockableFragment(LoginFragmentt.newInstance(),true)
         })
 
         txtSendCode.setOnClickListener {

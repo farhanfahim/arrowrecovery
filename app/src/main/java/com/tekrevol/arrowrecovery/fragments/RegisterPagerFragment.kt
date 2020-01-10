@@ -349,10 +349,6 @@ class RegisterPagerFragment : BaseFragment() {
             }
             1 -> {
 
-                if (fragmentName == FragmentName.RegistrationRequired) {
-
-                    var x: String = sharedPreferenceManager.currentUser.userDetails.firstName
-                }
                 socialloginLayout.visibility = View.GONE
                 title.text = "Personal Information"
                 btnnext.text = "Next"
