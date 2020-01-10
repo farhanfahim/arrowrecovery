@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.adapters.RegisterPagerAdapter
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
@@ -153,13 +154,33 @@ class RegisterPagerFragment : BaseFragment() {
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
-//                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
-                val currentUser: UserModel = sharedPreferenceManager.currentUser
-                currentUser.userDetails = userDetails
-                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
+                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
+//                val currentUser: UserModel = sharedPreferenceManager.currentUser
+//                currentUser.userDetails = userDetails
+//                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
 
-                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
-                    baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                when {
+
+                    (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                    }
+                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                    }
+                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                    }
+                    else -> {
+                        sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
+                        baseActivity.finish()
+                        baseActivity.openActivity(HomeActivity::class.java)
+                    }
                 }
             }
 
@@ -226,12 +247,28 @@ class RegisterPagerFragment : BaseFragment() {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
-                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
-                sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                if ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted)!!.equals(1)) {
-                    baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                when {
 
+                    (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                    }
+                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                    }
+                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                    }
+                    else -> {
+                        sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
+                        baseActivity.finish()
+                        baseActivity.openActivity(HomeActivity::class.java)
+                    }
                 }
             }
 
@@ -349,10 +386,6 @@ class RegisterPagerFragment : BaseFragment() {
             }
             1 -> {
 
-                if (fragmentName == FragmentName.RegistrationRequired) {
-
-                    var x: String = sharedPreferenceManager.currentUser.userDetails.firstName
-                }
                 socialloginLayout.visibility = View.GONE
                 title.text = "Personal Information"
                 btnnext.text = "Next"

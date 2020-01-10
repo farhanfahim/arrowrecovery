@@ -49,7 +49,7 @@ class SplashActivityKotlin : AppCompatActivity() {
 
             Handler().postDelayed({
                 //                        animateSplashLayout(true);
-                SharedPreferenceManager.getInstance(applicationContext).putValue(AppConstants.KEY_IS_VERIFIED, 0)
+                SharedPreferenceManager.getInstance(applicationContext).putValue(AppConstants.KEY_IS_VERIFIED, "0")
                 changeActivity(MainActivity::class.java)
             }, ANIMATIONS_DELAY.toLong())
 
@@ -57,6 +57,12 @@ class SplashActivityKotlin : AppCompatActivity() {
             Handler().postDelayed({
 
                 changeActivity(HomeActivity::class.java)
+
+            }, ANIMATIONS_DELAY.toLong())
+        } else if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(0)) {
+            Handler().postDelayed({
+                SharedPreferenceManager.getInstance(applicationContext).putValue(AppConstants.KEY_IS_VERIFIED, "0")
+                changeActivity(MainActivity::class.java)
 
             }, ANIMATIONS_DELAY.toLong())
         }
