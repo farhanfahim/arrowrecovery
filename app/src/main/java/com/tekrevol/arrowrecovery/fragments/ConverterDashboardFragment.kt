@@ -198,7 +198,9 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         if (type == ConverterItemShimmerAdapter::class.java.simpleName) {
             when (view?.id) {
                 R.id.contParent -> {
-                    baseActivity.openActivity(ProductDetailActivity::class.java)
+
+                    var product: ProductDetailModel = anyObject as ProductDetailModel
+                    baseActivity.openActivity(ProductDetailActivity::class.java,product.toString())
                 }
                 R.id.contAddToCart -> {
                     Snackbar.make(view, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
