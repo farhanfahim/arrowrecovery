@@ -59,6 +59,12 @@ class SplashActivityKotlin : AppCompatActivity() {
                 changeActivity(HomeActivity::class.java)
 
             }, ANIMATIONS_DELAY.toLong())
+        } else if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(0)) {
+            Handler().postDelayed({
+                SharedPreferenceManager.getInstance(applicationContext).putValue(AppConstants.KEY_IS_VERIFIED, "0")
+                changeActivity(MainActivity::class.java)
+
+            }, ANIMATIONS_DELAY.toLong())
         }
 
 

@@ -11,6 +11,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.sending_model.LoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
@@ -96,36 +97,15 @@ class LoginFragmentt : BaseFragment() {
             webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                     UIHelper.showToast(context, webResponse.message)
-                    /* if(isChecked == true)
-                    {
-                        saveUserInfo();
-                    } else {
-                        loginPrefsEditor.clear();
-                        loginPrefsEditor.commit();
-                    }
-*/
+
                     var userModelWrapper: UserModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper::class.java)
+                    sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                    sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                    sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+                    baseActivity.popBackStack()
+                    baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
 
-                    when {
-                        (userModelWrapper.user.userDetails.isCompleted == 0) -> {
-                            baseActivity.popBackStack()
-                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
-                        }
-                        (userModelWrapper.user.userDetails.isVerified) == 0 -> {
 
-                            baseActivity.popBackStack()
-                            baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
-
-                        }
-                        (userModelWrapper.user.userDetails.isApproved) == 0 -> {
-                            baseActivity.popBackStack()
-                            baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
-                        }
-                        else -> {
-                            baseActivity.finish()
-                            baseActivity.openActivity(HomeActivity::class.java)
-                        }
-                    }
                 }
 
                 override fun onError(`object`: Any?) {}

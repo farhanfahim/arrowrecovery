@@ -99,10 +99,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
                 when {
-                    ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(0)) -> {
-                        popBackStack()
-                        addDockableFragment(TwoFactorVerification.newInstance(), true)
-                    }
+
                     (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
@@ -150,8 +147,11 @@ class MainActivity : BaseActivity(), FacebookResponse {
         when {
             (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) ->
                 addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), false)
-
-            else -> {
+            ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(0)) -> {
+                popBackStack()
+                addDockableFragment(TwoFactorVerification.newInstance(), true)
+            }
+            /*else -> {
                 when {
                     ((sharedPreferenceManager?.currentUser?.userDetails?.isCompleted) == 0) -> {
                         popBackStack()
@@ -168,7 +168,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         openActivity(HomeActivity::class.java)
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -227,21 +227,24 @@ class MainActivity : BaseActivity(), FacebookResponse {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
                 when {
+
                     (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
                     }
-                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
-
+                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
                         popBackStack()
                         addDockableFragment(OtpVerification.newInstance(), true)
-
                     }
-                    (userModelWrapper.user.userDetails.isApproved) == 0 -> {
+                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                         popBackStack()
                         addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
                     else -> {
+                        sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                         finish()
                         openActivity(HomeActivity::class.java)
                     }
