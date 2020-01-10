@@ -5,17 +5,14 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.sending_model.ChangePasswordSendingModel
 import com.tekrevol.arrowrecovery.models.sending_model.OtpModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_change_password.*
 import kotlinx.android.synthetic.main.fragment_verify_account.*
 import retrofit2.Call
 import java.util.*
@@ -23,14 +20,14 @@ import java.util.*
 class OtpVerification : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
+    var email:String = ""
+    var phone:String = ""
     var webCallVerify: Call<WebResponse<Any>>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        txtBackToLoginScreen.visibility = View.GONE
-        txtPhone.text = "We have sent you a SMS with a code to the number " + sharedPreferenceManager.currentUser.userDetails.phone + " and your email " + sharedPreferenceManager.currentUser.email
-        sendOtp()
+            txtPhone.text = "We have sent you a SMS with a code to the number $phone and your email $email"
+            sendOtp()
     }
 
     private fun sendOtp() {
@@ -47,12 +44,14 @@ class OtpVerification : BaseFragment() {
     }
 
     companion object {
-        fun newInstance(): Fragment {
+        fun newInstance(email: String, phone: String): Fragment {
 
             val args = Bundle()
 
             val fragment = OtpVerification()
             fragment.arguments = args
+            fragment.email = email
+            fragment.phone = phone
             return fragment
         }
     }

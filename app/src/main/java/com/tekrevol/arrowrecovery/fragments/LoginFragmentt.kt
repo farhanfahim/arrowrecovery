@@ -5,19 +5,19 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
-import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.sending_model.LoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.inputEmail
 import retrofit2.Call
 
 
@@ -63,7 +63,7 @@ class LoginFragmentt : BaseFragment() {
 
         txt_signup.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), true)
+            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, "",0), true)
         })
 
     }
@@ -94,6 +94,8 @@ class LoginFragmentt : BaseFragment() {
             loginSendingModel.setDeviceToken("abc")
             loginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
             loginSendingModel.setPassword(inputPassword.getStringTrimmed())
+            var email:String = inputEmail.stringTrimmed
+            //var phone:String = inputPhoneNo.stringTrimmed
             webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                     UIHelper.showToast(context, webResponse.message)
@@ -107,11 +109,11 @@ class LoginFragmentt : BaseFragment() {
 
                         (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                             baseActivity.popBackStack()
-                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, 1), true)
+                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
                         }
                         (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
                             baseActivity.popBackStack()
-                            baseActivity.addDockableFragment(OtpVerification.newInstance(), true)
+                            baseActivity.addDockableFragment(OtpVerification.newInstance(email, ""), true)
                         }
                         (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                             baseActivity.popBackStack()
@@ -125,8 +127,6 @@ class LoginFragmentt : BaseFragment() {
                             baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
                         }
                     }
-
-
 
 
                 }
