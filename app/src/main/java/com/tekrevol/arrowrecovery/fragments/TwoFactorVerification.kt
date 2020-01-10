@@ -99,7 +99,7 @@ class TwoFactorVerification : BaseFragment() {
                     UIHelper.showToast(context, webResponse.message)
                     if(webResponse.isSuccess)
                     {
-                        sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, 1)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, "1")
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)
                     }

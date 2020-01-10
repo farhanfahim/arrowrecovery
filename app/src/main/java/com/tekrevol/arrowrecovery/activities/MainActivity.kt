@@ -147,7 +147,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
         when {
             (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) ->
                 addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, 0), false)
-            ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(0)) -> {
+            ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals("0")) -> {
                 popBackStack()
                 addDockableFragment(TwoFactorVerification.newInstance(), true)
             }
