@@ -123,14 +123,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
         val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2,RecyclerView.VERTICAL,false)
-        rvConverters.setLayoutManager(mLayoutManager2)
-        (rvConverters.getItemAnimator() as DefaultItemAnimator).supportsChangeAnimations = false
+        rvConverters.layoutManager = mLayoutManager2
+        (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
         val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
                 .attachTo(rvCategories)
                 .listenWith(this@ConverterDashboardFragment)
                 .build()
-        rvConverters.setAdapter(converterItemShimmerAdapter)
+        rvConverters.adapter = converterItemShimmerAdapter
         rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
 
 //        rvConverters.layoutManager = GridLayoutManager(context, 2)
@@ -226,6 +226,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private fun getProductDetail() {
 
         rvConverters.showShimmer()
+
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = 2
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -241,7 +242,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 onDonePaging()
-
 
             }
 

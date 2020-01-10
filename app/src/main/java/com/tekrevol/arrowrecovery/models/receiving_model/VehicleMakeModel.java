@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.models.receiving_model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
+import com.tekrevol.arrowrecovery.models.Attachments;
 
 public class VehicleMakeModel {
 
@@ -30,6 +31,7 @@ public class VehicleMakeModel {
     @Expose
     @SerializedName("id")
     private int id;
+
 
     public Boolean getSelected() {
         return isSelected;

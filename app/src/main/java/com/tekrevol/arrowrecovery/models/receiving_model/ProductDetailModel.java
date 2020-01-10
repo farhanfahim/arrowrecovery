@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.models.receiving_model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
+import com.tekrevol.arrowrecovery.models.Attachments;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class ProductDetailModel {
 
     @Expose
     @SerializedName("attachments")
-    private List<String> attachments;
+    private List<Attachments> attachments;
     @Expose
     @SerializedName("feature_image_url")
     private String feature_image_url;
@@ -54,11 +55,11 @@ public class ProductDetailModel {
     @SerializedName("id")
     private int id;
 
-    public List<String> getAttachments() {
+    public List<Attachments> getAttachments() {
         return attachments;
     }
 
-    public void setAttachments(List<String> attachments) {
+    public void setAttachments(List<Attachments> attachments) {
         this.attachments = attachments;
     }
 
