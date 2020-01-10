@@ -28,6 +28,7 @@ class OtpVerification : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        txtBackToLoginScreen.visibility = View.GONE
         txtPhone.text = "We have sent you a SMS with a code to the number " + sharedPreferenceManager.currentUser.userDetails.phone + " and your email " + sharedPreferenceManager.currentUser.email
         sendOtp()
     }
