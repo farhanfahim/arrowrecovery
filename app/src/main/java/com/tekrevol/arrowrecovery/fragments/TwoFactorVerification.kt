@@ -97,11 +97,13 @@ class TwoFactorVerification : BaseFragment() {
             webCallVerify = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFYOTP, otpModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
-                    sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, 1)
-                    val userModel = UserModel()
-                    userModel.setLoginVerified(true)
-                    baseActivity.finish()
-                    baseActivity.openActivity(HomeActivity::class.java)
+                    if(webResponse.isSuccess)
+                    {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, 1)
+                        baseActivity.finish()
+                        baseActivity.openActivity(HomeActivity::class.java)
+                    }
+
                 }
 
                 override fun onError(`object`: Any?) {}

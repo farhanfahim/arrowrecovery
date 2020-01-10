@@ -99,7 +99,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
                 when {
-                    ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).currentUser.isLoginVerified) -> {
+                    ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals(0)) -> {
                         popBackStack()
                         addDockableFragment(TwoFactorVerification.newInstance(), true)
                     }
