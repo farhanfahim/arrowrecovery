@@ -28,6 +28,7 @@
 
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtCarNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -48,21 +49,24 @@
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        app:typeface="@string/font_regular"
                         android:text="$ "
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/s16"
+                        android:visibility="gone"
+                        app:typeface="@string/font_regular" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        android:id="@+id/txtPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        app:typeface="@string/font_regular"
                         android:text="541.36"
                         android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/s16"
+                        android:visibility="gone"
+                        app:typeface="@string/font_regular" />
 
                 </LinearLayout>
 
@@ -178,21 +182,22 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
                     android:text="Year"
                     android:textColor="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="2014"
-                    app:typeface="@string/font_regular"
                     android:textColor="@color/title_color"
-                    android:textSize="@dimen/s16" />
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
             </LinearLayout>
 
@@ -209,21 +214,22 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
                     android:text="Make"
                     android:textColor="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="wrap_content"
+                    android:id="@+id/txtMake"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
                     android:text="BMW"
                     android:textColor="@color/title_color"
-                    android:textSize="@dimen/s16" />
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
             </LinearLayout>
 
@@ -247,10 +253,10 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
                     android:text="Model"
                     android:textColor="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="wrap_content"
@@ -258,10 +264,11 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
+                    android:id="@+id/txtModel"
                     android:text="5 Series"
                     android:textColor="@color/title_color"
-                    android:textSize="@dimen/s16" />
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
             </LinearLayout>
 
@@ -278,10 +285,10 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
                     android:text="Reference"
                     android:textColor="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:layout_width="wrap_content"
@@ -289,10 +296,11 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    app:typeface="@string/font_regular"
+                    android:id="@+id/txtReference"
                     android:text="0418189"
                     android:textColor="@color/title_color"
-                    android:textSize="@dimen/s16" />
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
             </LinearLayout>
 
@@ -323,22 +331,19 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Notes"
-                app:typeface="@string/font_regular"
                 android:textColor="@color/txtGrey"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_regular" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="wrap_content"
-                app:typeface="@string/font_regular"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed.
-This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text. Only for show. He who searches for meaning here will be sorely disappointed."
+                android:text=""
+                android:id="@+id/txtDescription"
                 android:textColor="@color/title_color"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/s16"
+                app:typeface="@string/font_regular" />
 
         </LinearLayout>
 

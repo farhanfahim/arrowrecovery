@@ -9,6 +9,10 @@ import java.util.List;
 
 public class ProductDetailModel {
 
+
+    @Expose
+    @SerializedName("vehicle_model")
+    private VehicleModelEntity vehicleModel;
     @Expose
     @SerializedName("attachments")
     private List<Attachments> attachments;
@@ -69,6 +73,14 @@ public class ProductDetailModel {
 
     public void setFeature_image_url(String feature_image_url) {
         this.feature_image_url = feature_image_url;
+    }
+
+    public VehicleModelEntity getVehicleModel() {
+        return vehicleModel;
+    }
+
+    public void setVehicleModel(VehicleModelEntity vehicleModel) {
+        this.vehicleModel = vehicleModel;
     }
 
     public int getRhodium() {

@@ -115,6 +115,7 @@ public class WebServiceConstants {
     public static final String Q_PARAM_VEHICLEMAKE = "vehicle-makes";
     public static final String Q_VEHICLE_MAKES = "vehicle-makes";
     public static final String Q_MAKE_ID = "make_id";
+    public static final String Q_FEATURED = "is_featured";
 
 
     /**

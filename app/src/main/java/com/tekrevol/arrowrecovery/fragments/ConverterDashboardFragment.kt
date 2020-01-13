@@ -1,17 +1,20 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ImageView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.reflect.TypeToken
+import com.synnapps.carouselview.ImageClickListener
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
@@ -22,12 +25,12 @@ import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
-import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
@@ -40,16 +43,18 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
     private var arrCategories: ArrayList<VehicleMakeModel> = ArrayList()
+    private var arrFeatured: ArrayList<ProductDetailModel> = ArrayList()
     private var arrConverters: ArrayList<ProductDetailModel> = ArrayList()
     private lateinit var categorySelectorAdapter: CategorySelectorShimmerAdapter
     private lateinit var converterItemShimmerAdapter: ConverterItemShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
-    var itemPos:Int = 0
+    var webCallProductDetail: Call<WebResponse<Any>>? = null
+    var webCallFeatured: Call<WebResponse<Any>>? = null
+    var itemPos: Int = 0
     //lateinit var txtTotalItems:AnyTextView
 
 
     companion object {
-
         fun newInstance(): ConverterDashboardFragment {
 
             val args = Bundle()
@@ -78,7 +83,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
         categorySelectorAdapter = CategorySelectorShimmerAdapter(context!!, arrCategories, this)
         converterItemShimmerAdapter = ConverterItemShimmerAdapter(context!!, arrConverters, this)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,9 +105,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
     private fun onBind() {
-        carouselView.setImageListener(this)
-        carouselView.pageCount = Constants.sampleConverterBanners.size
-
+        arrFeatured.clear()
         arrCategories.clear()
         arrConverters.clear()
 
@@ -127,7 +129,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         //arrConverters.addAll()
 
 
-        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2,RecyclerView.VERTICAL,false)
+        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
         rvConverters.layoutManager = mLayoutManager2
         (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
@@ -142,9 +144,35 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //        rvConverters.adapter = converterItemShimmerAdapter
 
         getVehicle()
+        getFeaturedList()
         //getProductDetail(1)
 
 
+    }
+
+    private fun getFeaturedList() {
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_FEATURED] = 1
+        webCallFeatured = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+                arrFeatured.clear()
+                arrFeatured.addAll(arrayList)
+
+                carouselView.setImageListener(imageListener)
+                carouselView.pageCount = arrayList.size
+
+
+            }
+
+            override fun onError(`object`: Any?) {
+            }
+        })
     }
 
     private fun getVehicle() {
@@ -182,6 +210,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
     override fun setListeners() {
+
+        carouselView.setImageClickListener { pos ->
+            var product: ProductDetailModel = arrFeatured[pos]
+            baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
+        }
+
     }
 
     override fun onClick(v: View?) {
@@ -204,7 +238,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 R.id.contParent -> {
 
                     var product: ProductDetailModel = anyObject as ProductDetailModel
-                    baseActivity.openActivity(ProductDetailActivity::class.java,product.toString())
+                    baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
                 }
                 R.id.contAddToCart -> {
                     Snackbar.make(view, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
@@ -233,13 +267,13 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    private fun getProductDetail(item:Int) {
+    private fun getProductDetail(item: Int) {
 
         rvConverters.showShimmer()
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
@@ -263,6 +297,11 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 rvConverters.hideShimmer()
             }
         })
+    }
+
+    var imageListener = ImageListener { position, imageView ->
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)
+        ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
     }
 
 }
