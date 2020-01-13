@@ -85,6 +85,7 @@ public class WebServiceConstants {
     public static final String PATH_CHANGE_PASSWORD = "change-password";
     public static final String PATH_RESENDOTP = "resend-otp";
     public static final String PATH_VERIFYOTP = "verify-otp";
+    public static final String PATH_ORDERPRODUCTS = "order-products";
 
 
 

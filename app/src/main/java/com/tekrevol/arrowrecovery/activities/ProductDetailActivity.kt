@@ -81,6 +81,8 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         }
 
         btnAddToCart.setOnClickListener {
+
+            addToCart()
             Snackbar.make(it, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
         }
 
@@ -131,6 +133,11 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
 
 
         )
+    }
+
+    private fun addToCart() {
+
+        
     }
 
     var imageListener = ImageListener { position, imageView ->
