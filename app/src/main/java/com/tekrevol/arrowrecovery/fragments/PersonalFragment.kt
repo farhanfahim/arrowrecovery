@@ -1,21 +1,23 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_editprofile.*
+import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
+import kotlinx.android.synthetic.main.fragment_editprofile.radio_btn_company
+import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
+import kotlinx.android.synthetic.main.fragment_personal.*
 
 public class PersonalFragment : BaseFragment() {
     private var selectedPosition: Int = 0
+
+
 
 
     companion object {
@@ -35,6 +37,7 @@ public class PersonalFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun getFragmentLayout(): Int {
@@ -54,6 +57,16 @@ public class PersonalFragment : BaseFragment() {
                 txtTitle.text = Constants.title[selectedPosition]
                 dialog.dismiss()
             }
+        }
+
+        radio_btn_individual.setOnClickListener{
+            inputCompanyName.visibility = View.GONE
+            txtKindCompany.visibility = View.GONE
+        }
+
+        radio_btn_company.setOnClickListener{
+            inputCompanyName.visibility = View.VISIBLE
+            txtKindCompany.visibility = View.VISIBLE
         }
     }
 

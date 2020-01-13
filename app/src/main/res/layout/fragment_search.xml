@@ -89,15 +89,18 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSearchItem"
-        android:visibility="gone"
-        android:layout_margin="@dimen/x10dp"
+    <com.todkars.shimmer.ShimmerRecyclerView
+        android:id="@+id/rvSearch"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_searchbar">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:reverseLayout="false"
+        tools:listitem="@layout/shimmer_item_searchbar">
 
+    </com.todkars.shimmer.ShimmerRecyclerView>
 
-    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

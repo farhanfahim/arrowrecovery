@@ -1,5 +1,6 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -11,6 +12,7 @@ import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_dashboard_pager.*
+import kotlinx.android.synthetic.main.titlebar_main.*
 
 class DashboardPagerFragment : BaseFragment() {
 
@@ -45,6 +47,9 @@ class DashboardPagerFragment : BaseFragment() {
             2 -> dashboardTitleBar.setTitle("Cart")
             3 -> dashboardTitleBar.setTitle("Customer Support")
             4 -> setProfileTitleBar()
+        }
+        if (positionToSelect == 2 || positionToSelect == 3){
+            btnRightSearch.visibility = View.INVISIBLE
         }
     }
 
@@ -100,6 +105,10 @@ class DashboardPagerFragment : BaseFragment() {
                 setProfileTitleBar()
 
             }
+        }
+
+        if (positionToSelect == 2 || positionToSelect == 3){
+            btnRightSearch.visibility = View.GONE
         }
 
     }

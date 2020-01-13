@@ -108,14 +108,20 @@ class LoginFragmentt : BaseFragment() {
                     when {
 
                         (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                             baseActivity.popBackStack()
                             baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
                         }
                         (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                             baseActivity.popBackStack()
                             baseActivity.addDockableFragment(OtpVerification.newInstance(email, ""), true)
                         }
                         (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                             baseActivity.popBackStack()
                             baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                         }

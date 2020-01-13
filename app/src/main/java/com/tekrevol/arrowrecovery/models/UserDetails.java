@@ -57,6 +57,26 @@ public class UserDetails {
     @SerializedName("state_id")
     private int stateId;
     @Expose
+    @SerializedName("kind_of_company")
+    private String kindOfCompany;
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    @Expose
+    @SerializedName("user_type")
+    private int userType;
+
+    @Expose
+    @SerializedName("state")
+    private States state;
+
+    @Expose
     @SerializedName("id")
     private int id;
     @Expose
@@ -82,7 +102,7 @@ public class UserDetails {
     private double lng;
     @Expose
     @SerializedName("title")
-    private String title;
+    private int title;
 
     public int getId() {
         return id;
@@ -92,10 +112,7 @@ public class UserDetails {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return GsonFactory.getSimpleGson().toJson(this);
-    }
+
 
     public int getIsApproved() {
         return isApproved;
@@ -281,11 +298,34 @@ public class UserDetails {
         this.lng = lng;
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(int title) {
         this.title = title;
+    }
+
+    public States getState() {
+        return state;
+    }
+
+
+    public void setState(States state) {
+        this.state = state;
+    }
+
+    public String getKindOfCompany() {
+        return kindOfCompany;
+    }
+
+    public void setKindOfCompany(String kindOfCompany) {
+        this.kindOfCompany = kindOfCompany;
+    }
+
+
+    @Override
+    public String toString() {
+        return GsonFactory.getSimpleGson().toJson(this);
     }
 }

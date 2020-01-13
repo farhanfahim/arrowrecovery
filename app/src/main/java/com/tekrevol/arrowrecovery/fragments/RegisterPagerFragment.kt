@@ -9,6 +9,7 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.adapters.RegisterPagerAdapter
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -25,8 +26,17 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_address.*
+import kotlinx.android.synthetic.main.fragment_address.inputAddress
+import kotlinx.android.synthetic.main.fragment_address.inputCity
+import kotlinx.android.synthetic.main.fragment_address.inputZipCode
+import kotlinx.android.synthetic.main.fragment_address.txtState
 import kotlinx.android.synthetic.main.fragment_contact.*
+import kotlinx.android.synthetic.main.fragment_contact.inputPhoneNo
+import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_personal.*
+import kotlinx.android.synthetic.main.fragment_personal.radio_btn_company
+import kotlinx.android.synthetic.main.fragment_personal.radio_btn_individual
+import kotlinx.android.synthetic.main.fragment_personal.txtTitle
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
 import java.util.ArrayList
@@ -37,7 +47,7 @@ class RegisterPagerFragment : BaseFragment() {
 
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
 
-    var email:String = ""
+    var email: String = ""
 
 
     var webCall: Call<WebResponse<Any>>? = null
@@ -46,7 +56,7 @@ class RegisterPagerFragment : BaseFragment() {
 
 
     companion object {
-        fun newInstance(fragmentName: FragmentName, email: String,positionToSelect: Int): Fragment {
+        fun newInstance(fragmentName: FragmentName, email: String, positionToSelect: Int): Fragment {
             val args = Bundle()
             val fragment = RegisterPagerFragment()
             fragment.positionToSelect = positionToSelect
@@ -136,6 +146,14 @@ class RegisterPagerFragment : BaseFragment() {
     private fun updateProfileApi() {
 
         val editProfileSendingModel = EditProfileSendingModel()
+
+        if (radio_btn_company.isChecked) {
+            editProfileSendingModel.userType = AppConstants.USER_TYPE_COMPANY
+        }
+        if (radio_btn_individual.isChecked) {
+            editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
+        }
+
         editProfileSendingModel.email = (email)
         editProfileSendingModel.phone = (inputPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (inputFirstname.stringTrimmed)
@@ -143,13 +161,27 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.address = (inputAddress.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.zipCode = (inputZipCode.stringTrimmed)
-        editProfileSendingModel.company = (txtCompanyName.stringTrimmed)
+        editProfileSendingModel.company = (inputCompanyName.stringTrimmed)
         editProfileSendingModel.name = (inputFirstname.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
+        editProfileSendingModel.kindOfCompany = inputKindCompany.stringTrimmed
         editProfileSendingModel.city = (inputCity.stringTrimmed)
-        editProfileSendingModel.title = (txtTitle.stringTrimmed)
-        var email:String = inputEmail.stringTrimmed
-        var phone:String = inputPhoneNo.stringTrimmed
+
+        if (txtTitle.text == Constants.title[0]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MR
+        }
+        if (txtTitle.text == Constants.title[1]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MISS
+        }
+        if (txtTitle.text == Constants.title[2]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MRS
+        }
+        if (txtTitle.text == Constants.title[3]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MS
+        }
+
+        var email: String = inputEmail.stringTrimmed
+        var phone: String = inputPhoneNo.stringTrimmed
 
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -164,13 +196,13 @@ class RegisterPagerFragment : BaseFragment() {
 
                     (currentUser.userDetails.isCompleted == 0) -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                    (currentUser.userDetails.isVerified)!! == 0 -> {
+                    (currentUser.userDetails.isVerified) == 0 -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(email,phone), true)
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(email, phone), true)
                     }
-                    (currentUser.userDetails.isApproved)!! == 0 -> {
+                    (currentUser.userDetails.isApproved) == 0 -> {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
@@ -230,20 +262,41 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.name = (inputUsername.stringTrimmed)
         signUpSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
         signUpSendingModel.email = (inputEmail.stringTrimmed)
-        var email:String = inputEmail.stringTrimmed
-        var phone:String = inputPhoneNo.stringTrimmed
+        var email: String = inputEmail.stringTrimmed
+        var phone: String = inputPhoneNo.stringTrimmed
         signUpSendingModel.phone = (inputPhoneNo.stringTrimmed)
         signUpSendingModel.firstName = (inputFirstname.stringTrimmed)
         signUpSendingModel.lastName = (inputLastname.stringTrimmed)
         signUpSendingModel.address = (inputAddress.stringTrimmed)
         signUpSendingModel.zipCode = (inputZipCode.stringTrimmed)
-        signUpSendingModel.company = (txtCompanyName.stringTrimmed)
+        signUpSendingModel.company = (inputCompanyName.stringTrimmed)
         signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (inputCity.stringTrimmed)
         signUpSendingModel.password = (inputPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (inputConfirmPassReg.stringTrimmed)
+        signUpSendingModel.kindOfCompany = inputKindCompany.stringTrimmed
         signUpSendingModel.isCompleted = (1)
-        signUpSendingModel.title = txtTitle.stringTrimmed
+
+        if (radio_btn_company.isChecked) {
+            signUpSendingModel.userType = AppConstants.USER_TYPE_COMPANY
+        }
+        if (radio_btn_individual.isChecked) {
+            signUpSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
+        }
+
+        if (txtTitle.text == Constants.title[0]) {
+            signUpSendingModel.title = AppConstants.TITLE_MR
+        }
+        if (txtTitle.text == Constants.title[1]) {
+            signUpSendingModel.title = AppConstants.TITLE_MISS
+        }
+        if (txtTitle.text == Constants.title[2]) {
+            signUpSendingModel.title = AppConstants.TITLE_MRS
+        }
+        if (txtTitle.text == Constants.title[3]) {
+            signUpSendingModel.title = AppConstants.TITLE_MS
+        }
+
 
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -253,14 +306,20 @@ class RegisterPagerFragment : BaseFragment() {
                 when {
 
                     (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(email,phone), true)
+                        baseActivity.addDockableFragment(OtpVerification.newInstance(email, phone), true)
                     }
-                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isApproved) == 0 -> {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
@@ -314,10 +373,20 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please select title")
             return
         }
-        if (txtCompanyName.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please enter your company name")
+
+        if (radio_btn_company.isChecked || radio_btn_individual.isChecked) {
+        } else {
+            UIHelper.showAlertDialog(context, "Please select type")
             return
         }
+
+        if (radio_btn_company.isChecked){
+            if (inputCompanyName.stringTrimmed.isEmpty()) {
+                UIHelper.showAlertDialog(context, "Please enter your company name")
+                return
+            }
+        }
+
 
         if (!inputFirstname.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter first name")

@@ -31,7 +31,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/img"
                 android:scaleType="fitCenter"
-                android:src="@drawable/clip" />
+                android:background="@color/material_grey400"/>
 
         </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
@@ -50,10 +50,11 @@
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:id="@+id/txtRef"
+                android:background="@color/material_grey400"
                 android:gravity="center|start"
                 android:maxLines="1"
                 android:minLines="1"
-                android:text="034311"
+                android:text=""
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s12" />
 
@@ -64,11 +65,10 @@
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:gravity="center|start"
-
                 android:id="@+id/txtName"
                 android:maxLines="1"
                 android:minLines="1"
-                android:text="General Motors"
+                android:background="@color/material_grey400"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s12" />
 
@@ -81,7 +81,7 @@
                 android:gravity="center|start"
                 android:maxLines="1"
                 android:minLines="1"
-                android:text="$254.89"
+                android:background="@color/material_grey400"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s12" />
 

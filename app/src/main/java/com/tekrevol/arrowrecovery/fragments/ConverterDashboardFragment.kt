@@ -44,7 +44,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private lateinit var categorySelectorAdapter: CategorySelectorShimmerAdapter
     private lateinit var converterItemShimmerAdapter: ConverterItemShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
-    var itemPos:Int = 0
+    var itemPos: Int = 0
     //lateinit var txtTotalItems:AnyTextView
 
 
@@ -127,7 +127,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         //arrConverters.addAll()
 
 
-        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2,RecyclerView.VERTICAL,false)
+        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
         rvConverters.layoutManager = mLayoutManager2
         (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
@@ -142,42 +142,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //        rvConverters.adapter = converterItemShimmerAdapter
 
         getVehicle()
-        //getProductDetail(1)
+        getProductDetail(itemPos)
 
-
-    }
-
-    private fun getVehicle() {
-
-
-        rvCategories.showShimmer()
-        val mquery: Map<String, Any> = HashMap()
-
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
-            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-
-                val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
-                val arrayList: java.util.ArrayList<VehicleMakeModel> = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
-
-//                val mediaModel: VehicleMakeModel = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), MediaModel::class.java)
-                // arrCategory.clear();
-
-                rvCategories.hideShimmer()
-
-                arrCategories.addAll(arrayList)
-                categorySelectorAdapter.notifyDataSetChanged()
-                onDonePaging()
-            }
-
-            override fun onError(`object`: Any?) {
-                if (rvCategories == null) {
-                    return
-                }
-                rvCategories.hideShimmer()
-            }
-        })
 
     }
 
@@ -204,7 +170,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 R.id.contParent -> {
 
                     var product: ProductDetailModel = anyObject as ProductDetailModel
-                    baseActivity.openActivity(ProductDetailActivity::class.java,product.toString())
+                    baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
                 }
                 R.id.contAddToCart -> {
                     Snackbar.make(view, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
@@ -233,7 +199,45 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    private fun getProductDetail(item:Int) {
+    private fun getVehicle() {
+
+
+        rvCategories.showShimmer()
+        val mquery: Map<String, Any> = HashMap()
+
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<VehicleMakeModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+//                val mediaModel: VehicleMakeModel = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), MediaModel::class.java)
+                // arrCategory.clear();
+
+                rvCategories.hideShimmer()
+
+                arrCategories.addAll(arrayList)
+                categorySelectorAdapter.notifyDataSetChanged()
+
+                arrCategories[0].isSelected = true
+                getProductDetail(arrCategories[0].id)
+
+                onDonePaging()
+            }
+
+            override fun onError(`object`: Any?) {
+                if (rvCategories == null) {
+                    return
+                }
+                rvCategories.hideShimmer()
+            }
+        })
+
+    }
+
+    private fun getProductDetail(item: Int) {
 
         rvConverters.showShimmer()
 

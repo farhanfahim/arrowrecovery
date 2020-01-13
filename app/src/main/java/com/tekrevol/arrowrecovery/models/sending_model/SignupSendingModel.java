@@ -15,6 +15,12 @@ public class SignupSendingModel {
     @Expose
     @SerializedName("device_token")
     private String deviceToken;
+
+
+
+    @Expose
+    @SerializedName("user_type")
+    private int userType;
     @Expose
     @SerializedName("password_confirmation")
     private String passwordConfirmation;
@@ -53,7 +59,19 @@ public class SignupSendingModel {
     private String company;
     @Expose
     @SerializedName("title")
-    private String title;
+    private int title;
+
+    @Expose
+    @SerializedName("kind_of_company")
+    private String kindOfCompany;
+
+    public String getKindOfCompany() {
+        return kindOfCompany;
+    }
+
+    public void setKindOfCompany(String kindOfCompany) {
+        this.kindOfCompany = kindOfCompany;
+    }
 
     public String getPhone() {
         return phone;
@@ -177,16 +195,24 @@ public class SignupSendingModel {
         this.company = company;
     }
 
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
     @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(int title) {
         this.title = title;
     }
 }

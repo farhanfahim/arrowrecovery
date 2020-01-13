@@ -61,7 +61,31 @@ public class EditProfileSendingModel {
 
     @Expose
     @SerializedName("title")
-    private String title;
+    private int title;
+
+    @Expose
+    @SerializedName("kind_of_company")
+    private String kindOfCompany;
+
+    public String getKindOfCompany() {
+        return kindOfCompany;
+    }
+
+    public void setKindOfCompany(String kindOfCompany) {
+        this.kindOfCompany = kindOfCompany;
+    }
+
+    @Expose
+    @SerializedName("user_type")
+    private int userType;
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
 
     public String getPhone() {
         return phone;
@@ -204,11 +228,11 @@ public class EditProfileSendingModel {
         this.name = name;
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(int title) {
         this.title = title;
     }
 }
