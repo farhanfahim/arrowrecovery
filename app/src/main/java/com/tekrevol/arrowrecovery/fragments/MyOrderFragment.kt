@@ -6,27 +6,41 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.receiving_model.Order
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_myorder.*
 import kotlinx.android.synthetic.main.fragment_search.*
+import retrofit2.Call
+import java.util.HashMap
 
 class MyOrderFragment : BaseFragment(), OnItemClickListener {
 
-    private var arrData: ArrayList<DummyModel> = ArrayList()
-    private lateinit var myOrderAdapter: MyOrderAdapter
+    private var arrData: ArrayList<Order> = ArrayList()
+    private lateinit var myOrderAdapter: MyOrderShimmerAdapter
+    var webCall: Call<WebResponse<Any>>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        myOrderAdapter = MyOrderAdapter(context!!, arrData, this)
+        myOrderAdapter = MyOrderShimmerAdapter(context!!, arrData, this)
 
     }
 
@@ -34,12 +48,13 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         onBind()
+        getOrders()
     }
 
     private fun onBind() {
 
         arrData.clear()
-        arrData.addAll(Constants.daysSelector())
+        //arrData.addAll(Constants.daysSelector())
 
         recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         (recyclerViewMyOrder.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
@@ -93,9 +108,42 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener {
         return R.layout.fragment_myorder
     }
 
-    override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
+    override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(), true)
+        var order: Order = anyObject as Order
+        //baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(order), true)
 
+
+    }
+
+
+    private fun getOrders() {
+
+        recyclerViewMyOrder.showShimmer()
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = 1
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<Order?>?>() {}.type
+                val arrayList: java.util.ArrayList<Order> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+                recyclerViewMyOrder.hideShimmer()
+                arrData.clear()
+                arrData.addAll(arrayList)
+                myOrderAdapter.notifyDataSetChanged()
+
+            }
+
+            override fun onError(`object`: Any?) {
+                if (rvConverters == null) {
+                    recyclerViewMyOrder.hideShimmer()
+                    return
+                }
+            }
+        })
     }
 }

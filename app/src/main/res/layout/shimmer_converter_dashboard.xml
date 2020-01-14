@@ -122,15 +122,16 @@
             <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
                 android:id="@+id/contAddToCart"
                 android:layout_width="60dp"
+                android:layout_marginRight="@dimen/x10dp"
                 android:layout_height="60dp"
-                android:background="@color/green_bg"
+                android:background="@color/material_grey400"
                 app:top_left_corner_radius="@dimen/x10dp">
 
                 <ImageView
                     android:layout_width="@dimen/x25dp"
                     android:layout_height="@dimen/x25dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/cart" />
+                    android:background="@color/material_grey400" />
 
             </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
