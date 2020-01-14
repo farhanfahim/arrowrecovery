@@ -85,8 +85,8 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
                 txtUserWithAddress?.text = it.userModel.userDetails.fullName
                 txtRef!!.text = model!!.orderProducts[position].product.serial_number
                 txtUserWithAddress?.text = it.userModel.userDetails.fullName +", "+it.userModel.userDetails.address
-                txtPhone!!.text = model.userModel.userDetails.phone
-                txtPrice!!.text = model.orderProducts[position].amount.toString()
+                txtPhone!!.text = it.userModel.userDetails.phone
+                txtPrice!!.text = it.orderProducts[position].amount.toString()
                 ImageLoaderHelper.loadImageWithouAnimationByPath(imgOrderItem, it.orderProducts[position].product.feature_image, true)
             }
 

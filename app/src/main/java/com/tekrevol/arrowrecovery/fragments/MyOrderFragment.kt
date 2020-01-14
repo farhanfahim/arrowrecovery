@@ -21,6 +21,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
