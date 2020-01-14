@@ -46,7 +46,7 @@
     </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -54,7 +54,7 @@
         tools:listitem="@layout/item_cart">
 
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </com.todkars.shimmer.ShimmerRecyclerView>
 
 
     <LinearLayout

@@ -40,11 +40,7 @@ import com.tekrevol.arrowrecovery.widget.AnyEditTextView
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
-import kotlinx.android.synthetic.main.dialog_message.*
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
-import kotlinx.android.synthetic.main.fragment_product_detail.edtQuantity
-import kotlinx.android.synthetic.main.fragment_product_detail.txtQuality
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
@@ -397,7 +393,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 arrConverters.clear()
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
-                txtTotalItems.text = arrConverters.size.toString()+" items found"
+                txtTotalItems.text = arrConverters.size.toString() + " items found"
                 onDonePaging()
 
             }

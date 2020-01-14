@@ -40,6 +40,16 @@ public class OrderProduct {
     @SerializedName("product")
     private ProductDetailModel product;
 
+    transient boolean isSelected = false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
 
     public ProductDetailModel getProduct() {
         return product;
@@ -120,6 +130,7 @@ public class OrderProduct {
     public void setId(int id) {
         this.id = id;
     }
+
     @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);

@@ -1,33 +1,15 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.AdapterView
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderShimmerAdapter
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.OrderDetailAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.OrderDetailShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
-import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
-import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_myorder.*
-import kotlinx.android.synthetic.main.fragment_orderdetail.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
-import retrofit2.Call
 
 class OrderDetailFragment : BaseFragment(), OnItemClickListener {
 
