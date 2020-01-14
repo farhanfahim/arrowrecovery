@@ -85,6 +85,7 @@ public class WebServiceConstants {
     public static final String PATH_CHANGE_PASSWORD = "change-password";
     public static final String PATH_RESENDOTP = "resend-otp";
     public static final String PATH_VERIFYOTP = "verify-otp";
+    public static final String PATH_ORDERPRODUCTS = "order-products";
 
 
 
@@ -116,6 +117,7 @@ public class WebServiceConstants {
     public static final String Q_VEHICLE_MAKES = "vehicle-makes";
     public static final String Q_MAKE_ID = "make_id";
     public static final String Q_QUERY = "query";
+    public static final String Q_FEATURED = "is_featured";
 
 
     /**

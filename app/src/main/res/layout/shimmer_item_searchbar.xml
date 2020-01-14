@@ -45,22 +45,22 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:id="@+id/txtRef"
-                android:background="@color/material_grey400"
                 android:gravity="center|start"
                 android:maxLines="1"
                 android:minLines="1"
-                android:text=""
-                android:textColor="@color/title_color"
+                android:background="@color/material_grey400"
+                android:text="----------"
+                android:textColor="@color/material_grey400"
                 android:textSize="@dimen/s12" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
@@ -69,12 +69,13 @@
                 android:maxLines="1"
                 android:minLines="1"
                 android:background="@color/material_grey400"
-                android:textColor="@color/title_color"
+                android:text="--------------------"
+                android:textColor="@color/material_grey400"
                 android:textSize="@dimen/s12" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:id="@+id/txtPrice"
@@ -82,7 +83,8 @@
                 android:maxLines="1"
                 android:minLines="1"
                 android:background="@color/material_grey400"
-                android:textColor="@color/title_color"
+                android:text="----------"
+                android:textColor="@color/material_grey400"
                 android:textSize="@dimen/s12" />
 
         </LinearLayout>

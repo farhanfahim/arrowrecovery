@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/x10dp"
+        android:padding="@dimen/x10dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.5">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                app:typeface="@string/font_regular"
+                android:id="@+id/index"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/x15dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/title_color" />
+
+
+            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                app:corner_radius="2dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:background="@color/material_grey400" />
+
+            </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="@dimen/x5dp"
+                android:layout_weight="2"
+                android:gravity="center|start"
+                android:orientation="vertical">
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:layout_margin="@dimen/x1dp"
+                    android:minLines="1"
+                    android:background="@color/material_grey400"
+                    android:text="------"
+                    android:textColor="@color/material_grey400"
+                    android:textSize="@dimen/s12" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:layout_margin="@dimen/x1dp"
+                    android:minLines="1"
+                    android:background="@color/material_grey400"
+                    android:text="---------"
+                    android:textColor="@color/material_grey400"
+                    android:textSize="@dimen/s12" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:layout_margin="@dimen/x1dp"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:background="@color/material_grey400"
+                    android:text="------"
+                    android:textColor="@color/material_grey400"
+                    android:textSize="@dimen/s12" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:layout_margin="@dimen/x1dp"
+            android:background="@color/material_grey400"
+            android:text="------"
+            android:textColor="@color/material_grey400"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
+            android:textSize="@dimen/s12" />
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:layout_marginLeft="2dp"
+            android:background="@color/material_grey400"
+            android:text="------"
+            android:textColor="@color/material_grey400"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
+            android:textSize="@dimen/s12" />
+
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
+            android:gravity="center"
+            android:layout_marginLeft="2dp"
+            android:background="@color/material_grey400"
+            android:text="------"
+            android:textColor="@color/material_grey400"
+            android:textSize="@dimen/s12" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

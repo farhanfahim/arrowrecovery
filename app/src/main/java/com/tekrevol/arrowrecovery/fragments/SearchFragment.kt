@@ -94,6 +94,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 if (txtSearch.text.length > 2) {
                     text = txtSearch.text.toString()
                     arrDataSearchBar.clear()
+                    //getProducts(text!!)
                     getProducts(s.toString())
                     recyclerViewSearchList.visibility = View.GONE
                     rvSearch.visibility = View.VISIBLE

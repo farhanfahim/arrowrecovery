@@ -1,13 +1,15 @@
 package com.tekrevol.arrowrecovery.activities
 
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.libraries.places.internal.it
 import com.google.android.material.snackbar.Snackbar
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
@@ -17,6 +19,10 @@ import com.tekrevol.arrowrecovery.constatnts.Constants.qualities
 import com.tekrevol.arrowrecovery.helperclasses.StringHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.models.Attachments
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
@@ -25,19 +31,36 @@ import retrofit2.Call
 class ProductDetailActivity : AppCompatActivity(), ImageListener {
     private var selectedPosition: Int = 0
     var webCall: Call<WebResponse<Any>>? = null
+    var model: String? = null
+    var productDetailModel: ProductDetailModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail)
-
-        carouselView.setImageListener(this)
-        carouselView.pageCount = Constants.sampleConverterBanners.size
-
         toolbar.title = ""
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setListener()
         KeyboardHelper.hideSoftKeyboard(this, edtQuantity)
+        onBind()
+    }
+
+
+    private fun onBind() {
+
+        model = intent.getStringExtra(AppConstants.JSON_STRING_KEY)
+        productDetailModel = GsonFactory.getSimpleGson().fromJson(model, ProductDetailModel::class.java)
+        txtCarNum.text = (productDetailModel?.name)
+        txtYear.text = (productDetailModel?.year.toString())
+        //    txtReference.text = (productDetailModel?.txtReference.toString())
+        txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
+        txtModel.text = (productDetailModel?.vehicleModel?.name)
+        //txtPrice.setText(productDetailModel?.price)
+
+        txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
+        carouselView.setImageListener(imageListener)
+        carouselView.pageCount = productDetailModel?.attachments?.size!!
+
     }
 
     override fun setImageForPosition(position: Int, imageView: ImageView?) {
@@ -58,6 +81,8 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         }
 
         btnAddToCart.setOnClickListener {
+
+            addToCart()
             Snackbar.make(it, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
         }
 
@@ -88,7 +113,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
                 if (s!!.isEmpty()) {
                     edtQuantity.setText("0")
                 } else {
-                    if(StringHelper.IsInt_ByJonas(s.toString())){
+                    if (StringHelper.IsInt_ByJonas(s.toString())) {
                         if (s.toString().toInt() > 999) {
                             edtQuantity.setText("999")
                         } else if (s.toString().toInt() < 0) {
@@ -108,6 +133,16 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
 
 
         )
+    }
+
+    private fun addToCart() {
+
+        
+    }
+
+    var imageListener = ImageListener { position, imageView ->
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)
+        ImageLoaderHelper.loadImageWithAnimations(imageView, productDetailModel?.attachments?.get(position)?.attachment_url, true)
     }
 
 }
