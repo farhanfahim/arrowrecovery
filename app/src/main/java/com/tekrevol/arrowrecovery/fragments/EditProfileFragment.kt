@@ -70,12 +70,12 @@ class EditProfileFragment : BaseFragment() {
         setFields()
 
 
-        if (radio_btn_company.isChecked){
+        if (radio_btn_company.isChecked) {
             inputCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
             inputKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
             inputCompany.visibility = View.VISIBLE
             inputKindCompany.visibility = View.VISIBLE
-        }else{
+        } else {
             inputCompany.visibility = View.GONE
             inputCompany.setText("")
             inputKindCompany.visibility = View.GONE
@@ -122,14 +122,14 @@ class EditProfileFragment : BaseFragment() {
             }
         }
 
-        radio_btn_individual.setOnClickListener{
+        radio_btn_individual.setOnClickListener {
             inputCompany.visibility = View.GONE
             inputCompany.setText("")
             inputKindCompany.visibility = View.GONE
             inputKindCompany.setText("")
         }
 
-        radio_btn_company.setOnClickListener{
+        radio_btn_company.setOnClickListener {
             inputCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
             inputKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
             inputCompany.visibility = View.VISIBLE
@@ -167,28 +167,28 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
-    private fun setFields(){
+    private fun setFields() {
 
         ImageLoaderHelper.loadImageWithAnimations(image, currentUser.userDetails.imageUrl, true)
 
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MR){
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MR) {
             txtTitle.text = Constants.title[0]
         }
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MISS){
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MISS) {
             txtTitle.text = Constants.title[1]
         }
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MRS){
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MRS) {
             txtTitle.text = Constants.title[2]
         }
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MS){
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MS) {
             txtTitle.text = Constants.title[3]
         }
 
 
-        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL){
+        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
             radio_btn_individual.isChecked = true
         }
-        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_COMPANY){
+        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_COMPANY) {
             radio_btn_company.isChecked = true
         }
 
@@ -231,7 +231,7 @@ class EditProfileFragment : BaseFragment() {
             return
         }
 
-        if (radio_btn_company.isChecked){
+        if (radio_btn_company.isChecked) {
             if (inputCompany.stringTrimmed.isEmpty()) {
                 UIHelper.showAlertDialog(context, "Please enter your company name")
                 return
@@ -275,10 +275,10 @@ class EditProfileFragment : BaseFragment() {
 
         // Setting data
 
-        if (radio_btn_company.isChecked){
+        if (radio_btn_company.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_COMPANY
         }
-        if (radio_btn_individual.isChecked){
+        if (radio_btn_individual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
         editProfileSendingModel.phone = (inputPhoneNo.stringTrimmed)
@@ -293,13 +293,13 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.kindOfCompany = inputKindCompany.stringTrimmed
 
-        if (txtTitle.text == Constants.title[0]){
+        if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
         }
-        if (txtTitle.text == Constants.title[1]){
+        if (txtTitle.text == Constants.title[1]) {
             editProfileSendingModel.title = AppConstants.TITLE_MISS
         }
-        if (txtTitle.text == Constants.title[2]){
+        if (txtTitle.text == Constants.title[2]) {
             editProfileSendingModel.title = AppConstants.TITLE_MRS
         }
 

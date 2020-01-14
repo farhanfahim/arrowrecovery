@@ -130,7 +130,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         //arrConverters.addAll()
 
 
-        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2,RecyclerView.VERTICAL,false)
+        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
         rvConverters.layoutManager = mLayoutManager2
         (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
@@ -271,7 +271,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         })
 
     }
-            
+
     private fun getProductDetail(item: Int) {
 
         rvConverters.showShimmer()
@@ -305,7 +305,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
     var imageListener = ImageListener { position, imageView ->
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)
+        imageView.scaleType = ImageView.ScaleType.FIT_CENTER
         ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
     }
 

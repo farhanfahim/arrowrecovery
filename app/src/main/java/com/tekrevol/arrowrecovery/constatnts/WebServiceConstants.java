@@ -59,7 +59,6 @@ public class WebServiceConstants {
     public static final String PATH_GET_USERS = "users";
     public static final String PATH_GET_USERS_SLASH = "users/";
     public static final String PATH_GET_PRODUCT = "products";
-    public static final String PATH_GET_PRODUCT_SLASH = "products";
     public static final String PATH_GET_REFRESH = "refresh";
     public static final String PATH_PROFILE = "profile";
     public static final String PATH_GIFTS = "gifts";

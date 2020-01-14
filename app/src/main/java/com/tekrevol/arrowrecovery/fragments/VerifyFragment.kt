@@ -29,7 +29,7 @@ class VerifyFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = VerifyFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -56,12 +56,12 @@ class VerifyFragment : BaseFragment() {
 
         countDownTimer = object : CountDownTimer(20000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                timer.setText("Resend verification code in 00: " + millisUntilFinished / 1000)
+                timer.text = "Resend verification code in 00: " + millisUntilFinished / 1000
             }
 
             override fun onFinish() {
-                timer.setText("Resend verification code in 00:00")
-                resendPassword.setVisibility(View.VISIBLE)
+                timer.text = "Resend verification code in 00:00"
+                resendPassword.visibility = View.VISIBLE
             }
         }
         (countDownTimer as CountDownTimer).start()
@@ -81,9 +81,9 @@ class VerifyFragment : BaseFragment() {
 
     private fun verifycodeAPI() {
         var resetPasswordSendingModel = ResetPasswordSendingModel()
-        resetPasswordSendingModel.setVerificationCode(inputCode.getStringTrimmed())
+        resetPasswordSendingModel.verificationCode = inputCode.stringTrimmed
 
-        sharedPreferenceManager.putValue(AppConstants.KEY_CODE, inputCode.getStringTrimmed())
+        sharedPreferenceManager.putValue(AppConstants.KEY_CODE, inputCode.stringTrimmed)
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFY_RESET_CODE, resetPasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

@@ -46,7 +46,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             val args = Bundle()
 
             val fragment = SearchFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -156,7 +156,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         queryMap[WebServiceConstants.Q_QUERY] = query
 
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT_SLASH, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type

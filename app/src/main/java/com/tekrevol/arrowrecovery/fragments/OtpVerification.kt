@@ -20,8 +20,8 @@ import java.util.*
 class OtpVerification : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
-    var email:String = ""
-    var phone:String = ""
+    var email: String = ""
+    var phone: String = ""
     var webCallVerify: Call<WebResponse<Any>>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

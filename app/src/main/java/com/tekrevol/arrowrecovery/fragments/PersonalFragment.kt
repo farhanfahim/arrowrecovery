@@ -14,10 +14,8 @@ import kotlinx.android.synthetic.main.fragment_editprofile.radio_btn_company
 import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
 import kotlinx.android.synthetic.main.fragment_personal.*
 
-public class PersonalFragment : BaseFragment() {
+class PersonalFragment : BaseFragment() {
     private var selectedPosition: Int = 0
-
-
 
 
     companion object {
@@ -32,11 +30,6 @@ public class PersonalFragment : BaseFragment() {
 
     override fun getDrawerLockMode(): Int {
         return 0
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
     }
 
@@ -59,12 +52,12 @@ public class PersonalFragment : BaseFragment() {
             }
         }
 
-        radio_btn_individual.setOnClickListener{
+        radio_btn_individual.setOnClickListener {
             inputCompanyName.visibility = View.GONE
             txtKindCompany.visibility = View.GONE
         }
 
-        radio_btn_company.setOnClickListener{
+        radio_btn_company.setOnClickListener {
             inputCompanyName.visibility = View.VISIBLE
             txtKindCompany.visibility = View.VISIBLE
         }

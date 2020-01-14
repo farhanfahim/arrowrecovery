@@ -50,6 +50,7 @@ class DashboardPagerFragment : BaseFragment() {
         }
         if (positionToSelect == 2 || positionToSelect == 3){
             btnRightSearch.visibility = View.INVISIBLE
+
         }
     }
 

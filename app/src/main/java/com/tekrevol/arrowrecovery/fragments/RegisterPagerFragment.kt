@@ -380,7 +380,7 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
-        if (radio_btn_company.isChecked){
+        if (radio_btn_company.isChecked) {
             if (inputCompanyName.stringTrimmed.isEmpty()) {
                 UIHelper.showAlertDialog(context, "Please enter your company name")
                 return

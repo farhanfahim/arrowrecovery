@@ -67,7 +67,7 @@ class ProfileFragment : BaseFragment() {
         })
 
 
-        contNotificationSetting.setOnClickListener{
+        contNotificationSetting.setOnClickListener {
             showNextBuildToast()
         }
 
@@ -82,7 +82,7 @@ class ProfileFragment : BaseFragment() {
 
     }
 
-    private fun setUserData(){
+    private fun setUserData() {
         ImageLoaderHelper.loadImageWithAnimations(image, currentUser.userDetails.imageUrl, true)
         var userName = sharedPreferenceManager.currentUser.name
         val fullName = sharedPreferenceManager.currentUser.userDetails.fullName
@@ -95,9 +95,9 @@ class ProfileFragment : BaseFragment() {
         txtName.text = fullName
         txtUsername.text = userName
         txtEmail.text = userEmail
-        if (country != null){
+        if (country != null) {
             txtAddress.text = "$address, $city, $country"
-        }else{
+        } else {
             txtAddress.text = "$address, $city"
         }
 
