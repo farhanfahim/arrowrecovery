@@ -1,28 +1,31 @@
 package com.tekrevol.arrowrecovery.activities
 
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.libraries.places.internal.it
 import com.google.android.material.snackbar.Snackbar
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.Constants.qualities
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.helperclasses.StringHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
+import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
-import com.tekrevol.arrowrecovery.models.Attachments
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
+import com.tekrevol.arrowrecovery.models.sending_model.OrderProductSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
@@ -33,6 +36,8 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
     var webCall: Call<WebResponse<Any>>? = null
     var model: String? = null
     var productDetailModel: ProductDetailModel? = null
+    private var sharedPreferenceManager: SharedPreferenceManager? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,8 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         toolbar.title = ""
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        sharedPreferenceManager = SharedPreferenceManager.getInstance(this)
+
         setListener()
         KeyboardHelper.hideSoftKeyboard(this, edtQuantity)
         onBind()
@@ -82,8 +89,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
 
         btnAddToCart.setOnClickListener {
 
-            addToCart()
-            Snackbar.make(it, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
+            addToCart(it)
         }
 
         btnCustomerSupport.setOnClickListener {
@@ -135,10 +141,22 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         )
     }
 
-    private fun addToCart() {
+    private fun addToCart(it: View) {
 
-        
+        var orderProductSendingModel = OrderProductSendingModel()
+        orderProductSendingModel.productId = productDetailModel!!.id
+        orderProductSendingModel.quality = Integer.parseInt(edtQuantity.text.toString());
+        orderProductSendingModel.quantity = Integer.parseInt(txtQuality.text.toString());
+
+        WebServices(this, sharedPreferenceManager?.getString(AppConstants.KEY_TOKEN), BaseURLTypes.BASE_URL, true).postAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS, orderProductSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any>) {
+                Snackbar.make(it, "This item has been added in cart successfully!", Snackbar.LENGTH_SHORT).show()
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
     }
+
 
     var imageListener = ImageListener { position, imageView ->
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)
