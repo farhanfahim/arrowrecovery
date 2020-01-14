@@ -83,6 +83,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:id="@+id/txtName"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:minLines="1"
@@ -97,6 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:ellipsize="end"
+                        android:id="@+id/txtAddress"
                         android:maxLines="1"
                         android:minLines="1"
 
@@ -110,6 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:ellipsize="end"
+                        android:id="@+id/txtPhone"
                         android:maxLines="1"
                         android:minLines="1"
                         android:text="+44 123 456 1"
@@ -123,6 +126,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -260,14 +264,18 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/recyclerViewOrderDetail"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x210dp"
-                android:layout_weight="1"
-                tools:listitem="@layout/item_order">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:reverseLayout="false"
+                tools:listitem="@layout/shimmer_item_myorder">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </com.todkars.shimmer.ShimmerRecyclerView>
 
             <View
                 android:layout_width="match_parent"

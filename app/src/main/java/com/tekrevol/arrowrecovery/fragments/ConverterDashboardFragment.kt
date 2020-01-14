@@ -31,6 +31,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
@@ -51,7 +52,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     var webCallProductDetail: Call<WebResponse<Any>>? = null
     var webCallFeatured: Call<WebResponse<Any>>? = null
     var itemPos: Int = 0
-    //lateinit var txtTotalItems:AnyTextView
 
 
     companion object {
@@ -146,7 +146,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
         getVehicle()
         getFeaturedList()
-        //getProductDetail(1)
 
 
     }
@@ -291,6 +290,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 arrConverters.clear()
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
+                txtTotalItems.text = arrConverters.size.toString()+" items found"
                 onDonePaging()
 
             }

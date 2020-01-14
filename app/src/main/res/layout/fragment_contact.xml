@@ -15,26 +15,25 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_fullname_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x10dp"
                 android:textSize="@dimen/s14"
-                android:id="@+id/emailLayout"
-                android:visibility="visible"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    app:typeface="@string/font_light"
-                    android:id="@+id/inputEmail"
+                    android:id="@+id/inputUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="Username"
+                    android:inputType="textPersonName"
                     android:maxLength="50"
-                    android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
-                    android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textColorHint="#C800BCD4"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

@@ -20,6 +20,9 @@ public class ProductDetailModel {
     @SerializedName("feature_image_url")
     private String feature_image_url;
     @Expose
+    @SerializedName("is_featured")
+    private int isFeatured;
+    @Expose
     @SerializedName("rhodium")
     private int rhodium;
     @Expose
@@ -58,6 +61,8 @@ public class ProductDetailModel {
     @Expose
     @SerializedName("id")
     private int id;
+
+
 
     public List<Attachments> getAttachments() {
         return attachments;
@@ -186,6 +191,15 @@ public class ProductDetailModel {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getIsFeatured() {
+        return isFeatured;
+    }
+
+    public void setIsFeatured(int isFeatured) {
+        this.isFeatured = isFeatured;
+    }
+
 
     @Override
     public String toString() {

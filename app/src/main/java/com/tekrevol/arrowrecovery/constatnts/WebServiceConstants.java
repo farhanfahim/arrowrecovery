@@ -85,6 +85,7 @@ public class WebServiceConstants {
     public static final String PATH_RESENDOTP = "resend-otp";
     public static final String PATH_VERIFYOTP = "verify-otp";
     public static final String PATH_ORDERPRODUCTS = "order-products";
+    public static final String PATH_ORDERS = "orders";
 
 
 
@@ -117,6 +118,7 @@ public class WebServiceConstants {
     public static final String Q_MAKE_ID = "make_id";
     public static final String Q_QUERY = "query";
     public static final String Q_FEATURED = "is_featured";
+    public static final String Q_WITH_ORDER_PRODUCTS = "with_order_products";
 
 
     /**

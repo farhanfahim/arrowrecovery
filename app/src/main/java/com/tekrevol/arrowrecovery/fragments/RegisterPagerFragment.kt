@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.fragment_address.inputZipCode
 import kotlinx.android.synthetic.main.fragment_address.txtState
 import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_contact.inputPhoneNo
-import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_personal.radio_btn_company
 import kotlinx.android.synthetic.main.fragment_personal.radio_btn_individual
@@ -342,8 +341,8 @@ class RegisterPagerFragment : BaseFragment() {
     private fun contactDetails(positionToSelect: Int) {
 
         if (fragmentName == FragmentName.SimpleLogin) {
-            if (!inputEmail.testValidity()) {
-                UIHelper.showAlertDialog(context, "Please enter your email")
+            if (!inputUsername.testValidity()) {
+                UIHelper.showAlertDialog(context, "Please enter user name")
                 return
             }
         }
@@ -404,8 +403,8 @@ class RegisterPagerFragment : BaseFragment() {
     private fun accountDetails(positionToSelect: Int) {
 
 
-        if (!inputUsername.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter username")
+        if (!inputEmail.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your email")
             return
         }
 
