@@ -26,7 +26,7 @@
         android:layout_alignParentBottom="true"
         app:mbn_countBackgroundColor="#ff6f00"
         app:mbn_countTextColor="@color/txtBlack"
-        app:mbn_defaultIconColor="@color/material_grey200"
+        app:mbn_defaultIconColor="@color/material_grey400"
         app:mbn_rippleColor="@color/colorPrimary"
         app:mbn_selectedIconColor="@color/colorPrimary"
         app:mbn_shadowColor="#5000" />

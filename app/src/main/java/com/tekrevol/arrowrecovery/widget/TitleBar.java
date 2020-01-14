@@ -169,6 +169,11 @@ public class TitleBar extends RelativeLayout {
         this.txtTitle.setVisibility(GONE);
     }
 
+    public void hideSearch() {
+        btnRightSearch.setVisibility(GONE);
+        img.setVisibility(GONE);
+    }
+
 
     public void showSidebar(final BaseActivity mActivity) {
 
@@ -262,6 +267,7 @@ public class TitleBar extends RelativeLayout {
         btnRight2.setOnClickListener(onClickListener);
 
     }
+
 
     public void btnSearch(final HomeActivity homeActivity, OnClickListener onClickListener) {
 

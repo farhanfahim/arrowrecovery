@@ -53,7 +53,6 @@ public class AddressFragment : BaseFragment() {
     }
 
 
-
     override fun getFragmentLayout(): Int {
 
         return R.layout.fragment_address
@@ -66,7 +65,7 @@ public class AddressFragment : BaseFragment() {
     override fun setListeners() {
 
         contState.setOnClickListener {
-            UIHelper.showSpinnerDialog(this@AddressFragment, spinnerModelArrayList, "Selected Category", txtState, null, null, IntWrapper(0))
+            UIHelper.showSpinnerDialog(this@AddressFragment, spinnerModelArrayList, "Select Category", txtState, null, null, IntWrapper(0))
         }
     }
 
@@ -108,7 +107,6 @@ public class AddressFragment : BaseFragment() {
         })
 
     }
-
 
 
 }

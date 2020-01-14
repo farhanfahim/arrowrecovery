@@ -32,10 +32,10 @@ class DashboardPagerFragment : BaseFragment() {
         titleBar.resetViews()
         titleBar.visibility = View.GONE
         dashboardTitleBar.btnSearch(homeActivity, View.OnClickListener {
-            baseActivity.addDockableFragment(SearchFragment.newInstance(),true)
+            baseActivity.addDockableFragment(SearchFragment.newInstance(), true)
         })
         dashboardTitleBar.btnNotification(homeActivity, View.OnClickListener {
-            baseActivity.addDockableFragment(NotificationFragment.newInstance(),true)
+            baseActivity.addDockableFragment(NotificationFragment.newInstance(), true)
         })
         // Using own title bar
         dashboardTitleBar.resetViews()
@@ -48,9 +48,8 @@ class DashboardPagerFragment : BaseFragment() {
             3 -> dashboardTitleBar.setTitle("Customer Support")
             4 -> setProfileTitleBar()
         }
-        if (positionToSelect == 2 || positionToSelect == 3){
-            btnRightSearch.visibility = View.INVISIBLE
-
+        if (positionToSelect == 2 || positionToSelect == 3) {
+            dashboardTitleBar.hideSearch()
         }
     }
 
@@ -108,7 +107,7 @@ class DashboardPagerFragment : BaseFragment() {
             }
         }
 
-        if (positionToSelect == 2 || positionToSelect == 3){
+        if (positionToSelect == 2 || positionToSelect == 3) {
             btnRightSearch.visibility = View.GONE
         }
 

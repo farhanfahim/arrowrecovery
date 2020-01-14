@@ -28,6 +28,7 @@ import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.sending_model.OrderProductSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import retrofit2.Call
 
@@ -143,10 +144,19 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
 
     private fun addToCart(it: View) {
 
+        if (txtQuality.stringTrimmed.isEmpty()) {
+            UIHelper.showAlertDialog(this, "Please select quality")
+            return
+        }
+
         var orderProductSendingModel = OrderProductSendingModel()
         orderProductSendingModel.productId = productDetailModel!!.id
-        orderProductSendingModel.quality = Integer.parseInt(edtQuantity.text.toString());
-        orderProductSendingModel.quantity = Integer.parseInt(txtQuality.text.toString());
+        orderProductSendingModel.quantity = Integer.parseInt(edtQuantity.text.toString())
+
+
+        var str: String
+        str = txtQuality.text.toString().replace("%", "")
+        orderProductSendingModel.quality = Integer.parseInt(str)
 
         WebServices(this, sharedPreferenceManager?.getString(AppConstants.KEY_TOKEN), BaseURLTypes.BASE_URL, true).postAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS, orderProductSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any>) {

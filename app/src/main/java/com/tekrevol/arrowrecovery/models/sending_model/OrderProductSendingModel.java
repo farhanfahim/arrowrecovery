@@ -2,6 +2,7 @@ package com.tekrevol.arrowrecovery.models.sending_model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class OrderProductSendingModel {
 
@@ -39,4 +40,9 @@ public class OrderProductSendingModel {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+    @Override
+    public String toString() {
+        return GsonFactory.getSimpleGson().toJson(this);
+    }
+
 }
