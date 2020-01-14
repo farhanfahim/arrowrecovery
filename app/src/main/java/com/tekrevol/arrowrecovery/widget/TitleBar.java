@@ -170,8 +170,7 @@ public class TitleBar extends RelativeLayout {
     }
 
     public void hideSearch() {
-        btnRightSearch.setVisibility(GONE);
-        img.setVisibility(GONE);
+        btnRightSearch.setVisibility(INVISIBLE);
     }
 
 

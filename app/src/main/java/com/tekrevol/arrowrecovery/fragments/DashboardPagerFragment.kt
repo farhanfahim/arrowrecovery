@@ -44,13 +44,20 @@ class DashboardPagerFragment : BaseFragment() {
         when (positionToSelect) {
             0 -> dashboardTitleBar.showTitleImage()
             1 -> dashboardTitleBar.showTitleImage()
-            2 -> dashboardTitleBar.setTitle("Cart")
-            3 -> dashboardTitleBar.setTitle("Customer Support")
+            2 -> {
+                dashboardTitleBar.hideSearch()
+                dashboardTitleBar.setTitle("Cart")
+            }
+            3 -> {
+                dashboardTitleBar.hideSearch()
+                dashboardTitleBar.setTitle("Customer Support")
+            }
             4 -> setProfileTitleBar()
         }
-        if (positionToSelect == 2 || positionToSelect == 3) {
-            dashboardTitleBar.hideSearch()
-        }
+        /*if (positionToSelect == 2 || positionToSelect == 3) {
+           // btnRightSearch.visibility = View.INVISIBLE
+
+        }*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -99,16 +106,16 @@ class DashboardPagerFragment : BaseFragment() {
         when (position) {
             0 -> dashboardTitleBar.showTitleImage()
             1 -> dashboardTitleBar.showTitleImage()
-            2 -> dashboardTitleBar.setTitle("Cart")
-            3 -> dashboardTitleBar.setTitle("Customer Support")
-            4 -> {
-                setProfileTitleBar()
-
+            2 -> {
+                dashboardTitleBar.hideSearch()
+                dashboardTitleBar.setTitle("Cart")
             }
-        }
+            3 -> {
+                dashboardTitleBar.hideSearch()
+                dashboardTitleBar.setTitle("Customer Support")
+            }
+            4 -> setProfileTitleBar()
 
-        if (positionToSelect == 2 || positionToSelect == 3) {
-            btnRightSearch.visibility = View.GONE
         }
 
     }

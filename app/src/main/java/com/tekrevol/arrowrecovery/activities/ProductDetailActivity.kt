@@ -60,7 +60,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         productDetailModel = GsonFactory.getSimpleGson().fromJson(model, ProductDetailModel::class.java)
         txtCarNum.text = (productDetailModel?.name)
         txtYear.text = (productDetailModel?.year.toString())
-        //    txtReference.text = (productDetailModel?.txtReference.toString())
+        txtReference.text = (productDetailModel?.serial_number)
         txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
         txtModel.text = (productDetailModel?.vehicleModel?.name)
         //txtPrice.setText(productDetailModel?.price)
@@ -146,6 +146,11 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
 
         if (txtQuality.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(this, "Please select quality")
+            return
+        }
+
+        if (edtQuantity.equals(0)) {
+            UIHelper.showAlertDialog(this, "Quantity most not be 0")
             return
         }
 
