@@ -122,6 +122,7 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/radio_btn_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -130,6 +131,7 @@
                 android:textSize="@dimen/s14" />
 
             <RadioButton
+                android:id="@+id/radio_btn_individual"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -151,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Company Name"
-                android:id="@+id/txtCompanyName"
+                android:id="@+id/inputCompanyName"
                 android:inputType="textPersonName"
                 android:maxLength="50"
                 android:singleLine="true"

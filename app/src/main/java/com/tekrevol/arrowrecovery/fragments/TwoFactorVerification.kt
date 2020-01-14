@@ -83,7 +83,7 @@ class TwoFactorVerification : BaseFragment() {
 
         txtBackToLoginScreen.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragmentt.newInstance(),true)
+            baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
         })
 
         txtSendCode.setOnClickListener {
@@ -98,10 +98,9 @@ class TwoFactorVerification : BaseFragment() {
             webCallVerify = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFYOTP, otpModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
-                    if(webResponse.isSuccess)
-                    {
+                    if (webResponse.isSuccess) {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, "1")
-                        Log.d("verify",sharedPreferenceManager.getString(AppConstants.KEY_IS_VERIFIED))
+                        Log.d("verify", sharedPreferenceManager.getString(AppConstants.KEY_IS_VERIFIED))
 
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)

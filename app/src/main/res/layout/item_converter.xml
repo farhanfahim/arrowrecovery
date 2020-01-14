@@ -94,6 +94,7 @@
                     android:maxLines="1"
                     android:text="$ "
                     android:textSize="@dimen/s14"
+                    android:visibility="gone"
                     android:textAllCaps="true"
                     android:textColor="@color/title_color" />
 
@@ -104,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:visibility="gone"
                     android:maxLines="1"
                     android:textSize="@dimen/s14"
                     android:text="541.25"

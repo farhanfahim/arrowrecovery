@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.tekrevol.arrowrecovery.R
@@ -24,6 +25,7 @@ class SearchAdapter(private val activity: Context?, private val arrData: List<Du
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
         val model = arrData[i]
         setListener(holder, model)
+                //holder.txtSearched.text = model.textSearch.toString()
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
@@ -38,6 +40,7 @@ class SearchAdapter(private val activity: Context?, private val arrData: List<Du
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
 
+        val txtSearched = view!!.findViewById<AnyTextView>(R.id.txtSearched)
     }
 
 }

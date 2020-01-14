@@ -32,15 +32,16 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     app:typeface="@string/font_regular"
-
                     android:id="@+id/txtMake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="-----"
+                    android:background="@color/material_grey400"
                     android:textSize="@dimen/s14"
+                    android:paddingBottom="@dimen/s5"
+                    android:paddingTop="@dimen/s5"
                     android:textAllCaps="true"
                     android:textColor="@color/title_color" />
 
@@ -50,24 +51,28 @@
                     android:id="@+id/txtModel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="---"
+                    android:background="@color/material_grey400"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s20" />
+
+                <ImageView
+                    android:id="@+id/imgConverter"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/material_grey400"
+                    android:layout_below="@+id/contHeader"
+                    android:scaleType="centerInside"
+                    />
 
             </LinearLayout>
 
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgConverter"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@+id/contHeader"
-            android:scaleType="centerInside"
-            />
+
 
 
         <LinearLayout
@@ -93,6 +98,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="$ "
+                    android:visibility="gone"
                     android:textSize="@dimen/s14"
                     android:textAllCaps="true"
                     android:textColor="@color/title_color" />
@@ -104,6 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:visibility="gone"
                     android:maxLines="1"
                     android:textSize="@dimen/s14"
                     android:text="----"

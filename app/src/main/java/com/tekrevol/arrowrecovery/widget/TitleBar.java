@@ -7,6 +7,7 @@ import android.content.Context;
 import androidx.core.view.GravityCompat;
 
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -132,6 +133,7 @@ public class TitleBar extends RelativeLayout {
         this.imgTitle.setVisibility(GONE);
         txtTitle.setVisibility(View.VISIBLE);
         txtTitle.setText(title);
+        txtTitle.setGravity(Gravity.CENTER);
     }
 
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.tekrevol.arrowrecovery.R
@@ -30,6 +31,11 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_editprofile.*
+import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
+import kotlinx.android.synthetic.main.fragment_editprofile.inputKindCompany
+import kotlinx.android.synthetic.main.fragment_editprofile.radio_btn_company
+import kotlinx.android.synthetic.main.fragment_editprofile.radio_btn_individual
+import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
 import retrofit2.Call
 import java.io.File
 import java.util.ArrayList
@@ -63,6 +69,18 @@ class EditProfileFragment : BaseFragment() {
         getStates()
         setFields()
 
+
+        if (radio_btn_company.isChecked) {
+            inputCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
+            inputKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+            inputCompany.visibility = View.VISIBLE
+            inputKindCompany.visibility = View.VISIBLE
+        } else {
+            inputCompany.visibility = View.GONE
+            inputCompany.setText("")
+            inputKindCompany.visibility = View.GONE
+            inputKindCompany.setText("")
+        }
     }
 
 
@@ -103,6 +121,20 @@ class EditProfileFragment : BaseFragment() {
                 dialog.dismiss()
             }
         }
+
+        radio_btn_individual.setOnClickListener {
+            inputCompany.visibility = View.GONE
+            inputCompany.setText("")
+            inputKindCompany.visibility = View.GONE
+            inputKindCompany.setText("")
+        }
+
+        radio_btn_company.setOnClickListener {
+            inputCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
+            inputKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+            inputCompany.visibility = View.VISIBLE
+            inputKindCompany.visibility = View.VISIBLE
+        }
     }
 
     override fun onClick(v: View?) {
@@ -135,10 +167,31 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
-    private fun setFields(){
+    private fun setFields() {
 
         ImageLoaderHelper.loadImageWithAnimations(image, currentUser.userDetails.imageUrl, true)
-        txtTitle.text = sharedPreferenceManager.currentUser.userDetails.title
+
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MR) {
+            txtTitle.text = Constants.title[0]
+        }
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MISS) {
+            txtTitle.text = Constants.title[1]
+        }
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MRS) {
+            txtTitle.text = Constants.title[2]
+        }
+        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MS) {
+            txtTitle.text = Constants.title[3]
+        }
+
+
+        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
+            radio_btn_individual.isChecked = true
+        }
+        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_COMPANY) {
+            radio_btn_company.isChecked = true
+        }
+
         inputFirstName.setText(sharedPreferenceManager.currentUser.userDetails.firstName)
         inputLastName.setText(sharedPreferenceManager.currentUser.userDetails.lastName)
         inputCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
@@ -147,8 +200,8 @@ class EditProfileFragment : BaseFragment() {
         inputZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
         inputCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
         inputCountry.setText(sharedPreferenceManager.currentUser.country)
-        txtKindCompany.setText(sharedPreferenceManager.currentUser.kindOfCompany)
-        txtState.text = getNameFromSpinner()
+        inputKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+        txtState.text = (sharedPreferenceManager.currentUser.userDetails.state.name)
 
     }
 
@@ -171,9 +224,18 @@ class EditProfileFragment : BaseFragment() {
             return
         }
 
-        if (inputCompany.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please enter your company name")
+
+        if (radio_btn_company.isChecked || radio_btn_individual.isChecked) {
+        } else {
+            UIHelper.showAlertDialog(context, "Please select type")
             return
+        }
+
+        if (radio_btn_company.isChecked) {
+            if (inputCompany.stringTrimmed.isEmpty()) {
+                UIHelper.showAlertDialog(context, "Please enter your company name")
+                return
+            }
         }
 
         if (!inputPhoneNo.testValidity()) {
@@ -213,6 +275,12 @@ class EditProfileFragment : BaseFragment() {
 
         // Setting data
 
+        if (radio_btn_company.isChecked) {
+            editProfileSendingModel.userType = AppConstants.USER_TYPE_COMPANY
+        }
+        if (radio_btn_individual.isChecked) {
+            editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
+        }
         editProfileSendingModel.phone = (inputPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (inputFirstName.stringTrimmed)
         editProfileSendingModel.lastName = (inputLastName.stringTrimmed)
@@ -223,7 +291,17 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.city = (inputCity.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.isCompleted = (1)
-        editProfileSendingModel.title = txtTitle.stringTrimmed
+        editProfileSendingModel.kindOfCompany = inputKindCompany.stringTrimmed
+
+        if (txtTitle.text == Constants.title[0]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MR
+        }
+        if (txtTitle.text == Constants.title[1]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MISS
+        }
+        if (txtTitle.text == Constants.title[2]) {
+            editProfileSendingModel.title = AppConstants.TITLE_MRS
+        }
 
 
 
@@ -262,7 +340,6 @@ class EditProfileFragment : BaseFragment() {
 
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
-                    //spinnerModelArrayList.add(SpinnerModel(categories.id))
                 }
             }
 
@@ -275,20 +352,13 @@ class EditProfileFragment : BaseFragment() {
 
         for (states in arrData) {
             if (states.name == txtState.stringTrimmed) {
+                txtState.text = states.name
                 return states.id
             }
         }
         return -1
     }
 
-    private fun getNameFromSpinner(): String? {
-        for (states in arrData) {
-            if (states.id == sharedPreferenceManager.currentUser.userDetails.stateId) {
-                return states.name
-            }
-        }
-        return ""
-    }
 
 }
 

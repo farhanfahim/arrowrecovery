@@ -55,6 +55,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
     companion object {
+
         fun newInstance(): ConverterDashboardFragment {
 
             val args = Bundle()
@@ -77,12 +78,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     override fun setTitlebar(titleBar: TitleBar?) {
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         categorySelectorAdapter = CategorySelectorShimmerAdapter(context!!, arrCategories, this)
         converterItemShimmerAdapter = ConverterItemShimmerAdapter(context!!, arrConverters, this)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -175,39 +176,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         })
     }
 
-    private fun getVehicle() {
-
-
-        rvCategories.showShimmer()
-        val mquery: Map<String, Any> = HashMap()
-
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
-            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-
-                val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
-                val arrayList: java.util.ArrayList<VehicleMakeModel> = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
-
-//                val mediaModel: VehicleMakeModel = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), MediaModel::class.java)
-                // arrCategory.clear();
-
-                rvCategories.hideShimmer()
-
-                arrCategories.addAll(arrayList)
-                categorySelectorAdapter.notifyDataSetChanged()
-                onDonePaging()
-            }
-
-            override fun onError(`object`: Any?) {
-                if (rvCategories == null) {
-                    return
-                }
-                rvCategories.hideShimmer()
-            }
-        })
-
-    }
 
     override fun setListeners() {
 
@@ -267,6 +235,43 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
+    private fun getVehicle() {
+
+        rvCategories.showShimmer()
+        val mquery: Map<String, Any> = HashMap()
+
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<VehicleMakeModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+//                val mediaModel: VehicleMakeModel = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), MediaModel::class.java)
+                // arrCategory.clear();
+
+                rvCategories.hideShimmer()
+
+                arrCategories.addAll(arrayList)
+                categorySelectorAdapter.notifyDataSetChanged()
+
+                arrCategories[0].isSelected = true
+                getProductDetail(arrCategories[0].id)
+
+                onDonePaging()
+            }
+
+            override fun onError(`object`: Any?) {
+                if (rvCategories == null) {
+                    return
+                }
+                rvCategories.hideShimmer()
+            }
+        })
+
+    }
+
     private fun getProductDetail(item: Int) {
 
         rvConverters.showShimmer()
@@ -300,7 +305,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
     var imageListener = ImageListener { position, imageView ->
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)
+        imageView.scaleType = ImageView.ScaleType.FIT_CENTER
         ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
     }
 

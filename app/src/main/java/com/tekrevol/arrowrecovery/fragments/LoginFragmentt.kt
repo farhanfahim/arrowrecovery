@@ -25,11 +25,6 @@ class LoginFragmentt : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun getDrawerLockMode(): Int {
         return 0
     }
@@ -63,7 +58,7 @@ class LoginFragmentt : BaseFragment() {
 
         txt_signup.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, "",0), true)
+            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, "", 0), true)
         })
 
     }
@@ -90,17 +85,17 @@ class LoginFragmentt : BaseFragment() {
 
         if (inputEmail.testValidity() && inputPassword.testValidity()) {
             var loginSendingModel = LoginSendingModel()
-            loginSendingModel.setEmail(inputEmail.getStringTrimmed())
-            loginSendingModel.setDeviceToken("abc")
-            loginSendingModel.setDeviceType(AppConstants.DEVICE_OS_ANDROID)
-            loginSendingModel.setPassword(inputPassword.getStringTrimmed())
-            var email:String = inputEmail.stringTrimmed
+            loginSendingModel.email = inputEmail.stringTrimmed
+            loginSendingModel.deviceToken = "abc"
+            loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
+            loginSendingModel.password = inputPassword.stringTrimmed
+            var email: String = inputEmail.stringTrimmed
             //var phone:String = inputPhoneNo.stringTrimmed
             webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                     UIHelper.showToast(context, webResponse.message)
 
-                    var userModelWrapper: UserModelWrapper = getGson().fromJson(getGson().toJson(webResponse.result), UserModelWrapper::class.java)
+                    var userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                     /*sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                     sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                     sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
@@ -108,14 +103,20 @@ class LoginFragmentt : BaseFragment() {
                     when {
 
                         (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                             baseActivity.popBackStack()
-                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email,1), true)
+                            baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                         }
-                        (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                        (userModelWrapper.user.userDetails.isVerified) == 0 -> {
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                             baseActivity.popBackStack()
                             baseActivity.addDockableFragment(OtpVerification.newInstance(email, ""), true)
                         }
-                        (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                        (userModelWrapper.user.userDetails.isApproved) == 0 -> {
+                            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
                             baseActivity.popBackStack()
                             baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                         }

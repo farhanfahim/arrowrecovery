@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/x5dp"
-    android:background="@color/material_grey600"
+    android:background="@color/material_grey400"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="@dimen/x15dp"
@@ -19,7 +19,7 @@
         android:id="@+id/txtCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-------"
+        android:text="         "
         android:textColor="@color/c_white" />
 
 </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

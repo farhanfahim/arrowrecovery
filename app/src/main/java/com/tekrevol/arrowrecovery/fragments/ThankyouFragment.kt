@@ -19,7 +19,7 @@ class ThankyouFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = ThankyouFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
@@ -39,7 +39,7 @@ class ThankyouFragment : BaseFragment() {
 
         txtBackToLogin.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragmentt.newInstance(),true)
+            baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
         })
     }
 
