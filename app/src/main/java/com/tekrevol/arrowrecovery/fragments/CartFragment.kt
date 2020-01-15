@@ -1,12 +1,12 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyCartAdapter
@@ -28,8 +28,6 @@ import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.forEach
-import kotlin.collections.removeAll
 import kotlin.collections.set
 
 class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageListener {
@@ -37,6 +35,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     private var arrData: ArrayList<OrderProduct> = ArrayList()
     private lateinit var cartAdapter: MyCartAdapter
     var webCall: Call<WebResponse<Any>>? = null
+    var webCallDelete: Call<WebResponse<Any>>? = null
+    var orderid: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,15 +61,11 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         super.onViewCreated(view, savedInstanceState)
 
         onBind()
-
-
     }
 
     private fun onBind() {
         arrData.clear()
         myCartApi()
-        //       arrData.addAll(Constants.notifications())
-
         val mLayoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recyclerViewCart.layoutManager = mLayoutManager1
         (recyclerViewCart.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
@@ -88,20 +84,25 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         recyclerViewCart.showShimmer()
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = 1
+        queryMap[WebServiceConstants.Q_PARAM_STATUS] = 10
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                val type = object : TypeToken<java.util.ArrayList<Order?>?>() {}.type
+
+                val order: Order = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , Order::class.java)
+
+                //   val type = object : TypeToken<java.util.ArrayList<Order?>?>() {}.type
+/*
                 val arrayList: java.util.ArrayList<Order> = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
-
+                                , type)*/
                 recyclerViewCart.hideShimmer()
-                arrData.clear()
-                for (categories in arrayList) {
-                    arrData.addAll(categories.orderProducts)
-                }
 
+                orderid = order.id
+                arrData.clear()
+                arrData.addAll(order.orderProducts)
                 cartAdapter.notifyDataSetChanged()
             }
 
@@ -128,8 +129,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     override fun setListeners() {
         btnCheckout.setOnClickListener {
-            /* val checkoutDialogFragment = CheckoutDialogFragment()
-             checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")*/
             val checkoutDialogFragment = CheckoutDialogFragment()
             checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
         }
@@ -141,11 +140,31 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
         btnDelete.setOnClickListener {
             UIHelper.showAlertDialog("Are you sure you want to delete selected Items?", "Delete Items", { dialog, which ->
+
+                deleteAllApi(dialog)
+            }, context)
+        }
+    }
+
+    private fun deleteAllApi(dialog: DialogInterface) {
+
+
+        //   aboutCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_PAGES + "/" +
+
+        webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERS + "/" + orderid, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                UIHelper.showToast(context, webResponse.message)
                 arrData.removeAll { it.isSelected }
                 cartAdapter.notifyDataSetChanged()
                 dialog.dismiss()
-            }, context)
-        }
+            }
+
+            override fun onError(`object`: Any?) {
+
+            }
+        })
+
+
     }
 
     override fun onClick(v: View?) {
