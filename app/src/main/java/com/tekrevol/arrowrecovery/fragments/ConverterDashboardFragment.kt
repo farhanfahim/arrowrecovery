@@ -42,6 +42,7 @@ import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.dialog_message.*
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
+import kotlinx.android.synthetic.main.fragment_myorder.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.fragment_product_detail.edtQuantity
 import kotlinx.android.synthetic.main.fragment_product_detail.txtQuality
@@ -62,6 +63,11 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     var webCallProductDetail: Call<WebResponse<Any>>? = null
     var webCallFeatured: Call<WebResponse<Any>>? = null
     var itemPos: Int = 0
+
+    private var offset = 0
+    private val limit = 2
+    private var x = 0
+    private var progressConverters: ProgressBar? = null
 
 
     companion object {
@@ -91,6 +97,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         categorySelectorAdapter = CategorySelectorShimmerAdapter(context!!, arrCategories, this)
         converterItemShimmerAdapter = ConverterItemShimmerAdapter(context!!, arrConverters, this)
 
@@ -98,6 +106,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        progressConverters = view.findViewById(R.id.progressConverters) as ProgressBar
 
         onBind()
         calculateRecyclerHeight(view)
@@ -324,7 +333,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
             //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
 
-            getProductDetail(itemPos)
+            offset = 0
+            getProductDetail(itemPos,limit, offset)
 
             arrCategories.forEach { it.isSelected = false }
             arrCategories[position].isSelected = true
@@ -334,11 +344,22 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    override fun onDonePaging() {
+    override fun onPage(i:Int) {
+        if (offset < i) {
+
+            offset = i
+
+            x++
+            progressConverters!!.visibility = View.VISIBLE
+
+            getProductDetail(itemPos,limit, i)
+        }
     }
 
-    override fun onPage(offset: Int) {
-
+    override fun onDonePaging() {
+        if (progressConverters != null) {
+            progressConverters!!.visibility = View.GONE
+        }
     }
 
     private fun getVehicle() {
@@ -363,9 +384,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 categorySelectorAdapter.notifyDataSetChanged()
 
                 arrCategories[0].isSelected = true
-                getProductDetail(arrCategories[0].id)
+                getProductDetail(arrCategories[0].id,limit,offset)
 
-                onDonePaging()
             }
 
             override fun onError(`object`: Any?) {
@@ -378,12 +398,17 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    private fun getProductDetail(item: Int) {
+    private fun getProductDetail(item: Int,limit: Int, offset: Int) {
 
-        rvConverters.showShimmer()
+        if (x == 0) {
+            rvConverters.showShimmer()
+
+        }
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
+        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
+        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -392,7 +417,9 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-                rvConverters.hideShimmer()
+                if (x == 0) {
+                    rvConverters.hideShimmer()
+                }
 
                 arrConverters.clear()
                 arrConverters.addAll(arrayList)
@@ -410,6 +437,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             }
         })
     }
+
+
+
+
 
     var imageListener = ImageListener { position, imageView ->
         imageView.scaleType = ImageView.ScaleType.FIT_CENTER

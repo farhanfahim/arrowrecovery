@@ -3,24 +3,40 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleModels
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_advanced_search.*
+import kotlinx.android.synthetic.main.fragment_advanced_search.advSearch
+import kotlinx.android.synthetic.main.fragment_editprofile.*
+import kotlinx.android.synthetic.main.fragment_search.*
+import retrofit2.Call
 import java.util.*
 
 class AdvanceSearchFragment : BaseFragment() {
     private val spinnerModelArrayList: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
     private val spinnerModelArrayList1: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
     private val spinnerModelArrayList2: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
+    //private val spinnerModelArrayList2: ArrayList<String> = ArrayList()
+    var webCall: Call<WebResponse<Any>>? = null
+    private var serialNumber:String = ""
 
 
     companion object {
-
+        var arrDataMake: ArrayList<VehicleMakeModel> = ArrayList()
+        var arrDataModel: ArrayList<VehicleModels> = ArrayList()
         fun newInstance(): AdvanceSearchFragment {
 
             val args = Bundle()
@@ -45,17 +61,25 @@ class AdvanceSearchFragment : BaseFragment() {
 
     private fun bindData() {
 
-
+        getMakeName()
+        getModelName()
         for (carMake in Constants.carMakeSelector()) {
             spinnerModelArrayList.add(SpinnerModel(carMake.text))
+        }
+
+        var thisYear:Int = Calendar.getInstance().get(Calendar.YEAR)
+        for (i in 1900..thisYear) {
+            spinnerModelArrayList2.add(SpinnerModel(i.toString()))
+
         }
 
         for (carModel in Constants.carModelSelector()) {
             spinnerModelArrayList1.add(SpinnerModel(carModel.text))
         }
-        for (carYear in Constants.carYearSelector()) {
-            spinnerModelArrayList2.add(SpinnerModel(carYear.text))
-        }
+//        for (carYear in Constants.carYearSelector()) {
+//            spinnerModelArrayList2.add(SpinnerModel(carYear.text))
+//        }
+        serialNumber = inputSerialNumber.toString()
     }
 
     override fun getFragmentLayout(): Int {
@@ -77,21 +101,22 @@ class AdvanceSearchFragment : BaseFragment() {
 
         advSearch.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
+            //advanceSearch(serialNumber)
         })
         /*  backButton.setOnClickListener(View.OnClickListener {
               baseActivity.popBackStack()
           })*/
 
         contMake.setOnClickListener(View.OnClickListener {
-            UIHelper.showSpinnerDialog(this, spinnerModelArrayList, "Selected Make"
+            UIHelper.showSpinnerDialog(this@AdvanceSearchFragment, spinnerModelArrayList, "Selected Make"
                     , txtMake, null, null, IntWrapper(0))
 
         })
-        contYear.setOnClickListener(View.OnClickListener {
+        contYear.setOnClickListener {
             UIHelper.showSpinnerDialog(this, spinnerModelArrayList2, "Selected Make"
                     , txtYear, null, null, IntWrapper(0))
 
-        })
+        }
 
 
         contModel.setOnClickListener(View.OnClickListener {
@@ -108,6 +133,104 @@ class AdvanceSearchFragment : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
+
+
+    private fun getMakeName() {
+
+        val query: MutableMap<String, Any> = HashMap()
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MAKES, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : com.google.gson.reflect.TypeToken<ArrayList<VehicleMakeModel>>() {
+
+                }.type
+
+                arrDataMake = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
+
+                spinnerModelArrayList.clear()
+
+                for (makeModel in arrDataMake) {
+                    spinnerModelArrayList.add(SpinnerModel(makeModel.name))
+                }
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+
+    }
+
+    private fun getModelName() {
+
+        val query: MutableMap<String, Any> = HashMap()
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MODEL, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : com.google.gson.reflect.TypeToken<ArrayList<VehicleModels>>() {
+
+                }.type
+
+                arrDataModel = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
+
+                spinnerModelArrayList1.clear()
+
+                for (modelName in arrDataModel) {
+                    spinnerModelArrayList1.add(SpinnerModel(modelName.name))
+                }
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+
+    }
+
+    private fun getMakeId(): Int {
+
+        for (makeId in arrDataMake) {
+            if (makeId.name == txtMake.stringTrimmed) {
+                return makeId.id
+            }
+        }
+        return -1
+    }
+
+    private fun getModelId(): Int {
+
+        for (modelId in arrDataModel) {
+            if (modelId.name == txtModel.stringTrimmed) {
+                return modelId.id
+            }
+        }
+        return -1
+    }
+
+
+
+    /*private fun advanceSearch(serialNumber: String) {
+
+        val queryMap = HashMap<String, Any>()
+
+        queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
+        queryMap[WebServiceConstants.Q_MAKE_ID] = getMakeId()
+        queryMap[WebServiceConstants.Q_MODEL_ID] = getModelId()
+        queryMap[WebServiceConstants.Q_YEAR] = txtYear
+
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<ArrayList<ProductDetailModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+            }
+
+            override fun onError(`object`: Any?) {
+
+            }
+        })
+    }*/
 
 
 }

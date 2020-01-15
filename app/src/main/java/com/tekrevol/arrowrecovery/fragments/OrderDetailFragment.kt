@@ -1,5 +1,8 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.ContentResolver
+import android.content.Context
+import android.content.ContextWrapper
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -18,33 +21,52 @@ import com.tekrevol.arrowrecovery.models.receiving_model.Order
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import com.todkars.shimmer.ShimmerAdapter
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
-import kotlinx.android.synthetic.main.fragment_myorder.*
 import kotlinx.android.synthetic.main.fragment_orderdetail.*
 import retrofit2.Call
-import java.util.HashMap
+import android.graphics.Bitmap
+import android.widget.LinearLayout
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.google.android.libraries.places.internal.jf.e
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.lang.System.out
+import java.util.*
+import kotlin.collections.ArrayList
 
-class OrderDetailFragment : BaseFragment(), OnItemClickListener {
+
+class OrderDetailFragment : BaseFragment(), OnItemClickListener{
+
 
     private var arrData: ArrayList<OrderProduct> = ArrayList()
-    private var arrOrderData: ArrayList<Order> = ArrayList()
-    //private var arr: ArrayList<String> = ArrayList()
     var webCall: Call<WebResponse<Any>>? = null
     private lateinit var myOrderAdapter: OrderDetailShimmerAdapter
+    private lateinit var linearLayoutOrderDetail: LinearLayout
+    private lateinit var myBitmap: Bitmap
 
+    var pos :Int = 0
     var model: String? = null
     var order: Order? = null
 
     companion object {
 
-        fun newInstance(order: Order): OrderDetailFragment {
+        fun newInstance(order: Order ,position: Int): OrderDetailFragment {
 
             val args = Bundle()
 
             val fragment = OrderDetailFragment()
             fragment.setArguments(args)
             fragment.order = order
+            fragment.pos = position
             return fragment
         }
     }
@@ -58,7 +80,9 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        linearLayoutOrderDetail = view.findViewById(R.id.linearLayoutOrderDetail)
         onBind()
+
     }
 
 //    private fun onBind() {
@@ -99,7 +123,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
         txtName.text = (order?.userModel!!.userDetails.fullName)
         txtAddress.text = (order?.userModel!!.userDetails.address)
         txtPhone.text = (order?.userModel!!.userDetails.phone)
-
+        txtTotalPrice.text = order!!.amount.toString()
 
 
     }
@@ -130,7 +154,15 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
 
         })*/
 
+
+
+        btnScreenShot.setOnClickListener {
+            myBitmap = getScreenShot(linearLayoutOrderDetail)
+            saveImageInStorage(myBitmap)
+        }
+
     }
+
 
     override fun onClick(v: View?) {
     }
@@ -141,6 +173,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
 
     }
+
 
 
     private fun getOrderProducts(orderId: Int) {
@@ -156,7 +189,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-                //recyclerViewOrderDetail.hideShimmer()
+                recyclerViewOrderDetail.hideShimmer()
                 arrData.clear()
                 arrData.addAll(arrayList)
                 myOrderAdapter.notifyDataSetChanged()
@@ -173,5 +206,42 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     }
 
 
+
+
+    private fun getScreenShot(view: View): Bitmap {
+
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        val bgDrawable = view.background
+        if (bgDrawable != null)
+            bgDrawable.draw(canvas)
+        else canvas.drawColor(Color.BLUE)
+        view.draw(canvas)
+        Toast.makeText(context, "screenshot captured", Toast.LENGTH_LONG).show()
+        return returnedBitmap
+        }
+
+    private fun saveImageInStorage(bitmap: Bitmap) {
+            val root: String = Environment.getExternalStorageDirectory().absolutePath
+            val myDir = File("$root/saved_images")
+            myDir.mkdirs()
+            val fileName: String = "Image-" + ".jpg"
+            val file = File(myDir, fileName)
+            if (file.exists()) file.delete()
+            try {
+                val out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+                out.flush()
+                out.close()
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+
+
+
+
 }
+
+
 

@@ -99,7 +99,6 @@ public class AddressFragment : BaseFragment() {
 
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
-                    //spinnerModelArrayList.add(SpinnerModel(categories.id))
                 }
             }
 

@@ -112,6 +112,7 @@ public class AppConstants {
     public static final int  TITLE_MISS = 20;
     public static final int  TITLE_MRS = 30;
     public static final int  TITLE_MS = 40;
+    public static final int  ALL_ORDERS = 1;
 
 
     /**

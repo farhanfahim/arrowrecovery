@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_white"
+    android:id="@+id/linearLayoutOrderDetail"
     android:orientation="vertical">
     <!--
         <LinearLayout
@@ -273,7 +274,7 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:reverseLayout="false"
-                tools:listitem="@layout/shimmer_item_myorder">
+                tools:listitem="@layout/shimmer_item_order">
 
             </com.todkars.shimmer.ShimmerRecyclerView>
 
@@ -327,6 +328,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
+                        android:id="@+id/txtBalance"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:minLines="1"
@@ -354,12 +356,13 @@
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
                             android:layout_width="match_parent"
+                            android:id="@+id/txtTotalPrice"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:minLines="1"
-                            android:text="Total: $2320
+                            android:text="Total: -----
 "
 
                             android:textColor="@color/txtBlack"
@@ -401,6 +404,8 @@
             </LinearLayout>
 
 
+
+
         </LinearLayout>
     </ScrollView>
 
@@ -437,6 +442,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
+            android:id="@+id/btnScreenShot"
             android:layout_weight="1"
             android:background="@drawable/searchbar_grey"
             android:backgroundTint="@color/green_bg"
