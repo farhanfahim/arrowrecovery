@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="@dimen/x20dp"
-            android:text="Total: $1200"
+            android:text=""
             app:typeface="@string/font_regular"
 
             android:textColor="@color/txtDarkGrey" />

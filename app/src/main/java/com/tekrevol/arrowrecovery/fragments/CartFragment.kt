@@ -20,6 +20,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
+import com.tekrevol.arrowrecovery.models.sending_model.UpdateCartModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
@@ -36,6 +37,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     private lateinit var cartAdapter: MyCartAdapter
     var webCall: Call<WebResponse<Any>>? = null
     var webCallDelete: Call<WebResponse<Any>>? = null
+    var webCallUpdate: Call<WebResponse<Any>>? = null
     var orderid: Int? = null
 
 
@@ -89,21 +91,19 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
 
-                val order: Order = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , Order::class.java)
+                if (webResponse.result != null) {
+                    val order: Order = GsonFactory.getSimpleGson()
+                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                    , Order::class.java)
 
-                //   val type = object : TypeToken<java.util.ArrayList<Order?>?>() {}.type
-/*
-                val arrayList: java.util.ArrayList<Order> = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)*/
-                recyclerViewCart.hideShimmer()
+                    recyclerViewCart.hideShimmer()
+                    orderid = order.id
+                    txtTotalPrice.text = "Total: " + order.amount
+                    arrData.clear()
+                    arrData.addAll(order.orderProducts)
+                    cartAdapter.notifyDataSetChanged()
+                }
 
-                orderid = order.id
-                arrData.clear()
-                arrData.addAll(order.orderProducts)
-                cartAdapter.notifyDataSetChanged()
             }
 
             override fun onError(`object`: Any?) {
@@ -141,10 +141,34 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         btnDelete.setOnClickListener {
             UIHelper.showAlertDialog("Are you sure you want to delete selected Items?", "Delete Items", { dialog, which ->
 
-                deleteAllApi(dialog)
+                //deleteAllApi(dialog)
+
+
+                deleteProduct(dialog)
             }, context)
         }
     }
+
+    private fun deleteProduct(dialog: DialogInterface) {
+
+        val map = arrData.filter { it.isSelected }.map { it.id }
+
+        webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS + "/" + map, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                UIHelper.showToast(context, webResponse.message)
+                arrData.removeAll { it.isSelected }
+                cartAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            }
+
+            override fun onError(`object`: Any?) {
+
+            }
+        })
+
+
+    }
+
 
     private fun deleteAllApi(dialog: DialogInterface) {
 
@@ -187,12 +211,48 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 }
             }
             R.id.btnSubtract -> {
-                showNextBuildToast()
+                updateQuantity(position, "sub")
             }
+
             R.id.btnAdd -> {
-                showNextBuildToast()
+                updateQuantity(position, "add")
             }
         }
+    }
+
+    private fun updateQuantity(position: Int, addorSub: String) {
+
+        when (addorSub) {
+            "add" -> {
+                var quantity = arrData[position].quantity
+                if (quantity < 999) {
+                    quantity++
+                }
+                arrData.get(position).setQuantity(quantity)
+                cartAdapter.notifyItemChanged(position)
+            }
+            "sub" -> {
+                var quantity = arrData[position].quantity
+                if (quantity > 1) {
+                    quantity--
+                }
+                arrData.get(position).setQuantity(quantity)
+                cartAdapter.notifyItemChanged(position)
+            }
+        }
+
+        val updateCartModel = UpdateCartModel()
+        //  updateCartModel.quantity = quantity
+
+
+        getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + orderid, null,
+                updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+
     }
 
     override fun onDonePaging() {

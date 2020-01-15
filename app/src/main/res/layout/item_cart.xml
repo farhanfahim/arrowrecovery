@@ -192,7 +192,7 @@
                     android:visibility="visible">
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:id="@+id/edtQuantity"
+                        android:id="@+id/edtQuantityCart"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

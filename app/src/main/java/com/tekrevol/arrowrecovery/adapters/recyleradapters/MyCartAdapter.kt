@@ -72,7 +72,7 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
         val btnSubtract = view.findViewById<ImageView>(R.id.btnSubtract)
         val txtName = view.findViewById<AnyTextView>(R.id.txtName)
         val txtQuality = view.findViewById<AnyTextView>(R.id.txtQuality)
-        val edtQuantity = view.findViewById<AnyTextView>(R.id.edtQuantity)
+        val edtQuantity = view.findViewById<AnyTextView>(R.id.edtQuantityCart)
         val txtPrice = view.findViewById<AnyTextView>(R.id.txtPrice)
         val contSelectQuality = view.findViewById<LinearLayout>(R.id.contSelectQuality)
         var model: OrderProduct? = null
@@ -86,6 +86,7 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
                 } else {
                     imgSelect.setImageResource(R.drawable.img_unselected_check)
                 }
+
                 txtSerialNo.text = it.product?.serial_number
                 txtName.text = it.product?.name
                 txtPrice.text = "$" + it.amount
