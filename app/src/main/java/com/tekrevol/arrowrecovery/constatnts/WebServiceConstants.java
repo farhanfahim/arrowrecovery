@@ -87,6 +87,7 @@ public class WebServiceConstants {
     public static final String PATH_ORDERPRODUCTS = "order-products";
     public static final String PATH_ORDER_PRODUCTS_SLASH = "order-products/";
     public static final String PATH_ORDERS = "orders";
+    public static final String PATH_COLLECTIONCENTER = "collection-centers";
 
 
 
@@ -121,6 +122,8 @@ public class WebServiceConstants {
     public static final String Q_QUERY = "query";
     public static final String Q_ORDER_ID = "order_id";
     public static final String Q_FEATURED = "is_featured";
+    public static final String Q_LAT = "is_featured";
+    public static final String Q_LONG = "is_featured";
     public static final String Q_WITH_ORDER_PRODUCTS = "with_order_products";
 
 

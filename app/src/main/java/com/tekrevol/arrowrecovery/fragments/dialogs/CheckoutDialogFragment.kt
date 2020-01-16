@@ -2,22 +2,18 @@ package com.tekrevol.arrowrecovery.fragments.dialogs
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
@@ -26,17 +22,33 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
+import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.GooglePlaceDataInterface, OnItemClickListener {
 
+    private var orderProduct: ArrayList<OrderProduct> = ArrayList()
+    private var arrDataCart: ArrayList<CollectionModel> = ArrayList()
     var pickupSelectedPos: IntWrapper = IntWrapper(0)
     var googlePlaceHelper: GooglePlaceHelper? = null
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var timeSelectorAdapter: TimeSelectorAdapter
     private fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
+    }
+
+    companion object {
+
+        fun newInstance(orderProduct: ArrayList<OrderProduct>, arrDataCart: ArrayList<CollectionModel>): CheckoutDialogFragment {
+
+            val args = Bundle()
+            val fragment = CheckoutDialogFragment()
+            fragment.orderProduct = orderProduct
+            fragment.arrDataCart = arrDataCart
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override fun setupDialog(dialog: Dialog, style: Int) {
@@ -164,7 +176,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     }
 
     override fun onError(error: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
