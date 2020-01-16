@@ -35,7 +35,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     var googlePlaceHelper: GooglePlaceHelper? = null
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var timeSelectorAdapter: TimeSelectorAdapter
-
     private fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
     }

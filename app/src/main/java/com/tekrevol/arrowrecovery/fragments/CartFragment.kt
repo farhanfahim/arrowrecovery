@@ -39,6 +39,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     var webCallDelete: Call<WebResponse<Any>>? = null
     var webCallUpdate: Call<WebResponse<Any>>? = null
     var orderid: Int? = null
+    var quantity: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,10 +141,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
         btnDelete.setOnClickListener {
             UIHelper.showAlertDialog("Are you sure you want to delete selected Items?", "Delete Items", { dialog, which ->
-
                 //deleteAllApi(dialog)
-
-
                 deleteProduct(dialog)
             }, context)
         }
@@ -224,34 +222,51 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
         when (addorSub) {
             "add" -> {
-                var quantity = arrData[position].quantity
-                if (quantity < 999) {
-                    quantity++
+                quantity = arrData[position].quantity
+                if (quantity!! < 999) {
+
+
+                    val updateCartModel = UpdateCartModel()
+                    updateCartModel.quantity = quantity.toString()
+                    getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].product_id, null,
+                            updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                        override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
+
+                            quantity = quantity!! + 1
+                            arrData.get(position).setQuantity(quantity!!)
+                            cartAdapter.notifyItemChanged(position)
+                        }
+
+                        override fun onError(`object`: Any?) {}
+                    })
+
                 }
-                arrData.get(position).setQuantity(quantity)
-                cartAdapter.notifyItemChanged(position)
+
             }
             "sub" -> {
-                var quantity = arrData[position].quantity
-                if (quantity > 1) {
-                    quantity--
+                quantity = arrData[position].quantity
+                if (quantity!! > 1) {
+
+
+                    val updateCartModel = UpdateCartModel()
+                    updateCartModel.quantity = quantity.toString()
+                    getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].product_id, null,
+                            updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                        override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
+
+                            quantity = quantity!! - 1
+                            arrData.get(position).setQuantity(quantity!!)
+                            cartAdapter.notifyItemChanged(position)
+                        }
+
+                        override fun onError(`object`: Any?) {}
+                    })
+
+
                 }
-                arrData.get(position).setQuantity(quantity)
-                cartAdapter.notifyItemChanged(position)
             }
         }
 
-        val updateCartModel = UpdateCartModel()
-        //  updateCartModel.quantity = quantity
-
-
-        getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + orderid, null,
-                updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
-            override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
-            }
-
-            override fun onError(`object`: Any?) {}
-        })
 
     }
 
