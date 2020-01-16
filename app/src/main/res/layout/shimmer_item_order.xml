@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/x10dp"
         android:padding="@dimen/x10dp"
         android:gravity="center">
@@ -21,20 +22,22 @@
                 app:typeface="@string/font_regular"
                 android:id="@+id/index"
                 android:layout_width="wrap_content"
+                android:background="@color/material_grey400"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/x15dp"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:text="-"
-                android:textColor="@color/title_color" />
+                android:text="1"
+                android:textColor="@color/material_grey400" />
 
 
             <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 app:corner_radius="2dp">
 
                 <ImageView
+                    android:id="@+id/imgOrderItem"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
@@ -44,7 +47,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="@dimen/x5dp"
                 android:layout_weight="2"
@@ -56,27 +59,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:layout_marginBottom="@dimen/x1dp"
+                    android:id="@+id/txtRef"
                     android:gravity="center|start"
                     android:maxLines="1"
-                    android:layout_margin="@dimen/x1dp"
-                    android:minLines="1"
                     android:background="@color/material_grey400"
-                    android:text="------"
-                    android:textColor="@color/material_grey400"
-                    android:textSize="@dimen/s12" />
-
-
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    app:typeface="@string/font_regular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center|start"
-                    android:maxLines="1"
-                    android:layout_margin="@dimen/x1dp"
                     android:minLines="1"
-                    android:background="@color/material_grey400"
-                    android:text="---------"
+                    android:text="034311"
                     android:textColor="@color/material_grey400"
                     android:textSize="@dimen/s12" />
 
@@ -86,11 +75,26 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:gravity="center|start"
-                    android:layout_margin="@dimen/x1dp"
+                    android:layout_marginBottom="@dimen/x1dp"
                     android:maxLines="1"
-                    android:minLines="1"
                     android:background="@color/material_grey400"
-                    android:text="------"
+                    android:minLines="1"
+                    android:id="@+id/txtName"
+                    android:text="General Motors"
+                    android:textColor="@color/material_grey400"
+                    android:textSize="@dimen/s12" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:background="@color/material_grey400"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:id="@+id/txtPrice"
+                    android:minLines="1"
+                    android:text="$254.89"
                     android:textColor="@color/material_grey400"
                     android:textSize="@dimen/s12" />
 
@@ -103,13 +107,33 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center"
-            android:layout_margin="@dimen/x1dp"
+            android:id="@+id/txtQtyAndPrice"
             android:background="@color/material_grey400"
-            android:text="------"
-            android:textColor="@color/material_grey400"
+            android:layout_marginRight="@dimen/x1dp"
+            android:gravity="center"
+            android:text="580 x 2"
             android:paddingLeft="@dimen/x3dp"
             android:paddingRight="@dimen/x3dp"
+            android:textColor="@color/material_grey400"
+            android:textSize="@dimen/s12" />
+
+
+
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            app:typeface="@string/font_regular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:background="@color/material_grey400"
+            android:paddingLeft="@dimen/x3dp"
+            android:id="@+id/txtTotalPrice"
+            android:layout_marginRight="@dimen/x1dp"
+            android:paddingRight="@dimen/x3dp"
+            android:gravity="center"
+            android:text="$1160"
+            android:textColor="@color/material_grey400"
             android:textSize="@dimen/s12" />
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
@@ -119,27 +143,11 @@
             android:gravity="center"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:layout_marginLeft="2dp"
+            android:id="@+id/txtQuality"
+            android:text="75%"
             android:background="@color/material_grey400"
-            android:text="------"
-            android:textColor="@color/material_grey400"
             android:paddingLeft="@dimen/x3dp"
             android:paddingRight="@dimen/x3dp"
-            android:textSize="@dimen/s12" />
-
-
-        <com.tekrevol.arrowrecovery.widget.AnyTextView
-            app:typeface="@string/font_regular"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:paddingLeft="@dimen/x3dp"
-            android:paddingRight="@dimen/x3dp"
-            android:gravity="center"
-            android:layout_marginLeft="2dp"
-            android:background="@color/material_grey400"
-            android:text="------"
             android:textColor="@color/material_grey400"
             android:textSize="@dimen/s12" />
 
@@ -147,4 +155,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

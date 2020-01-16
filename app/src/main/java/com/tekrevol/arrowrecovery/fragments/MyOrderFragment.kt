@@ -9,28 +9,20 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
-import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
-import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import com.todkars.shimmer.ShimmerAdapter
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_myorder.*
-import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import java.util.HashMap
 
@@ -65,13 +57,13 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
 
         arrData.clear()
         //arrDataMake.addAll(Constants.daysSelector())
-
         recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         (recyclerViewMyOrder.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         val resId = R.anim.layout_animation_fall_bottom
         val animation = AnimationUtils.loadLayoutAnimation(context, resId)
         recyclerViewMyOrder.layoutAnimation = animation
         recyclerViewMyOrder.adapter = myOrderAdapter
+        recyclerViewMyOrder.setItemViewType(ShimmerAdapter.ItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_myorder }))
 
     }
 

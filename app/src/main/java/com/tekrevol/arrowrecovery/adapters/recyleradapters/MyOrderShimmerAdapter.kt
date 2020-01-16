@@ -7,16 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
-import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
-import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
@@ -64,13 +62,15 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var layoutItemMyOrder: LinearLayout? = view?.findViewById(R.id.layoutItemMyOrder)
-        var imgOrderItem: ImageView? = view?.findViewById(R.id.imgOrderItem)
-        var txtRef: AnyTextView? = view?.findViewById(R.id.txtRef)
-        var txtMake: AnyTextView? = view?.findViewById(R.id.txtMake)
-        var txtPrice: AnyTextView? = view?.findViewById(R.id.txtPrice)
-        var txtUserWithAddress: AnyTextView? = view?.findViewById(R.id.txtUserWithAddress)
-        var txtPhone: AnyTextView? = view?.findViewById(R.id.txtPhone)
+        var layoutItemMyOrder: LinearLayout? = view.findViewById(R.id.layoutItemMyOrder)
+        var imgOrderItem: ImageView? = view.findViewById(R.id.imgOrderItem)
+
+        var txtUser: AnyTextView? = view.findViewById(R.id.txtUserName)
+        var txtAddress: AnyTextView? = view.findViewById(R.id.txtAddress)
+        var txtPhone: AnyTextView? = view.findViewById(R.id.txtPhone)
+        var txtPrice: AnyTextView? = view.findViewById(R.id.txtTotalPrice)
+        var txtStatus: AnyTextView? = view.findViewById(R.id.txtStatus)
+        var txtDate: AnyTextView? = view.findViewById(R.id.txtDate)
         var model: Order? = null
 
         /**
@@ -82,11 +82,24 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
             this.model = model
 
             this.model?.let {
-                txtUserWithAddress?.text = it.userModel.userDetails.fullName
-                txtRef!!.text = model!!.orderProducts[position].product.serial_number
-                txtUserWithAddress?.text = it.userModel.userDetails.fullName +", "+it.userModel.userDetails.address
-                txtPhone!!.text = it.userModel.userDetails.phone
-                txtPrice!!.text = it.orderProducts[position].amount.toString()
+                txtUser?.text = it.userModel.userDetails.fullName
+                txtAddress?.text = it.userModel.userDetails.address
+                txtPhone?.text = it.userModel.userDetails.phone
+                txtPrice?.text = "$"+it.estimatedAmount.toString()
+                txtDate?.text = it.created_at
+
+                if (model!!.status == AppConstants.STATUS_COMPLETED){
+                    txtStatus!!.text = "Completed"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                }
+                if (model!!.status == AppConstants.STATUS_RETURNED){
+                    txtStatus!!.text = "Rejected"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.red_bg))
+                }
+                if (model!!.status == AppConstants.STATUS_CART){
+                    txtStatus!!.text = "Pending"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.fbutton_color_sun_flower))
+                }
                 ImageLoaderHelper.loadImageWithouAnimationByPath(imgOrderItem, it.orderProducts[position].product.feature_image, true)
             }
 

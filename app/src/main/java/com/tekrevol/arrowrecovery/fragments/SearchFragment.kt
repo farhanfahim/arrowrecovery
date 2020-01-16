@@ -6,8 +6,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.reflect.TypeToken
@@ -16,6 +16,7 @@ import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -23,15 +24,17 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleModels
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
-import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
+import kotlinx.android.synthetic.main.fragment_advanced_search.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import java.util.HashMap
 
 class SearchFragment : BaseFragment(), OnItemClickListener {
+
 
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
@@ -40,9 +43,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchBarShimmerAdapter: SearchBarShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
+    var vehicleModels = VehicleModels()
+
+
+
+
 
     companion object {
-
+        var productDetailModel = ProductDetailModel()
         fun newInstance(): SearchFragment {
 
             val args = Bundle()
@@ -61,11 +69,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     }
 
+
+
     private fun onBind() {
 
         arrData.clear()
         arrData.addAll(Constants.daysSelector())
-
 
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
@@ -108,8 +117,10 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         onBind()
+
     }
 
 
@@ -133,10 +144,10 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-
             baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
         })
     }
+
 
     override fun onClick(v: View?) {
     }
@@ -150,15 +161,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     }
 
-
     private fun getProducts(query: String) {
 
         rvSearch.showShimmer()
 
         val queryMap = HashMap<String, Any>()
-
         queryMap[WebServiceConstants.Q_QUERY] = query
-
+//        queryMap[WebServiceConstants.Q_MAKE_ID] = productDetailModel.vehicleModel.makeId
+//        queryMap[WebServiceConstants.Q_MODEL_ID] = productDetailModel.model_id
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 

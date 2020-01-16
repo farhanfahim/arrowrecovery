@@ -35,6 +35,7 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.libraries.places.internal.jf.e
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -123,7 +124,41 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
         txtName.text = (order?.userModel!!.userDetails.fullName)
         txtAddress.text = (order?.userModel!!.userDetails.address)
         txtPhone.text = (order?.userModel!!.userDetails.phone)
-        txtTotalPrice.text = order!!.amount.toString()
+
+        if (order!!.status == AppConstants.STATUS_CART){
+            txtStatus.text = "In Cart"
+        }
+        if (order!!.status == AppConstants.STATUS_PENDING){
+            txtStatus.text = "Pending"
+        }
+        if (order!!.status == AppConstants.STATUS_RECEIVED){
+            txtStatus.text = "Received"
+        }
+        if (order!!.status == AppConstants.STATUS_DELIVERED){
+            txtStatus.text = "Delivered"
+        }
+        if (order!!.status == AppConstants.STATUS_VERIFIED){
+            txtStatus.text = "Verified"
+        }
+        if (order!!.status == AppConstants.STATUS_PAID){
+            txtStatus.text = "Paid"
+        }
+        if (order!!.status == AppConstants.STATUS_COMPLETED){
+            txtStatus.text = "Completed"
+        }
+        if (order!!.status == AppConstants.STATUS_RETURNED){
+            txtStatus.text = "Returned"
+        }
+
+
+        if (order!!.amount == (0)){
+            txtAmountStatus.text = "Amount"
+            txtTotalPrice.text = "$"+0
+        }else{
+            txtAmountStatus.text = "Amount Paid"
+            txtTotalPrice.text = "$"+order!!.amount.toString()
+        }
+        txtEstimatedAmount.text = "$"+order!!.estimatedAmount.toString()
 
 
     }
@@ -237,6 +272,27 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
                 e.printStackTrace()
             }
         }
+
+//    private fun saveImageInStorage(bitmap:Bitmap) {
+//        val externalStorageState = Environment.getExternalStorageState()
+//        if (externalStorageState.equals(Environment.MEDIA_MOUNTED)){
+//            var externalStorage = Environment.getExternalStorageDirectory().toString()
+//            val file = File("$externalStorage/saved_images")
+//            try {
+//                val stream:OutputStream = FileOutputStream(file)
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+//                out.flush()
+//                out.close()
+//                Toast.makeText(context, "save", Toast.LENGTH_LONG).show()
+//            }catch (e:Exception){
+//                e.printStackTrace()
+//            }
+//
+//        }else{
+//            Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
+//        }
+//
+//    }
 
 
 

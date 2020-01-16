@@ -345,21 +345,21 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
     override fun onPage(i:Int) {
-        if (offset < i) {
-
-            offset = i
-
-            x++
-            progressConverters!!.visibility = View.VISIBLE
-
-            getProductDetail(itemPos,limit, i)
-        }
+//        if (offset < i) {
+//
+//            offset = i
+//
+//            x++
+//            progressConverters!!.visibility = View.VISIBLE
+//
+//            getProductDetail(itemPos,limit, i)
+//        }
     }
 
     override fun onDonePaging() {
-        if (progressConverters != null) {
-            progressConverters!!.visibility = View.GONE
-        }
+//        if (progressConverters != null) {
+//            progressConverters!!.visibility = View.GONE
+//        }
     }
 
     private fun getVehicle() {
@@ -400,15 +400,15 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     private fun getProductDetail(item: Int,limit: Int, offset: Int) {
 
-        if (x == 0) {
-            rvConverters.showShimmer()
-
-        }
+//        if (x == 0) {
+//            rvConverters.showShimmer()
+//
+//        }
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
-        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
+//        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
+//        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -417,15 +417,15 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-                if (x == 0) {
-                    rvConverters.hideShimmer()
-                }
+//                if (x == 0) {
+//                    rvConverters.hideShimmer()
+//                }
 
                 arrConverters.clear()
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString()+" items found"
-                onDonePaging()
+                //onDonePaging()
 
             }
 
