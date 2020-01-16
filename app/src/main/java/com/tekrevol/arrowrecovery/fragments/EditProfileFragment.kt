@@ -341,6 +341,8 @@ class EditProfileFragment : BaseFragment() {
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
+
+
             }
 
             override fun onError(`object`: Any?) {}

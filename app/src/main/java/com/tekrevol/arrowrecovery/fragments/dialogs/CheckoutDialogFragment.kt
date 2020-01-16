@@ -22,30 +22,35 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
+import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
+import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysEntity
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
 
 class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.GooglePlaceDataInterface, OnItemClickListener {
 
     private var orderProduct: ArrayList<OrderProduct> = ArrayList()
-    private var arrDataCart: ArrayList<CollectionModel> = ArrayList()
+    private var arrCollectionModel: ArrayList<CollectionModel> = ArrayList()
+    private var arrWorkingDay: ArrayList<Working_daysEntity> = ArrayList()
     var pickupSelectedPos: IntWrapper = IntWrapper(0)
     var googlePlaceHelper: GooglePlaceHelper? = null
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var timeSelectorAdapter: TimeSelectorAdapter
+    private var spinnerModelArrayList = java.util.ArrayList<SpinnerModel>()
+
     private fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
     }
 
     companion object {
 
-        fun newInstance(orderProduct: ArrayList<OrderProduct>, arrDataCart: ArrayList<CollectionModel>): CheckoutDialogFragment {
+        fun newInstance(orderProduct: ArrayList<OrderProduct>, arrCollectionModel: ArrayList<CollectionModel>): CheckoutDialogFragment {
 
             val args = Bundle()
             val fragment = CheckoutDialogFragment()
             fragment.orderProduct = orderProduct
-            fragment.arrDataCart = arrDataCart
+            fragment.arrCollectionModel = arrCollectionModel
             fragment.arguments = args
             return fragment
         }
@@ -97,7 +102,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         timeSelectorAdapter = TimeSelectorAdapter(context!!, arrData, this)
@@ -117,6 +121,12 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     private fun onBind() {
         arrData.clear()
         arrData.addAll(Constants.timeSelector())
+        spinnerModelArrayList.clear()
+
+        for (collection in arrCollectionModel) {
+            spinnerModelArrayList.add(SpinnerModel(collection.name))
+            //spinnerModelArrayList.add(SpinnerModel(categories.id))
+        }
 
         rvTimeSelection.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvTimeSelection.adapter = timeSelectorAdapter
@@ -146,7 +156,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
 
         contPickupSelected.setOnClickListener {
-            UIHelper.showSpinnerDialog(fragmentManager, Constants.locationSelector(), "Select Location", txtCollectionCenterLocation, null, {}, pickupSelectedPos)
+            UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {}, pickupSelectedPos)
         }
 
         contCollectionCenter.setOnClickListener {
@@ -186,5 +196,17 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         arrData.forEach { it.isSelected = false }
         arrData[position].isSelected = true
         timeSelectorAdapter.notifyDataSetChanged()
+    }
+
+
+    private fun getWorkingDays(): Int {
+        for (arr in arrCollectionModel) {
+            if (arr.getName().equals(txtCollectionCenterLocation.getStringTrimmed())) {
+                var id:Int = arr.id
+
+                return arr.id
+            }
+        }
+        return -1
     }
 }
