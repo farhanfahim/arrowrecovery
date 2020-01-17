@@ -63,7 +63,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         txtReference.text = (productDetailModel?.serial_number)
         txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
         txtModel.text = (productDetailModel?.vehicleModel?.name)
-        // txtPrice.setText(productDetailModel?.price)
+        //txtPrice.setText(productDetailModel?.price)
 
         txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
         carouselView.setImageListener(imageListener)

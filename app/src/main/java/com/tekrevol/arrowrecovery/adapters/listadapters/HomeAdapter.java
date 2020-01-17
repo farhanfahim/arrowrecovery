@@ -22,11 +22,11 @@
 // */
 //
 //public class SessionAdapter extends ArrayAdapter<Category> {
-//    public ArrayList<Category> arrData = new ArrayList<>();
+//    public ArrayList<Category> arrDataMake = new ArrayList<>();
 //
 //    public SessionAdapter(Activity context, ArrayList<Category> arrCategory) {
 //        super(context, 0, arrCategory);
-//        arrData.addAll(arrCategory);
+//        arrDataMake.addAll(arrCategory);
 //    }
 //
 //    @Override

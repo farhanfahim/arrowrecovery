@@ -6,8 +6,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.reflect.TypeToken
@@ -16,6 +16,7 @@ import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -23,15 +24,18 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleModelEntity
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleModels
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
-import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
+import kotlinx.android.synthetic.main.fragment_advanced_search.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import java.util.HashMap
 
 class SearchFragment : BaseFragment(), OnItemClickListener {
+
 
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
@@ -41,8 +45,15 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     private lateinit var searchBarShimmerAdapter: SearchBarShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
 
-    companion object {
 
+
+
+
+    companion object {
+        var makeId:String = ""
+        var modelId:String = ""
+        var year:String = ""
+        var serialNumber:String = ""
         fun newInstance(): SearchFragment {
 
             val args = Bundle()
@@ -61,11 +72,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     }
 
+
+
     private fun onBind() {
 
         arrData.clear()
         arrData.addAll(Constants.daysSelector())
-
 
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
@@ -94,22 +106,36 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if (txtSearch.text.length > 2) {
                     text = txtSearch.text.toString()
                     arrDataSearchBar.clear()
-                    //getProducts(text!!)
-                    getProducts(s.toString())
-                    recyclerViewSearchList.visibility = View.GONE
-                    rvSearch.visibility = View.VISIBLE
+                    if (text!! == ""){
+                        Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
+                    }else{
+                        getProducts(text!!, makeId, modelId, year, serialNumber)
+                        sharedPreferenceManager.putObject("searchKeyword",text)
+
+                        recyclerViewSearchList.visibility = View.GONE
+                        rvSearch.visibility = View.VISIBLE
+                    }
+                    if (text!! == "") {
+                        arrDataSearchBar.clear()
+                        recyclerViewSearchList.visibility = View.VISIBLE
+                        rvSearch.visibility = View.GONE
+                        makeId = ""
+                        modelId = ""
+                        year = ""
+                        serialNumber = ""
+                    }
                 }
-            }
         })
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         onBind()
+
     }
 
 
@@ -133,10 +159,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-
-            baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
+            if (text == null){
+                Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
+            }else{
+                baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
+            }
         })
     }
+
 
     override fun onClick(v: View?) {
     }
@@ -146,19 +176,21 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        baseActivity.openActivity(ProductDetailActivity::class.java)
+        var product: ProductDetailModel = anyObject as ProductDetailModel
+        baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
 
     }
 
-
-    private fun getProducts(query: String) {
+    private fun getProducts(query: String,makeId:String,modelId:String,year:String,serialNumber:String) {
 
         rvSearch.showShimmer()
 
         val queryMap = HashMap<String, Any>()
-
         queryMap[WebServiceConstants.Q_QUERY] = query
-
+        queryMap[WebServiceConstants.Q_MAKE_ID] = makeId
+        queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
+        queryMap[WebServiceConstants.Q_YEAR] = year
+        queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 

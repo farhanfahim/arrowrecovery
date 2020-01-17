@@ -51,6 +51,12 @@ public class Order {
 
 
     @Expose
+    @SerializedName("estimated_amount")
+    private int estimatedAmount;
+
+
+
+    @Expose
     @SerializedName("order_products")
     private List<OrderProduct> orderProducts;
 
@@ -190,6 +196,14 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getEstimatedAmount() {
+        return estimatedAmount;
+    }
+
+    public void setEstimatedAmount(int estimatedAmount) {
+        this.estimatedAmount = estimatedAmount;
     }
 
     @Override

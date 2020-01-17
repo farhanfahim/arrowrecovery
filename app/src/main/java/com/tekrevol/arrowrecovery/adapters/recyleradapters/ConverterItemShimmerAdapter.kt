@@ -53,7 +53,7 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
 
     override fun getPagingLayout(): Int {
 
-        return R.layout.item_categories
+        return R.layout.item_converter
     }
 
     override fun getPagingItemCount(): Int {

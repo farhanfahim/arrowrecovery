@@ -1,15 +1,18 @@
 package com.tekrevol.arrowrecovery.adapters.recyleradapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
@@ -28,10 +31,23 @@ class MyOrderAdapter(private val activity: Context?, private val arrData: List<O
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
         val model = arrData[i]
         setListener(holder, model)
-        holder.txtRef!!.text = model.orderProducts[i].product.serial_number
-        holder.txtUserWithAddress!!.text = model.userModel.userDetails.fullName +", "+model.userModel.userDetails.address
+        holder.txtUser!!.text = model.userModel.userDetails.fullName
+        holder.txtAddress!!.text = model.userModel.userDetails.address
         holder.txtPhone!!.text = model.userModel.userDetails.phone
         holder.txtPrice!!.text = model.orderProducts[i].amount.toString()
+
+        if (model.status == AppConstants.STATUS_COMPLETED){
+            holder.txtStatus!!.text = "Completed"
+            holder.txtStatus!!.setTextColor(ContextCompat.getColor(activity!!, R.color.green_bg))
+        }
+        if (model.status == AppConstants.STATUS_RETURNED){
+            holder.txtStatus!!.text = "Rejected"
+            holder.txtStatus!!.setTextColor(ContextCompat.getColor(activity!!, R.color.red_bg))
+        }
+        if (model.status == AppConstants.STATUS_PENDING){
+            holder.txtStatus!!.text = "Pending"
+            holder.txtStatus!!.setTextColor(ContextCompat.getColor(activity!!, R.color.fbutton_color_sun_flower))
+        }
         ImageLoaderHelper.loadImageWithouAnimationByPath(holder.imgOrderItem, model.orderProducts[i].product.feature_image, true)
     }
 
@@ -49,10 +65,11 @@ class MyOrderAdapter(private val activity: Context?, private val arrData: List<O
 
         var layoutItemMyOrder: LinearLayout? = view.findViewById(R.id.layoutItemMyOrder)
         var imgOrderItem: ImageView? = view.findViewById(R.id.imgOrderItem)
-        var txtRef: AnyTextView? = view.findViewById(R.id.txtRef)
-        var txtMake: AnyTextView? = view.findViewById(R.id.txtMake)
+        var txtStatus: AnyTextView? = view.findViewById(R.id.txtStatus)
+        var txtDate: AnyTextView? = view.findViewById(R.id.txtDate)
+        var txtAddress: AnyTextView? = view.findViewById(R.id.txtAddress)
         var txtPrice: AnyTextView? = view.findViewById(R.id.txtPrice)
-        var txtUserWithAddress: AnyTextView? = view.findViewById(R.id.txtUserWithAddress)
+        var txtUser: AnyTextView? = view.findViewById(R.id.txtUserName)
         var txtPhone: AnyTextView? = view.findViewById(R.id.txtPhone)
     }
 

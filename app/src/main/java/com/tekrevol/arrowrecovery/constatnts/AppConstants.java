@@ -112,6 +112,17 @@ public class AppConstants {
     public static final int  TITLE_MISS = 20;
     public static final int  TITLE_MRS = 30;
     public static final int  TITLE_MS = 40;
+    public static final int  ALL_ORDERS = 1;
+
+    public static final int  STATUS_CART = 10;
+    public static final int  STATUS_PENDING = 20;
+    public static final int  STATUS_RECEIVED = 30;
+    public static final int  STATUS_DELIVERED = 40;
+    public static final int  STATUS_VERIFIED = 50;
+    public static final int  STATUS_PAID = 60;
+    public static final int  STATUS_COMPLETED = 70;
+    public static final int  STATUS_RETURNED = 80;
+
 
 
     /**

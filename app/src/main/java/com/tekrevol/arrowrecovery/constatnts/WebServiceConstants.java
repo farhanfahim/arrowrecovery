@@ -52,6 +52,8 @@ public class WebServiceConstants {
      * API PATHS NAMES
      */
 
+
+
     public static final String PATH_REGISTER = "register";
     public static final String PATH_LOGIN = "login";
     public static final String PATH_GET_DEPARTMENTS = "departments";
@@ -119,8 +121,12 @@ public class WebServiceConstants {
     public static final String Q_PARAM_STATES = "states";
     public static final String Q_PARAM_VEHICLEMAKE = "vehicle-makes";
     public static final String Q_VEHICLE_MAKES = "vehicle-makes";
+    public static final String Q_VEHICLE_MODEL = "vehicle-models";
     public static final String Q_MAKE_ID = "make_id";
     public static final String Q_QUERY = "query";
+    public static final String Q_YEAR = "year";
+    public static final String Q_SERIAL_NUMBER = "serial_number";
+    public static final String Q_MODEL_ID = "model_id";
     public static final String Q_ORDER_ID = "order_id";
     public static final String Q_FEATURED = "is_featured";
     public static final String Q_LAT = "is_featured";

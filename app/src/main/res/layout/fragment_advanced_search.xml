@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_white"
+    android:id="@+id/fragment_advanced_search"
     android:orientation="vertical">
 
     <ScrollView
@@ -182,6 +183,7 @@
                     android:layout_margin="@dimen/s5"
                     android:layout_weight="1"
                     android:background="@null"
+                    android:id="@+id/inputSerialNumber"
                     android:hint="Enter Serial Number..."
                     android:padding="10dp"
                     android:singleLine="true"
@@ -221,6 +223,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:id="@+id/btnClear"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_stroke_green"
                 android:gravity="center"
@@ -230,7 +233,7 @@
                 android:visibility="visible" />
 
             <Button
-                android:id="@+id/advSearch"
+                android:id="@+id/btnAdvSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -45,6 +43,8 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
 
     private fun setListener(holder: ViewHolder, model: ProductDetailModel?) {
         holder.contSearch!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, SearchBarShimmerAdapter::class.java.simpleName) }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -53,7 +53,7 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
 
     override fun getPagingLayout(): Int {
 
-        return R.layout.item_categories
+        return R.layout.item_searchbar
     }
 
     override fun getPagingItemCount(): Int {
