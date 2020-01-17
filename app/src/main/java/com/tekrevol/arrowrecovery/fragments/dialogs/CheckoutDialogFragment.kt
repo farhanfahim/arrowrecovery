@@ -7,11 +7,13 @@ import android.content.res.Resources
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.libraries.places.internal.i
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -36,6 +38,8 @@ import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
 import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysEntity
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -51,6 +55,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     private var sharedPreferenceManager: SharedPreferenceManager? = null
     private lateinit var timeSelectorAdapter: TimeSelectorAdapter
     private var spinnerModelArrayList = java.util.ArrayList<SpinnerModel>()
+    var latitudee: Double? = null
+    var longitudee: Double? = null
 
     private fun getScreenHeight(): Int {
         return Resources.getSystem().displayMetrics.heightPixels
@@ -82,7 +88,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         params.height = getScreenHeight()
 
         val behavior = params.behavior
-
         if (behavior is BottomSheetBehavior<*>) {
             behavior.setBottomSheetCallback(object : BottomSheetCallback() {
                 @SuppressLint("SwitchIntDef")
@@ -140,13 +145,11 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
         for (collection in arrCollectionModel) {
             spinnerModelArrayList.add(SpinnerModel(collection.name))
-            //spinnerModelArrayList.add(SpinnerModel(categories.id))
         }
 
         rvTimeSelection.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvTimeSelection.adapter = timeSelectorAdapter
 
-        timeSelectorAdapter.notifyDataSetChanged()
     }
 
     private fun setListener() {
@@ -157,16 +160,19 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
                     contPickupSelected.visibility = View.VISIBLE
                     contCollectionCenter.visibility = View.GONE
+                    txtCollectionCenterLocation.text = ""
+                    txtPickupLocation.text = ""
                     heading.visibility = View.GONE
                     map.visibility = View.GONE
                     getPickUpTime()
                 }
                 R.id.rbCollectionCenter -> {
 
-
                     contPickupSelected.visibility = View.GONE
                     contCollectionCenter.visibility = View.VISIBLE
                     heading.visibility = View.GONE
+                    txtCollectionCenterLocation.text = ""
+                    txtPickupLocation.text = ""
                     map.visibility = View.GONE
                 }
             }
@@ -177,8 +183,17 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
 
         contCollectionCenter.setOnClickListener {
-            UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {}, pickupSelectedPos)
+            UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {
+                spinnerModelArrayList.filter { it.isSelected }.firstOrNull()?.let {
+                    getMap(it)
+                }
+            }, pickupSelectedPos)
         }
+
+        imgMap.setOnClickListener(View.OnClickListener {
+            Log.d("map", "map")
+            latitudee?.let { it1 -> longitudee?.let { it2 -> GooglePlaceHelper.intentOpenMap(context, it1, it2, "testing") } }
+        })
 
         contPickupSelected.setOnClickListener {
             googlePlaceHelper = GooglePlaceHelper(activity, GooglePlaceHelper.PLACE_PICKER, this, this, true)
@@ -199,20 +214,41 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     }
 
+    private fun getMap(it: SpinnerModel) {
+
+        for (arr in arrCollectionModel) {
+
+            if (it.text.equals(arr.name)) {
+
+                latitudee = arrCollectionModel[it.positionInList].latitude
+                longitudee = arrCollectionModel[it.positionInList].longitude
+                var str: String = GooglePlaceHelper.getMapSnapshotURL(arrCollectionModel[it.positionInList].latitude, arrCollectionModel[it.positionInList].longitude)
+                ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                heading.visibility = View.VISIBLE
+                map.visibility = View.VISIBLE
+            }
+        }
+
+    }
+
     private fun getPickUpTime() {
 
         val mquery: Map<String, Any> = HashMap()
-
         WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).getAPIAnyObject(WebServiceConstants.PATH_SLOTS, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-
-               // webResponse.result
+                arrDate.clear()
+                arrDate.addAll(webResponse.result as Collection<String>)
+                arrData.clear()
+                for (arr in arrDate) {
+                    arrData.add((DummyModel(arr, false)))
+                }
+                txtToltalSlot.text = arrData.size.toString() + "(4 Slots availables)"
+                timeSelectorAdapter.notifyDataSetChanged()
             }
 
             override fun onError(`object`: Any?) {
             }
         })
-
     }
 
 
@@ -227,7 +263,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
 
-
         var geocoder: Geocoder
         var addresses: List<Address>
         geocoder = Geocoder(getContext(), Locale.getDefault());
@@ -235,6 +270,9 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         var state: String = addresses.get(0).getAdminArea()
         if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
             txtPickupLocation.text = locationName
+
+            latitudee = latitude
+            longitudee = longitude
             var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
             ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
             heading.visibility = View.VISIBLE
@@ -250,18 +288,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         arrData.forEach { it.isSelected = false }
         arrData[position].isSelected = true
         timeSelectorAdapter.notifyDataSetChanged()
-    }
-
-
-    private fun getWorkingDays(): Int {
-        for (arr in arrCollectionModel) {
-            if (arr.getName().equals(txtCollectionCenterLocation.getStringTrimmed())) {
-                var id: Int = arr.id
-
-                return arr.id
-            }
-        }
-        return -1
     }
 
 }
