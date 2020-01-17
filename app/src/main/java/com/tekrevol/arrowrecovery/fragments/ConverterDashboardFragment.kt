@@ -380,6 +380,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 arrCategories[0].isSelected = true
                 getProductDetail(arrCategories[0].id,limit,offset)
 
+                //onDonePaging()
             }
 
             override fun onError(`object`: Any?) {
@@ -420,6 +421,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString()+" items found"
                 //onDonePaging()
+
 
             }
 

@@ -48,7 +48,7 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
     }
 
     private fun setListener(holder: ViewHolder, model: OrderProduct?) {
-        }
+    }
 
     override fun getItemCount(): Int {
         return arrData.size
@@ -86,9 +86,9 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
                 txtPrice!!.text = it.amount.toString()
                 txtName!!.text = it.product.name
                 var calculatedAmount = it.amount * it.quantity
-                txtQtyAndPrice!!.text = it.amount.toString()+"x"+it.quantity.toString()
+                txtQtyAndPrice!!.text = it.amount.toString() + "x" + it.quantity.toString()
                 txtTotalPrice!!.text = calculatedAmount.toString()
-                txtQuality!!.text = it.quality.toString()+"%"
+                txtQuality!!.text = it.quality.toString() + "%"
                 ImageLoaderHelper.loadImageWithouAnimationByPath(imgOrderItem, it.product.feature_image, true)
             }
 

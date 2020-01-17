@@ -54,7 +54,7 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
 
     override fun getPagingLayout(): Int {
 
-        return R.layout.item_categories
+        return R.layout.shimmer_item_order
     }
 
     override fun getPagingItemCount(): Int {

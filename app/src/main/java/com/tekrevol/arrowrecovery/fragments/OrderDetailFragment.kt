@@ -17,6 +17,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
@@ -233,7 +234,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
             }
 
             override fun onError(`object`: Any?) {
-                if (rvConverters == null) {
+                if (recyclerViewOrderDetail == null) {
                     recyclerViewOrderDetail.hideShimmer()
                     return
                 }

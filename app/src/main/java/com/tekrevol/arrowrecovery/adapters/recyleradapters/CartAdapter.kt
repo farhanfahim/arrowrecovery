@@ -32,10 +32,6 @@ class CartAdapter(private val activity: Context?, private val arrData: List<Dumm
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-           holder.imgSelect.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
-           holder.contSelectQuality.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
-           holder.btnSubtract.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
-           holder.btnAdd.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {
