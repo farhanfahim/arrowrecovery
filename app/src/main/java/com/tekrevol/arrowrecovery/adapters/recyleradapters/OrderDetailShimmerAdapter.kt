@@ -5,19 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
-import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.receiving_model.Order
+import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
-import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
@@ -56,7 +50,7 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
 
     override fun getPagingLayout(): Int {
 
-        return R.layout.item_categories
+        return R.layout.item_order
     }
 
     override fun getPagingItemCount(): Int {
@@ -64,13 +58,13 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var txtRef: AnyTextView? = view?.findViewById(R.id.txtRef)
-        var imgOrderItem: ImageView? = view?.findViewById(R.id.imgOrderItem)
-        var txtName: AnyTextView? = view?.findViewById(R.id.txtName)
-        var txtPrice: AnyTextView? = view?.findViewById(R.id.txtPrice)
-        var txtQtyAndPrice: AnyTextView? = view?.findViewById(R.id.txtQtyAndPrice)
-        var txtQuality: AnyTextView? = view?.findViewById(R.id.txtQuality)
-        var txtTotalPrice: AnyTextView? = view?.findViewById(R.id.txtTotalPrice)
+        var txtRef: AnyTextView? = view.findViewById(R.id.txtRef)
+        var imgOrderItem: ImageView? = view.findViewById(R.id.imgStatus)
+        var txtName: AnyTextView? = view.findViewById(R.id.txtName)
+        var txtPrice: AnyTextView? = view.findViewById(R.id.txtPrice)
+        var txtQtyAndPrice: AnyTextView? = view.findViewById(R.id.txtQtyAndPrice)
+        var txtQuality: AnyTextView? = view.findViewById(R.id.txtQuality)
+        var txtTotalPrice: AnyTextView? = view.findViewById(R.id.txtTotalPrice)
         var model: OrderProduct? = null
 
         /**

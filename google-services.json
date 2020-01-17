@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "855958676622",
+    "firebase_url": "https://arrow-1953a.firebaseio.com",
+    "project_id": "arrow-1953a",
+    "storage_bucket": "arrow-1953a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855958676622:android:69d58c5dbd0f2825d015df",
+        "android_client_info": {
+          "package_name": "com.tekrevol.arrowrecovery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855958676622-15fhsvnge7st8q32elcre0gb9ioohiep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.arrowrecovery",
+            "certificate_hash": "8db1fa47b268bf5a6bae51461eadfded4f2002ec"
+          }
+        },
+        {
+          "client_id": "855958676622-sbk965175c13m1qq42nr6q7ek1vu8k9g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_JcXpkjaZVgWGq9Y_UQFRbChCX7iVx1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855958676622-sbk965175c13m1qq42nr6q7ek1vu8k9g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -34,7 +34,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
     var webCall: Call<WebResponse<Any>>? = null
 
     private var offset: Int = 0
-    private val limit = 1
+    private val limit = 2
     private var x = 0
 
     private var progressBarMyOrder: ProgressBar? = null
@@ -50,7 +50,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         progressBarMyOrder = view.findViewById(R.id.progressBarMyOrder) as ProgressBar
 
         onBind()
-        getOrders(limit,0)
+        getOrders(limit,offset)
     }
 
     private fun onBind() {
@@ -58,10 +58,6 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         arrData.clear()
         //arrDataMake.addAll(Constants.daysSelector())
         recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        (recyclerViewMyOrder.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-        val resId = R.anim.layout_animation_fall_bottom
-        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
-        recyclerViewMyOrder.layoutAnimation = animation
         recyclerViewMyOrder.adapter = myOrderAdapter
         recyclerViewMyOrder.setItemViewType(ShimmerAdapter.ItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_myorder }))
 
@@ -147,11 +143,11 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
                     arrData.clear()
                     arrData.addAll(arrayList)
                     myOrderAdapter.notifyDataSetChanged()
-
+                    onDonePaging()
                 }
 
                 override fun onError(`object`: Any?) {
-                    if (rvConverters == null) {
+                    if (recyclerViewMyOrder == null) {
                         recyclerViewMyOrder.hideShimmer()
                         return
                     }

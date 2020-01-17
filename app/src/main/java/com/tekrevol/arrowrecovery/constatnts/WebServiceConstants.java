@@ -91,6 +91,7 @@ public class WebServiceConstants {
     public static final String PATH_ORDER_PRODUCTS_SLASH = "order-products/";
     public static final String PATH_ORDERS = "orders";
     public static final String PATH_COLLECTIONCENTER = "collection-centers";
+    public static final String PATH_NOTIFICATIONS = "notifications";
 
 
 

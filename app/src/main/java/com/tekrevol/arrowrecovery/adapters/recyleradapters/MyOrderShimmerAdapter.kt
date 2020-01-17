@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tekrevol.arrowrecovery.R
@@ -16,6 +15,8 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
 import com.tekrevol.arrowrecovery.widget.AnyTextView
+
+
 
 /**
  */
@@ -63,7 +64,7 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var layoutItemMyOrder: LinearLayout? = view.findViewById(R.id.layoutItemMyOrder)
-        var imgOrderItem: ImageView? = view.findViewById(R.id.imgOrderItem)
+        var imgStatus: ImageView? = view.findViewById(R.id.imgStatus)
 
         var txtUser: AnyTextView? = view.findViewById(R.id.txtUserName)
         var txtAddress: AnyTextView? = view.findViewById(R.id.txtAddress)
@@ -86,21 +87,54 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
                 txtAddress?.text = it.userModel.userDetails.address
                 txtPhone?.text = it.userModel.userDetails.phone
                 txtPrice?.text = "$"+it.estimatedAmount.toString()
-                txtDate?.text = it.created_at
 
+                val dateParts = it.created_at.split(" ")
+                val date = dateParts[0]
+                txtDate?.text = date.split("-").reversed().joinToString("-")
+
+                if (model!!.status == AppConstants.STATUS_RECEIVED){
+                    txtStatus!!.text = "Received"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                    imgStatus!!.setImageResource(R.drawable.approved)
+                }
+                if (model!!.status == AppConstants.STATUS_DELIVERED){
+                    txtStatus!!.text = "Delivered"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                    imgStatus!!.setImageResource(R.drawable.approved)
+                }
+                if (model!!.status == AppConstants.STATUS_VERIFIED){
+                    txtStatus!!.text = "verified"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                    imgStatus!!.setImageResource(R.drawable.approved)
+                }
+                if (model!!.status == AppConstants.STATUS_PAID){
+                    txtStatus!!.text = "Paid"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                    imgStatus!!.setImageResource(R.drawable.approved)
+                }
                 if (model!!.status == AppConstants.STATUS_COMPLETED){
                     txtStatus!!.text = "Completed"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                    imgStatus!!.setImageResource(R.drawable.approved)
                 }
+
                 if (model!!.status == AppConstants.STATUS_RETURNED){
                     txtStatus!!.text = "Rejected"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.red_bg))
+                    imgStatus!!.setImageResource(R.drawable.rejected)
                 }
+
                 if (model!!.status == AppConstants.STATUS_CART){
                     txtStatus!!.text = "Pending"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.fbutton_color_sun_flower))
+                    imgStatus!!.setImageResource(R.drawable.pending)
                 }
-                ImageLoaderHelper.loadImageWithouAnimationByPath(imgOrderItem, it.orderProducts[position].product.feature_image, true)
+                if (model!!.status == AppConstants.STATUS_CART){
+                    txtStatus!!.text = "In Cart"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.fbutton_color_sun_flower))
+                    imgStatus!!.setImageResource(R.drawable.pending)
+
+                }
             }
 
         }

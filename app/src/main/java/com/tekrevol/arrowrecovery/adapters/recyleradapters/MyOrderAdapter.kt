@@ -1,7 +1,6 @@
 package com.tekrevol.arrowrecovery.adapters.recyleradapters
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
-import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Order
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
@@ -64,7 +61,7 @@ class MyOrderAdapter(private val activity: Context?, private val arrData: List<O
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         var layoutItemMyOrder: LinearLayout? = view.findViewById(R.id.layoutItemMyOrder)
-        var imgOrderItem: ImageView? = view.findViewById(R.id.imgOrderItem)
+        var imgOrderItem: ImageView? = view.findViewById(R.id.imgStatus)
         var txtStatus: AnyTextView? = view.findViewById(R.id.txtStatus)
         var txtDate: AnyTextView? = view.findViewById(R.id.txtDate)
         var txtAddress: AnyTextView? = view.findViewById(R.id.txtAddress)

@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.fragment_advanced_search.*
 import retrofit2.Call
 import java.util.*
 
+
+
 class AdvanceSearchFragment : BaseFragment() {
 
 
@@ -68,7 +70,8 @@ class AdvanceSearchFragment : BaseFragment() {
         }
 
         var thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
-        for (i in 1900..thisYear) {
+        for (i in thisYear downTo 1900) {
+
             spinnerModelArrayList2.add(SpinnerModel(i.toString()))
 
         }
