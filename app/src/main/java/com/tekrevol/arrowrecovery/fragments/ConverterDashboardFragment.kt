@@ -40,12 +40,7 @@ import com.tekrevol.arrowrecovery.widget.AnyEditTextView
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
-import kotlinx.android.synthetic.main.dialog_message.*
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
-import kotlinx.android.synthetic.main.fragment_myorder.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
-import kotlinx.android.synthetic.main.fragment_product_detail.edtQuantity
-import kotlinx.android.synthetic.main.fragment_product_detail.txtQuality
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
@@ -333,7 +328,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
             //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
 
-            offset = 0
             getProductDetail(itemPos,limit, offset)
 
             arrCategories.forEach { it.isSelected = false }
@@ -407,8 +401,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-//        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
-//        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
+        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
+        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 

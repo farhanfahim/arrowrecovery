@@ -41,6 +41,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import java.lang.System.out
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -257,21 +258,23 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
         }
 
     private fun saveImageInStorage(bitmap: Bitmap) {
-            val root: String = Environment.getExternalStorageDirectory().absolutePath
-            val myDir = File("$root/saved_images")
-            myDir.mkdirs()
-            val fileName: String = "Image-" + ".jpg"
-            val file = File(myDir, fileName)
-            if (file.exists()) file.delete()
-            try {
-                val out = FileOutputStream(file)
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-                out.flush()
-                out.close()
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
+        val root: String = Environment.getExternalStorageDirectory().absolutePath
+        val myDir = File("$root/saved_images")
+        myDir.mkdirs()
+        var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        var currentDateTime:String = dateFormat.format( Date())
+        val fileName = "$currentDateTime.jpg"
+        val file = File(myDir, fileName)
+        if (file.exists()) file.delete()
+        try {
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+            out.flush()
+            out.close()
+        }catch (e:Exception){
+            e.printStackTrace()
         }
+    }
 
 //    private fun saveImageInStorage(bitmap:Bitmap) {
 //        val externalStorageState = Environment.getExternalStorageState()

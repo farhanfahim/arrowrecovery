@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.makeId
+import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.modelId
+import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.serialNumber
+import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.year
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
@@ -30,7 +33,6 @@ class AdvanceSearchFragment : BaseFragment() {
     private val spinnerModelArrayList2: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
 
     var webCall: Call<WebResponse<Any>>? = null
-    private var serialNumber: String = ""
 
     companion object {
         var arrDataMake: ArrayList<VehicleMakeModel> = ArrayList()
@@ -100,8 +102,19 @@ class AdvanceSearchFragment : BaseFragment() {
                 Toast.makeText(context, "select at least one field", Toast.LENGTH_LONG).show()
             } else {
                 baseActivity.popBackStack()
-//                SearchFragment.productDetailModel.vehicleModel.vehicleMake.id = getModelId()
-//                SearchFragment.productDetailModel.vehicleModel.makeId = getMakeId()
+                if (getModelId() == -1){
+                    modelId = ""
+                }else{
+                    modelId = getModelId().toString()
+                }
+
+                if (getMakeId() == -1){
+                    makeId = ""
+                }else{
+                    makeId = getMakeId().toString()
+                }
+                year = txtYear.stringTrimmed
+                serialNumber = inputSerialNumber.stringTrimmed
             }
         })
 
