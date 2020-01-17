@@ -88,26 +88,6 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
 
     }
 
-//    private fun onBind() {
-//
-//        arr.add("1")
-//        arr.add("2")
-//        arr.add("3")
-//        arr.add("4")
-//        arr.add("5")
-//        arr.add("6")
-//        recyclerViewOrderDetail.layoutManager = LinearLayoutManager(context)
-//        (recyclerViewOrderDetail.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-//        val resId = R.anim.layout_animation_fall_bottom
-//        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
-//        recyclerViewOrderDetail.layoutAnimation = animation
-//        recyclerViewOrderDetail.adapter = OrderDetailAdapter(context, arr, this)
-//
-//        txtName.text = (order?.userModel!!.userDetails.fullName)
-//        txtAddress.text = (order?.userModel!!.userDetails.address)
-//        txtPhone.text = (order?.userModel!!.userDetails.phone)
-//
-//    }
 
 
     private fun onBind() {
@@ -127,33 +107,46 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
         txtAddress.text = (order?.userModel!!.userDetails.address)
         txtPhone.text = (order?.userModel!!.userDetails.phone)
 
-        if (order!!.status == AppConstants.STATUS_CART){
-            txtStatus.text = "In Cart"
-        }
-        if (order!!.status == AppConstants.STATUS_PENDING){
-            txtStatus.text = "Pending"
-        }
         if (order!!.status == AppConstants.STATUS_RECEIVED){
-            txtStatus.text = "Received"
+            txtStatus!!.text = "Received"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
         if (order!!.status == AppConstants.STATUS_DELIVERED){
-            txtStatus.text = "Delivered"
+            txtStatus!!.text = "Delivered"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
         if (order!!.status == AppConstants.STATUS_VERIFIED){
-            txtStatus.text = "Verified"
+            txtStatus!!.text = "verified"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
+
         if (order!!.status == AppConstants.STATUS_PAID){
-            txtStatus.text = "Paid"
+            txtStatus!!.text = "Paid"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
+
         if (order!!.status == AppConstants.STATUS_COMPLETED){
-            txtStatus.text = "Completed"
+            txtStatus!!.text = "Completed"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
+
         if (order!!.status == AppConstants.STATUS_RETURNED){
-            txtStatus.text = "Returned"
+            txtStatus!!.text = "Rejected"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.red_bg))
+        }
+
+        if (order!!.status == AppConstants.STATUS_CART){
+            txtStatus!!.text = "Pending"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.fbutton_color_sun_flower))
+        }
+        if (order!!.status == AppConstants.STATUS_CART){
+            txtStatus!!.text = "In Cart"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.fbutton_color_sun_flower))
         }
 
 
         if (order!!.amount == (0)){
+
             txtAmountStatus.text = "Amount"
             txtTotalPrice.text = "$"+0
         }else{

@@ -37,7 +37,7 @@
                 app:corner_radius="2dp">
 
                 <ImageView
-                    android:id="@+id/imgOrderItem"
+                    android:id="@+id/imgStatus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"

@@ -21,94 +21,32 @@
 
 
         <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
             app:corner_radius="2dp">
 
             <ImageView
-                android:id="@+id/imgOrderItem"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/imgStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/material_grey400"
                 android:scaleType="fitXY"
-                android:background="@color/material_grey400" />
+                android:src="@drawable/greycircle"/>
 
         </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:gravity="center|start"
-            android:orientation="vertical">
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtRef"
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:maxLines="1"
-                android:minLines="1"
-                android:layout_marginBottom="@dimen/x1dp"
-                android:background="@color/material_grey400"
-                android:text="034311"
-                android:textColor="@color/material_grey400"
-                android:textSize="@dimen/s12"
-                app:typeface="@string/font_regular" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:id="@+id/txtMake"
-                android:background="@color/material_grey400"
-                android:maxLines="1"
-                android:minLines="1"
-                android:layout_marginBottom="@dimen/x1dp"
-                android:text="Hyundai"
-                android:textColor="@color/material_grey400"
-                android:textSize="@dimen/s12"
-                app:typeface="@string/font_regular" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:id="@+id/txtPrice"
-                android:gravity="center|start"
-                android:background="@color/material_grey400"
-                android:maxLines="1"
-                android:minLines="1"
-                android:text="$254.89"
-                android:textColor="@color/material_grey400"
-                android:textSize="@dimen/s12"
-                app:typeface="@string/font_regular" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_weight="2"
-            android:gravity="center|start"
             android:orientation="vertical">
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center|start"
-                android:maxLines="1"
-                android:minLines="1"
-                android:text="From"
-                android:layout_marginBottom="@dimen/x1dp"
-                android:textColor="@color/material_grey400"
-                android:background="@color/material_grey400"
-                android:textSize="@dimen/s12"
-                app:typeface="@string/font_regular" />
+
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"
@@ -116,11 +54,11 @@
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:maxLines="1"
-                android:background="@color/material_grey400"
-                android:id="@+id/txtUserWithAddress"
                 android:layout_marginBottom="@dimen/x1dp"
+                android:id="@+id/txtUserName"
                 android:minLines="1"
-                android:text="John Smith New York, USA"
+                android:background="@color/material_grey400"
+                android:text="-------"
                 android:textColor="@color/material_grey400"
                 android:textSize="@dimen/s12"
                 app:typeface="@string/font_regular" />
@@ -129,7 +67,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:layout_marginBottom="@dimen/x1dp"
                 android:gravity="center|start"
+                android:maxLines="1"
+                android:background="@color/material_grey400"
+                android:id="@+id/txtAddress"
+                android:minLines="1"
+                android:text="New York, USA"
+                android:textColor="@color/material_grey400"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:background="@color/material_grey400"
                 android:maxLines="1"
                 android:minLines="1"
@@ -142,26 +94,108 @@
         </LinearLayout>
 
 
-        <com.tekrevol.arrowrecovery.widget.AnyTextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x5dp"
-            android:ellipsize="end"
-            android:id="@+id/txtTotalPrice"
-            android:background="@color/material_grey400"
-            android:gravity="center|start"
-            android:text="$1160"
-            android:textColor="@color/material_grey400"
-            app:typeface="@string/font_regular" />
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textColor="@color/txtDarkGrey"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:text="123"
+                android:background="@color/material_grey400"
+                android:id="@+id/txtTotalPrice"
+                android:minLines="1"
+                android:textColor="@color/material_grey400"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:background="@color/material_grey400"
+                android:minLines="1"
+                android:id="@+id/txtDate"
+                android:text="+44 123 456 1"
+                android:textColor="@color/material_grey400"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:background="@color/material_grey400"
+                android:minLines="1"
+                android:text="pending"
+                android:textColor="@color/material_grey400"
+                android:textAlignment="center"
+                android:id="@+id/txtStatus"
+                android:textSize="@dimen/s12"
+                app:typeface="@string/font_regular" />
+
+        </LinearLayout>
+
 
         <ImageView
 
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/x10dp"
+            android:padding="4dp"
             android:background="@color/material_grey400"
             android:layout_marginRight="@dimen/x10dp"
-            android:padding="4dp"
             android:gravity="center|start" />
 
     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

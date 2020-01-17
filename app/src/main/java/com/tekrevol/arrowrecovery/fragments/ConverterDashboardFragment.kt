@@ -41,6 +41,7 @@ import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
+import kotlinx.android.synthetic.main.fragment_myorder.*
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,7 +60,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     var webCallFeatured: Call<WebResponse<Any>>? = null
     var itemPos: Int = 0
 
-    private var offset = 0
+    private var offset: Int = 0
     private val limit = 2
     private var x = 0
     private var progressConverters: ProgressBar? = null
@@ -148,10 +149,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvConverters.layoutManager = mLayoutManager2
         (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
-        val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
-                .attachTo(rvCategories)
-                .listenWith(this@ConverterDashboardFragment)
-                .build()
+//        val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
+//                .attachTo(rvCategories)
+//                .listenWith(this@ConverterDashboardFragment)
+//                .build()
         rvConverters.adapter = converterItemShimmerAdapter
         rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
 
@@ -338,24 +339,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    override fun onPage(i:Int) {
-//        if (offset < i) {
-//
-//            offset = i
-//
-//            x++
-//            progressConverters!!.visibility = View.VISIBLE
-//
-//            getProductDetail(itemPos,limit, i)
-//        }
-    }
-
-    override fun onDonePaging() {
-//        if (progressConverters != null) {
-//            progressConverters!!.visibility = View.GONE
-//        }
-    }
-
     private fun getVehicle() {
 
         rvCategories.showShimmer()
@@ -413,8 +396,9 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                                 , type)
 
 //                if (x == 0) {
-//                    rvConverters.hideShimmer()
-//                }
+//                        rvConverters.hideShimmer()
+//                    }
+                rvConverters.hideShimmer()
 
                 arrConverters.clear()
                 arrConverters.addAll(arrayList)
@@ -426,21 +410,37 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             }
 
             override fun onError(`object`: Any?) {
-                if (rvConverters == null) {
-                    return
-                }
-                rvConverters.hideShimmer()
+//                if (rvConverters == null) {
+//                    rvConverters.hideShimmer()
+//                }
+
             }
         })
     }
 
 
-
-
-
     var imageListener = ImageListener { position, imageView ->
         imageView.scaleType = ImageView.ScaleType.FIT_CENTER
         ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
+    }
+
+
+    override fun onPage(i:Int) {
+//        if (offset < i) {
+//
+//            offset = i
+//
+//            x++
+//            progressConverters!!.visibility = View.VISIBLE
+//
+//            getProductDetail(itemPos,limit, i)
+//        }
+    }
+
+    override fun onDonePaging() {
+//        if (progressConverters != null) {
+//            progressConverters!!.visibility = View.GONE
+//        }
     }
 
 }
