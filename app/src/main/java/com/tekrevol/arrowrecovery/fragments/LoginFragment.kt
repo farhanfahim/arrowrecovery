@@ -15,13 +15,12 @@ import com.tekrevol.arrowrecovery.models.sending_model.LoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.inputEmail
 import retrofit2.Call
 
 
-class LoginFragmentt : BaseFragment() {
+class LoginFragment : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
 
@@ -40,26 +39,24 @@ class LoginFragmentt : BaseFragment() {
 
     override fun setListeners() {
 
-        txtLogin.setOnClickListener(View.OnClickListener {
+        txtLogin.setOnClickListener {
             loginUpAPI()
-        })
+        }
 
-        txtForgot.setOnClickListener(View.OnClickListener {
+        txtForgot.setOnClickListener {
             baseActivity.addDockableFragment(ForgotFragment.newInstance(), true)
-        })
+        }
 
-        btnfbLogin.setOnClickListener(View.OnClickListener {
-            loginFacebookAPI()
-        })
+        btnfbLogin.setOnClickListener { loginFacebookAPI() }
 
-        btngoogleLogin.setOnClickListener(View.OnClickListener {
+        btngoogleLogin.setOnClickListener {
             loginGoogleAPI()
-        })
+        }
 
-        txt_signup.setOnClickListener(View.OnClickListener {
+        txt_signup.setOnClickListener {
             baseActivity.popBackStack()
             baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, "", 0), true)
-        })
+        }
 
     }
 
@@ -84,18 +81,18 @@ class LoginFragmentt : BaseFragment() {
         }
 
         if (inputEmail.testValidity() && inputPassword.testValidity()) {
-            var loginSendingModel = LoginSendingModel()
+            val loginSendingModel = LoginSendingModel()
             loginSendingModel.email = inputEmail.stringTrimmed
-            loginSendingModel.deviceToken = "abc"
+            loginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
             loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
             loginSendingModel.password = inputPassword.stringTrimmed
-            var email: String = inputEmail.stringTrimmed
+            val email: String = inputEmail.stringTrimmed
             //var phone:String = inputPhoneNo.stringTrimmed
             webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                     UIHelper.showToast(context, webResponse.message)
 
-                    var userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
+                    val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                     /*sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                     sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                     sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
@@ -149,7 +146,7 @@ class LoginFragmentt : BaseFragment() {
 
             val args = Bundle()
 
-            val fragment = LoginFragmentt()
+            val fragment = LoginFragment()
             fragment.arguments = args
             return fragment
         }

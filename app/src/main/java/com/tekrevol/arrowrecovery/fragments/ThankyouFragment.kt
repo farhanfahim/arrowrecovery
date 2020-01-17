@@ -7,8 +7,6 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_thankyou.*
-import kotlinx.android.synthetic.main.fragment_verify_account.*
-import kotlinx.android.synthetic.main.item_cart.*
 
 class ThankyouFragment : BaseFragment() {
 
@@ -39,7 +37,7 @@ class ThankyouFragment : BaseFragment() {
 
         txtBackToLogin.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
+            baseActivity.addDockableFragment(LoginFragment.newInstance(), true)
         })
     }
 

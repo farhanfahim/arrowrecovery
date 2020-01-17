@@ -99,6 +99,7 @@ public class AppConstants {
     public static final String KEY_CROSS_TAB_DATA = "cross_tab";
     public static final String KEY_REGISTERED_DEVICE = "registered_device";
     public static final String KEY_INSERT_REGISTERED_DEVICE = "registered_device";
+    public static final String KEY_FIREBASE_TOKEN = "firebase_token";
     public static final String KEY_FIREBASE_TOKEN_UPDATED = "FIREBASE_TOKEN_UPDATED";
     public static final String KEY_PIN_CODE = "pin_code";
     public static final String KEY_IS_PIN_ENABLE = "is_pin_enable";
