@@ -1,5 +1,7 @@
 package com.tekrevol.arrowrecovery.models
 
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+
 data class DummyModel(var text: String) {
 
     var isSelected = false
@@ -8,7 +10,8 @@ data class DummyModel(var text: String) {
         this.isSelected = isSelected
      }
 
-
-
+    override fun toString(): String {
+        return GsonFactory.getSimpleGson().toJson(this)
+    }
 
 }

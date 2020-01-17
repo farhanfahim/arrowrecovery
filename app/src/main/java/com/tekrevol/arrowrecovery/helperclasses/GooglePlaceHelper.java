@@ -36,7 +36,7 @@ public class GooglePlaceHelper {
     public static final int REQUEST_CODE_PLACE_HELPER = 6666;
     public static final int PLACE_PICKER = 0;
     public static final int PLACE_AUTOCOMPLETE = 1;
-    private static final String GEO_API_KEY = "AIzaSyCkoOvnd1_eougL23wAx7DP65C_duaJRjQ";
+    public static final String GEO_API_KEY = "AIzaSyB9ppk-0eNcK42I5ykfreGWwgiUClqmMIs";
     private final boolean isFullScreen;
     private int apiType;
     private GooglePlaceDataInterface googlePlaceDataInterface;

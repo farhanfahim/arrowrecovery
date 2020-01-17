@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.res.Resources
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,20 +15,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
+import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
 import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysEntity
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.GooglePlaceDataInterface, OnItemClickListener {
 
@@ -36,6 +47,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     var pickupSelectedPos: IntWrapper = IntWrapper(0)
     var googlePlaceHelper: GooglePlaceHelper? = null
     private var arrData: ArrayList<DummyModel> = ArrayList()
+    private var arrDate: ArrayList<String> = ArrayList()
+    private var sharedPreferenceManager: SharedPreferenceManager? = null
     private lateinit var timeSelectorAdapter: TimeSelectorAdapter
     private var spinnerModelArrayList = java.util.ArrayList<SpinnerModel>()
 
@@ -104,6 +117,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferenceManager = SharedPreferenceManager.getInstance(context)
         timeSelectorAdapter = TimeSelectorAdapter(context!!, arrData, this)
 
     }
@@ -119,8 +133,9 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     }
 
     private fun onBind() {
+
         arrData.clear()
-        arrData.addAll(Constants.timeSelector())
+        // arrData.addAll(Constants.timeSelector())
         spinnerModelArrayList.clear()
 
         for (collection in arrCollectionModel) {
@@ -140,13 +155,19 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             when (checkedId) {
                 R.id.rbPickup -> {
 
-                    contPickupSelected.visibility = View.GONE
-                    contCollectionCenter.visibility = View.VISIBLE
+                    contPickupSelected.visibility = View.VISIBLE
+                    contCollectionCenter.visibility = View.GONE
+                    heading.visibility = View.GONE
+                    map.visibility = View.GONE
+                    getPickUpTime()
                 }
                 R.id.rbCollectionCenter -> {
 
-                    contPickupSelected.visibility = View.VISIBLE
-                    contCollectionCenter.visibility = View.GONE
+
+                    contPickupSelected.visibility = View.GONE
+                    contCollectionCenter.visibility = View.VISIBLE
+                    heading.visibility = View.GONE
+                    map.visibility = View.GONE
                 }
             }
         }
@@ -155,11 +176,11 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             DateManager.showDatePicker(context, txtDate, null, false, true)
         }
 
-        contPickupSelected.setOnClickListener {
+        contCollectionCenter.setOnClickListener {
             UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {}, pickupSelectedPos)
         }
 
-        contCollectionCenter.setOnClickListener {
+        contPickupSelected.setOnClickListener {
             googlePlaceHelper = GooglePlaceHelper(activity, GooglePlaceHelper.PLACE_PICKER, this, this, true)
             googlePlaceHelper?.openMapsActivity()
         }
@@ -178,6 +199,22 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     }
 
+    private fun getPickUpTime() {
+
+        val mquery: Map<String, Any> = HashMap()
+
+        WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).getAPIAnyObject(WebServiceConstants.PATH_SLOTS, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+               // webResponse.result
+            }
+
+            override fun onError(`object`: Any?) {
+            }
+        })
+
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -189,7 +226,24 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     }
 
     override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
-        txtPickupLocation.text = locationName
+
+
+        var geocoder: Geocoder
+        var addresses: List<Address>
+        geocoder = Geocoder(getContext(), Locale.getDefault());
+        addresses = geocoder.getFromLocation(latitude, longitude, 1)
+        var state: String = addresses.get(0).getAdminArea()
+        if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
+            txtPickupLocation.text = locationName
+            var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+            ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+            heading.visibility = View.VISIBLE
+            map.visibility = View.VISIBLE
+
+        } else {
+            UIHelper.showAlertDialog(context, "Your current state doesn't match the state info you provided at the time of registration.")
+        }
+
     }
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
@@ -202,11 +256,12 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     private fun getWorkingDays(): Int {
         for (arr in arrCollectionModel) {
             if (arr.getName().equals(txtCollectionCenterLocation.getStringTrimmed())) {
-                var id:Int = arr.id
+                var id: Int = arr.id
 
                 return arr.id
             }
         }
         return -1
     }
+
 }
