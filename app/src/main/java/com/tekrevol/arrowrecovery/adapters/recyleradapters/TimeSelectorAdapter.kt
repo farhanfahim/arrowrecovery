@@ -33,7 +33,7 @@ class TimeSelectorAdapter(private val activity: Context, private val arrData: Li
     }
 
     private fun setListener(holder: ViewHolder, model: DummyModel) {
-        holder.contTime.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model,v, TimeSelectorAdapter::class.java.simpleName) }
+        holder.contTime.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, TimeSelectorAdapter::class.java.simpleName) }
     }
 
     override fun getItemCount(): Int {

@@ -10,11 +10,17 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.multidex.MultiDexApplication;
 
 import android.util.Log;
 import android.util.Pair;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.tekrevol.arrowrecovery.activities.MainActivity;
 import com.tekrevol.arrowrecovery.libraries.imageloader.CustomImageDownaloder;
 import com.crashlytics.android.Crashlytics;
@@ -24,12 +30,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.reactivex.subjects.PublishSubject;
+
+import static com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN;
+import static com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPDATED;
 
 /**
  * Created by khanhamza on 09-Mar-17.
@@ -58,6 +68,26 @@ public class BaseApplication extends MultiDexApplication implements Application.
         // TODO: 11/1/2017 Enable Crash Lytics and Never Crash feature before releasing the app
 //        Fabric.with(this, new Crashlytics());
 //        neverCrash();
+
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful() || task.getResult() == null) {
+                        Log.w("FIREBASE", "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+
+                    // Log and toast
+                    Log.d("FIREBASE TOKEN: ", token);
+
+                    SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, token);
+                    SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN_UPDATED, true);
+
+                });
+
     }
 
     public static Context getContext() {

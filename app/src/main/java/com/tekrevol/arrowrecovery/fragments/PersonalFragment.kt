@@ -1,9 +1,9 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import androidx.appcompat.app.AlertDialog
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment

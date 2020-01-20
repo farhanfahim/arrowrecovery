@@ -101,7 +101,7 @@ class RegisterPagerFragment : BaseFragment() {
 
         txt_login.setOnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
+            baseActivity.addDockableFragment(LoginFragment.newInstance(), true)
         }
 
         btnfb.setOnClickListener {

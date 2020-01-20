@@ -13,14 +13,11 @@ import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.OtpModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_thankyou.*
 import kotlinx.android.synthetic.main.fragment_verify_account.*
 import retrofit2.Call
-import java.io.File
 import java.util.*
 
 class TwoFactorVerification : BaseFragment() {
@@ -83,7 +80,7 @@ class TwoFactorVerification : BaseFragment() {
 
         txtBackToLoginScreen.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
-            baseActivity.addDockableFragment(LoginFragmentt.newInstance(), true)
+            baseActivity.addDockableFragment(LoginFragment.newInstance(), true)
         })
 
         txtSendCode.setOnClickListener {

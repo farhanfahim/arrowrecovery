@@ -194,28 +194,18 @@
 
 
         <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
-            android:layout_width="match_parent"
             android:id="@+id/map"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginBottom="@dimen/x20dp"
+            android:visibility="gone"
             app:corner_radius="@dimen/x10dp">
 
-            <com.jsibbold.zoomage.ZoomageView
+            <ImageView
                 android:id="@+id/imgMap"
-
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x200dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_dummy_map"
-                app:zoomage_animateOnReset="true"
-                app:zoomage_autoCenter="true"
-                app:zoomage_autoResetMode="UNDER"
-                app:zoomage_maxScale="8"
-                app:zoomage_minScale="0.6"
-                app:zoomage_restrictBounds="false"
-                app:zoomage_translatable="true"
-                app:zoomage_zoomable="true" />
+                android:scaleType="centerCrop" />
 
 
         </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
@@ -281,19 +271,18 @@
                 app:typeface="@string/font_medium" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:id="@+id/txtToltalSlot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="(4 Slots availables)"
+                android:text=""
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s14"
                 app:typeface="@string/font_regular" />
 
         </LinearLayout>
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTimeSelection"
             android:layout_width="match_parent"
