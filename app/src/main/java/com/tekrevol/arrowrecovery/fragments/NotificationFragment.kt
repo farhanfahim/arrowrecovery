@@ -6,21 +6,31 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.NotificationAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import kotlinx.android.synthetic.main.fragment_notification.*
+import retrofit2.Call
+import java.util.HashMap
 
 class NotificationFragment : BaseFragment(), OnItemClickListener {
 
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var notificationAdapter: NotificationAdapter
+    var webCall: Call<WebResponse<Any>>? = null
 
     companion object {
 
@@ -112,6 +122,39 @@ class NotificationFragment : BaseFragment(), OnItemClickListener {
             }
 
         }
+    }
+
+
+    private fun getNotification() {
+
+
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = 0
+        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = 0
+
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<DummyModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<DummyModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+
+                arrData.addAll(arrayList)
+                notificationAdapter.notifyDataSetChanged()
+
+
+            }
+
+            override fun onError(`object`: Any?) {
+                if (recyclerViewNotification == null) {
+                    return
+                }
+
+            }
+        })
+
     }
 
 
