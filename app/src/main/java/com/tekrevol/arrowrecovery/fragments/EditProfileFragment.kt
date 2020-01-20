@@ -5,7 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.crashlytics.android.Crashlytics
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
@@ -78,6 +81,7 @@ class EditProfileFragment : BaseFragment() {
             edtKindCompany.visibility = View.GONE
             edtKindCompany.setText("")
         }
+
     }
 
 

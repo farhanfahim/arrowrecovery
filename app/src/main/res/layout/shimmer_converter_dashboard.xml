@@ -121,7 +121,6 @@
                 android:id="@+id/contAddToCart"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginRight="@dimen/x10dp"
                 android:background="@color/material_grey400"
                 app:top_left_corner_radius="@dimen/x10dp">
 

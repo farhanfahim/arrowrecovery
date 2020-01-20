@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,8 +26,8 @@
             android:layout_height="@dimen/x40dp"
             android:checked="false"
             android:padding="@dimen/x10dp"
-            android:src="@drawable/img_selecte_check"
-            android:tint="@color/colorAccent" />
+            android:src="@drawable/greycircle"
+            android:tint="@color/material_grey400" />
 
 
         <LinearLayout
@@ -51,10 +51,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:background="@color/material_grey400"
                     android:maxLines="1"
                     android:minLines="1"
                     android:text="Your orde is arriving soon!"
-                    android:textColor="@color/title_color"
+                    android:textColor="@color/material_grey400"
                     android:textSize="@dimen/s12" />
 
                 <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
@@ -70,16 +71,17 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:id="@+id/txtMessage"
                 android:gravity="center|start"
                 android:maxLines="1"
+                android:background="@color/material_grey400"
                 android:minLines="1"
-                android:text="This is dummy copy. It is not meant to be read."
-                android:textColor="@color/title_color"
+                android:text="This is dummy copy. It is not to be read."
+                android:textColor="@color/material_grey400"
                 android:textSize="@dimen/s12" />
 
 
@@ -102,15 +104,16 @@
                 android:visibility="visible">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:id="@+id/txtTime"
+                    android:id="@+id/txtmantracategory"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:hint="3m"
                     android:padding="5dp"
-                    android:textColor="@color/c_black"
-                    android:textColorHint="@color/c_black"
+                    android:background="@color/material_grey400"
+                    android:textColor="@color/material_grey400"
+                    android:textColorHint="@color/material_grey400"
                     android:textSize="@dimen/s12"
                     app:typeface="@string/font_regular" />
 
@@ -128,4 +131,4 @@
     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>
