@@ -81,9 +81,9 @@ class VerifyFragment : BaseFragment() {
 
     private fun verifycodeAPI() {
         var resetPasswordSendingModel = ResetPasswordSendingModel()
-        resetPasswordSendingModel.verificationCode = inputCode.stringTrimmed
+        resetPasswordSendingModel.verificationCode = edtCode.stringTrimmed
 
-        sharedPreferenceManager.putValue(AppConstants.KEY_CODE, inputCode.stringTrimmed)
+        sharedPreferenceManager.putValue(AppConstants.KEY_CODE, edtCode.stringTrimmed)
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_VERIFY_RESET_CODE, resetPasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

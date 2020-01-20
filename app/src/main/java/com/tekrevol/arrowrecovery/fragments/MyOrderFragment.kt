@@ -57,7 +57,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerViewMyOrder.adapter = myOrderAdapter
         recyclerViewMyOrder.setItemViewType(ShimmerAdapter.ItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_myorder }))
-
+        (recyclerViewMyOrder.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
     }
 
     companion object {

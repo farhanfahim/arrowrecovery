@@ -56,18 +56,22 @@
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s20" />
 
+                <ImageView
+                    android:id="@+id/imgConverter"
+                    android:layout_width="match_parent"
+
+                    android:layout_marginTop="@dimen/x5dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/contHeader"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img1" />
+
             </LinearLayout>
 
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgConverter"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_below="@+id/contHeader"
-            android:scaleType="fitCenter"
-            android:src="@drawable/img1" />
+
 
 
         <LinearLayout

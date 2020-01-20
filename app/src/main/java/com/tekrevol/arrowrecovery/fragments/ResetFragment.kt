@@ -61,11 +61,11 @@ class ResetFragment : BaseFragment() {
 
     private fun resetpasswordAPI() {
 
-        if (!inputNewPass.testValidity()) {
+        if (!edtNewPass.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid new password")
             return
         }
-        if (!inputConfirmPass.testValidity()) {
+        if (!edtConfirmPass.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid confirm password")
             return
         }
@@ -77,10 +77,10 @@ class ResetFragment : BaseFragment() {
         code = sharedPreferenceManager.getString(AppConstants.KEY_CODE)
 
         val resetPasswordSendingModel = ResetPasswordSendingModel()
-        resetPasswordSendingModel.setPassword(inputNewPass.getStringTrimmed())
+        resetPasswordSendingModel.setPassword(edtNewPass.getStringTrimmed())
         resetPasswordSendingModel.setEmail(txtEmail)
         resetPasswordSendingModel.setVerificationCode(code)
-        resetPasswordSendingModel.setPassword(inputConfirmPass.getStringTrimmed())
+        resetPasswordSendingModel.setPassword(edtConfirmPass.getStringTrimmed())
 
         webCall = getBaseWebServices(true).postAPIAnyObject(PATH_RESET_PASSWORD, resetPasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

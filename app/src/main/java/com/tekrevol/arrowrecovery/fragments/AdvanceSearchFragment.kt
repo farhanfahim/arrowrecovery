@@ -82,7 +82,7 @@ class AdvanceSearchFragment : BaseFragment() {
 //        for (carYear in Constants.carYearSelector()) {
 //            spinnerModelArrayList2.add(SpinnerModel(carYear.text))
 //        }
-        serialNumber = inputSerialNumber.toString()
+        serialNumber = edtSerialNumber.toString()
     }
 
     override fun getFragmentLayout(): Int {
@@ -117,7 +117,7 @@ class AdvanceSearchFragment : BaseFragment() {
                     makeId = getMakeId().toString()
                 }
                 year = txtYear.stringTrimmed
-                serialNumber = inputSerialNumber.stringTrimmed
+                serialNumber = edtSerialNumber.stringTrimmed
             }
         })
 
@@ -125,7 +125,7 @@ class AdvanceSearchFragment : BaseFragment() {
             txtYear.text = ""
             txtMake.text = ""
             txtModel.text = ""
-            inputSerialNumber.text = null
+            edtSerialNumber.text = null
 
         }
 

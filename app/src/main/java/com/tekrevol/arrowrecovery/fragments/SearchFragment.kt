@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -77,22 +76,22 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-        val resId = R.anim.layout_animation_fall_bottom
-        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
-        recyclerViewSearchList.layoutAnimation = animation
+//        val resId = R.anim.layout_animation_fall_bottom
+//        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+//        recyclerViewSearchList.layoutAnimation = animation
         recyclerViewSearchList.adapter = searchAdapter
 
         rvSearch.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (rvSearch.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-        val resId2 = R.anim.layout_animation_fall_bottom
-        val animation2 = AnimationUtils.loadLayoutAnimation(context, resId2)
-        rvSearch.layoutAnimation = animation2
+//        val resId2 = R.anim.layout_animation_fall_bottom
+//        val animation2 = AnimationUtils.loadLayoutAnimation(context, resId2)
+//        rvSearch.layoutAnimation = animation2
         rvSearch.adapter = searchBarShimmerAdapter
         rvSearch.setItemViewType(ShimmerAdapter.ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_searchbar })
 
         /*if (onCreated) {
             return;
-        }*/txtSearch.addTextChangedListener(object : TextWatcher {
+        }*/edtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
             }
@@ -102,7 +101,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable) {
-                    text = txtSearch.text.toString()
+                    text = edtSearch.text.toString()
                     arrDataSearchBar.clear()
                     if (text!! == ""){
                         Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
@@ -151,7 +150,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun setListeners() {
 
-        image.setOnClickListener(View.OnClickListener {
+        imgProfile.setOnClickListener(View.OnClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {

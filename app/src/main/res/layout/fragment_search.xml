@@ -17,7 +17,7 @@
 
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/imgProfile"
             android:layout_width="@dimen/x40dp"
             android:layout_height="@dimen/x40dp"
             android:layout_marginLeft="@dimen/x5dp"
@@ -40,7 +40,7 @@
 
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:id="@+id/txtSearch"
+                android:id="@+id/edtSearch"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x10dp"

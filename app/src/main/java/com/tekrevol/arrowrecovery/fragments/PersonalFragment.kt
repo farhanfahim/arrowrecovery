@@ -10,7 +10,6 @@ import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
-import kotlinx.android.synthetic.main.fragment_editprofile.radio_btn_company
 import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
 import kotlinx.android.synthetic.main.fragment_personal.*
 
@@ -52,14 +51,14 @@ class PersonalFragment : BaseFragment() {
             }
         }
 
-        radio_btn_individual.setOnClickListener {
-            inputCompanyName.visibility = View.GONE
-            inputKindCompany.visibility = View.GONE
+        radioBtnIndividual.setOnClickListener {
+            edtCompanyName.visibility = View.GONE
+            edtKindCompany.visibility = View.GONE
         }
 
-        radio_btn_company.setOnClickListener {
-            inputCompanyName.visibility = View.VISIBLE
-            inputKindCompany.visibility = View.VISIBLE
+        radioBtnCompany.setOnClickListener {
+            edtCompanyName.visibility = View.VISIBLE
+            edtKindCompany.visibility = View.VISIBLE
         }
     }
 

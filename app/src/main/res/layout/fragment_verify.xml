@@ -52,7 +52,7 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 app:typeface="@string/font_light"
-                android:id="@+id/inputCode"
+                android:id="@+id/edtCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Code"

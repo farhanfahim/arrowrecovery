@@ -19,7 +19,7 @@ class AccountFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = AccountFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }

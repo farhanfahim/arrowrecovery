@@ -183,7 +183,7 @@
                     android:layout_margin="@dimen/s5"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:id="@+id/inputSerialNumber"
+                    android:id="@+id/edtSerialNumber"
                     android:hint="Enter Serial Number..."
                     android:padding="10dp"
                     android:singleLine="true"

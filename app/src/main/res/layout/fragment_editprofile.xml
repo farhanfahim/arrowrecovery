@@ -52,7 +52,7 @@
                                 app:civ_border_width="@dimen/x3dp" />
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:id="@+id/image"
+                                android:id="@+id/imgProfile"
                                 android:layout_width="110dp"
                                 android:layout_height="110dp"
                                 android:layout_centerInParent="true"
@@ -137,7 +137,7 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                            android:id="@+id/inputFirstName"
+                            android:id="@+id/edtFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="First Name"
@@ -157,7 +157,7 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                            android:id="@+id/inputLastName"
+                            android:id="@+id/edtLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Last Name"
@@ -178,7 +178,7 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radio_btn_company"
+                            android:id="@+id/radioBtnCompany"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
@@ -188,7 +188,7 @@
 
                         <RadioButton
 
-                            android:id="@+id/radio_btn_individual"
+                            android:id="@+id/radioBtnIndividual"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -206,7 +206,7 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                            android:id="@+id/inputCompany"
+                            android:id="@+id/edtCompany"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Company Name"
@@ -230,7 +230,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Kind of Company"
                             android:inputType="text"
-                            android:id="@+id/inputKindCompany"
+                            android:id="@+id/edtKindCompany"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -262,7 +262,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Phone Number"
                             android:inputType="number"
-                            android:id="@+id/inputPhoneNo"
+                            android:id="@+id/edtPhoneNo"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -321,7 +321,7 @@
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/inputAddress"
+                            android:id="@+id/edtAddress"
                             android:hint="Address"
                             android:inputType="text"
                             android:singleLine="true"
@@ -341,7 +341,7 @@
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/inputZipCode"
+                            android:id="@+id/edtZipCode"
                             android:hint="Zip Code"
                             android:inputType="text"
                             android:singleLine="true"
@@ -363,7 +363,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="City"
-                            android:id="@+id/inputCity"
+                            android:id="@+id/edtCity"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
@@ -427,7 +427,7 @@
                             android:layout_height="wrap_content"
                             android:hint="Country"
                             android:inputType="text"
-                            android:id="@+id/inputCountry"
+                            android:id="@+id/edtCountry"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"

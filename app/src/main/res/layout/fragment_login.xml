@@ -65,7 +65,7 @@
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:id="@+id/inputEmail"
+                android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username/Email"
@@ -93,7 +93,7 @@
             app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                android:id="@+id/inputPassword"
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"

@@ -156,7 +156,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     private fun getCollectionSelector() {
 
 
-        if (!arrData.isEmpty()) {
+        if (arrData.isNotEmpty()) {
 
 
             val queryMap = HashMap<String, Any>()
@@ -268,7 +268,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                         override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
 
                             quantity = quantity!! + 1
-                            arrData.get(position).setQuantity(quantity!!)
+                            arrData[position].quantity = quantity!!
                             cartAdapter.notifyItemChanged(position)
                         }
 
@@ -290,7 +290,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                         override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
 
                             quantity = quantity!! - 1
-                            arrData.get(position).setQuantity(quantity!!)
+                            arrData[position].quantity = quantity!!
                             cartAdapter.notifyItemChanged(position)
                         }
 
