@@ -32,18 +32,17 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     app:typeface="@string/font_regular"
+
                     android:id="@+id/txtMake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/x5dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
                     android:background="@color/material_grey400"
+                    android:maxLines="1"
+                    android:text=""
                     android:textSize="@dimen/s14"
-                    android:paddingBottom="@dimen/s5"
-                    android:paddingTop="@dimen/s5"
-                    android:textAllCaps="true"
-                    android:textColor="@color/title_color" />
+                    android:textAllCaps="true" />
 
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
@@ -51,21 +50,20 @@
                     android:id="@+id/txtModel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/x5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text=""
                     android:background="@color/material_grey400"
-                    android:textColor="@color/title_color"
                     android:textSize="@dimen/s20" />
 
                 <ImageView
                     android:id="@+id/imgConverter"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/x5dp"
                     android:layout_height="100dp"
                     android:background="@color/material_grey400"
                     android:layout_below="@+id/contHeader"
-                    android:scaleType="centerInside"
-                    />
+                    android:scaleType="fitCenter" />
 
             </LinearLayout>
 
@@ -98,8 +96,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="$ "
-                    android:visibility="gone"
                     android:textSize="@dimen/s14"
+                    android:visibility="gone"
                     android:textAllCaps="true"
                     android:textColor="@color/title_color" />
 
@@ -113,7 +111,7 @@
                     android:visibility="gone"
                     android:maxLines="1"
                     android:textSize="@dimen/s14"
-                    android:text="----"
+                    android:text="541.25"
                     android:textAllCaps="true"
                     android:textColor="@color/title_color" />
 
@@ -122,8 +120,8 @@
             <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
                 android:id="@+id/contAddToCart"
                 android:layout_width="60dp"
-                android:layout_marginRight="@dimen/x10dp"
                 android:layout_height="60dp"
+                android:layout_marginRight="@dimen/x10dp"
                 android:background="@color/material_grey400"
                 app:top_left_corner_radius="@dimen/x10dp">
 
@@ -131,7 +129,7 @@
                     android:layout_width="@dimen/x25dp"
                     android:layout_height="@dimen/x25dp"
                     android:layout_centerInParent="true"
-                    android:background="@color/material_grey400" />
+                    android:src="@drawable/cart" />
 
             </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 

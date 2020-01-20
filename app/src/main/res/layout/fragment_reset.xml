@@ -46,7 +46,7 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 app:typeface="@string/font_light"
-                android:id="@+id/inputNewPass"
+                android:id="@+id/edtNewPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="New Password"
@@ -74,7 +74,7 @@
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:id="@+id/inputConfirmPass"
+                android:id="@+id/edtConfirmPass"
                 android:textColor="@color/title_color"
                 android:textColorHint="@color/txtGrey"
                 android:textSize="@dimen/s14" />

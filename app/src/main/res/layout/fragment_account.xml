@@ -28,7 +28,7 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     app:typeface="@string/font_light"
-                    android:id="@+id/inputEmail"
+                    android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
-                    android:id="@+id/inputPasswordReg"
+                    android:id="@+id/edtPasswordReg"
                     android:inputType="textPassword"
                     android:maxLength="50"
                     android:singleLine="true"
@@ -72,7 +72,7 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:layout_width="match_parent"
-                    android:id="@+id/inputConfirmPassReg"
+                    android:id="@+id/edtConfirmPassReg"
                     android:layout_height="wrap_content"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"

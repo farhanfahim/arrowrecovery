@@ -15,9 +15,8 @@ import com.tekrevol.arrowrecovery.models.sending_model.LoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_login.inputEmail
+import kotlinx.android.synthetic.main.fragment_login.edtEmail
 import retrofit2.Call
 
 
@@ -74,22 +73,22 @@ class LoginFragmentt : BaseFragment() {
 
     private fun loginUpAPI() {
 
-        if (!inputEmail.testValidity()) {
+        if (!edtEmail.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid email address")
             return
         }
-        if (!inputPassword.testValidity()) {
+        if (!edtPassword.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid password")
             return
         }
 
-        if (inputEmail.testValidity() && inputPassword.testValidity()) {
+        if (edtEmail.testValidity() && edtPassword.testValidity()) {
             var loginSendingModel = LoginSendingModel()
-            loginSendingModel.email = inputEmail.stringTrimmed
+            loginSendingModel.email = edtEmail.stringTrimmed
             loginSendingModel.deviceToken = "abc"
             loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
-            loginSendingModel.password = inputPassword.stringTrimmed
-            var email: String = inputEmail.stringTrimmed
+            loginSendingModel.password = edtPassword.stringTrimmed
+            var email: String = edtEmail.stringTrimmed
             //var phone:String = inputPhoneNo.stringTrimmed
             webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {

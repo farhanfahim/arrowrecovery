@@ -102,7 +102,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         app:typeface="@string/font_regular"
-                        android:text="7743 items found"
+                        android:text="0 item found"
                         android:textColor="@color/title_grey"
                         android:textSize="@dimen/s16" />
 

@@ -12,7 +12,6 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import java.util.*
 
@@ -67,16 +66,16 @@ class ForgotFragment : BaseFragment() {
 
     private fun forgotPasswordAPI() {
 
-        if (!inputEmail.testValidity()) {
+        if (!edtEmail.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid email address")
             return
         }
 
-        sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_EMAIL, inputEmail.getStringTrimmed())
+        sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_EMAIL, edtEmail.getStringTrimmed())
         // key , fileTypeValue
         // key , fileTypeValue
         val query: MutableMap<String, Any> = HashMap()
-        query[WebServiceConstants.Q_PARAM_EMAIL] = inputEmail.getStringTrimmed()
+        query[WebServiceConstants.Q_PARAM_EMAIL] = edtEmail.getStringTrimmed()
 
         webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_FORGET_PASSWORD, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

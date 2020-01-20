@@ -27,7 +27,7 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    android:id="@+id/inputAddress"
+                    android:id="@+id/edtAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Zip Code"
                     android:inputType="text"
-                    android:id="@+id/inputZipCode"
+                    android:id="@+id/edtZipCode"
                     android:maxLength="10"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
-                    android:id="@+id/inputCity"
+                    android:id="@+id/edtCity"
                     android:inputType="text"
                     android:maxLength="30"
                     android:singleLine="true"
@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Country"
                     android:inputType="text"
-                    android:id="@+id/inputCountry"
+                    android:id="@+id/edtCountry"
                     android:maxLength="30"
                     android:singleLine="true"
                     android:textColor="@color/title_color"

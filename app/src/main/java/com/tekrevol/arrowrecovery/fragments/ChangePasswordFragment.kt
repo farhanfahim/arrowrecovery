@@ -43,8 +43,8 @@ class ChangePasswordFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        inputNewPass.addValidator(PasswordValidation())
-        inputConfirmPass.addValidator(PasswordValidation(inputNewPass))
+        edtNewPass.addValidator(PasswordValidation())
+        edtConfirmPass.addValidator(PasswordValidation(edtNewPass))
     }
 
     override fun setTitlebar(titleBar: TitleBar) {
@@ -72,24 +72,24 @@ class ChangePasswordFragment : BaseFragment() {
     private fun changePassApi() {
 
 
-        if (!inputCurrentPass.testValidity()) {
+        if (!edtCurrentPass.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid current password")
             return
         }
-        if (!inputNewPass.testValidity()) {
+        if (!edtNewPass.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid new password")
             return
         }
-        if (!inputConfirmPass.testValidity()) {
+        if (!edtConfirmPass.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid confirm password")
             return
         }
 
         var changePasswordSendingModel = ChangePasswordSendingModel()
         changePasswordSendingModel.authorization = token
-        changePasswordSendingModel.currentPassword = inputCurrentPass.stringTrimmed
-        changePasswordSendingModel.password = inputNewPass.stringTrimmed
-        changePasswordSendingModel.passwordConfirmation = inputConfirmPass.stringTrimmed
+        changePasswordSendingModel.currentPassword = edtCurrentPass.stringTrimmed
+        changePasswordSendingModel.password = edtNewPass.stringTrimmed
+        changePasswordSendingModel.passwordConfirmation = edtConfirmPass.stringTrimmed
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_CHANGE_PASSWORD, changePasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any>) {

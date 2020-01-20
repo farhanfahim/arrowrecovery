@@ -26,15 +26,15 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_address.inputAddress
-import kotlinx.android.synthetic.main.fragment_address.inputCity
-import kotlinx.android.synthetic.main.fragment_address.inputZipCode
+import kotlinx.android.synthetic.main.fragment_address.edtAddress
+import kotlinx.android.synthetic.main.fragment_address.edtCity
+import kotlinx.android.synthetic.main.fragment_address.edtZipCode
 import kotlinx.android.synthetic.main.fragment_address.txtState
 import kotlinx.android.synthetic.main.fragment_contact.*
-import kotlinx.android.synthetic.main.fragment_contact.inputPhoneNo
+import kotlinx.android.synthetic.main.fragment_contact.edtPhoneNo
 import kotlinx.android.synthetic.main.fragment_personal.*
-import kotlinx.android.synthetic.main.fragment_personal.radio_btn_company
-import kotlinx.android.synthetic.main.fragment_personal.radio_btn_individual
+import kotlinx.android.synthetic.main.fragment_personal.radioBtnCompany
+import kotlinx.android.synthetic.main.fragment_personal.radioBtnIndividual
 import kotlinx.android.synthetic.main.fragment_personal.txtTitle
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
@@ -146,25 +146,25 @@ class RegisterPagerFragment : BaseFragment() {
 
         val editProfileSendingModel = EditProfileSendingModel()
 
-        if (radio_btn_company.isChecked) {
+        if (radioBtnCompany.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_COMPANY
         }
-        if (radio_btn_individual.isChecked) {
+        if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
 
         editProfileSendingModel.email = (email)
-        editProfileSendingModel.phone = (inputPhoneNo.stringTrimmed)
-        editProfileSendingModel.firstName = (inputFirstname.stringTrimmed)
-        editProfileSendingModel.lastName = (inputLastname.stringTrimmed)
-        editProfileSendingModel.address = (inputAddress.stringTrimmed)
+        editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
+        editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
+        editProfileSendingModel.address = (edtAddress.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
-        editProfileSendingModel.zipCode = (inputZipCode.stringTrimmed)
-        editProfileSendingModel.company = (inputCompanyName.stringTrimmed)
-        editProfileSendingModel.name = (inputFirstname.stringTrimmed)
+        editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
+        editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
+        editProfileSendingModel.name = (edtFirstname.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
-        editProfileSendingModel.kindOfCompany = inputKindCompany.stringTrimmed
-        editProfileSendingModel.city = (inputCity.stringTrimmed)
+        editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
+        editProfileSendingModel.city = (edtCity.stringTrimmed)
 
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
@@ -179,8 +179,8 @@ class RegisterPagerFragment : BaseFragment() {
             editProfileSendingModel.title = AppConstants.TITLE_MS
         }
 
-        var email: String = inputEmail.stringTrimmed
-        var phone: String = inputPhoneNo.stringTrimmed
+        var email: String = edtEmail.stringTrimmed
+        var phone: String = edtPhoneNo.stringTrimmed
 
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -232,18 +232,18 @@ class RegisterPagerFragment : BaseFragment() {
     private fun signUpApi() {
 
 
-        if (!inputAddress.testValidity()) {
+        if (!edtAddress.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your address")
             return
 
         }
 
-        if (!inputZipCode.testValidity()) {
+        if (!edtZipCode.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter zipCode")
             return
 
         }
-        if (!inputCity.testValidity()) {
+        if (!edtCity.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your city")
             return
         }
@@ -258,28 +258,28 @@ class RegisterPagerFragment : BaseFragment() {
 
         var signUpSendingModel = SignupSendingModel()
         signUpSendingModel.deviceToken = ("abc")
-        signUpSendingModel.name = (inputUsername.stringTrimmed)
+        signUpSendingModel.name = (edtUsername.stringTrimmed)
         signUpSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
-        signUpSendingModel.email = (inputEmail.stringTrimmed)
-        var email: String = inputEmail.stringTrimmed
-        var phone: String = inputPhoneNo.stringTrimmed
-        signUpSendingModel.phone = (inputPhoneNo.stringTrimmed)
-        signUpSendingModel.firstName = (inputFirstname.stringTrimmed)
-        signUpSendingModel.lastName = (inputLastname.stringTrimmed)
-        signUpSendingModel.address = (inputAddress.stringTrimmed)
-        signUpSendingModel.zipCode = (inputZipCode.stringTrimmed)
-        signUpSendingModel.company = (inputCompanyName.stringTrimmed)
+        signUpSendingModel.email = (edtEmail.stringTrimmed)
+        var email: String = edtEmail.stringTrimmed
+        var phone: String = edtPhoneNo.stringTrimmed
+        signUpSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        signUpSendingModel.firstName = (edtFirstname.stringTrimmed)
+        signUpSendingModel.lastName = (edtLastName.stringTrimmed)
+        signUpSendingModel.address = (edtAddress.stringTrimmed)
+        signUpSendingModel.zipCode = (edtZipCode.stringTrimmed)
+        signUpSendingModel.company = (edtCompanyName.stringTrimmed)
         signUpSendingModel.stateId = getIdFromSpinner()
-        signUpSendingModel.city = (inputCity.stringTrimmed)
-        signUpSendingModel.password = (inputPasswordReg.stringTrimmed)
-        signUpSendingModel.passwordConfirmation = (inputConfirmPassReg.stringTrimmed)
-        signUpSendingModel.kindOfCompany = inputKindCompany.stringTrimmed
+        signUpSendingModel.city = (edtCity.stringTrimmed)
+        signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
+        signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
+        signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         signUpSendingModel.isCompleted = (1)
 
-        if (radio_btn_company.isChecked) {
+        if (radioBtnCompany.isChecked) {
             signUpSendingModel.userType = AppConstants.USER_TYPE_COMPANY
         }
-        if (radio_btn_individual.isChecked) {
+        if (radioBtnIndividual.isChecked) {
             signUpSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
 
@@ -341,18 +341,18 @@ class RegisterPagerFragment : BaseFragment() {
     private fun contactDetails(positionToSelect: Int) {
 
         if (fragmentName == FragmentName.SimpleLogin) {
-            if (!inputUsername.testValidity()) {
+            if (!edtUsername.testValidity()) {
                 UIHelper.showAlertDialog(context, "Please enter user name")
                 return
             }
         }
 
-        if (!inputPhoneNo.testValidity()) {
+        if (!edtPhoneNo.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your phone no")
             return
         }
         val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Is " + inputPhoneNo.stringTrimmed + "your valid phone no? ")
+        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + "your valid phone no? ")
                 .setTitle("Alert")
                 .setCancelable(true)
                 .setNegativeButton("No"
@@ -373,25 +373,25 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
-        if (radio_btn_company.isChecked || radio_btn_individual.isChecked) {
+        if (radioBtnCompany.isChecked || radioBtnIndividual.isChecked) {
         } else {
             UIHelper.showAlertDialog(context, "Please select type")
             return
         }
 
-        if (radio_btn_company.isChecked) {
-            if (inputCompanyName.stringTrimmed.isEmpty()) {
+        if (radioBtnCompany.isChecked) {
+            if (edtCompanyName.stringTrimmed.isEmpty()) {
                 UIHelper.showAlertDialog(context, "Please enter your company name")
                 return
             }
         }
 
 
-        if (!inputFirstname.testValidity()) {
+        if (!edtFirstname.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter first name")
             return
         }
-        if (!inputLastname.testValidity()) {
+        if (!edtLastName.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter last name")
             return
         }
@@ -403,20 +403,20 @@ class RegisterPagerFragment : BaseFragment() {
     private fun accountDetails(positionToSelect: Int) {
 
 
-        if (!inputEmail.testValidity()) {
+        if (!edtEmail.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your email")
             return
         }
 
-        inputPasswordReg.addValidator(PasswordValidation())
-        inputConfirmPassReg.addValidator(PasswordValidation(inputPasswordReg))
+        edtPasswordReg.addValidator(PasswordValidation())
+        edtConfirmPassReg.addValidator(PasswordValidation(edtPasswordReg))
 
-        if (!inputPasswordReg.testValidity()) {
+        if (!edtPasswordReg.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid password")
             return
         }
 
-        if (!inputConfirmPassReg.testValidity()) {
+        if (!edtConfirmPassReg.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter valid confirm password")
             return
         }

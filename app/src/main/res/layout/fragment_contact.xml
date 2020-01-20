@@ -23,7 +23,7 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    android:id="@+id/inputUsername"
+                    android:id="@+id/edtUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
@@ -49,7 +49,7 @@
                     android:hint="Phone Number"
                     android:singleLine="true"
                     android:inputType="phone"
-                    android:id="@+id/inputPhoneNo"
+                    android:id="@+id/edtPhoneNo"
                     app:typeface="@string/font_light"
                     android:maxLength="50"
                     android:textColor="@color/title_color"
@@ -73,7 +73,7 @@
                     android:lines="5"
                     android:maxLines="5"
                     android:gravity="start"
-                    android:id="@+id/inputComment"
+                    android:id="@+id/edtComment"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14" />
