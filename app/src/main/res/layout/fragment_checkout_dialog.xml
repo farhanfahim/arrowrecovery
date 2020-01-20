@@ -113,13 +113,11 @@
                     android:textColor="@color/txtBlack"
                     android:textSize="@dimen/s16" />
 
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/x5dp"
                     android:src="@drawable/img_location" />
-
 
             </LinearLayout>
 
@@ -255,10 +253,12 @@
 
 
         <LinearLayout
+            android:id="@+id/txtPickup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone">
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="wrap_content"
@@ -283,6 +283,7 @@
                 app:typeface="@string/font_regular" />
 
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTimeSelection"
             android:layout_width="match_parent"

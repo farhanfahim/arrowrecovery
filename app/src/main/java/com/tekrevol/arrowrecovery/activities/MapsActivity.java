@@ -10,9 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.tekrevol.arrowrecovery.R;
-import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper;
-import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,6 +18,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tekrevol.arrowrecovery.R;
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper;
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +31,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static final int MAPS_ACTIVITY_RESULT = 8900;
     public static final String KEY_LATITUDE = "lat";
     public static final String KEY_LONGITUTUDE = "lng";
-
-    @BindView(R.id.imgSearch)
-    ImageView imgSearch;
-    @BindView(R.id.imgDone)
     FloatingActionButton imgDone;
+    ImageView imgSearch;
     private GoogleMap mMap;
     GooglePlaceHelper googlePlaceHelper;
 
@@ -48,7 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
 
-
+        imgDone = findViewById(R.id.imgDone);
+        imgSearch = findViewById(R.id.imgSearch);
         marker = new MarkerOptions();
         marker.draggable(true);
 

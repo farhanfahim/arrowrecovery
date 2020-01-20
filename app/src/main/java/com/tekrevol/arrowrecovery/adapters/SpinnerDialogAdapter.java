@@ -88,16 +88,16 @@ public class SpinnerDialogAdapter extends RecyclerView.Adapter<SpinnerDialogAdap
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.radioButton)
         RadioButton radioButton;
-        @BindView(R.id.txtChoice)
         AnyTextView txtChoice;
-        @BindView(R.id.contParentLayout)
         LinearLayout contParentLayout;
 
         ViewHolder(View view) {
-
             super(view);
+            radioButton = view.findViewById(R.id.radioButton);
+            txtChoice = view.findViewById(R.id.txtChoice);
+            contParentLayout = view.findViewById(R.id.contParentLayout);
+
             ButterKnife.bind(this, view);
         }
     }

@@ -40,14 +40,10 @@ public class SpinnerDialogFragment extends DialogFragment {
     String title;
     Unbinder unbinder;
     SpinnerDialogAdapter adapter;
-    @BindView(R.id.recyclerView)
+
     RecyclerView recyclerView;
-    @BindView(R.id.txtOK)
-    FButton txtOK;
-    @BindView(R.id.txtTitle)
     TextView txtTitle;
-    @BindView(R.id.btnClose)
-    ImageView btnClose;
+    FButton txtOK;
 
 
     private ArrayList<SpinnerModel> arrData;
@@ -98,6 +94,10 @@ public class SpinnerDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_spinner_popup, container);
         unbinder = ButterKnife.bind(this, view);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        txtOK = view.findViewById(R.id.txtOK);
+        txtTitle = view.findViewById(R.id.txtTitle);
+
         return view;
     }
 
@@ -125,6 +125,16 @@ public class SpinnerDialogFragment extends DialogFragment {
 
 
     private void setListeners() {
+
+        txtOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onSpinnerOKPressedListener != null) {
+                    onSpinnerOKPressedListener.onItemSelect(null);
+                }
+                dismiss();
+            }
+        });
 /*
         edtSearchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -177,17 +187,5 @@ public class SpinnerDialogFragment extends DialogFragment {
         unbinder.unbind();
     }
 
-
-    @OnClick({R.id.txtOK})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.txtOK:
-                if (onSpinnerOKPressedListener != null) {
-                    onSpinnerOKPressedListener.onItemSelect(null);
-                }
-                this.dismiss();
-                break;
-        }
-    }
 }
 

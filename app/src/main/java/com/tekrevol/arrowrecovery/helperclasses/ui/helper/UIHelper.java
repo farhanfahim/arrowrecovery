@@ -714,42 +714,6 @@ public class UIHelper {
         dialogFragment.show(fm, null);
     }
 
-    public static void showSpinnerDialog1(FragmentManager fm, final ArrayList<SpinnerModel> arrData, String title, final TextView textView,
-                                         OnSpinnerItemClickListener onSpinnerItemClick, OnSpinnerOKPressedListener onSpinnerOKPressedListener, final IntWrapper positionToScroll) {
-        final SpinnerDialogFragment dialogFragment;
-
-        String s = GsonFactory.getSimpleGson().toJson(arrData);
-        Type type = new TypeToken<ArrayList<SpinnerModel>>() {
-        }.getType();
-        final ArrayList<SpinnerModel> listCopy = GsonFactory.getSimpleGson().fromJson(s, type);
-
-        if (onSpinnerItemClick == null) {
-            dialogFragment = SpinnerDialogFragment.newInstance(title, listCopy, (position, object, adapter) -> {
-                if (object instanceof SpinnerModel) {
-                    textView.setText(((SpinnerModel) object).getText());
-                    for (SpinnerModel arrDatum : listCopy) {
-                        arrDatum.setSelected(false);
-                    }
-                    listCopy.get(position).setSelected(true);
-//                        adapter.getArrDataMake().get(position).setSelected(true);
-
-                    for (SpinnerModel arrDatum : arrData) {
-                        arrDatum.setSelected(false);
-                    }
-                    arrData.get(position).setSelected(true);
-//                        adapter.getArrDataMake().get(position).setSelected(true);
-
-
-                    adapter.notifyDataSetChanged();
-                    positionToScroll.value = position;
-                }
-            }, onSpinnerOKPressedListener, positionToScroll.value);
-        } else {
-            dialogFragment = SpinnerDialogFragment.newInstance(title, listCopy, onSpinnerItemClick, onSpinnerOKPressedListener, positionToScroll.value);
-        }
-        dialogFragment.show(fm, null);
-    }
-
 
     public static GenericDialogFragment genericPopUp(BaseActivity activity, GenericDialogFragment genericDialogFragment, String title, String message, String btn1Text, String btn2Text, GenericClickableInterface btn1Interface, GenericClickableInterface btnbtn2Interface, boolean isCancelable, boolean isShow) {
         genericDialogFragment.setTitle(title);

@@ -126,6 +126,10 @@ public class AppConstants {
 
     public static final int  STATUS_RETURNED = 80;
 
+    public static final int  DELIVERED = 10;
+
+    public static final int  PICKUP = 80;
+
 
 
     /**

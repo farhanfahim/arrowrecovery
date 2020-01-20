@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 
 import com.tekrevol.arrowrecovery.activities.MapsActivity;
@@ -188,7 +190,7 @@ public class GooglePlaceHelper {
 
     public static GoogleAddressModel getAddress(Context context, double LATITUDE, double LONGITUDE) {
 
-        GoogleAddressModel googleAddressModel = new GoogleAddressModel("", "", "", "", "", "");
+        GoogleAddressModel googleAddressModel = new GoogleAddressModel("", "", "", "", "", "", LATITUDE, LONGITUDE);
 
         //Set AddressFragment
         try {
@@ -205,7 +207,7 @@ public class GooglePlaceHelper {
                 String streetName = addresses.get(0).getFeatureName(); // Only if available else return NULL
 
 
-                googleAddressModel = new GoogleAddressModel(address, city, state, country, postalCode, streetName);
+                googleAddressModel = new GoogleAddressModel(address, city, state, country, postalCode, streetName, LATITUDE, LONGITUDE);
 
                 Log.d(TAG, "getAddress:  address -" + address);
                 Log.d(TAG, "getAddress:  city -" + city);
@@ -233,17 +235,20 @@ public class GooglePlaceHelper {
         private String country;
         private String postalCode;
         private String streetName;
+        private double LATITUDE;
+        private double LONGITUDE;
 
 
-        public GoogleAddressModel(String address, String city, String state, String country, String postalCode, String streetName) {
+        public GoogleAddressModel(String address, String city, String state, String country, String postalCode, String streetName, double LATITUDE, double LONGITUDE) {
             this.address = address;
             this.city = city;
             this.state = state;
             this.country = country;
             this.postalCode = postalCode;
             this.streetName = streetName;
+            this.LATITUDE = LATITUDE;
+            this.LONGITUDE = LONGITUDE;
         }
-
 
         public String getAddress() {
             return address == null ? "" : address;
@@ -267,6 +272,22 @@ public class GooglePlaceHelper {
 
         public String getStreetName() {
             return streetName == null ? "" : streetName;
+        }
+
+        public double getLATITUDE() {
+            return LATITUDE;
+        }
+
+        public void setLATITUDE(double LATITUDE) {
+            this.LATITUDE = LATITUDE;
+        }
+
+        public double getLONGITUDE() {
+            return LONGITUDE;
+        }
+
+        public void setLONGITUDE(double LONGITUDE) {
+            this.LONGITUDE = LONGITUDE;
         }
     }
 

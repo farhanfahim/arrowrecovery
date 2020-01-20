@@ -86,8 +86,7 @@ public class WebServiceConstants {
     public static final String PATH_CHANGE_PASSWORD = "change-password";
     public static final String PATH_RESENDOTP = "resend-otp";
     public static final String PATH_VERIFYOTP = "verify-otp";
-    public static final String PATH_ORDERPRODUCTS = "orderModel-products";
-    public static final String PATH_ORDER_PRODUCTS_SLASH = "orderModel-products/";
+    public static final String PATH_ORDERPRODUCTS = "order-products";
     public static final String PATH_ORDERS = "orders";
     public static final String PATH_COLLECTIONCENTER = "collection-centers";
     public static final String PATH_NOTIFICATIONS = "notifications";
@@ -127,8 +126,8 @@ public class WebServiceConstants {
     public static final String Q_MODEL_ID = "model_id";
     public static final String Q_ORDER_ID = "order_id";
     public static final String Q_FEATURED = "is_featured";
-    public static final String Q_LAT = "is_featured";
-    public static final String Q_LONG = "is_featured";
+    public static final String Q_LAT = "latitude";
+    public static final String Q_LONG = "longitude";
     public static final String Q_WITH_ORDER_PRODUCTS = "with_order_products";
 
 
