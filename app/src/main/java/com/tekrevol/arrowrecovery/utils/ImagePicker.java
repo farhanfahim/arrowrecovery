@@ -174,7 +174,7 @@ public final class ImagePicker {
 
     /**
      * Called after launching the picker with the same values of Activity.getImageFromResult
-     * in order to resolve the result and get the image.
+     * in orderModel to resolve the result and get the image.
      *
      * @param context             context.
      * @param requestCode         used to identify the pick image action.

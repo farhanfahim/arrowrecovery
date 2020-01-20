@@ -10,13 +10,12 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
-import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
 /**
  */
-class OrderDetailShimmerAdapter(private val activity: Context, private val arrData: List<OrderProduct>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
+class OrderDetailShimmerAdapter(private val activity: Context, private val arrData: List<OrderProductModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
@@ -41,7 +40,7 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
 
     }
 
-    private fun setListener(holder: ViewHolder, model: OrderProduct?) {
+    private fun setListener(holder: ViewHolder, model: OrderProductModel?) {
     }
 
     override fun getItemCount(): Int {
@@ -65,14 +64,14 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
         var txtQtyAndPrice: AnyTextView? = view.findViewById(R.id.txtQtyAndPrice)
         var txtQuality: AnyTextView? = view.findViewById(R.id.txtQuality)
         var txtTotalPrice: AnyTextView? = view.findViewById(R.id.txtTotalPrice)
-        var model: OrderProduct? = null
+        var model: OrderProductModel? = null
 
         /**
          * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
          * ViewHolder when Item is loaded.
          */
 
-        fun bindTo(model: OrderProduct?, context: Context) {
+        fun bindTo(model: OrderProductModel?, context: Context) {
             this.model = model
 
             this.model?.let {

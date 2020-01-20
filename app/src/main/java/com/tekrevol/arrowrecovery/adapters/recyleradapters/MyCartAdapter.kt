@@ -6,20 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
-import com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
-import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
-import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
-class MyCartAdapter(private val activity: Context, private val arrData: List<OrderProduct>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
+class MyCartAdapter(private val activity: Context, private val arrData: List<OrderProductModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
@@ -44,7 +38,7 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
 
     }
 
-    private fun setListener(holder: ViewHolder, model: OrderProduct?) {
+    private fun setListener(holder: ViewHolder, model: OrderProductModel?) {
         holder.imgSelect.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
         holder.contSelectQuality.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
         holder.btnSubtract.setOnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model, v, CartAdapter::class.java.simpleName) }
@@ -75,9 +69,9 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
         val edtQuantity = view.findViewById<AnyTextView>(R.id.edtQuantityCart)
         val txtPrice = view.findViewById<AnyTextView>(R.id.txtPrice)
         val contSelectQuality = view.findViewById<LinearLayout>(R.id.contSelectQuality)
-        var model: OrderProduct? = null
+        var model: OrderProductModel? = null
 
-        fun bindTo(model: OrderProduct?, context: Context, position: Int) {
+        fun bindTo(model: OrderProductModel?, context: Context, position: Int) {
             this.model = model
 
             this.model?.let {

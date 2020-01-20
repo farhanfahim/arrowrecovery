@@ -12,7 +12,7 @@ public class ProductDetailModel {
 
     @Expose
     @SerializedName("vehicle_model")
-    private VehicleModelEntity vehicleModel;
+    private VehicleModel vehicleModel;
     @Expose
     @SerializedName("attachments")
     private List<Attachments> attachments;
@@ -80,11 +80,11 @@ public class ProductDetailModel {
         this.feature_image_url = feature_image_url;
     }
 
-    public VehicleModelEntity getVehicleModel() {
+    public VehicleModel getVehicleModel() {
         return vehicleModel;
     }
 
-    public void setVehicleModel(VehicleModelEntity vehicleModel) {
+    public void setVehicleModel(VehicleModel vehicleModel) {
         this.vehicleModel = vehicleModel;
     }
 

@@ -6,7 +6,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 import java.util.List;
 
-public class Order {
+public class OrderModel {
 
     @Expose
     @SerializedName("product_count")
@@ -58,11 +58,11 @@ public class Order {
 
     @Expose
     @SerializedName("order_products")
-    private List<OrderProduct> orderProducts;
+    private List<OrderProductModel> orderProductModels;
 
     @Expose
-    @SerializedName("manufacturer")
-    private Manufacturer manufacturer;
+    @SerializedName("manufacturerModel")
+    private ManufacturerModel manufacturerModel;
 
     @Expose
     @SerializedName("user")
@@ -77,20 +77,20 @@ public class Order {
         this.userModel = userModel;
     }
 
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public List<OrderProductModel> getOrderProductModels() {
+        return orderProductModels;
     }
 
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setOrderProductModels(List<OrderProductModel> orderProductModels) {
+        this.orderProductModels = orderProductModels;
     }
 
 
-    public Manufacturer getManufacturer() {
-        return manufacturer;
+    public ManufacturerModel getManufacturerModel() {
+        return manufacturerModel;
     }
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setManufacturerModel(ManufacturerModel manufacturerModel) {
+        this.manufacturerModel = manufacturerModel;
     }
 
 

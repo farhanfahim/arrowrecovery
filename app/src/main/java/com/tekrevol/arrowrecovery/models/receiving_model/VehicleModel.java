@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
-public  class VehicleModelEntity {
+public  class VehicleModel {
 
     @Expose
     @SerializedName("vehicle_make")

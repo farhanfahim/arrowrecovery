@@ -105,16 +105,16 @@ object Constants {
 
     fun notifications(): ArrayList<DummyModel> {
         val array: ArrayList<DummyModel> = ArrayList()
-        array.add(DummyModel("Notification 1: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 2: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 3: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 4: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 5: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 6: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 7: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 8: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 9: Your order is arriving soon!", false))
-        array.add(DummyModel("Notification 10: Your order is arriving soon!", false))
+        array.add(DummyModel("Notification 1: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 2: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 3: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 4: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 5: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 6: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 7: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 8: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 9: Your orderModel is arriving soon!", false))
+        array.add(DummyModel("Notification 10: Your orderModel is arriving soon!", false))
          return array
     }
 
