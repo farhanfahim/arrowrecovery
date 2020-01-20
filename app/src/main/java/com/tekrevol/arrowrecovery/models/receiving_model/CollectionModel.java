@@ -10,7 +10,7 @@ public class CollectionModel {
 
     @Expose
     @SerializedName("working_days")
-    private List<Working_daysEntity> workingDays;
+    private List<Working_daysModel> workingDays;
     @Expose
     @SerializedName("distance")
     private double distance;
@@ -48,11 +48,11 @@ public class CollectionModel {
     @SerializedName("id")
     private int id;
 
-    public List<Working_daysEntity> getWorkingDays() {
+    public List<Working_daysModel> getWorkingDays() {
         return workingDays;
     }
 
-    public void setWorkingDays(List<Working_daysEntity> workingDays) {
+    public void setWorkingDays(List<Working_daysModel> workingDays) {
         this.workingDays = workingDays;
     }
 

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
-public class Manufacturer {
+public class ManufacturerModel {
 
     @Expose
     @SerializedName("deleted_at")

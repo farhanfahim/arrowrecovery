@@ -21,8 +21,8 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
-import com.tekrevol.arrowrecovery.models.receiving_model.Order
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderModel
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
 import com.tekrevol.arrowrecovery.models.sending_model.UpdateCartModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
@@ -36,7 +36,7 @@ import kotlin.collections.set
 
 class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageListener, GooglePlaceHelper.GooglePlaceDataInterface {
 
-    private var arrData: ArrayList<OrderProduct> = ArrayList()
+    private var arrData: ArrayList<OrderProductModel> = ArrayList()
     private var arrDataCart: ArrayList<CollectionModel> = ArrayList()
     private lateinit var cartAdapter: MyCartAdapter
     var webCall: Call<WebResponse<Any>>? = null
@@ -99,15 +99,15 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 if (webResponse.result != null) {
-                    val order: Order = GsonFactory.getSimpleGson()
+                    val orderModel: OrderModel = GsonFactory.getSimpleGson()
                             .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                    , Order::class.java)
+                                    , OrderModel::class.java)
 
                     recyclerViewCart.hideShimmer()
-                    orderid = order.id
-                    txtTotalPrice.text = "Total: " + order.amount
+                    orderid = orderModel.id
+                    txtTotalPrice.text = "Total: " + orderModel.amount
                     arrData.clear()
-                    arrData.addAll(order.orderProducts)
+                    arrData.addAll(orderModel.orderProductModels)
                     cartAdapter.notifyDataSetChanged()
                 }
 

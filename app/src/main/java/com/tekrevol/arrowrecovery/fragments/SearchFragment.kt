@@ -16,7 +16,6 @@ import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -24,12 +23,9 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
-import com.tekrevol.arrowrecovery.models.receiving_model.VehicleModelEntity
-import com.tekrevol.arrowrecovery.models.receiving_model.VehicleModels
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
-import kotlinx.android.synthetic.main.fragment_advanced_search.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import java.util.HashMap

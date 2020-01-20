@@ -6,7 +6,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 import java.util.List;
 
-public class OrderProduct {
+public class OrderProductModel {
 
     @Expose
     @SerializedName("deleted_at")

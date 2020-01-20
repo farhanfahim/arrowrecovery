@@ -36,8 +36,8 @@ public class WebServiceConstants {
      */
 
     // STAGING
-//    public static final String BASE_URL = "http://papp.servstaging.com/";
-//    public static final String IMAGE_BASE_URL = "http://papp.servstaging.com/api/resize/";
+//    public static final String BASE_URL = "http://app-arrow-recovery.servstaging.com/";
+//    public static final String IMAGE_BASE_URL = "http://app-arrow-recovery.servstaging.com/api/resize/";
 
     // DEV
 //    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
@@ -51,7 +51,6 @@ public class WebServiceConstants {
     /**
      * API PATHS NAMES
      */
-
 
 
     public static final String PATH_REGISTER = "register";
@@ -87,13 +86,11 @@ public class WebServiceConstants {
     public static final String PATH_CHANGE_PASSWORD = "change-password";
     public static final String PATH_RESENDOTP = "resend-otp";
     public static final String PATH_VERIFYOTP = "verify-otp";
-    public static final String PATH_ORDERPRODUCTS = "order-products";
-    public static final String PATH_ORDER_PRODUCTS_SLASH = "order-products/";
+    public static final String PATH_ORDERPRODUCTS = "orderModel-products";
+    public static final String PATH_ORDER_PRODUCTS_SLASH = "orderModel-products/";
     public static final String PATH_ORDERS = "orders";
     public static final String PATH_COLLECTIONCENTER = "collection-centers";
     public static final String PATH_NOTIFICATIONS = "notifications";
-
-
 
 
     /**

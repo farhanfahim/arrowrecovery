@@ -3,7 +3,7 @@ package com.tekrevol.arrowrecovery.models.receiving_model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Working_daysEntity {
+public class Working_daysModel {
 
 
     @Expose

@@ -2,10 +2,8 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ProgressBar
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
@@ -17,11 +15,10 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.receiving_model.Order
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
-import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import kotlinx.android.synthetic.main.fragment_myorder.*
 import retrofit2.Call
 import java.util.HashMap
@@ -29,7 +26,7 @@ import java.util.HashMap
 class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnPageListener {
 
 
-    private var arrData: ArrayList<Order> = ArrayList()
+    private var arrData: ArrayList<OrderModel> = ArrayList()
     private lateinit var myOrderAdapter: MyOrderShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
 
@@ -81,7 +78,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         titleBar.hide()
         titleBar.showBackButton(activity)
 
-        titleBar.setTitle("My Order")
+        titleBar.setTitle("My OrderModel")
     }
 
     override fun setListeners() {
@@ -108,9 +105,9 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        var order: Order = anyObject as Order
+        var orderModel: OrderModel = anyObject as OrderModel
         //baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(order ,position), true)
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(orderModel ,position), true)
 
 
     }
@@ -132,8 +129,8 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
             webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                    val type = object : TypeToken<java.util.ArrayList<Order?>?>() {}.type
-                    val arrayList: java.util.ArrayList<Order> = GsonFactory.getSimpleGson()
+                    val type = object : TypeToken<java.util.ArrayList<OrderModel?>?>() {}.type
+                    val arrayList: java.util.ArrayList<OrderModel> = GsonFactory.getSimpleGson()
                             .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                     , type)
 

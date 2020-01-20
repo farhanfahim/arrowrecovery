@@ -13,11 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.libraries.places.internal.i
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -28,26 +26,23 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
-import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProduct
-import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysEntity
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
+import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
-import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
 class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.GooglePlaceDataInterface, OnItemClickListener {
 
-    private var orderProduct: ArrayList<OrderProduct> = ArrayList()
+    private var orderProductModel: ArrayList<OrderProductModel> = ArrayList()
     private var arrCollectionModel: ArrayList<CollectionModel> = ArrayList()
-    private var arrWorkingDay: ArrayList<Working_daysEntity> = ArrayList()
+    private var arrWorkingDay: ArrayList<Working_daysModel> = ArrayList()
     var pickupSelectedPos: IntWrapper = IntWrapper(0)
     var googlePlaceHelper: GooglePlaceHelper? = null
     private var arrData: ArrayList<DummyModel> = ArrayList()
@@ -64,11 +59,11 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     companion object {
 
-        fun newInstance(orderProduct: ArrayList<OrderProduct>, arrCollectionModel: ArrayList<CollectionModel>): CheckoutDialogFragment {
+        fun newInstance(orderProductModel: ArrayList<OrderProductModel>, arrCollectionModel: ArrayList<CollectionModel>): CheckoutDialogFragment {
 
             val args = Bundle()
             val fragment = CheckoutDialogFragment()
-            fragment.orderProduct = orderProduct
+            fragment.orderProductModel = orderProductModel
             fragment.arrCollectionModel = arrCollectionModel
             fragment.arguments = args
             return fragment
@@ -205,9 +200,9 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
 
         btnPlaceOrder.setOnClickListener {
-            UIHelper.showAlertDialog("Are you sure you want to place this order?", "Place Order", { dialog, which ->
+            UIHelper.showAlertDialog("Are you sure you want to place this orderModel?", "Place OrderModel", { dialog, which ->
                 dialog.dismiss()
-                UIHelper.showToast(context, "Order Placed Successfully")
+                UIHelper.showToast(context, "OrderModel Placed Successfully")
                 this@CheckoutDialogFragment.dismiss()
             }, context)
         }
