@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_myorder.*
 import retrofit2.Call
 import java.util.HashMap
 
-class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnPageListener {
+class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageListener {
 
 
     private var arrData: ArrayList<OrderModel> = ArrayList()
@@ -48,13 +48,12 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         progressBarMyOrder = view.findViewById(R.id.progressBarMyOrder) as ProgressBar
 
         onBind()
-        getOrders(limit,offset)
+        getOrders(limit, offset)
     }
 
     private fun onBind() {
 
         arrData.clear()
-        //arrDataMake.addAll(Constants.daysSelector())
         recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerViewMyOrder.adapter = myOrderAdapter
         recyclerViewMyOrder.setItemViewType(ShimmerAdapter.ItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_myorder }))
@@ -83,9 +82,9 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
     }
 
     override fun setListeners() {
-  /*      backButton.setOnClickListener(View.OnClickListener {
-            baseActivity.popBackStack()
-        })*/
+        /*      backButton.setOnClickListener(View.OnClickListener {
+                  baseActivity.popBackStack()
+              })*/
 
     }
 
@@ -108,7 +107,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
 
         var orderModel: OrderModel = anyObject as OrderModel
         //baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(orderModel ,position), true)
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(orderModel, position), true)
 
 
     }
@@ -127,36 +126,35 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
         queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
 
-            webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                    val type = object : TypeToken<java.util.ArrayList<OrderModel?>?>() {}.type
-                    val arrayList: java.util.ArrayList<OrderModel> = GsonFactory.getSimpleGson()
-                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                    , type)
+                val type = object : TypeToken<java.util.ArrayList<OrderModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<OrderModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
 
-                    if (x == 0) {
-                        recyclerViewMyOrder.hideShimmer()
-                    }
-                    arrData.clear()
-                    arrData.addAll(arrayList)
-                    myOrderAdapter.notifyDataSetChanged()
-                    onDonePaging()
+                if (x == 0) {
+                    recyclerViewMyOrder.hideShimmer()
                 }
+                arrData.clear()
+                arrData.addAll(arrayList)
+                myOrderAdapter.notifyDataSetChanged()
+                onDonePaging()
+            }
 
-                override fun onError(`object`: Any?) {
-                    if (recyclerViewMyOrder == null) {
-                        recyclerViewMyOrder.hideShimmer()
-                        return
-                    }
+            override fun onError(`object`: Any?) {
+                if (recyclerViewMyOrder == null) {
+                    recyclerViewMyOrder.hideShimmer()
+                    return
                 }
-            })
+            }
+        })
 
     }
 
 
-
-    override fun onPage(i:Int) {
+    override fun onPage(i: Int) {
         if (offset < i) {
 
             offset = i

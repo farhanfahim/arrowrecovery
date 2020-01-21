@@ -40,7 +40,7 @@ class NotificationShimmerAdapter(private val activity: Context, private val arrD
             with(viewHolder)
             {
 
-                bindTo(model, activity)
+                bindTo(model)
                 setListener(viewHolder, model)
             }
         }
@@ -80,7 +80,7 @@ class NotificationShimmerAdapter(private val activity: Context, private val arrD
          * ViewHolder when Item is loaded.
          */
 
-        fun bindTo(model: NotificationModel?, context: Context) {
+        fun bindTo(model: NotificationModel?) {
             this.model = model
 
             this.model?.let {
@@ -90,7 +90,7 @@ class NotificationShimmerAdapter(private val activity: Context, private val arrD
                     imgSelect!!.setImageResource(R.drawable.img_unselected_check)
                 }
 
-                txtMessage!!.text = it.message
+                txtMessage!!.text = it.data.message
 
                 val date = it.created_at
                 val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")

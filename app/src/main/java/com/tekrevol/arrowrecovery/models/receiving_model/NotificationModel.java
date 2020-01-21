@@ -6,36 +6,67 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class NotificationModel {
 
-
-
     @Expose
-    @SerializedName("status")
-    private boolean status;
+    @SerializedName("data")
+    private DataModel data;
     @Expose
-    @SerializedName("message")
-    private String message;
+    @SerializedName("notifiable_id")
+    private int notifiableId;
     @Expose
-    @SerializedName("ref_id")
-    private int ref_id;
+    @SerializedName("notifiable_type")
+    private String notifiableType;
     @Expose
-    @SerializedName("action_type")
-    private String action_type;
-    @Expose
-    @SerializedName("url")
-    private String url;
-    @Expose
-    @SerializedName("sender_id")
-    private int sender_id;
+    @SerializedName("type")
+    private String type;
     @Expose
     @SerializedName("id")
-    private int id;
-
+    private String id;
     @Expose
     @SerializedName("updated_at")
     private String updated_at;
     @Expose
     @SerializedName("created_at")
     private String created_at;
+
+    public DataModel getData() {
+        return data;
+    }
+
+    public void setData(DataModel data) {
+        this.data = data;
+    }
+
+    public int getNotifiableId() {
+        return notifiableId;
+    }
+
+    public void setNotifiableId(int notifiableId) {
+        this.notifiableId = notifiableId;
+    }
+
+    public String getNotifiableType() {
+        return notifiableType;
+    }
+
+    public void setNotifiableType(String notifiableType) {
+        this.notifiableType = notifiableType;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUpdated_at() {
         return updated_at;
@@ -63,62 +94,6 @@ public class NotificationModel {
         isSelected = selected;
     }
 
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public int getRef_id() {
-        return ref_id;
-    }
-
-    public void setRef_id(int ref_id) {
-        this.ref_id = ref_id;
-    }
-
-    public String getAction_type() {
-        return action_type;
-    }
-
-    public void setAction_type(String action_type) {
-        this.action_type = action_type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public int getSender_id() {
-        return sender_id;
-    }
-
-    public void setSender_id(int sender_id) {
-        this.sender_id = sender_id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
     @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);
