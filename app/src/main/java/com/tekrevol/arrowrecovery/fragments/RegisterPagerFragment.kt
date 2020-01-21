@@ -235,7 +235,6 @@ class RegisterPagerFragment : BaseFragment() {
         if (!edtAddress.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your address")
             return
-
         }
 
         if (!edtZipCode.testValidity()) {

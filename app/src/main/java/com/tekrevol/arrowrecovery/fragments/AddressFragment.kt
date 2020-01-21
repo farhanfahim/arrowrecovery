@@ -107,5 +107,12 @@ public class AddressFragment : BaseFragment() {
 
     }
 
+    override fun onDestroyView() {
+        if (webCall != null) {
+            webCall!!.cancel()
+        }
+        super.onDestroyView()
+    }
+
 
 }

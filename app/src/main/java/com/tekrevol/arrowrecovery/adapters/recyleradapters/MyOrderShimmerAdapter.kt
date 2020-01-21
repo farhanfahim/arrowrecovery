@@ -123,7 +123,7 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
                     imgStatus!!.setImageResource(R.drawable.rejected)
                 }
 
-                if (model!!.status == AppConstants.STATUS_CART){
+                if (model!!.status == AppConstants.STATUS_PENDING){
                     txtStatus!!.text = "Pending"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.fbutton_color_sun_flower))
                     imgStatus!!.setImageResource(R.drawable.pending)
