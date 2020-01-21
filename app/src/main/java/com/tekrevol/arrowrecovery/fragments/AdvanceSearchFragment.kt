@@ -29,7 +29,6 @@ import java.util.*
 
 class AdvanceSearchFragment : BaseFragment() {
 
-
     private val spinnerModelArrayList: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
     private val spinnerModelArrayList1: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
     private val spinnerModelArrayList2: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
@@ -137,7 +136,6 @@ class AdvanceSearchFragment : BaseFragment() {
         contYear.setOnClickListener {
             UIHelper.showSpinnerDialog(this@AdvanceSearchFragment, spinnerModelArrayList2, "Selected Make"
                     , txtYear, null, null, IntWrapper(0))
-
 
         }
 

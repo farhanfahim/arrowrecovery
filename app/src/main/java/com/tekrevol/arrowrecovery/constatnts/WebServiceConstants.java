@@ -90,6 +90,7 @@ public class WebServiceConstants {
     public static final String PATH_ORDERS = "orders";
     public static final String PATH_COLLECTIONCENTER = "collection-centers";
     public static final String PATH_NOTIFICATIONS = "notifications";
+    public static final String PATH_GETAVAILABILITY = "check-availabilty";
     public static final String PATH_NOTIFICATIONS_SLASH = "notifications/";
 
 
@@ -129,6 +130,8 @@ public class WebServiceConstants {
     public static final String Q_FEATURED = "is_featured";
     public static final String Q_LAT = "latitude";
     public static final String Q_LONG = "longitude";
+    public static final String Q_COLLECTION_ID = "collection_center_id";
+    public static final String Q_DATE = "date";
     public static final String Q_WITH_ORDER_PRODUCTS = "with_order_products";
 
 

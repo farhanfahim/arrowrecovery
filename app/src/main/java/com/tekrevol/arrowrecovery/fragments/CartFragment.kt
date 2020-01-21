@@ -196,8 +196,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
             }
         })
-
-
     }
 
 
@@ -295,8 +293,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 }
             }
         }
-
-
     }
 
     override fun onDonePaging() {

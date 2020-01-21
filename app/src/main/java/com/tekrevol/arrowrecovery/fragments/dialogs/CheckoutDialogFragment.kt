@@ -1,6 +1,7 @@
 package com.tekrevol.arrowrecovery.fragments.dialogs
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -12,11 +13,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -28,17 +31,18 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
-import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysModel
+import com.tekrevol.arrowrecovery.models.receiving_model.*
 import com.tekrevol.arrowrecovery.models.sending_model.UpdateDeliveryCollectionCenterModel
 import com.tekrevol.arrowrecovery.models.sending_model.UpdatePickupModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.widget.AnyTextView
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
+import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -77,15 +81,15 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             fragment.arguments = args
             return fragment
         }
+    }
 
-        private fun getIdFromSpinner(checkoutDialogFragment: CheckoutDialogFragment): Int {
-            for (category in checkoutDialogFragment.arrCollectionModel) {
-                if (category.getName().equals(checkoutDialogFragment.txtCollectionCenterLocation.getStringTrimmed())) {
-                    return category.getId()
-                }
+    private fun getIdFromSpinner(checkoutDialogFragment: CheckoutDialogFragment): Int {
+        for (category in checkoutDialogFragment.arrCollectionModel) {
+            if (category.address.equals(checkoutDialogFragment.txtCollectionCenterLocation.getStringTrimmed())) {
+                return category.getId()
             }
-            return -1
         }
+        return -1
     }
 
     override fun setupDialog(dialog: Dialog, style: Int) {
@@ -153,7 +157,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     private fun onBind() {
 
         arrData.clear()
-        // arrData.addAll(Constants.timeSelector())
         spinnerModelArrayList.clear()
 
         for (collection in arrCollectionModel) {
@@ -176,6 +179,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                     contCollectionCenter.visibility = View.GONE
                     txtCollectionCenterLocation.text = ""
                     txtPickupLocation.text = ""
+                    txtDate.text = ""
                     heading.visibility = View.GONE
                     map.visibility = View.GONE
                     getPickUpTime()
@@ -183,6 +187,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                 R.id.rbCollectionCenter -> {
 
                     param = 2
+                    txtDate.text = ""
                     contPickupSelected.visibility = View.GONE
                     contCollectionCenter.visibility = View.VISIBLE
                     heading.visibility = View.GONE
@@ -194,7 +199,30 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
 
         contDate.setOnClickListener {
-            DateManager.showDatePicker(context, txtDate, null, false, true)
+
+            if (rbPickup.isChecked || rbCollectionCenter.isChecked) {
+
+                if (param.equals(1)) {
+                    if (txtPickupLocation.stringTrimmed.isEmpty()) {
+                        UIHelper.showAlertDialog(context, "Please select location")
+                        return@setOnClickListener
+                    }
+                    DateManager.showDatePicker(context, txtDate, null, false, true)
+                } else {
+                    if (txtCollectionCenterLocation.stringTrimmed.isEmpty()) {
+                        UIHelper.showAlertDialog(context, "Please select location")
+                        return@setOnClickListener
+                    }
+                    DateManager.showDatePicker(context, txtDate, { view, year, month, dayOfMonth ->
+                        getSlot(txtDate)
+                    }, false, true)
+                }
+
+            } else {
+                UIHelper.showAlertDialog(context, "Please select type pickup or delivered to collection center")
+                return@setOnClickListener
+            }
+
         }
 
 
@@ -229,7 +257,57 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     }
 
+    private fun getSlot(txtDate: AnyTextView) {
+
+        idFromSpinner = getIdFromSpinner(this)
+
+        if (idFromSpinner == -1) {
+            UIHelper.showShortToastInCenter(context, "Invalid ID")
+            return
+        }
+
+        Log.d("txtDate", txtDate.stringTrimmed.toString())
+
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_COLLECTION_ID] = idFromSpinner
+        queryMap[WebServiceConstants.Q_DATE] = txtDate.stringTrimmed.toString()
+
+        WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).getAPIAnyObject(WebServiceConstants.PATH_GETAVAILABILITY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                arrDate.clear()
+                arrData.clear()
+                val dateModel: DateModels = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , DateModels::class.java)
+
+                if (!(txtDate.text.equals(dateModel.date))) {
+                    txtDate.text = dateModel.date
+                    UIHelper.showAlertDialog(context, "The slots are available on " + dateModel.date)
+                }
+
+                arrDate.addAll(dateModel.slots)
+                for (arr in arrDate) {
+                    arrData.add((DummyModel(arr, false)))
+                }
+                txtPickup.visibility = View.VISIBLE
+                txtToltalSlot.text = "(" + arrData.size.toString() + " Slots availables)"
+                timeSelectorAdapter.notifyDataSetChanged()
+            }
+
+            override fun onError(`object`: Any?) {
+            }
+        })
+
+    }
+
     private fun placeOrder(dialog: DialogInterface) {
+
+        if (rbPickup.isChecked || rbCollectionCenter.isChecked) {
+        } else {
+            UIHelper.showAlertDialog(context, "Please select type pickup or delivered to collection center")
+            return
+        }
 
         if (param.equals(1)) {
 
@@ -268,7 +346,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                 UIHelper.showAlertDialog(context, "Please select time slot")
                 return
             }
-            idFromSpinner = Companion.getIdFromSpinner(this)
+            idFromSpinner = getIdFromSpinner(this)
 
             if (idFromSpinner == -1) {
                 UIHelper.showShortToastInCenter(context, "Invalid ID")
@@ -278,9 +356,9 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             val updateOrderModel = UpdateDeliveryCollectionCenterModel()
 
             updateOrderModel.deliveryDate = txtDate.stringTrimmed
-            updateOrderModel.deliveryMode = AppConstants.PICKUP
+            updateOrderModel.deliveryMode = AppConstants.DELIVERED
             updateOrderModel.timeSlot = txtPick
-            updateOrderModel.collectionCenterId
+            updateOrderModel.collectionCenterId = idFromSpinner
             WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS.toString() + "/" + orderid, null,
                     updateOrderModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
@@ -320,8 +398,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).getAPIAnyObject(WebServiceConstants.PATH_SLOTS, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 arrDate.clear()
-                arrDate.addAll(webResponse.result as Collection<String>)
                 arrData.clear()
+                arrDate.addAll(webResponse.result as Collection<String>)
                 for (arr in arrDate) {
                     arrData.add((DummyModel(arr, false)))
                 }
@@ -339,7 +417,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         googlePlaceHelper?.onActivityResult(requestCode, resultCode, data)
-
     }
 
     override fun onError(error: String?) {
