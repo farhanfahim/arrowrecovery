@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Base64;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+
+import androidx.core.content.FileProvider;
 
 import com.tekrevol.arrowrecovery.constatnts.AppConstants;
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper;
@@ -363,8 +366,21 @@ public class FileManager {
                 intent.setDataAndType(uri, "application/msword");
             } else if (url.toString().contains(".pdf")) {
                 // PDF file
-                intent.setDataAndType(uri, "application/pdf");
-            } else if (url.toString().contains(".ppt") || url.toString().contains(".pptx")) {
+                //intent.setDataAndType(uri, "application/pdf");
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Uri apkURI = FileProvider.getUriForFile(context.getApplicationContext(),context.getPackageName() + ".provider", url);
+                    intent.setDataAndType(apkURI, "application/pdf");
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                } else {
+                    intent.setDataAndType(Uri.fromFile(url), "application/pdf");
+                }
+            }
+
+
+
+
+            else if (url.toString().contains(".ppt") || url.toString().contains(".pptx")) {
                 // Powerpoint file
                 intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
             } else if (url.toString().contains(".xls") || url.toString().contains(".xlsx")) {

@@ -12,11 +12,12 @@ import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 import java.io.File
 
-open class CreatePdf(private val mContext: Context) {
+open class CreatePdf(private val mContext: Context, url:String ) {
 
     private var MimeType = "text/html"
     private var ENCODING = "utf-8"
 
+    private var invoiceUrl = url;
     private var mBaseURL: String? = ""
     private var mPdfName: String = ""
     private var mCallbacks: PdfCallbackListener? = null
@@ -88,7 +89,7 @@ open class CreatePdf(private val mContext: Context) {
 
         mWebView = WebView(mContext)
         //mWebView?.loadDataWithBaseURL(mBaseURL, mContent, MimeType, ENCODING, null)
-        mWebView?.loadUrl("https://adminlte.io/themes/AdminLTE/pages/examples/invoice-print.html")
+        mWebView?.loadUrl(invoiceUrl)
         mWebView?.settings?.javaScriptEnabled = true
         mWebView?.clearCache(true)
         mWebView?.webViewClient = object : WebViewClient() {

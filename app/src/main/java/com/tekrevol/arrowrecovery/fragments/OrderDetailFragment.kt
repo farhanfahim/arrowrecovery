@@ -24,8 +24,12 @@ import android.os.Environment
 import android.print.PrintAttributes
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.google.android.libraries.places.internal.it
+import com.google.android.material.snackbar.Snackbar
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.libraries.CreatePdf
+import com.tekrevol.arrowrecovery.managers.FileManager
+import com.tekrevol.arrowrecovery.managers.FileManager.openFile
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,6 +44,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
     private lateinit var myOrderAdapter: OrderDetailShimmerAdapter
     private lateinit var linearLayoutOrderDetail: LinearLayout
     var path:String = ""
+    lateinit var folder:File
 
     var pos :Int = 0
     var model: String? = null
@@ -96,6 +101,10 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
             txtStatus!!.text = "Received"
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
+        if (orderModel!!.status == AppConstants.STATUS_ORDERED){
+            txtStatus!!.text = "Ordered"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
+        }
         if (orderModel!!.status == AppConstants.STATUS_DELIVERED){
             txtStatus!!.text = "Delivered"
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
@@ -141,8 +150,8 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
         txtEstimatedAmount.text = "$"+orderModel!!.estimatedAmount.toString()
 
 
-        path = Environment.getExternalStorageDirectory().path+"/Arrow Pdf/"
-        val folder = File(path)
+        path = Environment.getExternalStorageDirectory().path+"/ArrowRecovery/"
+        folder = File(path)
 
         if (!folder.exists()) {
             folder.mkdirs()
@@ -234,9 +243,9 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
 
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var currentDateTime:String = dateFormat.format( Date())
-        val fileName = "$currentDateTime.jpg"
+        val fileName = "$currentDateTime"
         Toast.makeText(context, "PDF is generating", Toast.LENGTH_SHORT).show()
-        CreatePdf(context!!)
+        CreatePdf(context!!,orderModel!!.invoiceUrl)
                 .setPdfName(fileName)
                 .openPrintDialog(false)
                 .setContentBaseUrl(null)
@@ -249,7 +258,15 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
                     }
 
                     override fun onSuccess(filePath: String) {
-                        Toast.makeText(context, "Pdf Saved", Toast.LENGTH_SHORT).show()
+                        val snack = Snackbar.make(view,"PDF Saved",10000)
+                        snack.setAction("View PDF") {
+                            if (FileManager.isFileExits(filePath)){
+                                openFile(context, File(filePath))
+                            }
+                        }
+                        snack.show()
+
+
                     }
                 })
                 .create()

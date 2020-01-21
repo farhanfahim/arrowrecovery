@@ -96,6 +96,11 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
+                if (model!!.status == AppConstants.STATUS_ORDERED){
+                    txtStatus!!.text = "Ordered"
+                    txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
+                    imgStatus!!.setImageResource(R.drawable.approved)
+                }
                 if (model!!.status == AppConstants.STATUS_DELIVERED){
                     txtStatus!!.text = "Delivered"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))

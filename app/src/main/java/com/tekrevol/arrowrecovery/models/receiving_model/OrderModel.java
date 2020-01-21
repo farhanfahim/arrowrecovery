@@ -48,6 +48,18 @@ public class OrderModel {
     @SerializedName("id")
     private int id;
 
+    public String getInvoiceUrl() {
+        return invoiceUrl;
+    }
+
+    public void setInvoiceUrl(String invoiceUrl) {
+        this.invoiceUrl = invoiceUrl;
+    }
+
+    @Expose
+    @SerializedName("invoice_url")
+    private String invoiceUrl;
+
 
 
     @Expose
