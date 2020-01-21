@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,12 +16,10 @@ import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
@@ -33,7 +32,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
 
 
-    private var arrData: ArrayList<DummyModel> = ArrayList()
+    //private var arrData: ArrayList<DummyModel> = ArrayList()
+    private var arrData: ArrayList<String> = ArrayList()
     private var text: String? = null
     private var arrDataSearchBar: ArrayList<ProductDetailModel> = ArrayList()
     private lateinit var searchAdapter: SearchAdapter
@@ -71,14 +71,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun onBind() {
 
-        arrData.clear()
-        arrData.addAll(Constants.daysSelector())
+        //arrData.clear()
+        //arrData.addAll(Constants.daysSelector())
 
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-//        val resId = R.anim.layout_animation_fall_bottom
-//        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
-//        recyclerViewSearchList.layoutAnimation = animation
+        val resId = R.anim.layout_animation_fall_bottom
+        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
+        recyclerViewSearchList.layoutAnimation = animation
         recyclerViewSearchList.adapter = searchAdapter
 
         rvSearch.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -107,7 +107,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                         Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
                     }else{
                         getProducts(text!!, makeId, modelId, year, serialNumber)
-                        sharedPreferenceManager.putObject("searchKeyword",text)
+
+//                        if (text!!.length > 2){
+//                            arrData.add(text.toString())
+//                            sharedPreferenceManager.putObject("searchKeyword",arrData)
+//                        }
+
 
                         recyclerViewSearchList.visibility = View.GONE
                         rvSearch.visibility = View.VISIBLE
@@ -126,13 +131,13 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
         onBind()
 
     }
-
 
     override fun getDrawerLockMode(): Int {
         return 0

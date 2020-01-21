@@ -2,7 +2,6 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,16 +19,14 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_orderdetail.*
 import retrofit2.Call
-import android.graphics.Bitmap
 import android.widget.LinearLayout
-import android.graphics.Canvas
-import android.graphics.Color
 import android.os.Environment
+import android.print.PrintAttributes
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.libraries.CreatePdf
 import java.io.File
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -42,7 +39,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
     var webCall: Call<WebResponse<Any>>? = null
     private lateinit var myOrderAdapter: OrderDetailShimmerAdapter
     private lateinit var linearLayoutOrderDetail: LinearLayout
-    private lateinit var myBitmap: Bitmap
+    var path:String = ""
 
     var pos :Int = 0
     var model: String? = null
@@ -144,6 +141,14 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
         txtEstimatedAmount.text = "$"+orderModel!!.estimatedAmount.toString()
 
 
+        path = Environment.getExternalStorageDirectory().path+"/Arrow Pdf/"
+        val folder = File(path)
+
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
+
+
     }
 
 
@@ -174,9 +179,8 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
 
 
 
-        btnScreenShot.setOnClickListener {
-            myBitmap = getScreenShot(linearLayoutOrderDetail)
-            saveImageInStorage(myBitmap)
+        btnSavePdf.setOnClickListener {
+            savePdfFile(path)
         }
 
     }
@@ -225,59 +229,35 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
 
 
 
+    private fun savePdfFile(path:String){
 
-    private fun getScreenShot(view: View): Bitmap {
 
-        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(returnedBitmap)
-        val bgDrawable = view.background
-        if (bgDrawable != null)
-            bgDrawable.draw(canvas)
-        else canvas.drawColor(Color.BLUE)
-        view.draw(canvas)
-        Toast.makeText(context, "screenshot captured", Toast.LENGTH_LONG).show()
-        return returnedBitmap
-        }
-
-    private fun saveImageInStorage(bitmap: Bitmap) {
-        val root: String = Environment.getExternalStorageDirectory().absolutePath
-        val myDir = File("$root/saved_images")
-        myDir.mkdirs()
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var currentDateTime:String = dateFormat.format( Date())
         val fileName = "$currentDateTime.jpg"
-        val file = File(myDir, fileName)
-        if (file.exists()) file.delete()
-        try {
-            val out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
-            out.flush()
-            out.close()
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
+        Toast.makeText(context, "PDF is generating", Toast.LENGTH_SHORT).show()
+        CreatePdf(context!!)
+                .setPdfName(fileName)
+                .openPrintDialog(false)
+                .setContentBaseUrl(null)
+                .setPageSize(PrintAttributes.MediaSize.ISO_A4)
+                .setContent("Your Content")
+                .setFilePath(path)
+                .setCallbackListener(object : CreatePdf.PdfCallbackListener {
+                    override fun onFailure(errorMsg: String) {
+                        Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onSuccess(filePath: String) {
+                        Toast.makeText(context, "Pdf Saved", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .create()
+
+
     }
 
-//    private fun saveImageInStorage(bitmap:Bitmap) {
-//        val externalStorageState = Environment.getExternalStorageState()
-//        if (externalStorageState.equals(Environment.MEDIA_MOUNTED)){
-//            var externalStorage = Environment.getExternalStorageDirectory().toString()
-//            val file = File("$externalStorage/saved_images")
-//            try {
-//                val stream:OutputStream = FileOutputStream(file)
-//                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-//                out.flush()
-//                out.close()
-//                Toast.makeText(context, "save", Toast.LENGTH_LONG).show()
-//            }catch (e:Exception){
-//                e.printStackTrace()
-//            }
-//
-//        }else{
-//            Toast.makeText(context, "error", Toast.LENGTH_LONG).show()
-//        }
-//
-//    }
+
 
 
 
