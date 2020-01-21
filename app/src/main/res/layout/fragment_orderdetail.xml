@@ -447,25 +447,25 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            android:id="@+id/btnScreenShot"
+            android:id="@+id/btnSavePdf"
             android:layout_weight="1"
             android:background="@drawable/searchbar_grey"
             android:backgroundTint="@color/green_bg"
             android:gravity="center"
             android:weightSum="1">
 
-            <ImageView
+            <!--<ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/camera_ss" />
+                android:src="@drawable/camera_ss" />-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:text="Take Screenshot"
+                android:text="save as pdf"
                 android:textColor="@color/c_white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
