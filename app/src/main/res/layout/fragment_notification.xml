@@ -46,12 +46,18 @@
 
     </LinearLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:padding="@dimen/x10dp"
+    <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/recyclerViewNotification"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_notification"
-        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:reverseLayout="false"
+        tools:listitem="@layout/shimmer_item_notification">
+
+    </com.todkars.shimmer.ShimmerRecyclerView>
+
 
 </LinearLayout>

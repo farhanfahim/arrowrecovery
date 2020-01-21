@@ -227,6 +227,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         val edtQuantity = dialog1.findViewById<AnyEditTextView>(R.id.edtQuantity)
         val txtQuality = dialog1.findViewById<AnyTextView>(R.id.txtQuality)
         val contQuality = dialog1.findViewById<LinearLayout>(R.id.contQuality)
+        txtQuality.text = Constants.qualities[0]
 
         contQuality.setOnClickListener {
             UIHelper.showCheckedDialogBox(activity, "Select Quality", Constants.qualities, selectedPosition) { dialog, which ->
@@ -382,6 +383,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //            rvConverters.showShimmer()
 //
 //        }
+        rvConverters.showShimmer()
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
@@ -410,10 +412,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             }
 
             override fun onError(`object`: Any?) {
-//                if (rvConverters == null) {
-//                    rvConverters.hideShimmer()
-//                }
-
+                if (rvConverters == null) {
+                    return
+                }
+                rvConverters.hideShimmer()
             }
         })
     }

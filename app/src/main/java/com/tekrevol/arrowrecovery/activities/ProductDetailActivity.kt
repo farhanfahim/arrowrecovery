@@ -64,6 +64,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
         txtModel.text = (productDetailModel?.vehicleModel?.name)
         //txtPrice.setText(productDetailModel?.price)
+        txtQuality.text = qualities[0]
 
         txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
         carouselView.setImageListener(imageListener)
@@ -150,7 +151,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         }
 
         if (edtQuantity.equals(0)) {
-            UIHelper.showAlertDialog(this, "Quantity most not be 0")
+            UIHelper.showAlertDialog(this, "Quantity must not be 0")
             return
         }
 

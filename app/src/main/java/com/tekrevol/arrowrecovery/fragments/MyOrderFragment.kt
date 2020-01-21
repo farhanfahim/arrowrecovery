@@ -79,7 +79,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener , PagingDelegate.OnP
         titleBar.hide()
         titleBar.showBackButton(activity)
 
-        titleBar.setTitle("My OrderModel")
+        titleBar.setTitle("My Order")
     }
 
     override fun setListeners() {

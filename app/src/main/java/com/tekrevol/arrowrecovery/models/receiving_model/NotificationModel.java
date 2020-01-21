@@ -6,6 +6,8 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class NotificationModel {
 
+
+
     @Expose
     @SerializedName("status")
     private boolean status;
@@ -27,6 +29,40 @@ public class NotificationModel {
     @Expose
     @SerializedName("id")
     private int id;
+
+    @Expose
+    @SerializedName("updated_at")
+    private String updated_at;
+    @Expose
+    @SerializedName("created_at")
+    private String created_at;
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    transient boolean isSelected = false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
 
     public boolean getStatus() {
         return status;
