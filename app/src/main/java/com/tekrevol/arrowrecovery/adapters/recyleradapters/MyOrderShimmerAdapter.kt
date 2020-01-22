@@ -15,8 +15,6 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 
-
-
 /**
  */
 class MyOrderShimmerAdapter(private val activity: Context, private val arrData: List<OrderModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
@@ -36,7 +34,7 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
             with(viewHolder)
             {
 
-                bindTo(model, activity,position)
+                bindTo(model, activity, position)
                 setListener(viewHolder, model)
             }
         }
@@ -46,7 +44,7 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
 
     private fun setListener(holder: ViewHolder, model: OrderModel?) {
         holder.layoutItemMyOrder!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, MyOrderShimmerAdapter::class.java.simpleName) }
-        }
+    }
 
     override fun getItemCount(): Int {
         return arrData.size
@@ -65,9 +63,10 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
         var layoutItemMyOrder: LinearLayout? = view.findViewById(R.id.layoutItemMyOrder)
         var imgStatus: ImageView? = view.findViewById(R.id.imgStatus)
 
-        var txtUser: AnyTextView? = view.findViewById(R.id.txtUserName)
-        var txtAddress: AnyTextView? = view.findViewById(R.id.txtAddress)
-        var txtPhone: AnyTextView? = view.findViewById(R.id.txtPhone)
+        //  var txtUser: AnyTextView? = view.findViewById(R.id.txtUserName)
+        //  var txtAddress: AnyTextView? = view.findViewById(R.id.txtAddress)
+        var txtOrderid: AnyTextView? = view.findViewById(R.id.txtOrderid)
+        //  var txtPhone: AnyTextView? = view.findViewById(R.id.txtPhone)
         var txtPrice: AnyTextView? = view.findViewById(R.id.txtTotalPrice)
         var txtStatus: AnyTextView? = view.findViewById(R.id.txtStatus)
         var txtDate: AnyTextView? = view.findViewById(R.id.txtDate)
@@ -78,62 +77,63 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
          * ViewHolder when Item is loaded.
          */
 
-        fun bindTo(model: OrderModel?, context: Context, position :Int) {
+        fun bindTo(model: OrderModel?, context: Context, position: Int) {
             this.model = model
 
             this.model?.let {
-                txtUser?.text = it.userModel.userDetails.fullName
-                txtAddress?.text = it.userModel.userDetails.address
-                txtPhone?.text = it.userModel.userDetails.phone
-                txtPrice?.text = "$"+it.estimatedAmount.toString()
+                //txtUser?.text = it.userModel.userDetails.fullName
+                //txtAddress?.text = it.userModel.userDetails.address
+                txtOrderid?.text = "order id: " + it.id.toString()
+                // txtPhone?.text = it.userModel.userDetails.phone
+                txtPrice?.text = "Order Total: $" + it.estimatedAmount.toString()
 
                 val dateParts = it.created_at.split(" ")
                 val date = dateParts[0]
                 txtDate?.text = date.split("-").reversed().joinToString("-")
 
-                if (model!!.status == AppConstants.STATUS_RECEIVED){
+                if (model!!.status == AppConstants.STATUS_RECEIVED) {
                     txtStatus!!.text = "Received"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
-                if (model!!.status == AppConstants.STATUS_ORDERED){
+                if (model!!.status == AppConstants.STATUS_ORDERED) {
                     txtStatus!!.text = "Ordered"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
-                if (model!!.status == AppConstants.STATUS_DELIVERED){
+                if (model!!.status == AppConstants.STATUS_DELIVERED) {
                     txtStatus!!.text = "Delivered"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
-                if (model!!.status == AppConstants.STATUS_VERIFIED){
+                if (model!!.status == AppConstants.STATUS_VERIFIED) {
                     txtStatus!!.text = "verified"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
-                if (model!!.status == AppConstants.STATUS_PAID){
+                if (model!!.status == AppConstants.STATUS_PAID) {
                     txtStatus!!.text = "Paid"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
-                if (model!!.status == AppConstants.STATUS_COMPLETED){
+                if (model!!.status == AppConstants.STATUS_COMPLETED) {
                     txtStatus!!.text = "Completed"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.green_bg))
                     imgStatus!!.setImageResource(R.drawable.approved)
                 }
 
-                if (model!!.status == AppConstants.STATUS_RETURNED){
+                if (model!!.status == AppConstants.STATUS_RETURNED) {
                     txtStatus!!.text = "Rejected"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.red_bg))
                     imgStatus!!.setImageResource(R.drawable.rejected)
                 }
 
-                if (model!!.status == AppConstants.STATUS_PENDING){
+                if (model!!.status == AppConstants.STATUS_PENDING) {
                     txtStatus!!.text = "Pending"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.fbutton_color_sun_flower))
                     imgStatus!!.setImageResource(R.drawable.pending)
                 }
-                if (model!!.status == AppConstants.STATUS_CART){
+                if (model!!.status == AppConstants.STATUS_CART) {
                     txtStatus!!.text = "In Cart"
                     txtStatus!!.setTextColor(ContextCompat.getColor(context, R.color.fbutton_color_sun_flower))
                     imgStatus!!.setImageResource(R.drawable.pending)
