@@ -18,6 +18,7 @@ repositories {
     //maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
 
+
 }
 
 
@@ -149,6 +150,8 @@ dependencies {
 
     //zendesk chat
     implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
+    implementation group: 'com.zopim.android', name: 'sdk', version: '1.4.8'
+
 
 
 

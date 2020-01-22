@@ -1,18 +1,24 @@
 package com.tekrevol.arrowrecovery.fragments
 
-import android.graphics.Color
 import android.os.Bundle
-import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.AdapterView
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants.*
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.helperclasses.Spanny
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import com.zopim.android.sdk.api.ZopimChat
 import kotlinx.android.synthetic.main.fragment_support_customer.*
+import zendesk.core.Zendesk
+import zendesk.support.Support
+import zendesk.core.AnonymousIdentity
+import com.zopim.android.sdk.prechat.ZopimChatActivity
+import android.content.Intent
+
 
 
 class CustomerSupportFragment : BaseFragment() {
+
     companion object {
 
         fun newInstance(): CustomerSupportFragment {
@@ -20,10 +26,25 @@ class CustomerSupportFragment : BaseFragment() {
             val args = Bundle()
 
             val fragment = CustomerSupportFragment()
-            fragment.setArguments(args)
+            fragment.arguments = args
             return fragment
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        Zendesk.INSTANCE.init(context!!, CHAT_URL, APP_ID, CLIENT_ID)
+
+        val identity = AnonymousIdentity()
+        Zendesk.INSTANCE.setIdentity(identity)
+
+        Support.INSTANCE.init(Zendesk.INSTANCE)
+
+        ZopimChat.init(ACCOUNT_KEY)
+
+    }
+
 
     override fun getDrawerLockMode(): Int {
 
@@ -41,23 +62,10 @@ class CustomerSupportFragment : BaseFragment() {
     override fun setListeners() {
 
 
-        txtLeaveMessage.setOnClickListener(View.OnClickListener {
+        btnCustomerSupport.setOnClickListener {
 
-            showNextBuildToast()
-
-        })
-
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        var spanny = Spanny("Dear Valued Customers, ARROW RECOVERY chat ")
-                .append("09:00 AM- 09:00 PM (MON-SAT)", ForegroundColorSpan(resources.getColor(R.color.colorAccent)))
-                .append(". Thank You")
-
-        txtCS.text = spanny
+            startActivity(Intent(context, ZopimChatActivity::class.java))
+        }
 
 
     }
@@ -67,4 +75,6 @@ class CustomerSupportFragment : BaseFragment() {
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
     }
+
+
 }

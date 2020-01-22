@@ -26,6 +26,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper.getProgressHUD
 import com.tekrevol.arrowrecovery.libraries.htmltopdf.CreatePdf
 import com.tekrevol.arrowrecovery.managers.FileManager
 import com.tekrevol.arrowrecovery.managers.FileManager.openFile
@@ -174,7 +176,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
         titleBar.hide()
         titleBar.showBackButton(activity)
 
-        titleBar.setTitle("OrderModel Detail")
+        titleBar.setTitle("Order Detail")
 
     }
 
@@ -234,13 +236,14 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     }
 
 
-    private fun savePdfFile(path: String) {
 
+    private fun savePdfFile(path: String) {
 
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var currentDateTime: String = dateFormat.format(Date())
         val fileName = "$currentDateTime"
-        Toast.makeText(context, "PDF is generating", Toast.LENGTH_SHORT).show()
+        getProgressHUD(context).show()
+
         CreatePdf(context!!, orderModel!!.invoiceUrl)
                 .setPdfName(fileName)
                 .openPrintDialog(false)
@@ -250,10 +253,14 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
                 .setFilePath(path)
                 .setCallbackListener(object : CreatePdf.PdfCallbackListener {
                     override fun onFailure(errorMsg: String) {
-                        Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                        getProgressHUD(context).dismiss()
+                        //Snackbar.make(view, "Error", 10000).show()
+                        Toast.makeText(context,"error",Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onSuccess(filePath: String) {
+
+                        getProgressHUD(context).dismiss()
                         val snack = Snackbar.make(view, "PDF Saved", 10000)
                         snack.setAction("View PDF") {
                             if (FileManager.isFileExits(filePath)) {

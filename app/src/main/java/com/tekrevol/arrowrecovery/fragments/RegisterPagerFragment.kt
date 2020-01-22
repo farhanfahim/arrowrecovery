@@ -351,7 +351,7 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
         val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + "your valid phone no? ")
+        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid phone no? ")
                 .setTitle("Alert")
                 .setCancelable(true)
                 .setNegativeButton("No"
