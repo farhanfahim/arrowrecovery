@@ -7,42 +7,46 @@
     android:orientation="vertical"
     android:padding="@dimen/x20dp">
 
+    <com.tekrevol.arrowrecovery.widget.AnyTextView
+        app:typeface="@string/font_regular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/x20dp"
+        android:layout_marginTop="@dimen/x10dp"
+        android:textAlignment="center"
+        android:layout_marginRight="@dimen/x20dp"
+        android:layout_marginBottom="@dimen/x20dp"
+        android:text="Welcome to Arrow Recovery customer support"
+        android:textSize="@dimen/s14" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
 
-            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-                android:layout_width="@dimen/x15dp"
-                android:layout_height="@dimen/x15dp"
-                android:background="@color/colorAccent"
-                app:corner_radius="@dimen/x10dp"></com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+<!--            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout-->
+<!--                android:layout_width="@dimen/x15dp"-->
+<!--                android:layout_height="@dimen/x15dp"-->
+<!--                android:background="@color/colorAccent"-->
+<!--                app:corner_radius="@dimen/x10dp"></com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>-->
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/x5dp"
-                android:text="Offline"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s14" />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="@dimen/x5dp"-->
+<!--                android:text="Offline"-->
+<!--                android:textColor="@color/title_color"-->
+<!--                android:textSize="@dimen/s14" />-->
+<!--        </LinearLayout>-->
 
-        <com.tekrevol.arrowrecovery.widget.AnyTextView
-            app:typeface="@string/font_regular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20dp"
-            android:layout_marginTop="@dimen/x10dp"
-            android:layout_marginRight="@dimen/x20dp"
-            android:layout_marginBottom="@dimen/x20dp"
-            android:text="Welcome to Arrow Recovery customer support"
-            android:textSize="@dimen/s14" />
+
 
 
         <ImageView
@@ -52,17 +56,17 @@
             android:layout_margin="@dimen/x20dp"
             android:src="@drawable/livechatarrowrecovery" />
 
-        <com.tekrevol.arrowrecovery.widget.AnyTextView
-            app:typeface="@string/font_regular"
-            android:id="@+id/txtCS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x20dp"
-            android:layout_marginTop="@dimen/x20dp"
-            android:layout_marginRight="@dimen/x20dp"
-            android:text="fff"
-            android:textColor="@color/title_color"
-            android:textSize="@dimen/s14" />
+<!--        <com.tekrevol.arrowrecovery.widget.AnyTextView-->
+<!--            app:typeface="@string/font_regular"-->
+<!--            android:id="@+id/txtCS"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/x20dp"-->
+<!--            android:layout_marginTop="@dimen/x20dp"-->
+<!--            android:layout_marginRight="@dimen/x20dp"-->
+<!--            android:text="fff"-->
+<!--            android:textColor="@color/title_color"-->
+<!--            android:textSize="@dimen/s14" />-->
 
     </LinearLayout>
 
@@ -85,7 +89,7 @@
             android:textStyle="bold" />-->
 
     <info.hoang8f.widget.FButton
-        android:id="@+id/txtLeaveMessage"
+        android:id="@+id/btnCustomerSupport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/x20dp"
@@ -93,7 +97,7 @@
         android:backgroundTint="@color/green_bg"
         android:paddingLeft="@dimen/x10dp"
         android:paddingRight="@dimen/x10dp"
-        android:text="Leave Message"
+        android:text="Customer Support"
         android:textAllCaps="false"
         android:textColor="@color/c_white"
         android:textSize="@dimen/s18"
