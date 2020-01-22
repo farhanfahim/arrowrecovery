@@ -37,26 +37,23 @@ import java.util.HashMap
 class SearchFragment : BaseFragment(), OnItemClickListener {
 
 
-
     //private var arrData: ArrayList<DummyModel> = ArrayList()
     private var arrData: ArrayList<SearchHistoryModel> = ArrayList()
+    private var arrString: ArrayList<String> = ArrayList()
     private var text: String? = null
     private var arrDataSearchBar: ArrayList<ProductDetailModel> = ArrayList()
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchBarShimmerAdapter: SearchBarShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
 
-    var searchHistoryModel:SearchHistoryModel = SearchHistoryModel()
-
-
-
+    var searchHistoryModel: SearchHistoryModel = SearchHistoryModel()
 
 
     companion object {
-        var makeId:String = ""
-        var modelId:String = ""
-        var year:String = ""
-        var serialNumber:String = ""
+        var makeId: String = ""
+        var modelId: String = ""
+        var year: String = ""
+        var serialNumber: String = ""
         fun newInstance(): SearchFragment {
 
             val args = Bundle()
@@ -74,7 +71,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         searchBarShimmerAdapter = SearchBarShimmerAdapter(context!!, arrDataSearchBar, this)
 
     }
-
 
 
     private fun onBind() {
@@ -110,28 +106,28 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable) {
-                    text = edtSearch.text.toString()
-                    arrDataSearchBar.clear()
+                text = edtSearch.text.toString()
+                arrDataSearchBar.clear()
 
-                    if (text == null){
-                        Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
-                    }else{
-                        getProducts(text!!, makeId, modelId, year, serialNumber)
-                        searchHistoryModel.query = text
+                if (text == null) {
+                    Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
+                } else {
+                    getProducts(text!!, makeId, modelId, year, serialNumber)
+                    searchHistoryModel.query = text
 
-                        recyclerViewSearchList.visibility = View.GONE
-                        rvSearch.visibility = View.VISIBLE
-                    }
-                    if (text!! == "") {
-                        arrDataSearchBar.clear()
-                        recyclerViewSearchList.visibility = View.VISIBLE
-                        rvSearch.visibility = View.GONE
-                        makeId = ""
-                        modelId = ""
-                        year = ""
-                        serialNumber = ""
-                    }
+                    recyclerViewSearchList.visibility = View.GONE
+                    rvSearch.visibility = View.VISIBLE
                 }
+                if (text!! == "") {
+                    arrDataSearchBar.clear()
+                    recyclerViewSearchList.visibility = View.VISIBLE
+                    rvSearch.visibility = View.GONE
+                    makeId = ""
+                    modelId = ""
+                    year = ""
+                    serialNumber = ""
+                }
+            }
 
         })
 
@@ -166,9 +162,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-            if (text == null){
-                Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
-            }else{
+            if (text == null) {
+                Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
+            } else {
                 baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
             }
         })
@@ -185,13 +181,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         var product: ProductDetailModel = anyObject as ProductDetailModel
         baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-
-        //saveSearch()
+        saveSearch(product.name)
         //sharedPreferenceManager.putValue("searchKeyword",product.name)
 
     }
 
-    private fun getProducts(query: String,makeId:String,modelId:String,year:String,serialNumber:String) {
+    private fun getProducts(query: String, makeId: String, modelId: String, year: String, serialNumber: String) {
 
         rvSearch.showShimmer()
 
@@ -223,28 +218,23 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         })
     }
 
-    fun loadSearch(){
+    fun loadSearch() {
         val gson = Gson()
         val json = sharedPreferenceManager.getString("Set")
-        if (json.isEmpty())
-        {
+        if (json.isEmpty()) {
             Toast.makeText(context, "There is something error", Toast.LENGTH_LONG).show()
-        }
-        else
-        {
-            val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
-            var arrPackageData:List<SearchHistoryModel> = gson.fromJson(json, type)
-            for (data in arrPackageData)
-            {
-                arrData.add(data)
-
-            }
+        } else {
+            /*val type = object : TypeToken<java.util.ArrayList<String?>?>() {}.type
+            var arrPackageData: List<String> = gson.fromJson(json, type)
+            for (data in arrPackageData) {
+                arrString.add(data)
+            }*/
         }
     }
 
-    fun saveSearch(query:String){
+    fun saveSearch(query: String) {
 
-        arrData.add(searchHistoryModel)
+        arrData.add((SearchHistoryModel(query)))
         val gson = Gson()
         val json = gson.toJson(arrData)
         sharedPreferenceManager.putValue("Set", json)
