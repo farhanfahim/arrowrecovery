@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/x10dp"
         android:layout_marginRight="@dimen/x30dp"
         android:layout_marginLeft="@dimen/x30dp"
-        android:text=""
+        android:text="asdad"
         android:maxLines="1"
         android:minLines="1"
         android:ellipsize="end"
