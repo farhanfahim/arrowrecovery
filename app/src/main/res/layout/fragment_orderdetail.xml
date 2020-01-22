@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutOrderDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_white"
-    android:id="@+id/linearLayoutOrderDetail"
     android:orientation="vertical">
     <!--
         <LinearLayout
@@ -57,84 +57,148 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/x20dp"
                 android:layout_marginLeft="@dimen/x20dp"
-                android:layout_marginRight="@dimen/x20dp">
+                android:layout_marginTop="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:orientation="horizontal">
+
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Bill From"
+                    android:text="Order id: "
                     android:textColor="@color/txtGrey"
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_regular" />
 
-                <LinearLayout
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtOrderid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text=""
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_regular" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x20dp"
+                android:layout_marginRight="@dimen/x20dp"
+                android:orientation="horizontal">
+
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text=""
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
 
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x10dp"
+                    android:layout_marginRight="@dimen/x10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text=""
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
 
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:id="@+id/txtName"
-                        android:ellipsize="end"
-                        android:layout_marginRight="30dp"
-                        android:maxLines="1"
-                        android:minLines="1"
-
-                        android:text="John Smith"
-                        android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s16"
-                        app:typeface="@string/font_regular" />
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:ellipsize="end"
-                        android:layout_marginRight="30dp"
-                        android:id="@+id/txtAddress"
-                        android:maxLines="1"
-                        android:minLines="1"
-
-                        android:text="New York, USA"
-                        android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s16"
-                        app:typeface="@string/font_regular" />
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:ellipsize="end"
-                        android:id="@+id/txtPhone"
-                        android:maxLines="1"
-                        android:minLines="1"
-                        android:text="+44 123 456 1"
-
-                        android:textColor="@color/txtBlack"
-                        android:textSize="@dimen/s16"
-                        app:typeface="@string/font_regular" />
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text=""
+                    android:textColor="@color/txtBlack"
+                    android:textSize="@dimen/s16"
+                    app:typeface="@string/font_regular" />
 
 
-                </LinearLayout>
+                <!--  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="@dimen/x5dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+                      <ImageView
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:src="@drawable/user" />
+
+                  </LinearLayout>-->
+
+                <!--  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="@dimen/x5dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+                      <ImageView
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:src="@drawable/address" />
+
+                      <com.tekrevol.arrowrecovery.widget.AnyTextView
+                          android:id="@+id/txtAddress"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:ellipsize="end"
+                          android:maxLines="1"
+                          android:minLines="1"
+                          android:text=""
+                          android:textColor="@color/txtBlack"
+                          android:textSize="@dimen/s16"
+                          app:typeface="@string/font_regular" />
+
+                  </LinearLayout>
+
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="@dimen/x10dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+
+                      <ImageView
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:src="@drawable/phone" />
+
+
+                  </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -276,6 +340,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:reverseLayout="false"
@@ -304,15 +369,15 @@
 
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        android:id="@+id/txtAmountStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtAmountStatus"
                         android:layout_marginBottom="5dp"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:minLines="1"
-                        android:textColor="@color/txtGrey"
                         android:text="Total:"
+                        android:textColor="@color/txtGrey"
 
                         android:textSize="@dimen/s16"
                         app:typeface="@string/font_regular" />
@@ -358,8 +423,8 @@
 
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            android:layout_width="match_parent"
                             android:id="@+id/txtTotalPrice"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:ellipsize="end"
@@ -372,13 +437,13 @@
                             app:typeface="@string/font_regular" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            android:id="@+id/txtStatus"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:ellipsize="end"
-                            android:maxLines="1"
-                            android:id="@+id/txtStatus"
                             android:gravity="end"
+                            android:maxLines="1"
                             android:minLines="1"
                             android:text="Status"
 
@@ -387,12 +452,12 @@
                             app:typeface="@string/font_regular" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            android:id="@+id/txtEstimatedAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:ellipsize="end"
                             android:gravity="end"
-                            android:id="@+id/txtEstimatedAmount"
                             android:maxLines="1"
                             android:minLines="1"
                             android:text="----"
@@ -407,8 +472,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>
@@ -427,68 +490,20 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <!--   <Button
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_margin="20dp"
-               android:background="@drawable/searchbar_grey"
-               android:backgroundTint="@color/green_bg"
-               android:gravity="center"
-               android:padding="@dimen/x10dp"
-               android:text="Take Screenshot"
-               android:textColor="@color/c_white"
-               android:textSize="@dimen/s18" />-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
+        <info.hoang8f.widget.FButton
             android:id="@+id/btnSavePdf"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/x20dp"
             android:background="@drawable/searchbar_grey"
             android:backgroundTint="@color/green_bg"
-            android:gravity="center"
-            android:weightSum="1">
-
-            <!--<ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/camera_ss" />-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:text="save as pdf"
-                android:textColor="@color/c_white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-        <!--
-                <info.hoang8f.widget.FButton
-                    android:id="@+id/txtLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/x20dp"
-                    android:background="@drawable/searchbar_grey"
-                    android:backgroundTint="@color/green_bg"
-                    android:paddingLeft="@dimen/x10dp"
-                    android:paddingRight="@dimen/x10dp"
-                    android:text="Take Screenshot"
-                    android:textAllCaps="false"
-                    android:textColor="@color/c_white"
-                    android:textSize="@dimen/s18"
-                    app:shadowHeight="@dimen/x1dp" />
-                -->
+            android:paddingLeft="@dimen/x10dp"
+            android:paddingRight="@dimen/x10dp"
+            android:text="Take Screenshot"
+            android:textAllCaps="false"
+            android:textColor="@color/c_white"
+            android:textSize="@dimen/s18"
+            app:shadowHeight="@dimen/x1dp" />
 
 
     </LinearLayout>

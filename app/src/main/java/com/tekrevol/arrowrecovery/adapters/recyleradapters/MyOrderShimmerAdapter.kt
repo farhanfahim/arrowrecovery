@@ -52,11 +52,11 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
 
     override fun getPagingLayout(): Int {
 
-        return R.layout.shimmer_item_order
+        return 0
     }
 
     override fun getPagingItemCount(): Int {
-        return arrData.size
+        return 0
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -85,7 +85,7 @@ class MyOrderShimmerAdapter(private val activity: Context, private val arrData: 
                 //txtAddress?.text = it.userModel.userDetails.address
                 txtOrderid?.text = "order id: " + it.id.toString()
                 // txtPhone?.text = it.userModel.userDetails.phone
-                txtPrice?.text = "Order Total: $" + it.estimatedAmount.toString()
+                txtPrice?.text = "Total: $" + it.estimatedAmount.toString()
 
                 val dateParts = it.created_at.split(" ")
                 val date = dateParts[0]

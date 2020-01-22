@@ -1,16 +1,28 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.os.Environment
+import android.print.PrintAttributes
 import android.view.View
 import android.widget.AdapterView
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.reflect.TypeToken
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.OrderDetailShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.libraries.htmltopdf.CreatePdf
+import com.tekrevol.arrowrecovery.managers.FileManager
+import com.tekrevol.arrowrecovery.managers.FileManager.openFile
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderModel
@@ -19,16 +31,6 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_orderdetail.*
 import retrofit2.Call
-import android.widget.LinearLayout
-import android.os.Environment
-import android.print.PrintAttributes
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
-import com.tekrevol.arrowrecovery.constatnts.AppConstants
-import com.tekrevol.arrowrecovery.libraries.htmltopdf.CreatePdf
-import com.tekrevol.arrowrecovery.managers.FileManager
-import com.tekrevol.arrowrecovery.managers.FileManager.openFile
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,7 +46,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     private lateinit var linearLayoutOrderDetail: LinearLayout
     var path: String = ""
     lateinit var folder: File
-
+    private var mDialog: KProgressHUD? = null
     var pos: Int = 0
     var model: String? = null
     var orderModel: OrderModel? = null
@@ -94,6 +96,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
         txtName.text = (orderModel?.userModel!!.userDetails.fullName)
         txtAddress.text = (orderModel?.userModel!!.userDetails.address)
         txtPhone.text = (orderModel?.userModel!!.userDetails.phone)
+        txtOrderid.text = (orderModel?.id.toString())
 
         if (orderModel!!.status == AppConstants.STATUS_RECEIVED) {
             txtStatus!!.text = "Received"
@@ -179,12 +182,6 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun setListeners() {
-        /*       backButtonorder.setOnClickListener(View.OnClickListener {
-                   baseActivity.popBackStack()
-
-               })*/
-
-
 
         btnSavePdf.setOnClickListener {
             savePdfFile(path)
@@ -237,6 +234,9 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     private fun savePdfFile(path: String) {
 
 
+        mDialog = UIHelper.getProgressHUD(context)
+        mDialog?.show() as KProgressHUD
+
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         var currentDateTime: String = dateFormat.format(Date())
         val fileName = "$currentDateTime"
@@ -250,14 +250,20 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
                 .setFilePath(path)
                 .setCallbackListener(object : CreatePdf.PdfCallbackListener {
                     override fun onFailure(errorMsg: String) {
-                        Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                        UIHelper.showToast(context, errorMsg)
+                        mDialog?.dismiss()
+
                     }
 
                     override fun onSuccess(filePath: String) {
+
+                        mDialog?.dismiss()
                         val snack = Snackbar.make(view, "PDF Saved", 10000)
                         snack.setAction("View PDF") {
                             if (FileManager.isFileExits(filePath)) {
                                 openFile(context, File(filePath))
+
+
                             }
                         }
                         snack.show()

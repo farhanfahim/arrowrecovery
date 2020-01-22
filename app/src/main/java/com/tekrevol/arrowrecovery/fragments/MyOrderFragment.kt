@@ -6,12 +6,14 @@ import android.widget.AdapterView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyOrderShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
+import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
@@ -19,23 +21,19 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import com.todkars.shimmer.ShimmerAdapter
 import kotlinx.android.synthetic.main.fragment_myorder.*
 import retrofit2.Call
 import java.util.HashMap
 
 class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageListener {
 
-
     private var arrData: ArrayList<OrderModel> = ArrayList()
     private lateinit var myOrderAdapter: MyOrderShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
 
     private var offset: Int = 0
-    private val limit = 2
+    private val limit = 10
     private var x = 0
-
-    private var progressBarMyOrder: ProgressBar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,19 +43,25 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressBarMyOrder = view.findViewById(R.id.progressBarMyOrder) as ProgressBar
-
         onBind()
-        getOrders(limit, offset)
+        getOrders(limit, 0)
     }
 
     private fun onBind() {
 
         arrData.clear()
-        recyclerViewMyOrder.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerViewMyOrder.adapter = myOrderAdapter
-        recyclerViewMyOrder.setItemViewType(ShimmerAdapter.ItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_myorder }))
+        val mLayoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerViewMyOrder.layoutManager = mLayoutManager1
         (recyclerViewMyOrder.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+
+        val pagingDelegate: PagingDelegate = PagingDelegate.Builder(myOrderAdapter)
+                .attachTo(recyclerViewMyOrder)
+                .listenWith(this@MyOrderFragment)
+                .build()
+        recyclerViewMyOrder.adapter = myOrderAdapter
+        recyclerViewMyOrder.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
+
+
     }
 
     companion object {
@@ -82,9 +86,6 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
     }
 
     override fun setListeners() {
-        /*      backButton.setOnClickListener(View.OnClickListener {
-                  baseActivity.popBackStack()
-              })*/
 
     }
 
@@ -106,7 +107,6 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
         var orderModel: OrderModel = anyObject as OrderModel
-        //baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
         baseActivity.addDockableFragment(OrderDetailFragment.newInstance(orderModel, position), true)
 
 
@@ -120,7 +120,6 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
 
         }
 
-
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = AppConstants.ALL_ORDERS
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
@@ -129,25 +128,35 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                val type = object : TypeToken<java.util.ArrayList<OrderModel?>?>() {}.type
-                val arrayList: java.util.ArrayList<OrderModel> = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
+                if (webResponse.result != null) {
+                    val type = object : TypeToken<java.util.ArrayList<OrderModel?>?>() {}.type
+                    val arrayList: java.util.ArrayList<OrderModel> = GsonFactory.getSimpleGson()
+                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                    , type)
 
-                if (x == 0) {
+                    if (x == 0) {
+                        recyclerViewMyOrder.hideShimmer()
+                    }
+                    arrData.addAll(arrayList)
+                    myOrderAdapter.notifyDataSetChanged()
+                    onDonePaging()
+
+                } else {
+                    if (recyclerViewMyOrder == null) {
+                        return
+                    }
                     recyclerViewMyOrder.hideShimmer()
+
                 }
-                arrData.clear()
-                arrData.addAll(arrayList)
-                myOrderAdapter.notifyDataSetChanged()
-                onDonePaging()
+
             }
 
             override fun onError(`object`: Any?) {
                 if (recyclerViewMyOrder == null) {
-                    recyclerViewMyOrder.hideShimmer()
                     return
                 }
+                recyclerViewMyOrder.hideShimmer()
+
             }
         })
 
@@ -160,7 +169,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
             offset = i
 
             x++
-            progressBarMyOrder!!.visibility = View.VISIBLE
+            progressBarMyOrder.visibility = View.VISIBLE
 
             getOrders(limit, i)
         }
@@ -168,7 +177,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
 
     override fun onDonePaging() {
         if (progressBarMyOrder != null) {
-            progressBarMyOrder!!.visibility = View.GONE
+            progressBarMyOrder.visibility = View.GONE
         }
     }
 }

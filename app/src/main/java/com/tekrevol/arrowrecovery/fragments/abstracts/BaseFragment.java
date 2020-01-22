@@ -38,6 +38,8 @@ import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices;
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
+import com.todkars.shimmer.ShimmerAdapter.ItemViewType;
+
 
 import java.io.File;
 
