@@ -39,7 +39,6 @@ import kotlin.collections.ArrayList
 
 class OrderDetailFragment : BaseFragment(), OnItemClickListener {
 
-
     private var arrData: ArrayList<OrderProductModel> = ArrayList()
     var webCall: Call<WebResponse<Any>>? = null
     private lateinit var myOrderAdapter: OrderDetailShimmerAdapter
