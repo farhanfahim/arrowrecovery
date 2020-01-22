@@ -86,7 +86,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     }
 
-    private fun myCartApi() {
+    fun myCartApi() {
 
         recyclerViewCart.showShimmer()
         val queryMap = HashMap<String, Any>()
