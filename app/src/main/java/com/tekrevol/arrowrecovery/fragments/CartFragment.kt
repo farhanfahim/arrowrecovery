@@ -69,7 +69,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         onBind()
     }
 
-    private fun onBind() {
+    fun onBind() {
         arrData.clear()
         arrDataCart.clear()
         myCartApi()
