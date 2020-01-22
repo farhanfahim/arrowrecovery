@@ -1,5 +1,6 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,16 +11,21 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.SearchHistoryModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
@@ -33,12 +39,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
 
     //private var arrData: ArrayList<DummyModel> = ArrayList()
-    private var arrData: ArrayList<String> = ArrayList()
+    private var arrData: ArrayList<SearchHistoryModel> = ArrayList()
     private var text: String? = null
     private var arrDataSearchBar: ArrayList<ProductDetailModel> = ArrayList()
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchBarShimmerAdapter: SearchBarShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
+
+    var searchHistoryModel:SearchHistoryModel = SearchHistoryModel()
 
 
 
@@ -72,8 +80,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     private fun onBind() {
 
         //arrData.clear()
-        //arrData.addAll(Constants.daysSelector())
+        //arrData.addAll()
 
+        loadSearch()
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         val resId = R.anim.layout_animation_fall_bottom
@@ -103,16 +112,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             override fun afterTextChanged(s: Editable) {
                     text = edtSearch.text.toString()
                     arrDataSearchBar.clear()
-                    if (text!! == ""){
+
+                    if (text == null){
                         Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
                     }else{
                         getProducts(text!!, makeId, modelId, year, serialNumber)
-
-//                        if (text!!.length > 2){
-//                            arrData.add(text.toString())
-//                            sharedPreferenceManager.putObject("searchKeyword",arrData)
-//                        }
-
+                        searchHistoryModel.query = text
 
                         recyclerViewSearchList.visibility = View.GONE
                         rvSearch.visibility = View.VISIBLE
@@ -127,15 +132,17 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                         serialNumber = ""
                     }
                 }
+
         })
 
-    }
 
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
         onBind()
+
 
     }
 
@@ -179,6 +186,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         var product: ProductDetailModel = anyObject as ProductDetailModel
         baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
 
+        //saveSearch()
+        //sharedPreferenceManager.putValue("searchKeyword",product.name)
+
     }
 
     private fun getProducts(query: String,makeId:String,modelId:String,year:String,serialNumber:String) {
@@ -213,6 +223,31 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         })
     }
 
+    fun loadSearch(){
+        val gson = Gson()
+        val json = sharedPreferenceManager.getString("Set")
+        if (json.isEmpty())
+        {
+            Toast.makeText(context, "There is something error", Toast.LENGTH_LONG).show()
+        }
+        else
+        {
+            val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
+            var arrPackageData:List<SearchHistoryModel> = gson.fromJson(json, type)
+            for (data in arrPackageData)
+            {
+                arrData.add(data)
 
+            }
+        }
+    }
+
+    fun saveSearch(query:String){
+
+        arrData.add(searchHistoryModel)
+        val gson = Gson()
+        val json = gson.toJson(arrData)
+        sharedPreferenceManager.putValue("Set", json)
+    }
 }
 
