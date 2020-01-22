@@ -26,14 +26,14 @@ import retrofit2.Call
 import java.util.*
 
 
-
 class AdvanceSearchFragment : BaseFragment() {
 
     private val spinnerModelArrayList: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
     private val spinnerModelArrayList1: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
     private val spinnerModelArrayList2: ArrayList<SpinnerModel> = ArrayList<SpinnerModel>()
 
-    var webCall: Call<WebResponse<Any>>? = null
+    var webCallMake: Call<WebResponse<Any>>? = null
+    var webCallModel: Call<WebResponse<Any>>? = null
 
     companion object {
         var arrDataMake: ArrayList<VehicleMakeModel> = ArrayList()
@@ -46,7 +46,6 @@ class AdvanceSearchFragment : BaseFragment() {
             return fragment
         }
     }
-
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -78,9 +77,7 @@ class AdvanceSearchFragment : BaseFragment() {
         for (carModel in Constants.carModelSelector()) {
             spinnerModelArrayList1.add(SpinnerModel(carModel.text))
         }
-//        for (carYear in Constants.carYearSelector()) {
-//            spinnerModelArrayList2.add(SpinnerModel(carYear.text))
-//        }
+
         serialNumber = edtSerialNumber.toString()
     }
 
@@ -104,15 +101,15 @@ class AdvanceSearchFragment : BaseFragment() {
                 Toast.makeText(context, "select at least one field", Toast.LENGTH_LONG).show()
             } else {
                 baseActivity.popBackStack()
-                if (getModelId() == -1){
+                if (getModelId() == -1) {
                     modelId = ""
-                }else{
+                } else {
                     modelId = getModelId().toString()
                 }
 
-                if (getMakeId() == -1){
+                if (getMakeId() == -1) {
                     makeId = ""
-                }else{
+                } else {
                     makeId = getMakeId().toString()
                 }
                 year = txtYear.stringTrimmed
@@ -158,7 +155,7 @@ class AdvanceSearchFragment : BaseFragment() {
     private fun getMakeName() {
 
         val query: MutableMap<String, Any> = HashMap()
-        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MAKES, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallMake = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MAKES, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : com.google.gson.reflect.TypeToken<ArrayList<VehicleMakeModel>>() {
@@ -183,7 +180,7 @@ class AdvanceSearchFragment : BaseFragment() {
     private fun getModelName() {
 
         val query: MutableMap<String, Any> = HashMap()
-        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MODEL, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallModel = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MODEL, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : com.google.gson.reflect.TypeToken<ArrayList<VehicleModels>>() {
@@ -225,7 +222,16 @@ class AdvanceSearchFragment : BaseFragment() {
         return -1
     }
 
+    override fun onDestroyView() {
+        if (webCallMake != null) {
+            webCallMake!!.cancel()
+        }
+        if (webCallModel != null) {
+            webCallModel!!.cancel()
+        }
+        super.onDestroyView()
 
+    }
 
 }
 
