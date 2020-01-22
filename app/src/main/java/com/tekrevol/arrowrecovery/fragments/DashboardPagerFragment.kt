@@ -109,6 +109,11 @@ class DashboardPagerFragment : BaseFragment() {
             2 -> {
                 dashboardTitleBar.hideSearch()
                 dashboardTitleBar.setTitle("Cart")
+                val cartFragment = adapter?.getItem(2) as CartFragment?
+                cartFragment?.let {
+                    it.myCartApi()
+                }
+
             }
             3 -> {
                 dashboardTitleBar.hideSearch()
