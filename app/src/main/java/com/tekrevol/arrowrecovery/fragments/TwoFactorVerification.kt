@@ -29,7 +29,7 @@ class TwoFactorVerification : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         txtPhone.text = "We have sent you a SMS with a code to the number " + sharedPreferenceManager.currentUser.userDetails.phone + " and your email " + sharedPreferenceManager.currentUser.email
-        sendOtp()
+        //sendOtp()
     }
 
     private fun sendOtp() {

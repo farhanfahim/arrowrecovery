@@ -166,8 +166,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener{
         titleBar.visibility = View.VISIBLE
         titleBar.hide()
         titleBar.showBackButton(activity)
-
-        titleBar.setTitle("OrderModel Detail")
+        titleBar.setTitle("Order Detail")
 
     }
 

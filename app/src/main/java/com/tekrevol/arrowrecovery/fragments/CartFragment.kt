@@ -38,7 +38,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     private var arrData: ArrayList<OrderProductModel> = ArrayList()
     private var arrDataCart: ArrayList<CollectionModel> = ArrayList()
     private lateinit var cartAdapter: MyCartAdapter
-    var webCall: Call<WebResponse<Any>>? = null
+    var webCallCart: Call<WebResponse<Any>>? = null
+    var webCallCollection: Call<WebResponse<Any>>? = null
     var webCallDelete: Call<WebResponse<Any>>? = null
     var webCallUpdate: Call<WebResponse<Any>>? = null
     var orderid: Int? = null
@@ -91,7 +92,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = 1
         queryMap[WebServiceConstants.Q_PARAM_STATUS] = 10
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallCart = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 if (webResponse.result != null) {
@@ -157,7 +158,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             queryMap[WebServiceConstants.Q_LAT] = 24.9279159//googleAddressModel.latitude
             queryMap[WebServiceConstants.Q_LONG] = 67.0957739//googleAddressModel.longitude
 
-            webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            webCallCollection = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                     val type = object : TypeToken<java.util.ArrayList<CollectionModel?>?>() {}.type
@@ -167,7 +168,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                     if (webResponse.isSuccess) {
                         arrDataCart.addAll(arrayList)
-                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart,orderid)
+                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid)
                         checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
                     }
                 }
@@ -196,6 +197,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
             }
         })
+
+
     }
 
 
@@ -293,6 +296,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 }
             }
         }
+
+
     }
 
     override fun onDonePaging() {
@@ -300,5 +305,10 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     override fun onPage(offset: Int) {
 
+    }
+
+    override fun onDestroyView() {
+        webCallCart?.cancel()
+        super.onDestroyView()
     }
 }
