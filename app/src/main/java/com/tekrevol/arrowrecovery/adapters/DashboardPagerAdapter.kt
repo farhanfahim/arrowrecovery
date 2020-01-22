@@ -4,13 +4,14 @@ import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import com.tekrevol.arrowrecovery.fragments.*
 
-class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm!!, Lifecycle.State.RESUMED.ordinal) {
+class DashboardPagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm!!) {
     // CURRENT FRAGMENT
-    private val registeredFragments = SparseArray<Fragment>()
+    val registeredFragments = SparseArray<Fragment>()
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val fragment = super.instantiateItem(container, position) as Fragment

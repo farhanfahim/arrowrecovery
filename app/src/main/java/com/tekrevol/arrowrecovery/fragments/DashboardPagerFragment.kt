@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.viewpager.widget.ViewPager
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.DashboardPagerAdapter
@@ -93,6 +94,26 @@ class DashboardPagerFragment : BaseFragment() {
         navigationBar.setOnClickMenuListener { model ->
             setCurrentItem(model.id)
         }
+
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                if (position == 2) {
+                    adapter?.let {
+                        val cartFragment = it.registeredFragments[2] as CartFragment?
+                        cartFragment?.myCartApi(true)
+                    }
+
+                }
+
+            }
+        })
     }
 
 
@@ -109,10 +130,7 @@ class DashboardPagerFragment : BaseFragment() {
             2 -> {
                 dashboardTitleBar.hideSearch()
                 dashboardTitleBar.setTitle("Cart")
-                val cartFragment = adapter?.getItem(2) as CartFragment?
-                cartFragment?.let {
 
-                }
             }
             3 -> {
                 dashboardTitleBar.hideSearch()
