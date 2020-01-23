@@ -39,6 +39,7 @@ public class WebServiceConstants {
     public static final String BASE_URL = "http://app-arrow-recovery.servstaging.com/";
     public static final String IMAGE_BASE_URL = "http://app-arrow-recovery.servstaging.com/api/resize/";
 
+
     // DEV
 //    public static final String BASE_URL = "http://papp.apps.fomarkmedia.com/";
 //    public static final String IMAGE_BASE_URL = "http://arrow-recovery.apps.fomarkmedia.com/api/v1/";
