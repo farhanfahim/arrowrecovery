@@ -82,7 +82,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         //arrData.clear()
         //arrData.addAll()
 
-        loadSearch()
+
+
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         val resId = R.anim.layout_animation_fall_bottom
@@ -115,6 +116,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
                     if (text == null){
                         Toast.makeText(context,"search keyword required",Toast.LENGTH_SHORT).show()
+                        loadData()
                     }else{
                         getProducts(text!!, makeId, modelId, year, serialNumber)
                         searchHistoryModel.query = text
@@ -123,6 +125,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                         rvSearch.visibility = View.VISIBLE
                     }
                     if (text!! == "") {
+                        //loadData()
                         arrDataSearchBar.clear()
                         recyclerViewSearchList.visibility = View.VISIBLE
                         rvSearch.visibility = View.GONE
@@ -142,6 +145,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         super.onViewCreated(view, savedInstanceState)
         onBind()
+
 
 
     }
@@ -189,6 +193,10 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         //saveSearch()
         //sharedPreferenceManager.putValue("searchKeyword",product.name)
 
+        insertItem(product.name)
+        searchAdapter.notifyItemInserted(arrData.size)
+        saveData()
+
     }
 
     private fun getProducts(query: String,makeId:String,modelId:String,year:String,serialNumber:String) {
@@ -223,31 +231,27 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         })
     }
 
-    fun loadSearch(){
-        val gson = Gson()
-        val json = sharedPreferenceManager.getString("Set")
-        if (json.isEmpty())
-        {
-            Toast.makeText(context, "There is something error", Toast.LENGTH_LONG).show()
-        }
-        else
-        {
-            val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
-            var arrPackageData:List<SearchHistoryModel> = gson.fromJson(json, type)
-            for (data in arrPackageData)
-            {
-                arrData.add(data)
 
-            }
-        }
-    }
+    private fun saveData() {
 
-    fun saveSearch(query:String){
-
-        arrData.add(searchHistoryModel)
         val gson = Gson()
         val json = gson.toJson(arrData)
-        sharedPreferenceManager.putValue("Set", json)
+        sharedPreferenceManager.putValue("SearchedItem", json)
     }
+    private fun loadData() {
+        val gson = Gson()
+        val json = sharedPreferenceManager.getString("SearchedItem")
+        val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
+        arrData = gson.fromJson(json, type)
+
+    }
+
+    private fun insertItem(query:String) {
+        arrData.add(SearchHistoryModel(query))
+        searchAdapter.notifyItemInserted(arrData.size)
+    }
+
+
+
 }
 
