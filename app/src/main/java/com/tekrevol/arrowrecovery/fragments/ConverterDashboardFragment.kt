@@ -61,7 +61,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     var itemPos: Int = 0
 
     private var offset: Int = 0
-    private val limit = 2
+    private val limit = 8
     private var x = 0
     private var progressConverters: ProgressBar? = null
 

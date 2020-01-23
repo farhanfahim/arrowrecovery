@@ -55,10 +55,6 @@ class DashboardPagerFragment : BaseFragment() {
             }
             4 -> setProfileTitleBar()
         }
-        /*if (positionToSelect == 2 || positionToSelect == 3) {
-           // btnRightSearch.visibility = View.INVISIBLE
-
-        }*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

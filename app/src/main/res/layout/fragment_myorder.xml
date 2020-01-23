@@ -1,54 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/c_white"
     android:orientation="vertical">
-
-
-<!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="@dimen/x10dp">
-
-
-        <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="@dimen/x40dp"
-            android:layout_height="@dimen/x40dp"
-            android:layout_marginLeft="@dimen/x5dp"
-            android:layout_marginRight="@dimen/x10dp"
-            android:src="@drawable/back"
-            android:padding="@dimen/x10dp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="My Orders"
-            android:textColor="#000"
-            android:textSize="@dimen/s15" />
-
-
-
-        <ImageView
-            android:layout_width="@dimen/x40dp"
-            android:layout_height="@dimen/x40dp"
-            android:layout_marginLeft="@dimen/x5dp"
-            android:layout_marginRight="@dimen/x10dp"
-            android:visibility="invisible"
-            android:padding="@dimen/x10dp" />
-
-
-    </LinearLayout>
--->
-
 
     <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/recyclerViewMyOrder"
@@ -56,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
+        android:layout_weight="1"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:reverseLayout="false"

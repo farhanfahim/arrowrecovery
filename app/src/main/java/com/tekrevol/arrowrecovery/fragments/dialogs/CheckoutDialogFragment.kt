@@ -326,7 +326,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             updateOrderModel.deliveryMode = AppConstants.PICKUP
             updateOrderModel.timeSlot = txtPick
 
-            WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS.toString() + "/" + orderid, null,
+            WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS + "/" + orderid, null,
                     updateOrderModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
 
@@ -359,7 +359,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             updateOrderModel.deliveryMode = AppConstants.DELIVERED
             updateOrderModel.timeSlot = txtPick
             updateOrderModel.collectionCenterId = idFromSpinner
-            WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS.toString() + "/" + orderid, null,
+            WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS + "/" + orderid, null,
                     updateOrderModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
 

@@ -37,7 +37,6 @@ class RegisterPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) 
         }
     }
 
-
     override fun getCount(): Int {
         return 5
     }

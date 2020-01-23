@@ -69,7 +69,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         onBind()
     }
 
-    private fun onBind() {
+    fun onBind() {
         arrData.clear()
         arrDataCart.clear()
         myCartApi()
@@ -110,8 +110,12 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                     arrData.clear()
                     arrData.addAll(orderModel.orderProductModels)
                     cartAdapter.notifyDataSetChanged()
+                } else {
+                    if (recyclerViewCart == null) {
+                        return
+                    }
+                    recyclerViewCart.hideShimmer()
                 }
-
             }
 
             override fun onError(`object`: Any?) {
@@ -181,6 +185,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                 }
             })
+        } else {
+            UIHelper.showToast(context, "Your Cart is Empty")
         }
 
     }
@@ -201,8 +207,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
             }
         })
-
-
     }
 
 
