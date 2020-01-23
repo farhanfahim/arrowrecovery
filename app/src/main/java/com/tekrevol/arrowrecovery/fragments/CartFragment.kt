@@ -316,6 +316,9 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     override fun onDestroyView() {
         webCallCart?.cancel()
+        webCallCollection?.cancel()
+        webCallDelete?.cancel()
+        webCallUpdate?.cancel()
         super.onDestroyView()
     }
 }

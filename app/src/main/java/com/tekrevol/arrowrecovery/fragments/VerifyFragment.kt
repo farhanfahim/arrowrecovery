@@ -120,12 +120,8 @@ class VerifyFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        if (webCall != null) {
-            webCall!!.cancel()
-        }
-        if (countDownTimer != null) {
-            countDownTimer!!.cancel()
-        }
+        webCall?.cancel()
+        countDownTimer?.cancel()
         super.onDestroyView()
     }
 

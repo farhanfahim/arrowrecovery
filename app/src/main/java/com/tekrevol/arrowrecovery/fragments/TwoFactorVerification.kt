@@ -119,13 +119,8 @@ class TwoFactorVerification : BaseFragment() {
 
 
     override fun onDestroyView() {
-        if (webCall != null) {
-            webCall!!.cancel()
-        }
-
-        if (webCallVerify != null) {
-            webCallVerify!!.cancel()
-        }
+        webCall?.cancel()
+        webCallVerify?.cancel()
         super.onDestroyView()
     }
 }

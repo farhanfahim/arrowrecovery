@@ -109,13 +109,9 @@ class OtpVerification : BaseFragment() {
 
 
     override fun onDestroyView() {
-        if (webCall != null) {
-            webCall!!.cancel()
-        }
+        webCall?.cancel()
 
-        if (webCallVerify != null) {
-            webCallVerify!!.cancel()
-        }
+        webCallVerify?.cancel()
         super.onDestroyView()
     }
 }

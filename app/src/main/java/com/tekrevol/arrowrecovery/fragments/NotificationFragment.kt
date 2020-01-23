@@ -210,8 +210,9 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
     override fun onDestroyView() {
         webCall?.cancel()
         webCallDelete?.cancel()
-
         super.onDestroyView()
+
+
     }
 
 

@@ -363,5 +363,10 @@ class EditProfileFragment : BaseFragment() {
     }
 
 
+    override fun onDestroyView() {
+        webCall?.cancel()
+        super.onDestroyView()
+    }
+
 }
 

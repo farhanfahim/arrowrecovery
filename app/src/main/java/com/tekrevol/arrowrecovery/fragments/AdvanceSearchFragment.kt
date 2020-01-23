@@ -223,12 +223,8 @@ class AdvanceSearchFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        if (webCallMake != null) {
-            webCallMake!!.cancel()
-        }
-        if (webCallModel != null) {
-            webCallModel!!.cancel()
-        }
+        webCallMake?.cancel()
+        webCallModel?.cancel()
         super.onDestroyView()
 
     }

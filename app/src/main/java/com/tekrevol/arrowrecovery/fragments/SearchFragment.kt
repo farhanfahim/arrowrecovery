@@ -283,7 +283,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         sharedPreferenceManager.putValue("SearchedResult", json)
         arrData.add(SearchHistoryModel(query))
         searchAdapter.notifyItemInserted(arrData.size)
+    }
 
+
+    override fun onDestroyView() {
+        webCall?.cancel()
+        super.onDestroyView()
     }
 }
 

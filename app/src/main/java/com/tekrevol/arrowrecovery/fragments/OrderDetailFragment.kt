@@ -276,6 +276,12 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        webCall?.cancel()
+    }
+
+
 }
 
 

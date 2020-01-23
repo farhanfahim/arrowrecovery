@@ -98,9 +98,7 @@ class ResetFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        if (webCall != null) {
-            webCall!!.cancel()
-        }
+        webCall?.cancel()
         super.onDestroyView()
     }
 

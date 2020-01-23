@@ -156,4 +156,9 @@ class LoginFragment : BaseFragment() {
             return fragment
         }
     }
+
+    override fun onDestroyView() {
+        webCall?.cancel()
+        super.onDestroyView()
+    }
 }

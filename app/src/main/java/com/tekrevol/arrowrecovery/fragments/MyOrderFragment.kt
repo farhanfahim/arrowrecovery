@@ -180,4 +180,9 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
             progressBarMyOrder.visibility = View.GONE
         }
     }
+
+    override fun onDestroyView() {
+        webCall?.cancel()
+        super.onDestroyView()
+    }
 }

@@ -330,7 +330,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
             //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
 
-            getProductDetail(itemPos,limit, offset)
+            getProductDetail(itemPos, limit, offset)
 
             arrCategories.forEach { it.isSelected = false }
             arrCategories[position].isSelected = true
@@ -362,7 +362,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 categorySelectorAdapter.notifyDataSetChanged()
 
                 arrCategories[0].isSelected = true
-                getProductDetail(arrCategories[0].id,limit,offset)
+                getProductDetail(arrCategories[0].id, limit, offset)
 
                 //onDonePaging()
             }
@@ -377,7 +377,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-    private fun getProductDetail(item: Int,limit: Int, offset: Int) {
+    private fun getProductDetail(item: Int, limit: Int, offset: Int) {
 
 //        if (x == 0) {
 //            rvConverters.showShimmer()
@@ -405,7 +405,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 arrConverters.clear()
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
-                txtTotalItems.text = arrConverters.size.toString()+" items found"
+                txtTotalItems.text = arrConverters.size.toString() + " items found"
                 //onDonePaging()
 
 
@@ -427,7 +427,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
 
-    override fun onPage(i:Int) {
+    override fun onPage(i: Int) {
 //        if (offset < i) {
 //
 //            offset = i
@@ -443,6 +443,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //        if (progressConverters != null) {
 //            progressConverters!!.visibility = View.GONE
 //        }
+    }
+
+
+    override fun onDestroyView() {
+        webCall?.cancel()
+        webCallFeatured?.cancel()
+        webCallProductDetail?.cancel()
+        super.onDestroyView()
     }
 
 }
