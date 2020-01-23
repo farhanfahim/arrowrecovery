@@ -81,7 +81,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 .listenWith(this@CartFragment)
                 .build()
         recyclerViewCart.adapter = cartAdapter
-        recyclerViewCart.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
+        recyclerViewCart.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_cart })
 
     }
 

@@ -10,10 +10,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.reflect.TypeToken
 import com.kaopiz.kprogresshud.KProgressHUD
+import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.OrderDetailShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
@@ -37,7 +40,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OrderDetailFragment : BaseFragment(), OnItemClickListener {
+class OrderDetailFragment : BaseFragment(), OnItemClickListener ,PagingDelegate.OnPageListener {
 
     private var arrData: ArrayList<OrderProductModel> = ArrayList()
     var webCall: Call<WebResponse<Any>>? = null
@@ -90,6 +93,19 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
         recyclerViewOrderDetail.adapter = myOrderAdapter
         recyclerViewOrderDetail.setItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_order })
 
+        val mLayoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerViewOrderDetail.layoutManager = mLayoutManager1
+        (recyclerViewOrderDetail.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+
+        val pagingDelegate: PagingDelegate = PagingDelegate.Builder(myOrderAdapter)
+                .attachTo(recyclerViewOrderDetail)
+                .listenWith(this@OrderDetailFragment)
+                .build()
+        recyclerViewOrderDetail.adapter = myOrderAdapter
+        recyclerViewOrderDetail.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_order })
+
+
+
         getOrderProducts(orderModel!!.id)
 
         txtName.text = (orderModel?.userModel!!.userDetails.fullName)
@@ -129,7 +145,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.red_bg))
         }
 
-        if (orderModel!!.status == AppConstants.STATUS_CART) {
+        if (orderModel!!.status == AppConstants.STATUS_PENDING) {
             txtStatus!!.text = "Pending"
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.fbutton_color_sun_flower))
         }
@@ -279,6 +295,13 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         webCall?.cancel()
+    }
+
+    override fun onDonePaging() {
+    }
+
+    override fun onPage(offset: Int) {
+
     }
 
 

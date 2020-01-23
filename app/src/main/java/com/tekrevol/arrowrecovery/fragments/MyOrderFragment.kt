@@ -59,7 +59,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
                 .listenWith(this@MyOrderFragment)
                 .build()
         recyclerViewMyOrder.adapter = myOrderAdapter
-        recyclerViewMyOrder.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
+        recyclerViewMyOrder.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_myorder })
 
 
     }

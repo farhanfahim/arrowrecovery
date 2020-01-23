@@ -129,7 +129,7 @@ public class ImageLoaderHelper {
         if (decodedByte != null) {
             imageView.setImageBitmap(decodedByte);
         } else {
-            imageView.setImageResource(R.drawable.profile_placeholder);
+            imageView.setImageResource(R.drawable.placeholderimg);
         }
     }
 
@@ -148,8 +148,8 @@ public class ImageLoaderHelper {
         if (isUser) {
             return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                     .showImageForEmptyUri(R.color.base_dark_gray)
-                    .showImageOnFail(R.drawable.profile_placeholder)
-                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .showImageOnFail(R.drawable.placeholderimg)
+                    .showImageOnLoading(R.drawable.placeholderimg)
                     .build();
         } else {
             return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
@@ -168,8 +168,8 @@ public class ImageLoaderHelper {
         if (isUser) {
             return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                     .showImageForEmptyUri(R.color.base_dark_gray)
-                    .showImageOnFail(R.drawable.profile_placeholder)
-                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .showImageOnFail(R.drawable.placeholderimg)
+                    .showImageOnLoading(R.drawable.placeholderimg)
                     .extraForDownloader(headers)
                     .build();
         } else {
@@ -189,8 +189,8 @@ public class ImageLoaderHelper {
         if (isUser) {
             return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                     .showImageForEmptyUri(R.color.base_dark_gray)
-                    .showImageOnFail(R.drawable.profile_placeholder)
-                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .showImageOnFail(R.drawable.placeholderimg)
+                    .showImageOnLoading(R.drawable.placeholderimg)
                     .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
         } else {
             return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
@@ -209,8 +209,8 @@ public class ImageLoaderHelper {
         if (isUser) {
             return new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                     .showImageForEmptyUri(R.color.base_dark_gray)
-                    .showImageOnFail(R.drawable.profile_placeholder)
-                    .showImageOnLoading(R.drawable.profile_placeholder)
+                    .showImageOnFail(R.drawable.placeholderimg)
+                    .showImageOnLoading(R.drawable.placeholderimg)
                     .extraForDownloader(headers)
                     .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
         } else {

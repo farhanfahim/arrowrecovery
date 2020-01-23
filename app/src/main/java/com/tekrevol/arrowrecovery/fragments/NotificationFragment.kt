@@ -109,7 +109,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                 .listenWith(this@NotificationFragment)
                 .build()
         recyclerViewNotification.adapter = shimmerNotificationAdapter
-        recyclerViewNotification.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
+        recyclerViewNotification.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_notification})
 
     }
 
