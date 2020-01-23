@@ -43,13 +43,21 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
             return
         }
 
+        val java: Class<HomeActivity>
+        val user = SharedPreferenceManager.getInstance(this).currentUser
+
+        if ((user.userDetails.isCompleted == 1) && (user.userDetails.isVerified == 1) && (user.userDetails.isApproved == 1)) {
+            java = HomeActivity::class.java
+        } else {
+            return
+        }
 
         if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
-            val intent = Intent(applicationContext, HomeActivity::class.java)
+            val intent = Intent(applicationContext, java)
             handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
         } else {
             val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
-            val intent = Intent(applicationContext, HomeActivity::class.java)
+            val intent = Intent(applicationContext, java)
             handleNotification("Arrow Recovery", notificationModel.data.message, intent)
         }
 
@@ -87,7 +95,7 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
     fun showNotification(context: Context, title: String?, message: String?, intent: Intent?) {
         val nextInt = Random.nextInt()
         val sharedPreferenceManager = SharedPreferenceManager.getInstance(context)
-        val pendingIntent = PendingIntent.getActivity(context, nextInt,intent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(context, nextInt, intent, PendingIntent.FLAG_ONE_SHOT)
         val CHANNEL_ID = "arrow_recovery_channel" // The id of the channel.
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
