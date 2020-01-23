@@ -306,7 +306,7 @@ public class WebServices {
 
                             @Override
                             public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                                UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                                //                   UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                                 dismissDialog();
                                 callBack.onError("");
                             }
@@ -351,7 +351,7 @@ public class WebServices {
 
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                        UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                        //              UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
                         callBack.onError("");
                     }
@@ -396,7 +396,7 @@ public class WebServices {
 
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                        UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                        //            UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
                         callBack.onError("");
                     }
@@ -438,7 +438,7 @@ public class WebServices {
 
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
-                        UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                        //            UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
                         callBack.onError("");
                     }

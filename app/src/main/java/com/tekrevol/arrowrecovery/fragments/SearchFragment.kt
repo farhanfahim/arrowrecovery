@@ -214,43 +214,64 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun loadData() {
-        //   rvSearch.visibility = View.VISIBLE
         val gson = Gson()
-        val json = sharedPreferenceManager.getString("SearchedItem")
-        if (json != null) {
+        val json = sharedPreferenceManager.getString("SearchedResult")
+        if (json != "") {
             val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
-            arrData2 = gson.fromJson(json, type)
-            arrData.addAll(arrData2)
-            searchAdapter.notifyDataSetChanged()
+            if (type != null) {
+                arrData2 = gson.fromJson(json, type)
+                arrData.addAll(arrData2)
+                searchAdapter.notifyDataSetChanged()
+            }
+
         }
     }
 
     private fun insertItem(query: String) {
         val gsonSaveData = Gson()
-        val jsonSaveData = sharedPreferenceManager.getString("SearchedItem")
-        if (jsonSaveData != null) {
+        val jsonSaveData = sharedPreferenceManager.getString("SearchedResult")
+        if (jsonSaveData != "") {
             val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
             arrData2 = gsonSaveData.fromJson(jsonSaveData, type)
             val firstOrNull = arrData2.firstOrNull { it.equals(query) }
             if (firstOrNull == null) {
 
-                Log.d("arrsize", arrData2.size.toString())
                 if (arrData2.size > 4) {
                     arrData2.removeAt(0)
-                    Log.d("arrsize", arrData2.size.toString())
-
+                    searchAdapter.notifyItemRemoved(0)
+                    arrData.clear()
                     arrData.addAll(arrData2)
                     val gson = Gson()
                     val json = gson.toJson(arrData)
-                    sharedPreferenceManager.putValue("SearchedItems", json)
+                    sharedPreferenceManager.putValue("SearchedResult", json)
+                    arrData.add(SearchHistoryModel(query))
+                    searchAdapter.notifyItemInserted(arrData.size)
+                    return
+                } else {
+                    val gson = Gson()
+                    val json = gson.toJson(arrData)
+                    sharedPreferenceManager.putValue("SearchedResult", json)
                     arrData.add(SearchHistoryModel(query))
                     searchAdapter.notifyItemInserted(arrData.size)
                     return
                 }
             } else {
+                if (arrData2.size > 4) {
+                    arrData2.removeAt(0)
+                    searchAdapter.notifyItemRemoved(0)
+                    arrData.clear()
+                    arrData.addAll(arrData2)
+                    val gson = Gson()
+                    val json = gson.toJson(arrData)
+                    sharedPreferenceManager.putValue("SearchedResult", json)
+                    arrData.add(SearchHistoryModel(query))
+                    searchAdapter.notifyItemInserted(arrData.size)
+                    return
+                }
+
                 val gson = Gson()
                 val json = gson.toJson(arrData)
-                sharedPreferenceManager.putValue("SearchedItems", json)
+                sharedPreferenceManager.putValue("SearchedResult", json)
                 arrData.add(SearchHistoryModel(query))
                 searchAdapter.notifyItemInserted(arrData.size)
                 return
@@ -259,7 +280,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         val gson = Gson()
         val json = gson.toJson(arrData)
-        sharedPreferenceManager.putValue("SearchedItems", json)
+        sharedPreferenceManager.putValue("SearchedResult", json)
         arrData.add(SearchHistoryModel(query))
         searchAdapter.notifyItemInserted(arrData.size)
 
