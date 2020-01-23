@@ -7,180 +7,191 @@
     android:background="@color/background_color"
     android:orientation="vertical">
 
-
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:layout_height="match_parent">
+        android:id="@+id/pullToRefresh"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <View
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/x50dp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/x5dp"
-            android:background="@color/c_white"
-            android:elevation="@dimen/x5dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/x10dp"
-            android:paddingBottom="@dimen/x10dp"
-            android:visibility="invisible">
-
-            <include layout="@layout/item_categories" />
-
-
-        </LinearLayout>
-
-
-        <View
-            android:id="@+id/dummyViews"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/base_green"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.synnapps.carouselview.CarouselView
-                android:id="@+id/carouselView"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/x180dp"
-                android:background="@color/c_black"
-                app:fillColor="@color/green_bg"
-                app:pageColor="#FFFFFF"
-                app:radius="6dp"
-                app:slideInterval="3000"
-                app:strokeColor="#FF777777"
-                app:strokeWidth="1dp"
-                tools:ignore="MissingConstraints" />
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_color"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/x20dp">
+                android:orientation="vertical"
+                android:visibility="invisible"
+                android:layout_height="match_parent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/x50dp"/>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center|start"
-                    android:orientation="vertical">
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/x5dp"
+                    android:background="@color/c_white"
+                    android:elevation="@dimen/x5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/x10dp"
+                    android:paddingBottom="@dimen/x10dp"
+                    android:visibility="invisible">
 
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        app:typeface="@string/font_medium"
-                        android:text="Popular Catalytic Converters"
-                        android:textColor="@color/title_color"
-                        android:textSize="@dimen/s24" />
+                    <include layout="@layout/item_categories" />
 
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/txtTotalItems"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        app:typeface="@string/font_regular"
-                        android:text="0 item found"
-                        android:textColor="@color/title_grey"
-                        android:textSize="@dimen/s16" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:padding="10dp"
-                    android:src="@drawable/img_filter"
-                    android:visibility="gone" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/contCategories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/x5dp"
-                android:background="@color/c_white"
-                android:elevation="@dimen/x5dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/x10dp"
-                android:paddingBottom="@dimen/x10dp">
-
-                <com.todkars.shimmer.ShimmerRecyclerView
-                    android:id="@+id/rvCategories"
+                <View
+                    android:id="@+id/dummyViews"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:reverseLayout="false"
-                    tools:listitem="@layout/item_categories">
-
-                </com.todkars.shimmer.ShimmerRecyclerView>
-
+                    android:layout_height="0dp"
+                    android:background="@color/base_green"
+                    android:layout_weight="1"/>
 
             </LinearLayout>
-
-
-            <com.todkars.shimmer.ShimmerRecyclerView
-                android:id="@+id/rvConverters"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/x10dp"
-                android:background="@color/background_color"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/x60dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/item_converter">
+                android:layout_height="match_parent">
 
-            </com.todkars.shimmer.ShimmerRecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            <ProgressBar
+                    <com.synnapps.carouselview.CarouselView
+                        android:id="@+id/carouselView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/x180dp"
+                        android:background="@color/c_black"
+                        app:fillColor="@color/green_bg"
+                        app:pageColor="#FFFFFF"
+                        app:radius="6dp"
+                        app:slideInterval="3000"
+                        app:strokeColor="#FF777777"
+                        app:strokeWidth="1dp"
+                        tools:ignore="MissingConstraints" />
 
-                android:id="@+id/progressConverters"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="13dp"
-                android:layout_marginBottom="13dp"
-                android:indeterminate="true"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:visibility="gone" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/background_color"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/x20dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center|start"
+                            android:orientation="vertical">
+
+                            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                app:typeface="@string/font_medium"
+                                android:text="Popular Catalytic Converters"
+                                android:textColor="@color/title_color"
+                                android:textSize="@dimen/s24" />
+
+                            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:id="@+id/txtTotalItems"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                app:typeface="@string/font_regular"
+                                android:text="0 item found"
+                                android:textColor="@color/title_grey"
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:padding="10dp"
+                            android:src="@drawable/img_filter"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/contCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/x5dp"
+                        android:background="@color/c_white"
+                        android:elevation="@dimen/x5dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/x10dp"
+                        android:paddingBottom="@dimen/x10dp">
+
+                        <com.todkars.shimmer.ShimmerRecyclerView
+                            android:id="@+id/rvCategories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:reverseLayout="false"
+                            tools:listitem="@layout/item_categories">
+
+                        </com.todkars.shimmer.ShimmerRecyclerView>
+
+
+                    </LinearLayout>
+
+
+                    <com.todkars.shimmer.ShimmerRecyclerView
+                        android:id="@+id/rvConverters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/x10dp"
+                        android:background="@color/background_color"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/x60dp"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2"
+                        tools:listitem="@layout/item_converter">
+
+                    </com.todkars.shimmer.ShimmerRecyclerView>
+
+                    <ProgressBar
+
+                        android:id="@+id/progressConverters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="13dp"
+                        android:indeterminate="true"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:visibility="gone" />
 
 
 
 
-        </LinearLayout>
+                </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
 

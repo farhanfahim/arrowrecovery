@@ -59,9 +59,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     var webCallProductDetail: Call<WebResponse<Any>>? = null
     var webCallFeatured: Call<WebResponse<Any>>? = null
     var itemPos: Int = 0
+    var productid: Int = 0
 
     private var offset: Int = 0
-    private val limit = 8
+    private val limit = 2
     private var x = 0
     private var progressConverters: ProgressBar? = null
 
@@ -121,14 +122,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     }
 
     private fun onBind() {
-        arrFeatured.clear()
-        arrCategories.clear()
-        arrConverters.clear()
-
-        //arrCategories.addAll(Constants.categorySelector())
-
-//        rvCategories.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        rvCategories.adapter = categorySelectorAdapter
 
         val mLayoutManager1: RecyclerView.LayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         rvCategories.layoutManager = mLayoutManager1
@@ -141,23 +134,16 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvCategories.adapter = categorySelectorAdapter
         rvCategories.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
 
-        //
-        //arrConverters.addAll()
-
-
         val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
         rvConverters.layoutManager = mLayoutManager2
         (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-
-//        val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
-//                .attachTo(rvCategories)
-//                .listenWith(this@ConverterDashboardFragment)
-//                .build()
+        val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
+                .attachTo(rvConverters)
+                .listenWith(this@ConverterDashboardFragment)
+                .build()
         rvConverters.adapter = converterItemShimmerAdapter
         rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
-
-//        rvConverters.layoutManager = GridLayoutManager(context, 2)
-//        rvConverters.adapter = converterItemShimmerAdapter
+        arrConverters.clear()
 
         getVehicle()
         getFeaturedList()
@@ -190,12 +176,19 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         })
     }
 
-
     override fun setListeners() {
 
         carouselView.setImageClickListener { pos ->
             var product: ProductDetailModel = arrFeatured[pos]
             baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
+        }
+
+        pullToRefresh.setOnRefreshListener {
+            arrConverters.clear()
+            getVehicle()
+            getFeaturedList()
+
+            pullToRefresh.isRefreshing = false
         }
 
     }
@@ -330,6 +323,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
             //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
 
+            arrConverters.clear()
             getProductDetail(itemPos, limit, offset)
 
             arrCategories.forEach { it.isSelected = false }
@@ -353,18 +347,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-//                val mediaModel: VehicleMakeModel = GsonFactory.getSimpleGson().fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), MediaModel::class.java)
-                // arrCategory.clear();
-
+                arrCategories.clear()
                 rvCategories.hideShimmer()
 
                 arrCategories.addAll(arrayList)
                 categorySelectorAdapter.notifyDataSetChanged()
 
                 arrCategories[0].isSelected = true
-                getProductDetail(arrCategories[0].id, limit, offset)
-
-                //onDonePaging()
+                getProductDetail(arrCategories[0].id, limit, 0)
             }
 
             override fun onError(`object`: Any?) {
@@ -379,11 +369,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     private fun getProductDetail(item: Int, limit: Int, offset: Int) {
 
-//        if (x == 0) {
-//            rvConverters.showShimmer()
-//
-//        }
-        rvConverters.showShimmer()
+        productid = item
+      //  if (x == 0) {
+            rvConverters.showShimmer()
+      //  }
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
@@ -397,12 +386,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-//                if (x == 0) {
-//                        rvConverters.hideShimmer()
-//                    }
+                /*if (x == 0) {
+                    rvConverters.hideShimmer()
+                }*/
                 rvConverters.hideShimmer()
 
-                arrConverters.clear()
+
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString() + " items found"
@@ -428,15 +417,15 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
     override fun onPage(i: Int) {
-//        if (offset < i) {
-//
-//            offset = i
-//
-//            x++
-//            progressConverters!!.visibility = View.VISIBLE
-//
-//            getProductDetail(itemPos,limit, i)
-//        }
+        if (offset < i) {
+
+            offset = i
+
+            x++
+//            progressBarMyOrder.visibility = View.VISIBLE
+
+            getProductDetail(productid, limit, i)
+        }
     }
 
     override fun onDonePaging() {

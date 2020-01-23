@@ -16,6 +16,7 @@ import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
@@ -157,13 +158,13 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     private fun getCollectionSelector() {
 
-        //  val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
+        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
 
         if (arrData.isNotEmpty()) {
 
             val queryMap = HashMap<String, Any>()
-            queryMap[WebServiceConstants.Q_LAT] = 24.9279159//googleAddressModel.latitude
-            queryMap[WebServiceConstants.Q_LONG] = 67.0957739//googleAddressModel.longitude
+            queryMap[WebServiceConstants.Q_LAT] = googleAddressModel.latitude
+            queryMap[WebServiceConstants.Q_LONG] = googleAddressModel.longitude
 
             webCallCollection = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {

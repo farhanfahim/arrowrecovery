@@ -53,12 +53,13 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
 
     override fun getPagingLayout(): Int {
 
-        return R.layout.item_converter
+        return 0
     }
 
     override fun getPagingItemCount(): Int {
-        return arrData.size
+        return 0
     }
+
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val contParent = view.findViewById<RoundKornerLinearLayout>(R.id.contParent)
