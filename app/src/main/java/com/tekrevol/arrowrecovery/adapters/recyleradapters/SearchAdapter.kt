@@ -28,9 +28,10 @@ class SearchAdapter(private val activity: Context?, private var arrData: List<Se
 
     override fun onBindViewHolder(holder: ViewHolder, i: Int) {
         val model = arrData[i]
-        setListener(holder, model)
         holder.txtSearched.text = model.query
-        
+        setListener(holder, model)
+
+
     }
 
     private fun setListener(holder: ViewHolder, model: SearchHistoryModel) {

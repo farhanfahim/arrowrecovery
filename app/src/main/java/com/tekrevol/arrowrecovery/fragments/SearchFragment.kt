@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
@@ -37,9 +38,8 @@ import java.util.HashMap
 class SearchFragment : BaseFragment(), OnItemClickListener {
 
 
-    //private var arrData: ArrayList<DummyModel> = ArrayList()
     private var arrData: ArrayList<SearchHistoryModel> = ArrayList()
-    private var arrString: ArrayList<String> = ArrayList()
+    private var arrData2: ArrayList<SearchHistoryModel> = ArrayList()
     private var text: String? = null
     private var arrDataSearchBar: ArrayList<ProductDetailModel> = ArrayList()
     private lateinit var searchAdapter: SearchAdapter
@@ -75,10 +75,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun onBind() {
 
-        //arrData.clear()
-        //arrData.addAll()
-
-        loadSearch()
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         val resId = R.anim.layout_animation_fall_bottom
@@ -94,9 +90,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         rvSearch.adapter = searchBarShimmerAdapter
         rvSearch.setItemViewType(ShimmerAdapter.ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_searchbar })
 
-        /*if (onCreated) {
-            return;
-        }*/edtSearch.addTextChangedListener(object : TextWatcher {
+        loadData()
+        edtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
             }
@@ -181,8 +176,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         var product: ProductDetailModel = anyObject as ProductDetailModel
         baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-        saveSearch(product.name)
-        //sharedPreferenceManager.putValue("searchKeyword",product.name)
+        insertItem(product.name)
+        //searchAdapter.notifyItemInserted(arrData.size)
 
     }
 
@@ -218,26 +213,56 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         })
     }
 
-    fun loadSearch() {
+    private fun loadData() {
+        //   rvSearch.visibility = View.VISIBLE
         val gson = Gson()
-        val json = sharedPreferenceManager.getString("Set")
-        if (json.isEmpty()) {
-            Toast.makeText(context, "There is something error", Toast.LENGTH_LONG).show()
-        } else {
-            /*val type = object : TypeToken<java.util.ArrayList<String?>?>() {}.type
-            var arrPackageData: List<String> = gson.fromJson(json, type)
-            for (data in arrPackageData) {
-                arrString.add(data)
-            }*/
+        val json = sharedPreferenceManager.getString("SearchedItem")
+        if (json != null) {
+            val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
+            arrData2 = gson.fromJson(json, type)
+            arrData.addAll(arrData2)
+            searchAdapter.notifyDataSetChanged()
         }
     }
 
-    fun saveSearch(query: String) {
+    private fun insertItem(query: String) {
+        val gsonSaveData = Gson()
+        val jsonSaveData = sharedPreferenceManager.getString("SearchedItem")
+        if (jsonSaveData != null) {
+            val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
+            arrData2 = gsonSaveData.fromJson(jsonSaveData, type)
+            val firstOrNull = arrData2.firstOrNull { it.equals(query) }
+            if (firstOrNull == null) {
 
-        arrData.add((SearchHistoryModel(query)))
+                Log.d("arrsize", arrData2.size.toString())
+                if (arrData2.size > 4) {
+                    arrData2.removeAt(0)
+                    Log.d("arrsize", arrData2.size.toString())
+
+                    arrData.addAll(arrData2)
+                    val gson = Gson()
+                    val json = gson.toJson(arrData)
+                    sharedPreferenceManager.putValue("SearchedItems", json)
+                    arrData.add(SearchHistoryModel(query))
+                    searchAdapter.notifyItemInserted(arrData.size)
+                    return
+                }
+            } else {
+                val gson = Gson()
+                val json = gson.toJson(arrData)
+                sharedPreferenceManager.putValue("SearchedItems", json)
+                arrData.add(SearchHistoryModel(query))
+                searchAdapter.notifyItemInserted(arrData.size)
+                return
+            }
+        }
+
         val gson = Gson()
         val json = gson.toJson(arrData)
-        sharedPreferenceManager.putValue("Set", json)
+        sharedPreferenceManager.putValue("SearchedItems", json)
+        arrData.add(SearchHistoryModel(query))
+        searchAdapter.notifyItemInserted(arrData.size)
+
     }
 }
 
