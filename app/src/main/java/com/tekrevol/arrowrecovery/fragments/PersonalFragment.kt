@@ -45,7 +45,7 @@ class PersonalFragment : BaseFragment() {
 
         contTitle.setOnClickListener {
             UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->
-                selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
+                selectedPosition = (dialog as androidx.appcompat.app.AlertDialog).listView.checkedItemPosition
                 txtTitle.text = Constants.title[selectedPosition]
                 dialog.dismiss()
             }
