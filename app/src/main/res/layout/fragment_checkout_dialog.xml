@@ -306,6 +306,7 @@
 
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:id="@+id/txtTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"

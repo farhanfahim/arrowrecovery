@@ -44,6 +44,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     var webCallDelete: Call<WebResponse<Any>>? = null
     var webCallUpdate: Call<WebResponse<Any>>? = null
     var orderid: Int? = null
+    var orderTotal: Int? = null
     var quantity: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,7 +107,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                     recyclerViewCart.hideShimmer()
                     orderid = orderModel.id
-                    txtTotalPrice.text = "Total: " + orderModel.amount
+                    orderTotal = orderModel.estimatedAmount
+                    txtTotalPrice.text = "Total: " + orderModel.estimatedAmount
                     arrData.clear()
                     arrData.addAll(orderModel.orderProductModels)
                     cartAdapter.notifyDataSetChanged()
@@ -150,6 +152,11 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         }
 
         btnDelete.setOnClickListener {
+            if(arrData.isEmpty())
+            {
+                return@setOnClickListener
+            }
+
             UIHelper.showAlertDialog("Are you sure you want to delete selected Items?", "Delete Items", { dialog, which ->
                 deleteProduct(dialog)
             }, context)
@@ -163,8 +170,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         if (arrData.isNotEmpty()) {
 
             val queryMap = HashMap<String, Any>()
-            queryMap[WebServiceConstants.Q_LAT] = googleAddressModel.latitude
-            queryMap[WebServiceConstants.Q_LONG] = googleAddressModel.longitude
+            queryMap[WebServiceConstants.Q_LAT] = 24.927871
+            queryMap[WebServiceConstants.Q_LONG] = 67.096029
 
             webCallCollection = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -176,7 +183,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                     if (webResponse.isSuccess) {
                         arrDataCart.addAll(arrayList)
-                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid)
+                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid,orderTotal)
                         checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
                     }
                 }

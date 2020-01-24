@@ -56,6 +56,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
 
     private fun onBind() {
 
+        edtQuantity.setKeyListener(null)
         model = intent.getStringExtra(AppConstants.JSON_STRING_KEY)
         productDetailModel = GsonFactory.getSimpleGson().fromJson(model, ProductDetailModel::class.java)
         txtCarNum.text = (productDetailModel?.name)

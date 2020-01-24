@@ -84,6 +84,11 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
         }
 
         btnDelete.setOnClickListener {
+
+            if (arrData.isEmpty()) {
+                return@setOnClickListener
+            }
+
             UIHelper.showAlertDialog("Are you sure you want to delete selected Notifications?", "Delete Notifications", { dialog, which ->
                 deleteNotification(dialog)
             }, context)
@@ -109,7 +114,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                 .listenWith(this@NotificationFragment)
                 .build()
         recyclerViewNotification.adapter = shimmerNotificationAdapter
-        recyclerViewNotification.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_notification})
+        recyclerViewNotification.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_notification })
 
     }
 

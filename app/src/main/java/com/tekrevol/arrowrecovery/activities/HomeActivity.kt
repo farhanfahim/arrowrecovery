@@ -3,6 +3,8 @@ package com.tekrevol.arrowrecovery.activities
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -11,30 +13,41 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import com.tekrevol.arrowrecovery.BaseApplication.getContext
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.fragments.DashboardPagerFragment
 import com.tekrevol.arrowrecovery.fragments.DashboardPagerFragment.Companion.newInstance
 import com.tekrevol.arrowrecovery.fragments.RightSideMenuFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.libraries.residemenu.ResideMenu
+import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.utils.utility.Blur
 import com.tekrevol.arrowrecovery.utils.utility.Utils
+import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
+import java.util.*
 
 class HomeActivity : BaseActivity() {
     var navigationView: NavigationView? = null
+
+    private var sharedPreferenceManager: SharedPreferenceManager? = null
     var contMain: FrameLayout? = null
     var contParentActivityLayout: RelativeLayout? = null
     var rightSideMenuFragment: RightSideMenuFragment? = null
         private set
     var resideMenu: ResideMenu? = null
         private set
-    //For Blurred Background
     private val mDownScaled: Bitmap? = null
     private val mBackgroundFilename: String? = null
     private val background: Bitmap? = null
     var blurImage: ImageView? = null
         private set
+    var longitudee: Double? = null
+    var latitudee: Double? = null
+
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -42,6 +55,8 @@ class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferenceManager = SharedPreferenceManager.getInstance(this)
+
         //        setContentView(R.layout.activity_main);
     }
 
@@ -53,7 +68,6 @@ class HomeActivity : BaseActivity() {
         contMain = findViewById(R.id.contMain)
         contParentActivityLayout = findViewById(R.id.contParentActivityLayout)
         blurImage = findViewById(R.id.imageBlur)
-//        setSideMenu(ResideMenu.DIRECTION_RIGHT)
         initFragments()
     }
 
@@ -89,6 +103,7 @@ class HomeActivity : BaseActivity() {
         get() = R.id.contDrawer
 
     private fun initFragments() {
+
         addDockableFragment(DashboardPagerFragment.newInstance(), false)
     }
 

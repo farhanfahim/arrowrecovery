@@ -222,6 +222,9 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         val contQuality = dialog1.findViewById<LinearLayout>(R.id.contQuality)
         txtQuality.text = Constants.qualities[0]
 
+
+        edtQuantity.setKeyListener(null)
+
         contQuality.setOnClickListener {
             UIHelper.showCheckedDialogBox(activity, "Select Quality", Constants.qualities, selectedPosition) { dialog, which ->
                 selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
@@ -376,8 +379,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
-        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
+     /*   queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
+        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset*/
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -409,7 +412,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         })
     }
 
-
     var imageListener = ImageListener { position, imageView ->
         imageView.scaleType = ImageView.ScaleType.FIT_CENTER
         ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
@@ -417,7 +419,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
     override fun onPage(i: Int) {
-        if (offset < i) {
+        /*if (offset < i) {
 
             offset = i
 
@@ -425,7 +427,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //            progressBarMyOrder.visibility = View.VISIBLE
 
             getProductDetail(productid, limit, i)
-        }
+        }*/
     }
 
     override fun onDonePaging() {

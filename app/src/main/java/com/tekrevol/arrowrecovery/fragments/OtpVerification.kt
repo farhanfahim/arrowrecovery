@@ -91,6 +91,7 @@ class OtpVerification : BaseFragment() {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
 
+                    if(webResponse.isSuccess)
                     baseActivity.popBackStack()
                     baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                 }

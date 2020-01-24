@@ -1,33 +1,37 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
-import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.callbacks.OnNewPacketReceivedListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
-import com.tekrevol.arrowrecovery.constatnts.Events
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlin.random.Random
 
 
 class HomeFragment : BaseFragment(), OnItemClickListener {
+
+    private val PERMISSIONS_REQUEST_LOCATION = 100
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
@@ -54,8 +58,36 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // checkPermission()
+        //checkState()
         onBind()
         bindGraphData()
+        // Check the SDK version and whether the permission is already granted or not.
+
+    }
+
+    /*  private fun checkPermission() {
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && PermissionChecker.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+              requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_LOCATION)
+              checkPermission()
+              //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+          } else { // Android version is lesser than 6.0 or the permission is already granted.
+
+          }
+
+      }*/
+
+    private fun checkState() {
+        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
+        if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(googleAddressModel.address)!!) {
+
+        } else {
+            UIHelper.showAlertDialog1("Your current state doesn't match the state info you provided at the time of registration.", "Alert", { dialog, which ->
+                sharedPreferenceManager.clearDB()
+                baseActivity.clearAllActivitiesExceptThis(MainActivity::class.java)
+            }, context)
+        }
     }
 
     private fun onBind() {
@@ -154,8 +186,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
 
-
-
     override fun getDrawerLockMode(): Int {
         return 0
     }
@@ -194,7 +224,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         daysSelectorAdapter.notifyDataSetChanged()
 
         contRefresh.performClick()
-
 
     }
 
