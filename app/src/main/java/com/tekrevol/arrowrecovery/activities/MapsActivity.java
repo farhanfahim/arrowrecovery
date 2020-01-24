@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-
     public static final int MAPS_ACTIVITY_RESULT = 8900;
     public static final String KEY_LATITUDE = "lat";
     public static final String KEY_LONGITUTUDE = "lng";
