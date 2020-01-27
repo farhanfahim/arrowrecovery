@@ -29,7 +29,6 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.sending_model.SocialLoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
-import kotlinx.android.synthetic.main.fragment_contact.*
 
 class MainActivity : BaseActivity(), FacebookResponse {
 
@@ -95,7 +94,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
         socialLoginSendingModel.platform = AppConstants.SOCIAL_MEDIA_PLATFORM_GOOGLE
         socialLoginSendingModel.username = name
         socialLoginSendingModel.token = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
-        socialLoginSendingModel.deviceToken = "abc123"
+        socialLoginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
@@ -111,7 +110,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
-                        addDockableFragment(OtpVerification.newInstance(email!!, ""), true)
+                        addDockableFragment(OtpVerificationFragment.newInstance(email!!, ""), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
@@ -212,14 +211,13 @@ class MainActivity : BaseActivity(), FacebookResponse {
         socialLoginSendingModel.clientId = facebookUser.facebookID
         socialLoginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
         socialLoginSendingModel.email = facebookUser.email
-        socialLoginSendingModel.deviceToken = "abc"
         socialLoginSendingModel.image = facebookUser.profilePic
         socialLoginSendingModel.platform = AppConstants.SOCIAL_MEDIA_PLATFORM_FACEBOOK
         socialLoginSendingModel.username = facebookUser.name
-        socialLoginSendingModel.token = "abc123"
         var email: String = facebookUser.email
         // var phone:String = inputPhoneNo.stringTrimmed
         socialLoginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
+        socialLoginSendingModel.token = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
@@ -236,7 +234,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
-                        addDockableFragment(OtpVerification.newInstance(email, ""), true)
+                        addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)

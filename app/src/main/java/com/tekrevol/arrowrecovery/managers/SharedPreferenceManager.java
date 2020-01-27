@@ -36,16 +36,13 @@ public class SharedPreferenceManager {
 
     public void clearDB() {
         // Save Registered Device Data
-        InsertRegisteredDeviceModel object = getObject(AppConstants.KEY_INSERT_REGISTERED_DEVICE, InsertRegisteredDeviceModel.class);
-        RegisteredDeviceModel object2 = getObject(AppConstants.KEY_REGISTERED_DEVICE, RegisteredDeviceModel.class);
-        if (object == null) {
+
+        String token = getString(KEY_FIREBASE_TOKEN);
+        if (token == null) {
             pref.edit().clear().commit();
         } else {
-            object.setRegcardno(null);
-            object2.setRegcardno(null);
             pref.edit().clear().commit();
-            putObject(AppConstants.KEY_INSERT_REGISTERED_DEVICE, object);
-            putObject(AppConstants.KEY_REGISTERED_DEVICE, object2);
+            putObject(AppConstants.KEY_FIREBASE_TOKEN, token);
         }
     }
 

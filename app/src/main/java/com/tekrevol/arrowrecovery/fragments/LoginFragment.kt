@@ -72,11 +72,11 @@ class LoginFragment : BaseFragment() {
     private fun loginUpAPI() {
 
         if (!edtEmail.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter valid Email address")
+            UIHelper.showAlertDialog(context, getString(R.string.email_validation))
             return
         }
         if (!edtPassword.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter valid Password")
+            UIHelper.showAlertDialog(context, getString(R.string.password_validation))
             return
         }
 
@@ -87,7 +87,6 @@ class LoginFragment : BaseFragment() {
             if (edtEmail.testValidity() && edtPassword.testValidity()) {
                 var loginSendingModel = LoginSendingModel()
                 loginSendingModel.email = edtEmail.stringTrimmed
-                loginSendingModel.deviceToken = "abc"
                 loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
                 loginSendingModel.password = edtPassword.stringTrimmed
                 val email: String = edtEmail.stringTrimmed
@@ -113,7 +112,7 @@ class LoginFragment : BaseFragment() {
                                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                                 baseActivity.popBackStack()
-                                baseActivity.addDockableFragment(OtpVerification.newInstance(email, ""), true)
+                                baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
                             }
                             (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                                 sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)

@@ -16,28 +16,28 @@
             android:orientation="vertical">
 
 
-
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x10dp"
                 android:textSize="@dimen/s14"
-                android:id="@+id/emailLayout"
                 android:visibility="visible"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    app:typeface="@string/font_light"
                     android:id="@+id/edtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
-                    android:maxLength="50"
                     android:inputType="textEmailAddress"
+                    android:maxLength="50"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:testType="email"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -49,14 +49,13 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtPasswordReg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
-                    android:id="@+id/edtPasswordReg"
                     android:inputType="textPassword"
                     android:maxLength="50"
                     android:singleLine="true"
-
                     android:textColor="@color/title_color"
                     android:textColorHint="#C800BCD4"
                     android:textSize="@dimen/s14"
@@ -71,8 +70,8 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    android:layout_width="match_parent"
                     android:id="@+id/edtConfirmPassReg"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"

@@ -24,16 +24,16 @@ class RegisterPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) 
 
 
     override fun getItem(position: Int): Fragment {
-        when (position) {
-            0 -> return AccountFragment.newInstance()
+        return when (position) {
+            0 -> AccountFragment.newInstance()
 
-            1 -> return PersonalFragment.newInstance()
+            1 -> PersonalFragment.newInstance()
 
-            2 -> return ContactFragment.newInstance()
+            2 -> ContactFragment.newInstance()
 
-            3 -> return AddressFragment.newInstance()
+            3 -> AddressFragment.newInstance()
 
-            else -> return AddressFragment.newInstance()
+            else -> AddressFragment.newInstance()
         }
     }
 

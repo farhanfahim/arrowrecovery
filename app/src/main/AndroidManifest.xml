@@ -33,13 +33,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 
-        <!--<meta-data-->
-        <!--android:name="com.google.android.geo.API_KEY"-->
-        <!--android:value="AIzaSyBsP8jCqqrTckRDPcfaefKutSDo3NBENok" />-->
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
 
 
         <meta-data
