@@ -123,10 +123,11 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             }
 
             override fun onError(`object`: Any?) {
-                if (rvConverters == null) {
-                    recyclerViewCart.hideShimmer()
+                if (recyclerViewCart == null) {
                     return
                 }
+                recyclerViewCart.hideShimmer()
+
             }
         })
     }

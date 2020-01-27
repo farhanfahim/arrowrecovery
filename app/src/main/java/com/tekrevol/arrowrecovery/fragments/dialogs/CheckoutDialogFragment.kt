@@ -160,7 +160,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
         txtTotal.text = "$" + orderTotal.toString()
         for (collection in arrCollectionModel) {
-            spinnerModelArrayList.add(SpinnerModel(collection.address))
+            spinnerModelArrayList.add(SpinnerModel(collection.address.trim()))
         }
 
         rvTimeSelection.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -229,8 +229,14 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
         }
 
-
         contCollectionCenter.setOnClickListener {
+            contPickupSelected.visibility = View.GONE
+            contCollectionCenter.visibility = View.VISIBLE
+            heading.visibility = View.GONE
+            txtCollectionCenterLocation.text = ""
+            txtPickupLocation.text = ""
+            map.visibility = View.GONE
+            arrData.clear()
             UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {
                 spinnerModelArrayList.filter { it.isSelected }.firstOrNull()?.let {
                     getMap(it)
@@ -244,6 +250,11 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         })
 
         contPickupSelected.setOnClickListener {
+            txtCollectionCenterLocation.text = ""
+            txtPickupLocation.text = ""
+            txtDate.text = ""
+            heading.visibility = View.GONE
+            map.visibility = View.GONE
             googlePlaceHelper = GooglePlaceHelper(activity, GooglePlaceHelper.PLACE_PICKER, this, this, true)
             googlePlaceHelper?.openMapsActivity()
         }
@@ -356,24 +367,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     }
 
     private fun placeOrder(dialog: DialogInterface) {
-
-        /*   if (rbPickup.isChecked || rbCollectionCenter.isChecked) {
-           } else {
-               UIHelper.showAlertDialog(context, "Please select type pickup or delivered to collection center")
-               return
-           }*/
-
         if (param == 1) {
-
-            /*if (txtDate.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(context, "Please select date")
-                return
-            }
-            if (txtPick.isNullOrBlank()) {
-                UIHelper.showAlertDialog(context, "Please select time slot")
-                return
-            }*/
-
 
             val updateOrderModel = UpdatePickupModel()
             updateOrderModel.deliveryDate = txtDate.stringTrimmed
@@ -394,23 +388,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             })
 
         } else if (param == 2) {
-            /* if (txtDate.stringTrimmed.isEmpty()) {
-                 UIHelper.showAlertDialog(context, "Please select date")
-                 return
-             }
-             if (txtPick.isNullOrBlank()) {
-                 UIHelper.showAlertDialog(context, "Please select time slot")
-                 return
-             }
-             idFromSpinner = getIdFromSpinner(this)
 
-             if (idFromSpinner == -1) {
-                 UIHelper.showShortToastInCenter(context, "Invalid ID")
-                 return
-             }
- */
             val updateOrderModel = UpdateDeliveryCollectionCenterModel()
-
             updateOrderModel.deliveryDate = txtDate.stringTrimmed
             updateOrderModel.deliveryMode = AppConstants.DELIVERED
             updateOrderModel.timeSlot = txtPick
@@ -436,7 +415,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
         for (arr in arrCollectionModel) {
 
-            if (it.text.equals(arr.name)) {
+            if (it.text.equals(arr.address.trim())) {
                 latitudee = arrCollectionModel[it.positionInList].latitude
                 longitudee = arrCollectionModel[it.positionInList].longitude
                 var str: String = GooglePlaceHelper.getMapSnapshotURL(arrCollectionModel[it.positionInList].latitude, arrCollectionModel[it.positionInList].longitude)
@@ -516,7 +495,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         startActivity(intents)
         activity?.finish()
     }
-
 
 
 }

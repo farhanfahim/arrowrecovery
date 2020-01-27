@@ -152,6 +152,10 @@ class RegisterPagerFragment : BaseFragment() {
         if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
+        if (!checked.isChecked) {
+            UIHelper.showAlertDialog(context, "Please accept Term of Use")
+            return
+        }
 
         editProfileSendingModel.email = (email)
         editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
@@ -230,7 +234,6 @@ class RegisterPagerFragment : BaseFragment() {
     }
 
     private fun signUpApi() {
-
 
         if (!edtAddress.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter Address")
@@ -419,7 +422,6 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, getString(R.string.confirm_password_validation))
             return
         }
-
 
         setCurrentItemByPosition(positionToSelect + 1)
 

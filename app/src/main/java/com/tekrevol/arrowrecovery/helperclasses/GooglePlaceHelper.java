@@ -103,7 +103,7 @@ public class GooglePlaceHelper {
                 .build(activity);
 
 
-            if (fragment == null) {
+        if (fragment == null) {
             activity.startActivityForResult(intent, REQUEST_CODE_PLACE_HELPER);
         } else {
             fragment.startActivityForResult(intent, REQUEST_CODE_PLACE_HELPER);
@@ -300,7 +300,7 @@ public class GooglePlaceHelper {
      */
 
     public static String getMapSnapshotURL(double LAT, double LONG) {
-        return "https://maps.googleapis.com/maps/api/staticmap?center=" + LAT + "," + LONG + "&zoom=15&size=200x200&markers=color:red%7C" + LAT + "," + LONG + "&key=" + GEO_API_KEY;
+        return "https://maps.googleapis.com/maps/api/staticmap?center=" + LAT + "," + LONG + "&zoom=12&size=250x250&markers=color:red%7C" + LAT + "," + LONG + "&key=" + GEO_API_KEY;
     }
 
 
@@ -346,4 +346,3 @@ public class GooglePlaceHelper {
 
 
 }
-

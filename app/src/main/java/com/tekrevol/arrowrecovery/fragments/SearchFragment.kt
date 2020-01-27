@@ -246,7 +246,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             arrData2 = gsonSaveData.fromJson(jsonSaveData, type)
             val firstOrNull = arrData2.firstOrNull { it.equals(query) }
             if (firstOrNull == null) {
-
                 if (arrData2.size > 4) {
                     arrData2.removeAt(0)
                     searchAdapter.notifyItemRemoved(0)
