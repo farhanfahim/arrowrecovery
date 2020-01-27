@@ -19,6 +19,7 @@ import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -75,6 +76,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun onBind() {
 
+        loadData()
+
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         val resId = R.anim.layout_animation_fall_bottom
@@ -90,7 +93,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         rvSearch.adapter = searchBarShimmerAdapter
         rvSearch.setItemViewType(ShimmerAdapter.ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_searchbar })
 
-        loadData()
         edtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
@@ -215,7 +217,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun loadData() {
         val gson = Gson()
-        val json = sharedPreferenceManager.getString("SearchedResults")
+        val json = sharedPreferenceManager.getString(AppConstants.KEY_SAVESEARCH)
         if (json != "") {
             val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
             if (type != null) {
@@ -223,13 +225,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 arrData.addAll(arrData2)
                 searchAdapter.notifyDataSetChanged()
             }
-
         }
     }
 
     private fun insertItem(query: String) {
         val gsonSaveData = Gson()
-        val jsonSaveData = sharedPreferenceManager.getString("SearchedResults")
+        val jsonSaveData = sharedPreferenceManager.getString(AppConstants.KEY_SAVESEARCH)
         if (jsonSaveData != "") {
             val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
             arrData2 = gsonSaveData.fromJson(jsonSaveData, type)
@@ -243,14 +244,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                     arrData.addAll(arrData2)
                     val gson = Gson()
                     val json = gson.toJson(arrData)
-                    sharedPreferenceManager.putValue("SearchedResults", json)
+                    sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
                     arrData.add(SearchHistoryModel(query))
                     searchAdapter.notifyItemInserted(arrData.size)
                     return
                 } else {
                     val gson = Gson()
                     val json = gson.toJson(arrData)
-                    sharedPreferenceManager.putValue("SearchedResults", json)
+                    sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
                     arrData.add(SearchHistoryModel(query))
                     searchAdapter.notifyItemInserted(arrData.size)
                     return
@@ -263,7 +264,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                     arrData.addAll(arrData2)
                     val gson = Gson()
                     val json = gson.toJson(arrData)
-                    sharedPreferenceManager.putValue("SearchedResults", json)
+                    sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
                     arrData.add(SearchHistoryModel(query))
                     searchAdapter.notifyItemInserted(arrData.size)
                     return
@@ -271,7 +272,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
                 val gson = Gson()
                 val json = gson.toJson(arrData)
-                sharedPreferenceManager.putValue("SearchedResults", json)
+                sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
                 arrData.add(SearchHistoryModel(query))
                 searchAdapter.notifyItemInserted(arrData.size)
                 return
@@ -280,7 +281,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         val gson = Gson()
         val json = gson.toJson(arrData)
-        sharedPreferenceManager.putValue("SearchedResults", json)
+        sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
         arrData.add(SearchHistoryModel(query))
         searchAdapter.notifyItemInserted(arrData.size)
     }

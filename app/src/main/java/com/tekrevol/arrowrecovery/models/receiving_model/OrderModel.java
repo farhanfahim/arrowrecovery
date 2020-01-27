@@ -25,13 +25,13 @@ public class OrderModel {
     private int amount;
     @Expose
     @SerializedName("rhodium_price")
-    private int rhodium_price;
+    private double rhodium_price;
     @Expose
     @SerializedName("palladium_price")
-    private int palladium_price;
+    private double palladium_price;
     @Expose
     @SerializedName("platinum_price")
-    private int platinum_price;
+    private double platinum_price;
     @Expose
     @SerializedName("delivery_date_time")
     private String delivery_date_time;
@@ -61,11 +61,9 @@ public class OrderModel {
     private String invoiceUrl;
 
 
-
     @Expose
     @SerializedName("estimated_amount")
     private int estimatedAmount;
-
 
 
     @Expose
@@ -101,6 +99,7 @@ public class OrderModel {
     public ManufacturerModel getManufacturerModel() {
         return manufacturerModel;
     }
+
     public void setManufacturerModel(ManufacturerModel manufacturerModel) {
         this.manufacturerModel = manufacturerModel;
     }
@@ -146,15 +145,15 @@ public class OrderModel {
         this.amount = amount;
     }
 
-    public int getRhodium_price() {
+    public double getRhodium_price() {
         return rhodium_price;
     }
 
-    public void setRhodium_price(int rhodium_price) {
+    public void setRhodium_price(double rhodium_price) {
         this.rhodium_price = rhodium_price;
     }
 
-    public int getPalladium_price() {
+    public double getPalladium_price() {
         return palladium_price;
     }
 
@@ -162,7 +161,7 @@ public class OrderModel {
         this.palladium_price = palladium_price;
     }
 
-    public int getPlatinum_price() {
+    public double getPlatinum_price() {
         return platinum_price;
     }
 

@@ -10,10 +10,11 @@
         android:layout_width="match_parent"
         android:textSize="@dimen/s14"
         android:id="@+id/txtSearched"
+        android:padding="@dimen/x5dp"
         android:layout_marginTop="@dimen/x10dp"
         android:layout_marginRight="@dimen/x30dp"
         android:layout_marginLeft="@dimen/x30dp"
-        android:text="asdad"
+        android:text="abc"
         android:maxLines="1"
         android:minLines="1"
         android:ellipsize="end"
@@ -21,7 +22,6 @@
         android:textColor="@color/title_color"/>
 
     <View
-        android:layout_marginTop="@dimen/x10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/transparent_grey"/>
