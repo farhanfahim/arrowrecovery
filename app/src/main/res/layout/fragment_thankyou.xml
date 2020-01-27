@@ -41,7 +41,7 @@
         android:fontFamily="@string/font_bold"
         android:gravity="center"
         android:layout_marginBottom="@dimen/x20dp"
-        android:text="We will review your application and our executivewill approve your account shortly."
+        android:text="We will review your application and our executive will approve your account shortly."
         android:textColor="@color/title_color"
         android:textSize="@dimen/s20" />
 

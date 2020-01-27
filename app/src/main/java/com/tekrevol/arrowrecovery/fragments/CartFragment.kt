@@ -153,6 +153,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
         btnDelete.setOnClickListener {
             if (arrData.isEmpty()) {
+                UIHelper.showAlertDialog(context, "Your cart is Empty")
                 return@setOnClickListener
             }
 

@@ -125,7 +125,7 @@ public class AppConstants {
     public static final int  STATUS_COMPLETED = 70;
     public static final int  STATUS_RETURNED = 80;
     public static final int  DELIVERED = 10;
-    public static final int  PICKUP = 80;
+    public static final int  PICKUP = 20;
 
     public static final String CHAT_URL = "https://tekrevoldev.zendesk.com";
     public static final String APP_ID ="243d829efe2547e73de8349765690c61ed14915157bfcbb8";
