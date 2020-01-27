@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
@@ -259,7 +260,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                 return@setOnClickListener
             }
 
-            if (param.equals(1)) {
+            if (param == 1) {
 
                 if (txtPickupLocation.stringTrimmed.isEmpty()) {
                     UIHelper.showAlertDialog(context, "Please select location")
@@ -279,7 +280,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                     placeOrder(dialog)
                 }, context)
 
-            } else if (param.equals(2)) {
+            } else if (param == 2) {
 
                 if (txtCollectionCenterLocation.stringTrimmed.isEmpty()) {
                     UIHelper.showAlertDialog(context, "Please select location")
@@ -362,7 +363,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                return
            }*/
 
-        if (param.equals(1)) {
+        if (param == 1) {
 
             /*if (txtDate.stringTrimmed.isEmpty()) {
                 UIHelper.showAlertDialog(context, "Please select date")
@@ -384,15 +385,15 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                 override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
 
                     dialog.dismiss()
-                    UIHelper.showToast(context, "OrderModel Placed Successfully")
+                    UIHelper.showToast(context, "Order Placed Successfully")
                     dismiss()
-
+                    clearAllActivitiesExceptThis(HomeActivity::class.java)
                 }
 
                 override fun onError(`object`: Any?) {}
             })
 
-        } else if (param.equals(2)) {
+        } else if (param == 2) {
             /* if (txtDate.stringTrimmed.isEmpty()) {
                  UIHelper.showAlertDialog(context, "Please select date")
                  return
@@ -421,8 +422,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                     dialog.dismiss()
                     UIHelper.showToast(context, "OrderModel Placed Successfully")
                     dismiss()
-
-
+                    clearAllActivitiesExceptThis(HomeActivity::class.java)
                 }
 
                 override fun onError(`object`: Any?) {}
@@ -506,6 +506,17 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         txtPick = arrData[position].text
         timeSelectorAdapter.notifyDataSetChanged()
     }
+
+
+    fun clearAllActivitiesExceptThis(cls: Class<*>?) {
+        val intents = Intent(context, cls)
+        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intents)
+        activity?.finish()
+    }
+
 
 
 }

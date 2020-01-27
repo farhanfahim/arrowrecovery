@@ -2,6 +2,7 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -17,6 +18,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.kotlinhelper.disableClick
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
@@ -143,6 +145,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     override fun setListeners() {
         btnCheckout.setOnClickListener {
+            btnCheckout.disableClick()
             getCollectionSelector()
         }
 
@@ -168,12 +171,12 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
 
         if (arrData.isNotEmpty()) {
-
+            // FIXME we have to change hardcoded lat, long
             val queryMap = HashMap<String, Any>()
             queryMap[WebServiceConstants.Q_LAT] = 24.927871
             queryMap[WebServiceConstants.Q_LONG] = 67.096029
 
-            webCallCollection = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            webCallCollection = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                     val type = object : TypeToken<java.util.ArrayList<CollectionModel?>?>() {}.type
@@ -340,4 +343,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         webCallUpdate?.cancel()
         super.onDestroyView()
     }
+
+
 }

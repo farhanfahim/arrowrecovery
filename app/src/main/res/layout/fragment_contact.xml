@@ -44,17 +44,18 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtPhoneNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Phone Number"
-                    android:singleLine="true"
                     android:inputType="phone"
-                    android:id="@+id/edtPhoneNo"
-                    app:typeface="@string/font_light"
                     android:maxLength="50"
+                    android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:testType="phone"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -64,28 +65,28 @@
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Comment:"
-                    app:typeface="@string/font_light"
-                    android:inputType="textMultiLine"
-                    android:maxLength="500"
-                    android:lines="5"
-                    android:maxLines="5"
                     android:gravity="start"
-                    android:id="@+id/edtComment"
+                    android:hint="Comment:"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLength="500"
+                    android:maxLines="5"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"
-                app:typeface="@string/font_medium"
                 android:layout_height="wrap_content"
                 android:text=" LINE account, WhatsApp account, WeChat account"
                 android:textColor="@color/title_color"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_medium" />
 
 
         </LinearLayout>

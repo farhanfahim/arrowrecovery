@@ -61,5 +61,6 @@
     <string name="email_validation">Please enter valid email address</string>
     <string name="password_validation">Please enter more than 6 Characters in password</string>
     <string name="confirm_password_validation">Confirm password should be same as Password field</string>
+    <string name="phone_number_validation">Please enter valid phone number</string>
 
 </resources>

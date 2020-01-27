@@ -40,11 +40,11 @@ import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
 import java.util.ArrayList
 
-private var adapter: RegisterPagerAdapter? = null
 
 class RegisterPagerFragment : BaseFragment() {
 
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
+    private var adapter: RegisterPagerAdapter? = null
 
     var email: String = ""
 
@@ -199,7 +199,7 @@ class RegisterPagerFragment : BaseFragment() {
                     }
                     (currentUser.userDetails.isVerified) == 0 -> {
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(email, phone), true)
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, phone), true)
                     }
                     (currentUser.userDetails.isApproved) == 0 -> {
                         baseActivity.popBackStack()
@@ -256,7 +256,7 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         var signUpSendingModel = SignupSendingModel()
-        signUpSendingModel.deviceToken = ("abc")
+        signUpSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
         signUpSendingModel.name = (edtUsername.stringTrimmed)
         signUpSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
         signUpSendingModel.email = (edtEmail.stringTrimmed)
@@ -313,7 +313,7 @@ class RegisterPagerFragment : BaseFragment() {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerification.newInstance(email, phone), true)
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
@@ -346,8 +346,8 @@ class RegisterPagerFragment : BaseFragment() {
             }
         }
 
-        if (!edtPhoneNo.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter Phone Number")
+        if (!edtPhoneNo.testValidity() || edtPhoneNo.text.toString().trim().length < 10) {
+            UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
             return
         }
         val builder = AlertDialog.Builder(context!!)

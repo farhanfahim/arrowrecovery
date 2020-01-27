@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_verify_account.*
 import retrofit2.Call
 import java.util.*
 
-class OtpVerification : BaseFragment() {
+class OtpVerificationFragment : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
     var email: String = ""
@@ -39,7 +39,9 @@ class OtpVerification : BaseFragment() {
                 UIHelper.showToast(context, webResponse.message)
             }
 
-            override fun onError(`object`: Any?) {}
+            override fun onError(`object`: Any?) {
+
+            }
         })
 
     }
@@ -49,7 +51,7 @@ class OtpVerification : BaseFragment() {
 
             val args = Bundle()
 
-            val fragment = OtpVerification()
+            val fragment = OtpVerificationFragment()
             fragment.arguments = args
             fragment.email = email
             fragment.phone = phone
@@ -91,12 +93,17 @@ class OtpVerification : BaseFragment() {
                 override fun requestDataResponse(webResponse: WebResponse<Any>) {
                     UIHelper.showToast(context, webResponse.message)
 
-                    if(webResponse.isSuccess)
-                    baseActivity.popBackStack()
-                    baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                    if (webResponse.isSuccess) {
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                    } else {
+                        pinEditText.text?.clear()
+                    }
                 }
 
-                override fun onError(`object`: Any?) {}
+                override fun onError(`object`: Any?) {
+                    pinEditText.text?.clear()
+                }
             })
         }
     }
