@@ -72,11 +72,11 @@ class LoginFragment : BaseFragment() {
     private fun loginUpAPI() {
 
         if (!edtEmail.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter valid email address")
+            UIHelper.showAlertDialog(context, getString(R.string.email_validation))
             return
         }
         if (!edtPassword.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter valid password")
+            UIHelper.showAlertDialog(context, getString(R.string.password_validation))
             return
         }
 

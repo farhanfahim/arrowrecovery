@@ -403,7 +403,7 @@ class RegisterPagerFragment : BaseFragment() {
 
 
         if (!edtEmail.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your email")
+            UIHelper.showAlertDialog(context, getString(R.string.email_validation))
             return
         }
 
@@ -411,12 +411,12 @@ class RegisterPagerFragment : BaseFragment() {
         edtConfirmPassReg.addValidator(PasswordValidation(edtPasswordReg))
 
         if (!edtPasswordReg.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter valid password")
+            UIHelper.showAlertDialog(context, getString(R.string.password_validation))
             return
         }
 
         if (!edtConfirmPassReg.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter valid confirm password")
+            UIHelper.showAlertDialog(context, getString(R.string.confirm_password_validation))
             return
         }
 

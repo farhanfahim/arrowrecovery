@@ -58,5 +58,8 @@
     <string name="send_code"><u>Send a new code</u></string>
     <string name="app_id">AIzaSyDGGfCKmS11p7VKXi-hXaGNDkIY8ForUJs</string>
     <string name="google_maps_key">AIzaSyCkoOvnd1_eougL23wAx7DP65C_duaJRjQ</string>
+    <string name="email_validation">Please enter valid email address</string>
+    <string name="password_validation">Please enter more than 6 Characters in password</string>
+    <string name="confirm_password_validation">Confirm password should be same as Password field</string>
 
 </resources>
