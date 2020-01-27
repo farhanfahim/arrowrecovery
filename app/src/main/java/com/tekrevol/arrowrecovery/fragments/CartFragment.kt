@@ -152,8 +152,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         }
 
         btnDelete.setOnClickListener {
-            if(arrData.isEmpty())
-            {
+            if (arrData.isEmpty()) {
                 return@setOnClickListener
             }
 
@@ -183,7 +182,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                     if (webResponse.isSuccess) {
                         arrDataCart.addAll(arrayList)
-                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid,orderTotal)
+                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid, orderTotal)
                         checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
                     }
                 }
@@ -273,10 +272,15 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                     val updateCartModel = UpdateCartModel()
                     updateCartModel.quantity = quantity.toString()
-                    getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].product_id, null,
+                    getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].id, null,
                             updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                        override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
+                        override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                            UIHelper.showToast(context, webResponse.message)
+                            val orderModel: OrderModel = GsonFactory.getSimpleGson()
+                                    .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                            , OrderModel::class.java)
 
+                            txtTotalPrice.text = "Total: " + orderModel.estimatedAmount
                             quantity = quantity!! + 1
                             arrData[position].quantity = quantity!!
                             cartAdapter.notifyItemChanged(position)
@@ -295,10 +299,16 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
                     val updateCartModel = UpdateCartModel()
                     updateCartModel.quantity = quantity.toString()
-                    getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].product_id, null,
+                    getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].id, null,
                             updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                        override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
+                        override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
+                            UIHelper.showToast(context, webResponse.message)
+                            val orderModel: OrderModel = GsonFactory.getSimpleGson()
+                                    .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                            , OrderModel::class.java)
+
+                            txtTotalPrice.text = "Total: " + orderModel.estimatedAmount
                             quantity = quantity!! - 1
                             arrData[position].quantity = quantity!!
                             cartAdapter.notifyItemChanged(position)

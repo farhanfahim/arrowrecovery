@@ -385,6 +385,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
                     dialog.dismiss()
                     UIHelper.showToast(context, "OrderModel Placed Successfully")
+                    dismiss()
+
                 }
 
                 override fun onError(`object`: Any?) {}
@@ -418,6 +420,9 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
                     dialog.dismiss()
                     UIHelper.showToast(context, "OrderModel Placed Successfully")
+                    dismiss()
+
+
                 }
 
                 override fun onError(`object`: Any?) {}

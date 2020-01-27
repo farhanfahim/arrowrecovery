@@ -103,7 +103,7 @@ public class GooglePlaceHelper {
                 .build(activity);
 
 
-        if (fragment == null) {
+            if (fragment == null) {
             activity.startActivityForResult(intent, REQUEST_CODE_PLACE_HELPER);
         } else {
             fragment.startActivityForResult(intent, REQUEST_CODE_PLACE_HELPER);

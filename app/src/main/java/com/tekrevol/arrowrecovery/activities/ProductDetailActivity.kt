@@ -120,13 +120,13 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
             override fun afterTextChanged(s: Editable?) {
 
                 if (s!!.isEmpty()) {
-                    edtQuantity.setText("0")
+                    edtQuantity.setText("1")
                 } else {
                     if (StringHelper.IsInt_ByJonas(s.toString())) {
                         if (s.toString().toInt() > 999) {
                             edtQuantity.setText("999")
-                        } else if (s.toString().toInt() < 0) {
-                            edtQuantity.setText("0")
+                        } else if (s.toString().toInt() < 1) {
+                            edtQuantity.setText("1")
                         }
                     }
                 }

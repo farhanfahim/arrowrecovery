@@ -251,7 +251,7 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
         if (!checked.isChecked) {
-            UIHelper.showAlertDialog(context, "please accept term of use")
+            UIHelper.showAlertDialog(context, "Please accept term of use")
             return
         }
 
