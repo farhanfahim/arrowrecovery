@@ -53,12 +53,14 @@ public class EditProfileSendingModel {
     @SerializedName("city")
     private String city;
     @Expose
+    @SerializedName("country")
+    private String country;
+    @Expose
     @SerializedName("address")
     private String address;
     @Expose
     @SerializedName("company")
     private String company;
-
     @Expose
     @SerializedName("title")
     private int title;
@@ -103,10 +105,6 @@ public class EditProfileSendingModel {
         this.phone = phone;
     }
 
-    @Override
-    public String toString() {
-        return GsonFactory.getSimpleGson().toJson(this);
-    }
 
     public String getImage() {
         return image;
@@ -235,4 +233,18 @@ public class EditProfileSendingModel {
     public void setTitle(int title) {
         this.title = title;
     }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return GsonFactory.getSimpleGson().toJson(this);
+    }
+
 }
