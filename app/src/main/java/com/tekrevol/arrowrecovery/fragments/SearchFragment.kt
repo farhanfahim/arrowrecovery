@@ -16,6 +16,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
+import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemShimmerAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -176,17 +177,27 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
-        var product: ProductDetailModel = anyObject as ProductDetailModel
-        baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-        insertItem(product.name)
-        //searchAdapter.notifyItemInserted(arrData.size)
+        if (type == SearchFragment::class.java.simpleName) {
+            val gson = Gson()
+            val json = sharedPreferenceManager.getString(AppConstants.KEY_SAVESEARCH)
+            if (json != "") {
+                val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
+                if (type != null) {
+                    arrData2 = gson.fromJson(json, type)
+                    edtSearch?.setText(arrData2[position].query)
+                }
+            }
+        } else {
+            var product: ProductDetailModel = anyObject as ProductDetailModel
+            baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
+            insertItem(product.name)
+        }
 
     }
 
     private fun getProducts(query: String, makeId: String, modelId: String, year: String, serialNumber: String) {
 
         rvSearch.showShimmer()
-
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_QUERY] = query
         queryMap[WebServiceConstants.Q_MAKE_ID] = makeId
@@ -202,7 +213,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                                 , type)
 
                 rvSearch.hideShimmer()
-
                 arrDataSearchBar.clear()
                 arrDataSearchBar.addAll(arrayList)
                 searchBarShimmerAdapter.notifyDataSetChanged()
@@ -282,10 +292,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         val gson = Gson()
         val json = gson.toJson(arrData)
         sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
-        arrData.add(SearchHistoryModel(query))
         searchAdapter.notifyItemInserted(arrData.size)
     }
-
 
     override fun onDestroyView() {
         webCall?.cancel()

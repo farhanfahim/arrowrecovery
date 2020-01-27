@@ -91,7 +91,7 @@ public class AppConstants {
     public static final String KEY_CARD_MEMBER_DETAIL = "cardMemberDetail";
     public static final String KEY_CARD_NUMBER = "card_number";
     public static final String KEY_CODE = "code";
-    public static final String KEY_SAVESEARCH = "search";
+    public static final String KEY_SAVESEARCH = "searcHistory";
     public static final String USER_NOTIFICATION_DATA = "USER_NOTIFICATION_DATA";
     public static String FORCED_RESTART = "forced_restart";
     public static final String KEY_REGISTER_VM = "register_vm";

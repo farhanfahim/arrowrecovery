@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.fragments.SearchFragment
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.SearchHistoryModel
@@ -36,8 +37,7 @@ class SearchAdapter(private val activity: Context?, private var arrData: List<Se
     }
 
     private fun setListener(holder: ViewHolder, model: SearchHistoryModel) {
-
-        holder.txtSearched!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, SearchAdapter::class.java.simpleName) }
+        holder.txtSearched!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, SearchFragment::class.java.simpleName) }
 
     }
 
