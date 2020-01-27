@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.libraries.places.internal.it
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
@@ -36,14 +37,13 @@ class SearchAdapter(private val activity: Context?, private var arrData: List<Se
 
     private fun setListener(holder: ViewHolder, model: SearchHistoryModel) {
 
-        //   holder.layoutItemMyOrder?.setOnClickListener(View.OnClickListener { v -> onItemClick.onItemClick(holder.adapterPosition, model) })
+        holder.txtSearched!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, SearchAdapter::class.java.simpleName) }
 
     }
 
     override fun getItemCount(): Int {
         return arrData.size
     }
-
 
     class ViewHolder(view: View?) : RecyclerView.ViewHolder(view!!) {
 

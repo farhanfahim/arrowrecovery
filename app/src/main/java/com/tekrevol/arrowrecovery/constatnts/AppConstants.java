@@ -91,6 +91,7 @@ public class AppConstants {
     public static final String KEY_CARD_MEMBER_DETAIL = "cardMemberDetail";
     public static final String KEY_CARD_NUMBER = "card_number";
     public static final String KEY_CODE = "code";
+    public static final String KEY_SAVESEARCH = "search";
     public static final String USER_NOTIFICATION_DATA = "USER_NOTIFICATION_DATA";
     public static String FORCED_RESTART = "forced_restart";
     public static final String KEY_REGISTER_VM = "register_vm";
@@ -125,7 +126,7 @@ public class AppConstants {
     public static final int  STATUS_COMPLETED = 70;
     public static final int  STATUS_RETURNED = 80;
     public static final int  DELIVERED = 10;
-    public static final int  PICKUP = 80;
+    public static final int  PICKUP = 20;
 
     public static final String CHAT_URL = "https://tekrevoldev.zendesk.com";
     public static final String APP_ID ="243d829efe2547e73de8349765690c61ed14915157bfcbb8";

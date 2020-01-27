@@ -38,7 +38,7 @@ public class GooglePlaceHelper {
     public static final int REQUEST_CODE_PLACE_HELPER = 6666;
     public static final int PLACE_PICKER = 0;
     public static final int PLACE_AUTOCOMPLETE = 1;
-    public static final String GEO_API_KEY = "AIzaSyB9ppk-0eNcK42I5ykfreGWwgiUClqmMIs";
+    public static final String GEO_API_KEY = "AIzaSyDNejDJYWbNDYAA8l48FNca8E_5o9Jg1wk";
     private final boolean isFullScreen;
     private int apiType;
     private GooglePlaceDataInterface googlePlaceDataInterface;
@@ -103,7 +103,7 @@ public class GooglePlaceHelper {
                 .build(activity);
 
 
-        if (fragment == null) {
+            if (fragment == null) {
             activity.startActivityForResult(intent, REQUEST_CODE_PLACE_HELPER);
         } else {
             fragment.startActivityForResult(intent, REQUEST_CODE_PLACE_HELPER);

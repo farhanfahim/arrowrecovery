@@ -1,7 +1,6 @@
 package com.tekrevol.arrowrecovery.fragments.dialogs
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -13,13 +12,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -42,7 +39,6 @@ import com.tekrevol.arrowrecovery.models.sending_model.UpdatePickupModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
-import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -60,6 +56,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     private var spinnerModelArrayList = java.util.ArrayList<SpinnerModel>()
     var latitudee: Double? = null
     var orderid: Int? = null
+    var orderTotal: Int? = null
     var txtPick: String? = null
     var longitudee: Double? = null
     var param: Int = 0
@@ -71,13 +68,14 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     companion object {
 
-        fun newInstance(orderProductModel: ArrayList<OrderProductModel>, arrCollectionModel: ArrayList<CollectionModel>, orderid: Int?): CheckoutDialogFragment {
+        fun newInstance(orderProductModel: ArrayList<OrderProductModel>, arrCollectionModel: ArrayList<CollectionModel>, orderid: Int?, orderTotal: Int?): CheckoutDialogFragment {
 
             val args = Bundle()
             val fragment = CheckoutDialogFragment()
             fragment.orderProductModel = orderProductModel
             fragment.arrCollectionModel = arrCollectionModel
             fragment.orderid = orderid
+            fragment.orderTotal = orderTotal
             fragment.arguments = args
             return fragment
         }
@@ -159,6 +157,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         arrData.clear()
         spinnerModelArrayList.clear()
 
+        txtTotal.text = "$" + orderTotal.toString()
         for (collection in arrCollectionModel) {
             spinnerModelArrayList.add(SpinnerModel(collection.address))
         }
@@ -194,6 +193,10 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                     txtCollectionCenterLocation.text = ""
                     txtPickupLocation.text = ""
                     map.visibility = View.GONE
+                    arrData.clear()
+                    txtPickup.visibility = View.GONE
+                    timeSelectorAdapter.notifyDataSetChanged()
+
                 }
             }
         }
@@ -249,9 +252,59 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         }
 
         btnPlaceOrder.setOnClickListener {
-            UIHelper.showAlertDialog("Are you sure you want to place this order?", "Place Order", { dialog, which ->
-                placeOrder(dialog)
-            }, context)
+
+            if (rbPickup.isChecked || rbCollectionCenter.isChecked) {
+            } else {
+                UIHelper.showAlertDialog(context, "Please select type pickup or delivered to collection center")
+                return@setOnClickListener
+            }
+
+            if (param.equals(1)) {
+
+                if (txtPickupLocation.stringTrimmed.isEmpty()) {
+                    UIHelper.showAlertDialog(context, "Please select location")
+                    return@setOnClickListener
+                }
+
+                if (txtDate.stringTrimmed.isEmpty()) {
+                    UIHelper.showAlertDialog(context, "Please select date")
+                    return@setOnClickListener
+                }
+                if (txtPick.isNullOrBlank()) {
+                    UIHelper.showAlertDialog(context, "Please select time slot")
+                    return@setOnClickListener
+                }
+
+                UIHelper.showAlertDialog("Are you sure you want to place this order?", "Place Order", { dialog, which ->
+                    placeOrder(dialog)
+                }, context)
+
+            } else if (param.equals(2)) {
+
+                if (txtCollectionCenterLocation.stringTrimmed.isEmpty()) {
+                    UIHelper.showAlertDialog(context, "Please select location")
+                    return@setOnClickListener
+                }
+
+                if (txtDate.stringTrimmed.isEmpty()) {
+                    UIHelper.showAlertDialog(context, "Please select date")
+                    return@setOnClickListener
+                }
+                if (txtPick.isNullOrBlank()) {
+                    UIHelper.showAlertDialog(context, "Please select time slot")
+                    return@setOnClickListener
+                }
+                idFromSpinner = getIdFromSpinner(this)
+
+                if (idFromSpinner == -1) {
+                    UIHelper.showShortToastInCenter(context, "Invalid ID")
+                    return@setOnClickListener
+                }
+
+                UIHelper.showAlertDialog("Are you sure you want to place this order?", "Place Order", { dialog, which ->
+                    placeOrder(dialog)
+                }, context)
+            }
 
         }
 
@@ -303,22 +356,22 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     private fun placeOrder(dialog: DialogInterface) {
 
-        if (rbPickup.isChecked || rbCollectionCenter.isChecked) {
-        } else {
-            UIHelper.showAlertDialog(context, "Please select type pickup or delivered to collection center")
-            return
-        }
+        /*   if (rbPickup.isChecked || rbCollectionCenter.isChecked) {
+           } else {
+               UIHelper.showAlertDialog(context, "Please select type pickup or delivered to collection center")
+               return
+           }*/
 
         if (param.equals(1)) {
 
-            if (txtDate.stringTrimmed.isEmpty()) {
+            /*if (txtDate.stringTrimmed.isEmpty()) {
                 UIHelper.showAlertDialog(context, "Please select date")
                 return
             }
             if (txtPick.isNullOrBlank()) {
                 UIHelper.showAlertDialog(context, "Please select time slot")
                 return
-            }
+            }*/
 
 
             val updateOrderModel = UpdatePickupModel()
@@ -332,27 +385,29 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
                     dialog.dismiss()
                     UIHelper.showToast(context, "OrderModel Placed Successfully")
+                    dismiss()
+
                 }
 
                 override fun onError(`object`: Any?) {}
             })
 
         } else if (param.equals(2)) {
-            if (txtDate.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(context, "Please select date")
-                return
-            }
-            if (txtPick.isNullOrBlank()) {
-                UIHelper.showAlertDialog(context, "Please select time slot")
-                return
-            }
-            idFromSpinner = getIdFromSpinner(this)
+            /* if (txtDate.stringTrimmed.isEmpty()) {
+                 UIHelper.showAlertDialog(context, "Please select date")
+                 return
+             }
+             if (txtPick.isNullOrBlank()) {
+                 UIHelper.showAlertDialog(context, "Please select time slot")
+                 return
+             }
+             idFromSpinner = getIdFromSpinner(this)
 
-            if (idFromSpinner == -1) {
-                UIHelper.showShortToastInCenter(context, "Invalid ID")
-                return
-            }
-
+             if (idFromSpinner == -1) {
+                 UIHelper.showShortToastInCenter(context, "Invalid ID")
+                 return
+             }
+ */
             val updateOrderModel = UpdateDeliveryCollectionCenterModel()
 
             updateOrderModel.deliveryDate = txtDate.stringTrimmed
@@ -365,12 +420,13 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
                     dialog.dismiss()
                     UIHelper.showToast(context, "OrderModel Placed Successfully")
+                    dismiss()
+
+
                 }
 
                 override fun onError(`object`: Any?) {}
             })
-
-
         }
 
 

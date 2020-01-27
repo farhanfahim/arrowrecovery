@@ -233,25 +233,25 @@ class RegisterPagerFragment : BaseFragment() {
 
 
         if (!edtAddress.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your address")
+            UIHelper.showAlertDialog(context, "Please enter Address")
             return
         }
 
         if (!edtZipCode.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter zipCode")
+            UIHelper.showAlertDialog(context, "Please enter Zip Code")
             return
 
         }
         if (!edtCity.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your city")
+            UIHelper.showAlertDialog(context, "Please enter City")
             return
         }
         if (txtState.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select state")
+            UIHelper.showAlertDialog(context, "Please select State")
             return
         }
         if (!checked.isChecked) {
-            UIHelper.showAlertDialog(context, "please accept term of use")
+            UIHelper.showAlertDialog(context, "Please accept Term of Use")
             return
         }
 
@@ -341,17 +341,17 @@ class RegisterPagerFragment : BaseFragment() {
 
         if (fragmentName == FragmentName.SimpleLogin) {
             if (!edtUsername.testValidity()) {
-                UIHelper.showAlertDialog(context, "Please enter user name")
+                UIHelper.showAlertDialog(context, "Please enter Username")
                 return
             }
         }
 
         if (!edtPhoneNo.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your phone no")
+            UIHelper.showAlertDialog(context, "Please enter Phone Number")
             return
         }
         val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid phone no? ")
+        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid Phone Number? ")
                 .setTitle("Alert")
                 .setCancelable(true)
                 .setNegativeButton("No"
@@ -368,31 +368,31 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
         if (txtTitle.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select title")
+            UIHelper.showAlertDialog(context, "Please select Title")
+            return
+        }
+
+
+        if (!edtFirstname.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter First Name")
+            return
+        }
+        if (!edtLastName.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter Last Name")
             return
         }
 
         if (radioBtnCompany.isChecked || radioBtnIndividual.isChecked) {
         } else {
-            UIHelper.showAlertDialog(context, "Please select type")
+            UIHelper.showAlertDialog(context, "Please Select Type")
             return
         }
 
         if (radioBtnCompany.isChecked) {
             if (edtCompanyName.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(context, "Please enter your company name")
+                UIHelper.showAlertDialog(context, "Please enter your Company Name")
                 return
             }
-        }
-
-
-        if (!edtFirstname.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter first name")
-            return
-        }
-        if (!edtLastName.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter last name")
-            return
         }
 
         setCurrentItemByPosition(positionToSelect + 1)
