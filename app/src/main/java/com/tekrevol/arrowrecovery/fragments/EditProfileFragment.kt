@@ -287,6 +287,7 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.company = (edtCompany.stringTrimmed)
         editProfileSendingModel.name = (edtFirstName.stringTrimmed)
         editProfileSendingModel.city = (edtCity.stringTrimmed)
+        editProfileSendingModel.country = (edtCountry.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed

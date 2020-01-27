@@ -173,8 +173,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         if (arrData.isNotEmpty()) {
             // FIXME we have to change hardcoded lat, long
             val queryMap = HashMap<String, Any>()
-            queryMap[WebServiceConstants.Q_LAT] = 24.927871
-            queryMap[WebServiceConstants.Q_LONG] = 67.096029
+            queryMap[WebServiceConstants.Q_LAT] = 18.276089
+            queryMap[WebServiceConstants.Q_LONG] = -66.529049
 
             webCallCollection = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -185,6 +185,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                                     , type)
 
                     if (webResponse.isSuccess) {
+                        arrDataCart.clear()
                         arrDataCart.addAll(arrayList)
                         val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid, orderTotal)
                         checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
