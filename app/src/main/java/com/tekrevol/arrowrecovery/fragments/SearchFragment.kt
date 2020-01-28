@@ -259,9 +259,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                     return
                 } else {
                     val gson = Gson()
+                    arrData.add(SearchHistoryModel(query))
                     val json = gson.toJson(arrData)
                     sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
-                    arrData.add(SearchHistoryModel(query))
                     searchAdapter.notifyItemInserted(arrData.size)
                     return
                 }
@@ -280,6 +280,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 }
 
                 val gson = Gson()
+                arrData.add(SearchHistoryModel(query))
                 val json = gson.toJson(arrData)
                 sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
                 arrData.add(SearchHistoryModel(query))
@@ -289,6 +290,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         }
 
         val gson = Gson()
+        arrData.add(SearchHistoryModel(query))
         val json = gson.toJson(arrData)
         sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
         searchAdapter.notifyItemInserted(arrData.size)
