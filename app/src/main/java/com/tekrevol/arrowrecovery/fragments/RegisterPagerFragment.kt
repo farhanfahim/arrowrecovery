@@ -184,7 +184,6 @@ class RegisterPagerFragment : BaseFragment() {
         if (txtTitle.text == Constants.title[3]) {
             editProfileSendingModel.title = AppConstants.TITLE_MS
         }
-
         var email: String = edtEmail.stringTrimmed
         var phone: String = edtPhoneNo.stringTrimmed
 
@@ -214,9 +213,9 @@ class RegisterPagerFragment : BaseFragment() {
                         baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
                     else -> {
-                       /* sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
-                        sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
+                        /* sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
 
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)
