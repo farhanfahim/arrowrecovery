@@ -15,9 +15,11 @@ import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.UserDetails
+import com.tekrevol.arrowrecovery.models.receiving_model.DataUpdate
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.sending_model.SignupSendingModel
@@ -186,33 +188,35 @@ class RegisterPagerFragment : BaseFragment() {
         var email: String = edtEmail.stringTrimmed
         var phone: String = edtPhoneNo.stringTrimmed
 
-
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
+                /*val userDetails: UserDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                 val currentUser: UserModel = sharedPreferenceManager.currentUser
-                currentUser.userDetails = userDetails
-//                sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
+                currentUser.userDetails = userDetails*/
+
+                val model: DataUpdate = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , DataUpdate::class.java)
 
                 when {
 
-                    (currentUser.userDetails.isCompleted == 0) -> {
+                    (model.details.isCompleted == 0) -> {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                    (currentUser.userDetails.isVerified) == 0 -> {
+                    (model.details.isVerified) == 0 -> {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, phone), true)
                     }
-                    (currentUser.userDetails.isApproved) == 0 -> {
+                    (model.details.isApproved) == 0 -> {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
                     else -> {
-                        sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                       /* sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
 
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)

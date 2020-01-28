@@ -43,13 +43,12 @@ class SplashActivityKotlin : AppCompatActivity() {
             e.printStackTrace()
         }
 
-
-        if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null && SharedPreferenceManager.getInstance(applicationContext).getString(KEY_IS_VERIFIED)== "1") {
+        if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null && SharedPreferenceManager.getInstance(applicationContext).getString(KEY_IS_VERIFIED) == "1") {
             Handler().postDelayed({
 
                 changeActivity(HomeActivity::class.java)
 
-            } , ANIMATIONS_DELAY.toLong())
+            }, ANIMATIONS_DELAY.toLong())
 
         } else if (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) {
 
@@ -57,15 +56,14 @@ class SplashActivityKotlin : AppCompatActivity() {
                 //                        animateSplashLayout(true);
                 SharedPreferenceManager.getInstance(applicationContext).putValue(KEY_IS_VERIFIED, "0")
                 changeActivity(MainActivity::class.java)
-            } ,ANIMATIONS_DELAY.toLong())
-        }
-        else if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null) {
+            }, ANIMATIONS_DELAY.toLong())
+        } else if (SharedPreferenceManager.getInstance(applicationContext).currentUser != null) {
 
             Handler().postDelayed({
                 //                        animateSplashLayout(true);
                 SharedPreferenceManager.getInstance(applicationContext).putValue(KEY_IS_VERIFIED, "0")
                 changeActivity(MainActivity::class.java)
-            } ,ANIMATIONS_DELAY.toLong())
+            }, ANIMATIONS_DELAY.toLong())
         }
 
 

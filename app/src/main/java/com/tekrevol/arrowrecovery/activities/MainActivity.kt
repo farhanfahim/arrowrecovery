@@ -223,7 +223,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
                 when {
 
-
                     (userModelWrapper.user.userDetails.isCompleted == 0) -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
