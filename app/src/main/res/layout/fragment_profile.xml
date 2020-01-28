@@ -310,6 +310,7 @@
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
+                        android:visibility="gone"
                         android:padding="@dimen/x20dp"
                         app:corner_radius="@dimen/x5dp">
 

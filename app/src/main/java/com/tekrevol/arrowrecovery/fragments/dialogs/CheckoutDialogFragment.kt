@@ -463,18 +463,22 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         var addresses: List<Address>
         geocoder = Geocoder(getContext(), Locale.getDefault());
         addresses = geocoder.getFromLocation(latitude, longitude, 1)
-        var state: String = addresses.get(0).getAdminArea()
-        if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
-            txtPickupLocation.text = locationName
-            latitudee = latitude
-            longitudee = longitude
-            var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
-            ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
-            heading.visibility = View.VISIBLE
-            map.visibility = View.VISIBLE
+        if (addresses != null && addresses.size > 0) {
 
-        } else {
-            UIHelper.showAlertDialog(context, "Your current state doesn't match the state info you provided at the time of registration.")
+
+            var state: String = addresses.get(0).getAdminArea()
+            if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
+                txtPickupLocation.text = locationName
+                latitudee = latitude
+                longitudee = longitude
+                var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+                ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                heading.visibility = View.VISIBLE
+                map.visibility = View.VISIBLE
+
+            } else {
+                UIHelper.showAlertDialog(context, "Your current state doesn't match the state info you provided at the time of registration.")
+            }
         }
 
     }

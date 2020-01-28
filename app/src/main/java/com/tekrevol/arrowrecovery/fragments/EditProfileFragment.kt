@@ -23,6 +23,7 @@ import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.UserDetails
+import com.tekrevol.arrowrecovery.models.receiving_model.DataUpdate
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
@@ -80,7 +81,6 @@ class EditProfileFragment : BaseFragment() {
         }
 
     }
-
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -270,7 +270,6 @@ class EditProfileFragment : BaseFragment() {
             arrMultiFileModel.add(MultiFileModel(fileTemporaryProfilePicture, FileType.IMAGE, "image"))
         }
 
-
         // Setting data
 
         if (radioBtnCompany.isChecked) {
@@ -302,14 +301,18 @@ class EditProfileFragment : BaseFragment() {
             editProfileSendingModel.title = AppConstants.TITLE_MRS
         }
 
-
-
         WebServices(baseActivity, token, BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                     override fun requestDataResponse(webResponse: WebResponse<Any>) {
-                        val userDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
+
+                        val model: DataUpdate = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , DataUpdate::class.java)
+
+
+                     //   val userDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
                         val currentUser = sharedPreferenceManager.currentUser
-                        currentUser.userDetails = userDetails
+                        currentUser.userDetails = model.details
                         sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
 //                        baseActivity.finish()
 //                        baseActivity.openActivity(HomeActivity::class.java)
@@ -346,7 +349,6 @@ class EditProfileFragment : BaseFragment() {
 
             override fun onError(`object`: Any?) {}
         })
-
     }
 
     private fun getIdFromSpinner(): Int {
@@ -359,7 +361,6 @@ class EditProfileFragment : BaseFragment() {
         }
         return -1
     }
-
 
     override fun onDestroyView() {
         webCall?.cancel()
