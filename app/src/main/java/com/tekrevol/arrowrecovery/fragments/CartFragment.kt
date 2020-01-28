@@ -132,7 +132,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         })
     }
 
-
     override fun getDrawerLockMode(): Int {
         return 0
     }
@@ -327,7 +326,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 }
             }
         }
-
 
     }
 
