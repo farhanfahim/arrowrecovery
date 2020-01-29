@@ -288,6 +288,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                                             , OrderModel::class.java)
 
                             txtTotalPrice.text = "Total: " + orderModel.estimatedAmount
+                            orderTotal = orderModel.estimatedAmount
                             quantity = quantity!! + 1
                             arrData[position].quantity = quantity!!
                             cartAdapter.notifyItemChanged(position)
@@ -317,6 +318,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                                             , OrderModel::class.java)
 
                             txtTotalPrice.text = "Total: " + orderModel.estimatedAmount
+                            orderTotal = orderModel.estimatedAmount
+
                             quantity = quantity!! - 1
                             arrData[position].quantity = quantity!!
                             cartAdapter.notifyItemChanged(position)
