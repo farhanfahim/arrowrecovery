@@ -65,6 +65,18 @@ public class ProductDetailModel {
     @SerializedName("estimated_amount")
     private int estimatedAmount;
 
+    @Expose
+    @SerializedName("estimated_price")
+    private int estimatedPrice;
+
+    public int getEstimatedPrice() {
+        return estimatedPrice;
+    }
+
+    public void setEstimatedPrice(int estimatedPrice) {
+        this.estimatedPrice = estimatedPrice;
+    }
+
     public int getEstimatedAmount() {
         return estimatedAmount;
     }

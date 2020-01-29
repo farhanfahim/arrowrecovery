@@ -81,7 +81,7 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
             this.model?.let {
                 txtMake.text = it.name
                 txtModel.text = it.car_variation
-                txtPrice.text = it.estimatedAmount.toString()
+                txtPrice.text = it.estimatedPrice.toString()
                 ImageLoaderHelper.loadImageWithouAnimationByPath(imgConverter, it.feature_image, true)
             }
         }
