@@ -9,11 +9,15 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_RESET_PASSWORD
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.sending_model.ResetPasswordSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_change_password.*
 import kotlinx.android.synthetic.main.fragment_reset.*
+import kotlinx.android.synthetic.main.fragment_reset.edtConfirmPass
+import kotlinx.android.synthetic.main.fragment_reset.edtNewPass
 import retrofit2.Call
 
 class ResetFragment : BaseFragment() {
@@ -59,6 +63,11 @@ class ResetFragment : BaseFragment() {
         })
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        edtNewPass.addValidator(PasswordValidation())
+        edtConfirmPass.addValidator(PasswordValidation(edtNewPass))
+    }
     private fun resetpasswordAPI() {
 
         if (!edtNewPass.testValidity()) {
@@ -80,7 +89,7 @@ class ResetFragment : BaseFragment() {
         resetPasswordSendingModel.setPassword(edtNewPass.getStringTrimmed())
         resetPasswordSendingModel.setEmail(txtEmail)
         resetPasswordSendingModel.setVerificationCode(code)
-        resetPasswordSendingModel.setPassword(edtConfirmPass.getStringTrimmed())
+        resetPasswordSendingModel.setPasswordConfirmation(edtConfirmPass.getStringTrimmed())
 
         webCall = getBaseWebServices(true).postAPIAnyObject(PATH_RESET_PASSWORD, resetPasswordSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

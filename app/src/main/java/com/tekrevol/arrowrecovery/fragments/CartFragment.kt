@@ -211,6 +211,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 UIHelper.showToast(context, webResponse.message)
                 arrData.removeAll { it.isSelected }
                 cartAdapter.notifyDataSetChanged()
+                cbSelectAll.isChecked = false
                 dialog.dismiss()
             }
 
