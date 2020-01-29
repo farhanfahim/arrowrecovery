@@ -220,8 +220,8 @@
                     app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/txtMake"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
@@ -259,12 +259,12 @@
                     app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtModel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:id="@+id/txtModel"
                     android:text="5 Series"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16"
@@ -291,12 +291,12 @@
                     app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtReference"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:id="@+id/txtReference"
                     android:text="0418189"
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16"
@@ -336,11 +336,11 @@
                 app:typeface="@string/font_regular" />
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:id="@+id/txtDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text=""
-                android:id="@+id/txtDescription"
                 android:textColor="@color/title_color"
                 android:textSize="@dimen/s16"
                 app:typeface="@string/font_regular" />

@@ -53,7 +53,6 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         onBind()
     }
 
-
     private fun onBind() {
 
         edtQuantity.setKeyListener(null)

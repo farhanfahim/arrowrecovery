@@ -154,6 +154,25 @@ class RegisterPagerFragment : BaseFragment() {
         if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
+        if (!edtAddress.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter Address")
+            return
+        }
+
+        if (!edtZipCode.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter Zip Code")
+            return
+
+        }
+        if (!edtCity.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter City")
+            return
+        }
+        if (txtState.stringTrimmed.isEmpty()) {
+            UIHelper.showAlertDialog(context, "Please select State")
+            return
+        }
+
         if (!checked.isChecked) {
             UIHelper.showAlertDialog(context, "Please accept Term of Use")
             return
