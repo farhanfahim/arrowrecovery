@@ -25,6 +25,7 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper.GoogleAddressModel
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
@@ -34,12 +35,16 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.receiving_model.*
+import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
+import com.tekrevol.arrowrecovery.models.receiving_model.DateModels
+import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
+import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysModel
 import com.tekrevol.arrowrecovery.models.sending_model.UpdateDeliveryCollectionCenterModel
 import com.tekrevol.arrowrecovery.models.sending_model.UpdatePickupModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
+import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -459,28 +464,29 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
 
-        var geocoder: Geocoder
-        var addresses: List<Address>
-        geocoder = Geocoder(getContext(), Locale.getDefault());
-        addresses = geocoder.getFromLocation(latitude, longitude, 1)
-        if (addresses != null && addresses.size > 0) {
+        try {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses != null && addresses.size > 0) {
+                val state = addresses[0].adminArea
+                if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
+                    txtPickupLocation.text = locationName
+                    latitudee = latitude
+                    longitudee = longitude
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+                    ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                    heading.visibility = View.VISIBLE
+                    map.visibility = View.VISIBLE
+
+                } else {
+                    UIHelper.showAlertDialog(context, "Your current state doesn't match the state info you provided at the time of registration.")
+                }
 
 
-            var state: String = addresses.get(0).getAdminArea()
-            if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
-                txtPickupLocation.text = locationName
-                latitudee = latitude
-                longitudee = longitude
-                var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
-                ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
-                heading.visibility = View.VISIBLE
-                map.visibility = View.VISIBLE
-
-            } else {
-                UIHelper.showAlertDialog(context, "Your current state doesn't match the state info you provided at the time of registration.")
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-
     }
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
