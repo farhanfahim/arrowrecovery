@@ -277,7 +277,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
 
                     val updateCartModel = UpdateCartModel()
-                    updateCartModel.quantity = quantity.toString()
+                    var quantityNum = quantity!! + 1
+                    updateCartModel.quantity = quantityNum.toString()
                     getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].id, null,
                             updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                         override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -304,7 +305,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
 
                     val updateCartModel = UpdateCartModel()
-                    updateCartModel.quantity = quantity.toString()
+                    var quantityNum = quantity!! - 1
+                    updateCartModel.quantity = quantityNum.toString()
                     getBaseWebServices(true).putMultipartAPI(WebServiceConstants.PATH_ORDERPRODUCTS.toString() + "/" + arrData[position].id, null,
                             updateCartModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                         override fun requestDataResponse(webResponse: WebResponse<Any?>) {
