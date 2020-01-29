@@ -3,19 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_white"
     android:orientation="vertical"
+    android:fillViewport="true"
+
+    android:background="@drawable/background"
     android:padding="@dimen/x10dp">
 
 
-    <com.tekrevol.arrowrecovery.widget.AnyTextView
-        android:id="@+id/txtViewContent_generic_content"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="content"
-        android:padding="@dimen/x5dp"
-        android:textSize="@dimen/s15"
-        android:textColor="@color/txtBlue"
-        />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.tekrevol.arrowrecovery.widget.AnyTextView
+            android:id="@+id/txtViewContent_generic_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/x10dp"
+            android:text="content"
+            android:textColor="@color/txtBlue"
+            android:textSize="@dimen/s15" />
+
+
+        <WebView
+            android:id="@+id/webView"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/x5dp" />
+
+
+    </LinearLayout>
+
 
 </ScrollView>

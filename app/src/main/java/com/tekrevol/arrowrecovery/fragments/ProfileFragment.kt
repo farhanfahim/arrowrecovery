@@ -4,16 +4,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.AboutUs
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.receiving_model.Slug
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_profile.imgProfile
+import retrofit2.Call
+import java.util.*
 
 class ProfileFragment : BaseFragment() {
 
+
+    var aboutCall: Call<WebResponse<Any>>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,11 +78,12 @@ class ProfileFragment : BaseFragment() {
         }
 
         contPrivacyPolicy.setOnClickListener {
-            baseActivity.addDockableFragment(GenericContentFragment.newInstance("Privacy Policy", AboutUs), true)
+            privacyAPI(AppConstants.KEY_PRIVACY)
         }
 
         contTermsAndConditions.setOnClickListener {
-            baseActivity.addDockableFragment(GenericContentFragment.newInstance("Terms and Conditions", AboutUs), true)
+            privacyAPI(AppConstants.KEY_TERMS)
+           // baseActivity.addDockableFragment(GenericContentFragment.newInstance("Terms and Conditions", AboutUs), true)
         }
 
 
@@ -87,8 +97,8 @@ class ProfileFragment : BaseFragment() {
         val address = sharedPreferenceManager.currentUser.userDetails.address
         val city = sharedPreferenceManager.currentUser.userDetails.city
         val country = sharedPreferenceManager.currentUser.country
+        ImageLoaderHelper.loadImageWithouAnimationByPath(imgProfile, currentUser.userDetails.imageUrl, true)
 
-        ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
         txtName.text = fullName
         txtUsername.text = userName
         txtEmail.text = userEmail
@@ -106,6 +116,20 @@ class ProfileFragment : BaseFragment() {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    }
+
+    private fun privacyAPI(slugId: String) {
+        val queryMap: Map<String, Any> = HashMap()
+        aboutCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_PAGES.toString() + "/" + slugId, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                val pagesModel: Slug = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , Slug::class.java)
+                baseActivity.addDockableFragment(GenericContentFragment.newInstance(pagesModel.getTitle(), pagesModel.getContent(), true), false)
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
     }
 
 }

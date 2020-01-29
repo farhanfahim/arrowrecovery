@@ -133,6 +133,8 @@ public class AppConstants {
     public static final String CLIENT_ID ="mobile_sdk_client_7d94c9e4e726ed7424ee";
     public static final String ACCOUNT_KEY ="0ogfyFbIZhpMtrv4UEde6yTv8O80EDMO";
 
+    public static final String KEY_PRIVACY = "2";
+    public static final String KEY_TERMS = "1";
 
 
     /**

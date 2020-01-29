@@ -1,10 +1,14 @@
 package com.tekrevol.arrowrecovery.fragments.abstracts;
 
+import android.graphics.Color;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
@@ -13,6 +17,8 @@ import com.tekrevol.arrowrecovery.widget.AnyTextView;
 import com.tekrevol.arrowrecovery.R;
 import com.tekrevol.arrowrecovery.widget.TitleBar;
 
+import butterknife.BindView;
+
 
 /**
  * Created by khanhamza on 21-Feb-17.
@@ -20,15 +26,20 @@ import com.tekrevol.arrowrecovery.widget.TitleBar;
 
 public class GenericContentFragment extends BaseFragment {
 
+
+    AnyTextView txtViewContentGenericContent;
+    WebView webView;
     private String content = "";
     private String title = "";
+    private boolean isShowWebView;
 
 
-    public static GenericContentFragment newInstance(String title, String content) {
+    public static GenericContentFragment newInstance(String title, String content, boolean isShowWebView) {
         Bundle args = new Bundle();
         GenericContentFragment fragment = new GenericContentFragment();
         fragment.title = title;
         fragment.content = content;
+        fragment.isShowWebView = isShowWebView;
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,14 +61,30 @@ public class GenericContentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        txtViewContentGenericContent = view.findViewById(R.id.txtViewContent_generic_content);
+        webView = view.findViewById(R.id.webView);
         bindViews(view);
     }
 
     private void bindViews(View view) {
+
+        webView.setBackgroundColor(Color.TRANSPARENT);
+        if (isShowWebView) {
+            txtViewContentGenericContent.setVisibility(View.GONE);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.loadDataWithBaseURL("", content, "text/html", "UTF-8", "");
+        } else {
+            webView.setVisibility(View.GONE);
+            txtViewContentGenericContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
+        }
+/*
+
         AnyTextView txtViewContent = view.findViewById(R.id.txtViewContent_generic_content);
 
-//        txtViewContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
-        txtViewContent.setText(content);
+        txtViewContent.setText(Html.fromHtml(content), TextView.BufferType.SPANNABLE);
+*/
+
+//        txtViewContent.setText(content);
     }
 
     @Override
