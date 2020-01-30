@@ -34,6 +34,7 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 class MainActivity : BaseActivity(), FacebookResponse {
 
     val RC_SIGN_IN: Int = 1
+    var email: String? = null
     lateinit var mGoogleSignInClient: GoogleSignInClient
     lateinit var mGoogleSignInOptions: GoogleSignInOptions
     private var sharedPreferenceManager: SharedPreferenceManager? = null
@@ -78,7 +79,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-        val email = account?.email
+        email = account?.email
         val name = account?.displayName
         val userid = account?.id
         var imUrl = ""

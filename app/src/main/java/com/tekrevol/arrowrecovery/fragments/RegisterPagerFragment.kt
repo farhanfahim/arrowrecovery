@@ -178,7 +178,7 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
-        editProfileSendingModel.email = (email)
+        //  editProfileSendingModel.email = (email)
         editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
@@ -203,7 +203,7 @@ class RegisterPagerFragment : BaseFragment() {
         if (txtTitle.text == Constants.title[3]) {
             editProfileSendingModel.title = AppConstants.TITLE_MS
         }
-        var email: String = edtEmail.stringTrimmed
+        //   var email: String = edtEmail.stringTrimmed
         var phone: String = edtPhoneNo.stringTrimmed
 
         getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_PROFILE, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {

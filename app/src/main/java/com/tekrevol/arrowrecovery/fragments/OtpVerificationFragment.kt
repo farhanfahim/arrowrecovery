@@ -28,7 +28,6 @@ class OtpVerificationFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         txtPhone.text = "We have sent you a SMS with a code to the number $phone and your email $email"
         txtBackToLoginScreen.visibility = View.GONE
-        //sendOtp()
     }
 
     private fun sendOtp() {
