@@ -194,15 +194,15 @@
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
                         android:id="@+id/edtQuantityCart"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:maxLength="3"
                         android:padding="@dimen/x10dp"
-                        android:text="0"
+                        android:minWidth="@dimen/x40dp"
+                        android:text=""
                         android:textColor="@color/c_black"
                         android:textColorHint="@color/c_black"
                         android:textSize="@dimen/s12"
