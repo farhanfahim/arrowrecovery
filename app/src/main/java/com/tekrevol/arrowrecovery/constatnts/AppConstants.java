@@ -107,6 +107,7 @@ public class AppConstants {
     public static final String KEY_CURRENT_LOCATION = "current_location";
     public static final String KEY_CURRENT_USER_EMAIL = "userEmail";
     public static final String KEY_IS_VERIFIED = "verified";
+    public static final String KEY_PASSWORDSCREEN = "passwordscreen";
 
     public static final int  USER_TYPE_INDIVIDUAL = 10;
     public static final int  USER_TYPE_COMPANY = 20;

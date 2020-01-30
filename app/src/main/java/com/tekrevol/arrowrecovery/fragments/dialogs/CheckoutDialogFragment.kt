@@ -63,6 +63,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     var latitudee: Double? = null
     var orderid: Int? = null
     var orderTotal: Int? = null
+    var txtStr: String? = null
     var txtPick: String? = null
     var longitudee: Double? = null
     var param: Int = 0
@@ -244,7 +245,14 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             arrData.clear()
             UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {
                 spinnerModelArrayList.filter { it.isSelected }.firstOrNull()?.let {
+                    if (txtCollectionCenterLocation.text.isNotEmpty()) {
+                        txtStr = txtCollectionCenterLocation.text.toString()
+                    }
                     getMap(it)
+                }
+                if (txtCollectionCenterLocation.text.equals("")) {
+                    if (txtStr != "" || txtStr != null)
+                        txtCollectionCenterLocation.text = txtStr
                 }
             }, pickupSelectedPos)
         }

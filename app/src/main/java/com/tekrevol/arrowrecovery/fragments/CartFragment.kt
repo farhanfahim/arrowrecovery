@@ -173,8 +173,8 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         if (arrData.isNotEmpty()) {
             // FIXME we have to change hardcoded lat, long
             val queryMap = HashMap<String, Any>()
-            queryMap[WebServiceConstants.Q_LAT] = 18.276089
-            queryMap[WebServiceConstants.Q_LONG] = -66.529049
+            queryMap[WebServiceConstants.Q_LAT] = googleAddressModel.latitude
+            queryMap[WebServiceConstants.Q_LONG] = googleAddressModel.longitude
 
             webCallCollection = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {

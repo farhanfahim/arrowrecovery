@@ -282,7 +282,7 @@ class RegisterPagerFragment : BaseFragment() {
 
         var signUpSendingModel = SignupSendingModel()
         signUpSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
-        signUpSendingModel.name = (edtUsername.stringTrimmed)
+        signUpSendingModel.name = (edtFirstname.stringTrimmed) + " " + (edtLastName.stringTrimmed)
         signUpSendingModel.deviceType = (AppConstants.DEVICE_OS_ANDROID)
         signUpSendingModel.email = (edtEmail.stringTrimmed)
         var email: String = edtEmail.stringTrimmed
@@ -364,12 +364,6 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun contactDetails(positionToSelect: Int) {
 
-        if (fragmentName == FragmentName.SimpleLogin) {
-            if (!edtUsername.testValidity()) {
-                UIHelper.showAlertDialog(context, "Please enter Username")
-                return
-            }
-        }
 
         if (!edtPhoneNo.testValidity() || edtPhoneNo.text.toString().trim().length < 10) {
             UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
