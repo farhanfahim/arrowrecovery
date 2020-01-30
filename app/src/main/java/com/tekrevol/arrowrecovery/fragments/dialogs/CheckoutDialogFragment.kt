@@ -243,16 +243,30 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             txtPickupLocation.text = ""
             map.visibility = View.GONE
             arrData.clear()
+            txtDate.text = ""
+            txtPickup.visibility = View.GONE
+            timeSelectorAdapter.notifyDataSetChanged()
+
             UIHelper.showSpinnerDialog(fragmentManager, spinnerModelArrayList, "Select Location", txtCollectionCenterLocation, null, {
                 spinnerModelArrayList.filter { it.isSelected }.firstOrNull()?.let {
                     if (txtCollectionCenterLocation.text.isNotEmpty()) {
                         txtStr = txtCollectionCenterLocation.text.toString()
+                        getMap(it)
                     }
-                    getMap(it)
+
                 }
                 if (txtCollectionCenterLocation.text.equals("")) {
-                    if (txtStr != "" || txtStr != null)
-                        txtCollectionCenterLocation.text = txtStr
+                    contPickupSelected.visibility = View.GONE
+                    contCollectionCenter.visibility = View.VISIBLE
+                    heading.visibility = View.GONE
+                    txtCollectionCenterLocation.text = ""
+                    txtPickupLocation.text = ""
+                    map.visibility = View.GONE
+                    arrData.clear()
+                    txtDate.text = ""
+                    txtPickup.visibility = View.GONE
+                    timeSelectorAdapter.notifyDataSetChanged()
+
                 }
             }, pickupSelectedPos)
         }
