@@ -190,6 +190,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
+        editProfileSendingModel.country = (edtCountry.stringTrimmed)
 
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
@@ -295,6 +296,7 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
         signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (edtCity.stringTrimmed)
+        signUpSendingModel.country = (edtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
         signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed

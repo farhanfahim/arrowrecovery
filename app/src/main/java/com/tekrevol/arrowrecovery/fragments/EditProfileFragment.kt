@@ -197,7 +197,7 @@ class EditProfileFragment : BaseFragment() {
         edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
         edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
         edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
-        edtCountry.setText(sharedPreferenceManager.currentUser.country)
+        edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
         edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
         txtState.text = (sharedPreferenceManager.currentUser.userDetails.state.name)
 

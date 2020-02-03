@@ -72,14 +72,15 @@
                     </RelativeLayout>
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        app:typeface="@string/font_regular"
                         android:id="@+id/txtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="John Smith"
                         android:textColor="@color/green_bg"
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/s16"
+                        android:visibility="gone"
+                        app:typeface="@string/font_regular" />
 
                     <EditText
                         android:id="@+id/edtName"
@@ -93,15 +94,14 @@
                         android:visibility="gone" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        app:typeface="@string/font_regular"
                         android:id="@+id/txtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/x10dp"
                         android:gravity="center"
                         android:text="123Username"
-                        android:textSize="@dimen/s16" />
-
+                        android:textSize="@dimen/s16"
+                        app:typeface="@string/font_regular" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -112,14 +112,13 @@
 
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Email: "
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:id="@+id/txtEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -128,7 +127,8 @@
                             android:minLines="1"
                             android:text="example@example.com"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
 
                     </LinearLayout>
@@ -144,14 +144,13 @@
 
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Address: "
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:id="@+id/txtAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -160,7 +159,8 @@
                             android:minLines="1"
                             android:text="216 San Andrew St, Miami, FL"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <EditText
                             android:id="@+id/edtAddress"
@@ -179,28 +179,28 @@
                     </LinearLayout>
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        app:typeface="@string/font_regular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginTop="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:text="About: "
+                        android:textSize="@dimen/s14"
                         android:visibility="gone"
-                        android:textSize="@dimen/s14" />
+                        app:typeface="@string/font_regular" />
 
                     <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        app:typeface="@string/font_regular"
                         android:id="@+id/txtAbout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/x10dp"
                         android:layout_marginRight="@dimen/x10dp"
                         android:layout_marginBottom="@dimen/x10dp"
                         android:text="This is dummy copy. It is not meant to be read. It has been placed here solely to demonstrate the look and feel of finished, typeset text."
                         android:textColor="@color/title_color"
-                        android:textSize="@dimen/s14" />
+                        android:textSize="@dimen/s14"
+                        android:visibility="gone"
+                        app:typeface="@string/font_regular" />
 
 
                 </LinearLayout>
@@ -242,7 +242,6 @@
                             android:src="@drawable/ordericon" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -250,7 +249,8 @@
                             android:gravity="center|start"
                             android:text="My Orders"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <ImageView
 
@@ -281,7 +281,6 @@
                             android:src="@drawable/changepassicon" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -289,7 +288,8 @@
                             android:gravity="center|start"
                             android:text="Change Password"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <ImageView
 
@@ -310,8 +310,8 @@
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:visibility="gone"
                         android:padding="@dimen/x20dp"
+                        android:visibility="gone"
                         app:corner_radius="@dimen/x5dp">
 
                         <ImageView
@@ -322,7 +322,6 @@
                             android:src="@drawable/notificationiconprof" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -330,7 +329,8 @@
                             android:gravity="center|start"
                             android:text="Notification Settings"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <ImageView
 
@@ -361,7 +361,6 @@
                             android:src="@drawable/privacyicon" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -369,7 +368,8 @@
                             android:gravity="center|start"
                             android:text="Privacy Policy"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <ImageView
 
@@ -400,7 +400,6 @@
                             android:src="@drawable/ordericon" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -408,7 +407,8 @@
                             android:gravity="center|start"
                             android:text="Terms and Conditions"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
                         <ImageView
 
@@ -422,12 +422,12 @@
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
 
                     <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+                        android:id="@+id/logout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/x10dp"
                         android:background="@color/c_white"
                         android:elevation="@dimen/x5dp"
-                        android:id="@+id/logout"
                         android:padding="@dimen/x20dp"
                         app:corner_radius="@dimen/x5dp">
 
@@ -439,7 +439,6 @@
                             android:src="@drawable/logouticon" />
 
                         <com.tekrevol.arrowrecovery.widget.AnyTextView
-                            app:typeface="@string/font_regular"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/x10dp"
@@ -447,7 +446,8 @@
                             android:gravity="center|start"
                             android:text="Logout"
                             android:textColor="@color/title_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
 
 
                     </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

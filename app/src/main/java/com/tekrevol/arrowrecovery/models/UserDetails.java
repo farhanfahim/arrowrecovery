@@ -59,6 +59,9 @@ public class UserDetails {
     @Expose
     @SerializedName("kind_of_company")
     private String kindOfCompany;
+    @Expose
+    @SerializedName("country")
+    private String country;
 
     public int getUserType() {
         return userType;
@@ -112,7 +115,13 @@ public class UserDetails {
         this.id = id;
     }
 
+    public String getCountry() {
+        return country;
+    }
 
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public int getIsApproved() {
         return isApproved;

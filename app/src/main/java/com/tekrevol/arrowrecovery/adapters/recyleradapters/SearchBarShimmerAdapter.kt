@@ -85,6 +85,4 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
 
         }
     }
-
-
 }

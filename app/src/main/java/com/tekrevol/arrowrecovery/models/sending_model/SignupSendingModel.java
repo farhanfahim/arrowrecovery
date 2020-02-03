@@ -15,9 +15,9 @@ public class SignupSendingModel {
     @Expose
     @SerializedName("device_token")
     private String deviceToken;
-
-
-
+    @Expose
+    @SerializedName("country")
+    private String country;
     @Expose
     @SerializedName("user_type")
     private int userType;
@@ -64,6 +64,14 @@ public class SignupSendingModel {
     @Expose
     @SerializedName("kind_of_company")
     private String kindOfCompany;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getKindOfCompany() {
         return kindOfCompany;
@@ -112,7 +120,6 @@ public class SignupSendingModel {
     public void setIsCompleted(int isCompleted) {
         this.isCompleted = isCompleted;
     }
-
 
 
     public String getPassword() {
