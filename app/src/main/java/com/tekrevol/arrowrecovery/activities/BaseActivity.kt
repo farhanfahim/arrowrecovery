@@ -31,7 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setAndBindTitleBar()
         drawerLayout = findViewById(drawerLayoutId)
         drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment()
         gson = GsonFactory.getSimpleGson()
@@ -39,13 +39,11 @@ abstract class BaseActivity : AppCompatActivity() {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 //        }
-
     }
 
     open fun getGson(): Gson? {
         return gson
     }
-
 
     /**
      * Give Resource id of the view you want to inflate

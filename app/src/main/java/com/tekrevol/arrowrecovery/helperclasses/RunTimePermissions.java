@@ -3,15 +3,21 @@ package com.tekrevol.arrowrecovery.helperclasses;
 import android.app.Activity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
+
 import androidx.core.app.ActivityCompat;
+
+import com.tekrevol.arrowrecovery.activities.BaseActivity;
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper;
 
 /**
  * Created by khanhamza on 23-May-17.
  */
 
 public class RunTimePermissions {
-
 
 
     // Storage Permissions variables
@@ -21,11 +27,11 @@ public class RunTimePermissions {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA,
             Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_WIFI_STATE,
             Manifest.permission.READ_PHONE_STATE
     };
-
 
 
     //persmission method.
@@ -35,6 +41,7 @@ public class RunTimePermissions {
         int writePermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int cameraPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA);
         int locationPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        int coarseLocationPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
         int internetPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.INTERNET);
         int wifiPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE);
         int readPhonePermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE);
@@ -45,6 +52,7 @@ public class RunTimePermissions {
                 || locationPermission != PackageManager.PERMISSION_GRANTED
                 || internetPermission != PackageManager.PERMISSION_GRANTED
                 || wifiPermission != PackageManager.PERMISSION_GRANTED
+                || coarseLocationPermission != PackageManager.PERMISSION_GRANTED
                 || readPhonePermission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
@@ -53,5 +61,30 @@ public class RunTimePermissions {
                     REQUEST_CODE
             );
         }
+    }
+
+
+    public static boolean isAllPermissionGiven(Context context, BaseActivity activity, boolean showAlert) {
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return true;
+        }
+
+        if (showAlert) {
+
+            UIHelper.showAlertDialog("This app needs to access your location permission for further process", "Permissions", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    verifyStoragePermissions(activity);
+                }
+            }, context);
+
+        }
+        return false;
     }
 }

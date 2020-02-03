@@ -1,8 +1,9 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Context
 import android.content.DialogInterface
+import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -18,6 +19,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
 import com.tekrevol.arrowrecovery.helperclasses.kotlinhelper.disableClick
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
@@ -30,7 +32,6 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
@@ -146,7 +147,14 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     override fun setListeners() {
         btnCheckout.setOnClickListener {
             btnCheckout.disableClick()
-            getCollectionSelector()
+            //                if (ActivityCompat.checkSelfPermission(getHomeActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+//
+//                    ActivityCompat.requestPermissions(getHomeActivity(), new String[]{Manifest.permission.RECORD_AUDIO},
+//                            RECORD_AUDIO);
+//                }
+            if (RunTimePermissions.isAllPermissionGiven(context, baseActivity, true)) {
+                getCollectionSelector()
+            }
         }
 
         cbSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -168,37 +176,44 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
     private fun getCollectionSelector() {
 
-        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
-
-        if (arrData.isNotEmpty()) {
-            // FIXME we have to change hardcoded lat, long
-            val queryMap = HashMap<String, Any>()
-            queryMap[WebServiceConstants.Q_LAT] = googleAddressModel.latitude
-            queryMap[WebServiceConstants.Q_LONG] = googleAddressModel.longitude
-
-            webCallCollection = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-
-                    val type = object : TypeToken<java.util.ArrayList<CollectionModel?>?>() {}.type
-                    val arrayList: java.util.ArrayList<CollectionModel> = GsonFactory.getSimpleGson()
-                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                    , type)
-
-                    if (webResponse.isSuccess) {
-                        arrDataCart.clear()
-                        arrDataCart.addAll(arrayList)
-                        val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid, orderTotal)
-                        checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
-                    }
-                }
-
-                override fun onError(`object`: Any?) {
-
-                }
-            })
+        val manager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            UIHelper.showAlertDialog(context, "Your GPS seems to be disabled, please enable to proceed process")
         } else {
-            UIHelper.showToast(context, "Your Cart is Empty")
+
+            val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
+
+            if (arrData.isNotEmpty()) {
+                // FIXME we have to change hardcoded lat, long
+                val queryMap = HashMap<String, Any>()
+                queryMap[WebServiceConstants.Q_LAT] = googleAddressModel.latitude
+                queryMap[WebServiceConstants.Q_LONG] = googleAddressModel.longitude
+
+                webCallCollection = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_COLLECTIONCENTER, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                        val type = object : TypeToken<java.util.ArrayList<CollectionModel?>?>() {}.type
+                        val arrayList: java.util.ArrayList<CollectionModel> = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type)
+
+                        if (webResponse.isSuccess) {
+                            arrDataCart.clear()
+                            arrDataCart.addAll(arrayList)
+                            val checkoutDialogFragment = CheckoutDialogFragment.newInstance(arrData, arrDataCart, orderid, orderTotal)
+                            checkoutDialogFragment.show(baseActivity.supportFragmentManager, "CheckoutDialogFragment")
+                        }
+                    }
+
+                    override fun onError(`object`: Any?) {
+
+                    }
+                })
+            } else {
+                UIHelper.showToast(context, "Your Cart is Empty")
+            }
         }
+
 
     }
 
