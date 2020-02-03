@@ -39,7 +39,6 @@ import java.util.HashMap
 
 class SearchFragment : BaseFragment(), OnItemClickListener {
 
-
     private var arrData: ArrayList<SearchHistoryModel> = ArrayList()
     private var arrData2: ArrayList<SearchHistoryModel> = ArrayList()
     private var text: String? = null
@@ -78,7 +77,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     private fun onBind() {
 
         loadData()
-
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         val resId = R.anim.layout_animation_fall_bottom
@@ -128,7 +126,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             }
 
         })
-
 
     }
 

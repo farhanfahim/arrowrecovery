@@ -1,6 +1,5 @@
 package com.tekrevol.arrowrecovery.fragments
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -11,9 +10,7 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.DashboardPagerAdapter
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_dashboard_pager.*
-import kotlinx.android.synthetic.main.titlebar_main.*
 
 class DashboardPagerFragment : BaseFragment() {
 
@@ -81,7 +78,7 @@ class DashboardPagerFragment : BaseFragment() {
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
 //        setCurrentItem(positionToSelect
-        navigationBar.show(positionToSelect, true)
+        navigationBar.show(positionToSelect, false)
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Pair
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -30,6 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setAndBindTitleBar()
         drawerLayout = findViewById(drawerLayoutId)
         drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment()
         gson = GsonFactory.getSimpleGson()
