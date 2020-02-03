@@ -1,5 +1,7 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Context
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -7,8 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.adapters.DashboardPagerAdapter
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_dashboard_pager.*
 
@@ -77,18 +83,23 @@ class DashboardPagerFragment : BaseFragment() {
         viewpager.adapter = adapter
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
-//        setCurrentItem(positionToSelect
         navigationBar.show(positionToSelect, false)
+
     }
+
 
 
     override fun setListeners() {
         // Check model.id for position
+
+
         navigationBar.setOnClickMenuListener { model ->
+
             setCurrentItem(model.id)
         }
 
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -97,6 +108,7 @@ class DashboardPagerFragment : BaseFragment() {
             }
 
             override fun onPageSelected(position: Int) {
+
                 if (position == 2) {
                     adapter?.let {
                         val cartFragment = it.registeredFragments[2] as CartFragment?
@@ -111,6 +123,8 @@ class DashboardPagerFragment : BaseFragment() {
 
 
     private fun setCurrentItem(position: Int) {
+
+
         positionToSelect = position
         viewpager!!.setCurrentItem(position, true)
         //        ((BaseFragment)adapter.getItem(position)).setTitlebar(getHomeActivity().getTitleBar());
@@ -130,6 +144,7 @@ class DashboardPagerFragment : BaseFragment() {
                 dashboardTitleBar.setTitle("Customer Support")
             }
             4 -> setProfileTitleBar()
+
 
         }
 

@@ -1,8 +1,10 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -23,25 +25,23 @@ import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
 
-
 class HomeFragment : BaseFragment(), OnItemClickListener {
-
-    private val PERMISSIONS_REQUEST_LOCATION = 100
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
+    private var permisionValue: Boolean = false
 
     companion object {
 
         fun newInstance(): HomeFragment {
 
             val args = Bundle()
-
             val fragment = HomeFragment()
             fragment.arguments = args
             return fragment
@@ -55,33 +55,22 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // checkPermission()
-        //checkState()
         onBind()
         bindGraphData()
-        // Check the SDK version and whether the permission is already granted or not.
+
 
     }
 
-    /*  private fun checkPermission() {
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && PermissionChecker.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-              requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), PERMISSIONS_REQUEST_LOCATION)
-              checkPermission()
-              //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-          } else { // Android version is lesser than 6.0 or the permission is already granted.
-
-          }
-
-      }*/
 
     private fun checkState() {
-        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
-        if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(googleAddressModel.address)!!) {
 
+        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
+        if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(googleAddressModel.address)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(googleAddressModel.address)!!)) {
+
+            permisionValue = true
         } else {
             UIHelper.showAlertDialog1("Your current state doesn't match the state info you provided at the time of registration.", "Alert", { dialog, which ->
                 sharedPreferenceManager.clearDB()
@@ -96,6 +85,17 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         rvDays.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvDays.adapter = daysSelectorAdapter
+     /*   while (permisionValue != true) {
+            if (RunTimePermissions.isAllPermissionGiven(context, baseActivity, true)) {
+                val manager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    UIHelper.showAlertDialog(context, "Your GPS seems to be disabled, please enable to proceed process")
+                } else {
+                    checkState()
+                }
+            }
+        }*/
+
     }
 
     private fun bindGraphData() {
@@ -144,7 +144,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         chart.invalidate()
     }
 
-
     private fun setData(count: Int, range: Float) {
         val values = java.util.ArrayList<Entry>()
         for (i in 0 until count) {
@@ -184,7 +183,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         // redraw
         chart.invalidate()
     }
-
 
     override fun getDrawerLockMode(): Int {
         return 0

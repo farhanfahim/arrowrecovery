@@ -9,6 +9,17 @@ public class States {
     @Expose
     @SerializedName("name")
     private String name;
+    @Expose
+    @SerializedName("short_name")
+    private String shortName;
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
 
     @Expose
     @SerializedName("id")

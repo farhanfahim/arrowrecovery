@@ -253,8 +253,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                         txtStr = txtCollectionCenterLocation.text.toString()
                         getMap(it)
                     }
-
                 }
+
                 if (txtCollectionCenterLocation.text.equals("")) {
                     contPickupSelected.visibility = View.GONE
                     contCollectionCenter.visibility = View.VISIBLE
@@ -435,7 +435,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             })
         }
 
-
     }
 
     private fun getMap(it: SpinnerModel) {
@@ -475,7 +474,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         })
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         googlePlaceHelper?.onActivityResult(requestCode, resultCode, data)
@@ -491,7 +489,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null && addresses.size > 0) {
                 val state = addresses[0].adminArea
-                if ((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) {
+                if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(state)!!) ) {
                     txtPickupLocation.text = locationName
                     latitudee = latitude
                     longitudee = longitude

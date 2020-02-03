@@ -133,7 +133,7 @@ public class UIHelper {
         builder
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("Yes", onClickListener);
+                .setPositiveButton("Ok", onClickListener);
 
         if (!title.isEmpty())
             builder.setTitle(title);

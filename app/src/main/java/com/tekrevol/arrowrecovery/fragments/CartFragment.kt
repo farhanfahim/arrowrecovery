@@ -61,7 +61,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         fun newInstance(): CartFragment {
 
             val args = Bundle()
-
             val fragment = CartFragment()
             fragment.arguments = args
             return fragment
@@ -213,7 +212,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                 UIHelper.showToast(context, "Your Cart is Empty")
             }
         }
-
 
     }
 
