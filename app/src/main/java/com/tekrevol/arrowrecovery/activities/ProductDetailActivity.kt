@@ -1,5 +1,6 @@
 package com.tekrevol.arrowrecovery.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -28,7 +29,6 @@ import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.sending_model.OrderProductSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import retrofit2.Call
 
@@ -80,6 +80,12 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
     }
 
     private fun setListener() {
+
+        carouselView.setImageClickListener { pos ->
+            val i = Intent(this, SliderActivity::class.java)
+            i.putExtra(AppConstants.JSON_STRING_KEY, model.toString())
+            startActivity(i)
+        }
 
         contQuality.setOnClickListener {
             UIHelper.showCheckedDialogBox(this, "Select Quality", qualities, selectedPosition) { dialog, which ->
@@ -178,5 +184,6 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)
         ImageLoaderHelper.loadImageWithAnimations(imageView, productDetailModel?.attachments?.get(position)?.attachment_url, true)
     }
+
 
 }

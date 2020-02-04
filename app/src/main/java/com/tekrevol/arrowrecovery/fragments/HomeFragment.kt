@@ -35,7 +35,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
-    private var permisionValue: Boolean = false
+
 
     companion object {
 
@@ -64,37 +64,13 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
-
-    private fun checkState() {
-
-        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
-        if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(googleAddressModel.address)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(googleAddressModel.address)!!)) {
-
-            permisionValue = true
-        } else {
-            UIHelper.showAlertDialog1("Your current state doesn't match the state info you provided at the time of registration.", "Alert", { dialog, which ->
-                sharedPreferenceManager.clearDB()
-                baseActivity.clearAllActivitiesExceptThis(MainActivity::class.java)
-            }, context)
-        }
-    }
-
     private fun onBind() {
         arrData.clear()
         arrData.addAll(Constants.daysSelector())
 
         rvDays.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvDays.adapter = daysSelectorAdapter
-     /*   while (permisionValue != true) {
-            if (RunTimePermissions.isAllPermissionGiven(context, baseActivity, true)) {
-                val manager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    UIHelper.showAlertDialog(context, "Your GPS seems to be disabled, please enable to proceed process")
-                } else {
-                    checkState()
-                }
-            }
-        }*/
+
 
     }
 

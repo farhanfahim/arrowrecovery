@@ -2,8 +2,10 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.MyCartAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -177,7 +180,9 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
         val manager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            UIHelper.showAlertDialog(context, "Your GPS seems to be disabled, please enable to proceed process")
+            UIHelper.showAlertDialog1("Your GPS seems to be disabled, please enable to proceed process", "Alert", { dialog, which ->
+                startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }, context)
         } else {
 
             val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)

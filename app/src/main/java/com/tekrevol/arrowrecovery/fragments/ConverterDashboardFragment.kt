@@ -306,7 +306,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     }
 
-
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
         if (type == ConverterItemShimmerAdapter::class.java.simpleName) {
@@ -373,14 +372,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private fun getProductDetail(item: Int, limit: Int, offset: Int) {
 
         productid = item
-      //  if (x == 0) {
-            rvConverters.showShimmer()
-      //  }
+        //  if (x == 0) {
+        rvConverters.showShimmer()
+        //  }
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-     /*   queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
-        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset*/
+        /*   queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
+           queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset*/
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -419,21 +418,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
 
     override fun onPage(i: Int) {
-        /*if (offset < i) {
-
-            offset = i
-
-            x++
-//            progressBarMyOrder.visibility = View.VISIBLE
-
-            getProductDetail(productid, limit, i)
-        }*/
     }
 
     override fun onDonePaging() {
-//        if (progressConverters != null) {
-//            progressConverters!!.visibility = View.GONE
-//        }
+
     }
 
 

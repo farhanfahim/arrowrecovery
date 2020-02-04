@@ -92,7 +92,6 @@ class DashboardPagerFragment : BaseFragment() {
     override fun setListeners() {
         // Check model.id for position
 
-
         navigationBar.setOnClickMenuListener { model ->
 
             setCurrentItem(model.id)
@@ -144,7 +143,6 @@ class DashboardPagerFragment : BaseFragment() {
                 dashboardTitleBar.setTitle("Customer Support")
             }
             4 -> setProfileTitleBar()
-
 
         }
 
