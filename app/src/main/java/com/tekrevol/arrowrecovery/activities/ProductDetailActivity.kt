@@ -145,7 +145,6 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
             }
         }
 
-
         )
     }
 
@@ -178,7 +177,6 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
             override fun onError(`object`: Any?) {}
         })
     }
-
 
     var imageListener = ImageListener { position, imageView ->
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER)

@@ -188,7 +188,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             val googleAddressModel = GooglePlaceHelper.getCurrentLocation(context, false)
 
             if (arrData.isNotEmpty()) {
-                // FIXME we have to change hardcoded lat, long
                 val queryMap = HashMap<String, Any>()
                 queryMap[WebServiceConstants.Q_LAT] = googleAddressModel.latitude
                 queryMap[WebServiceConstants.Q_LONG] = googleAddressModel.longitude

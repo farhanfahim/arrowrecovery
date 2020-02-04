@@ -1,38 +1,31 @@
 package com.tekrevol.arrowrecovery.activities
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
-import android.location.Address
-import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import com.tekrevol.arrowrecovery.BaseApplication.getContext
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.fragments.DashboardPagerFragment
-import com.tekrevol.arrowrecovery.fragments.DashboardPagerFragment.Companion.newInstance
 import com.tekrevol.arrowrecovery.fragments.RightSideMenuFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
-import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.libraries.residemenu.ResideMenu
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
-import com.tekrevol.arrowrecovery.utils.utility.Blur
-import com.tekrevol.arrowrecovery.utils.utility.Utils
-import kotlinx.android.synthetic.main.fragment_checkout_dialog.*
-import java.util.*
 
 class HomeActivity : BaseActivity() {
     var navigationView: NavigationView? = null
@@ -50,9 +43,6 @@ class HomeActivity : BaseActivity() {
     private val background: Bitmap? = null
     var blurImage: ImageView? = null
         private set
-    var longitudee: Double? = null
-    var latitudee: Double? = null
-
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -66,19 +56,6 @@ class HomeActivity : BaseActivity() {
     }
 
 
-    private fun checkState() {
-
-        val googleAddressModel = GooglePlaceHelper.getCurrentLocation(this, false)
-        if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(googleAddressModel.address)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(googleAddressModel.address)!!)) {
-            initFragments()
-        } else {
-            UIHelper.showAlertDialog1("Your current state doesn't match the state info you provided at the time of registration.", "Alert", { dialog, which ->
-                sharedPreferenceManager!!.clearDB()
-                clearAllActivitiesExceptThis(MainActivity::class.java)
-            }, this)
-        }
-    }
-
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         val intentData = intent.getStringExtra(AppConstants.JSON_STRING_KEY)
@@ -88,18 +65,39 @@ class HomeActivity : BaseActivity() {
         contParentActivityLayout = findViewById(R.id.contParentActivityLayout)
         blurImage = findViewById(R.id.imageBlur)
 
-
         initFragments()
-        /* if (RunTimePermissions.isAllPermissionGiven(this, this, true)) {
-             val manager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-             if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                 UIHelper.showAlertDialog1("Your GPS seems to be disabled, please enable to proceed process", "Alert", { dialog, which ->
-                     startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                 }, this)
-             } else {
-                 checkState()
-             }
-         }*/
+
+   /*     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            val manager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                checkState()
+            } else {
+                UIHelper.showAlertDialog1("You have not enabled GPS, please enable to proceed ", "Logout", { dialog, which ->
+                    sharedPreferenceManager!!.clearDB()
+                    clearAllActivitiesExceptThis(MainActivity::class.java)
+                }, this)
+            }
+        } else {
+            UIHelper.showAlertDialog1("You have not enabled Location, please enable to proceed ", "Logout", { dialog, which ->
+                sharedPreferenceManager!!.clearDB()
+                clearAllActivitiesExceptThis(MainActivity::class.java)
+            }, this)
+        }*/
+    }
+
+    private fun checkState() {
+
+        // FIXME changes needed
+        /*val googleAddressModel = GooglePlaceHelper.getCurrentLocation(this, false)
+        if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(googleAddressModel.address)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(googleAddressModel.address)!!)) {
+            initFragments()
+        } else {
+            UIHelper.showAlertDialog1("Your current state doesn't match the state info you provided at the time of registration.", "Alert", { dialog, which ->
+                sharedPreferenceManager!!.clearDB()
+                clearAllActivitiesExceptThis(MainActivity::class.java)
+            }, this)
+
+        }*/
     }
 
     private fun setSideMenu(direction: Int) {
