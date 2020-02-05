@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -30,8 +29,6 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 
 class HomeActivity : BaseActivity() {
     var navigationView: NavigationView? = null
-    private var permisionValue: Boolean = false
-
     private var sharedPreferenceManager: SharedPreferenceManager? = null
     var contMain: FrameLayout? = null
     var contParentActivityLayout: RelativeLayout? = null
@@ -60,18 +57,36 @@ class HomeActivity : BaseActivity() {
             }
         }
 
-        //        setContentView(R.layout.activity_main);
+        // checkAproved()
+
     }
+
+    private fun checkAproved() {
+
+        val services = WebServices(this, sharedPreferenceManager!!.getString(AppConstants.KEY_TOKEN), BaseURLTypes.BASE_URL, false)
+        services.postAPIAnyObject(WebServiceConstants.PATH_ME, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+
+                val userModel = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModel::class.java)
+                val currentUser = sharedPreferenceManager!!.currentUser
+                currentUser.userDetails = userModel.userDetails
+                sharedPreferenceManager!!.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+    }
+
     open fun getCurrentUser(): UserModel? {
         return sharedPreferenceManager?.getCurrentUser()
     }
 
 
-
     private fun callRefreshApi() {
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-             //   Log.w(HomeActivity.TAG, "getInstanceId failed", task.exception)
+                //   Log.w(HomeActivity.TAG, "getInstanceId failed", task.exception)
                 return@OnCompleteListener
             }
             // Get new Instance ID token

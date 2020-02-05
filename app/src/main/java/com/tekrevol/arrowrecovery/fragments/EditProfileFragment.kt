@@ -304,16 +304,16 @@ class EditProfileFragment : BaseFragment() {
         WebServices(baseActivity, token, BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                     override fun requestDataResponse(webResponse: WebResponse<Any>) {
+                        UIHelper.showToast(context, webResponse.message)
+                        /*  val model: DataUpdate = GsonFactory.getSimpleGson()
+                                    .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                            , DataUpdate::class.java)
 
-                        val model: DataUpdate = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , DataUpdate::class.java)
 
-
-                     //   val userDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
-                        val currentUser = sharedPreferenceManager.currentUser
-                        currentUser.userDetails = model.details
-                        sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)
+                         //   val userDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
+                            val currentUser = sharedPreferenceManager.currentUser
+                            currentUser.userDetails = model.details
+                            sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)*/
 //                        baseActivity.finish()
 //                        baseActivity.openActivity(HomeActivity::class.java)
                         baseActivity.popBackStack()

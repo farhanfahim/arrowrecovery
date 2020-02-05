@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/c_white">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -227,11 +226,11 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/edtKindCompany"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Kind of Company"
                             android:inputType="text"
-                            android:id="@+id/edtKindCompany"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -259,11 +258,11 @@
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
 
+                            android:id="@+id/edtPhoneNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Phone Number"
                             android:inputType="number"
-                            android:id="@+id/edtPhoneNo"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"
@@ -320,9 +319,9 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/edtAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/edtAddress"
                             android:hint="Address"
                             android:inputType="text"
                             android:singleLine="true"
@@ -340,9 +339,9 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/edtZipCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/edtZipCode"
                             android:hint="Zip Code"
                             android:inputType="text"
                             android:singleLine="true"
@@ -361,10 +360,10 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/edtCity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="City"
-                            android:id="@+id/edtCity"
                             android:inputType="text"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
@@ -377,8 +376,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginTop="10dp"
+                        android:orientation="vertical"
                         android:visibility="visible">
 
                         <LinearLayout
@@ -424,11 +423,11 @@
                         app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                         <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                            android:id="@+id/edtCountry"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Country"
                             android:inputType="text"
-                            android:id="@+id/edtCountry"
                             android:singleLine="true"
                             android:textColor="@color/title_color"
                             android:textColorHint="@color/txtGrey"

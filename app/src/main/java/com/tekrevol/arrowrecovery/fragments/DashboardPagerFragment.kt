@@ -79,14 +79,12 @@ class DashboardPagerFragment : BaseFragment() {
         navigationBar.add(MeowBottomNavigation.Model(2, R.drawable.coloredcarticon))
         navigationBar.add(MeowBottomNavigation.Model(3, R.drawable.coloredcontacticon))
         navigationBar.add(MeowBottomNavigation.Model(4, R.drawable.coloredprofileicon))
-
         viewpager.adapter = adapter
         viewpager.setPagingEnabled(false)
         viewpager.offscreenPageLimit = 4
         navigationBar.show(positionToSelect, false)
 
     }
-
 
 
     override fun setListeners() {
@@ -120,9 +118,7 @@ class DashboardPagerFragment : BaseFragment() {
         })
     }
 
-
     private fun setCurrentItem(position: Int) {
-
 
         positionToSelect = position
         viewpager!!.setCurrentItem(position, true)

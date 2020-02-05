@@ -1,17 +1,11 @@
 package com.tekrevol.arrowrecovery.fragments
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -19,15 +13,16 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
-import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
-import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
+import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -35,7 +30,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
-
 
     companion object {
 
@@ -61,18 +55,16 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         onBind()
         bindGraphData()
 
-
     }
 
     private fun onBind() {
         arrData.clear()
         arrData.addAll(Constants.daysSelector())
-
         rvDays.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvDays.adapter = daysSelectorAdapter
 
-
     }
+
 
     private fun bindGraphData() {
         chart.setViewPortOffsets(0f, 0f, 0f, 0f)

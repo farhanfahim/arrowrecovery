@@ -178,7 +178,6 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
-        //  editProfileSendingModel.email = (email)
         editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
@@ -392,7 +391,6 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please select Title")
             return
         }
-
 
         if (!edtFirstname.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter First Name")
