@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent"
     android:background="@color/c_white"
     android:orientation="vertical">
 
     <com.todkars.shimmer.ShimmerRecyclerView
+        android:visibility="gone"
         android:id="@+id/recyclerViewMyOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +22,14 @@
         tools:listitem="@layout/shimmer_item_myorder">
 
     </com.todkars.shimmer.ShimmerRecyclerView>
+
+    <ImageView
+        android:id="@+id/imgNoOrder"
+        android:src="@drawable/noorder"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <ProgressBar
 

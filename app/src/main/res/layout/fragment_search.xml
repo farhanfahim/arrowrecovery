@@ -15,7 +15,6 @@
         android:padding="10dp">
 
 
-
         <ImageView
             android:id="@+id/imgProfile"
             android:layout_width="@dimen/x40dp"

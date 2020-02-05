@@ -133,11 +133,18 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
                     val arrayList: java.util.ArrayList<OrderModel> = GsonFactory.getSimpleGson()
                             .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                     , type)
-
                     if (x == 0) {
                         recyclerViewMyOrder.hideShimmer()
                     }
                     arrData.addAll(arrayList)
+                    if (arrData.isEmpty()) {
+                        recyclerViewMyOrder.visibility = View.GONE
+                        imgNoOrder.visibility = View.VISIBLE
+                    } else {
+                        recyclerViewMyOrder.visibility = View.VISIBLE
+                        imgNoOrder.visibility = View.GONE
+                    }
+
                     myOrderAdapter.notifyDataSetChanged()
                     onDonePaging()
 

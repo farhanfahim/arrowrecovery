@@ -154,6 +154,17 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
+                if (arrayList.isEmpty()) {
+                    selectAllLayout.visibility = View.GONE
+                    recyclerViewNotification.visibility = View.GONE
+                    imgNoNotification.visibility = View.VISIBLE
+
+                } else {
+                    selectAllLayout.visibility = View.VISIBLE
+                    recyclerViewNotification.visibility = View.VISIBLE
+                    imgNoNotification.visibility = View.GONE
+                }
+
                 if (x == 0) {
                     recyclerViewNotification.hideShimmer()
                 }

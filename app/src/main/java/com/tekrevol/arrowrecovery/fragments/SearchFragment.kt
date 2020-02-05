@@ -58,7 +58,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         fun newInstance(): SearchFragment {
 
             val args = Bundle()
-
             val fragment = SearchFragment()
             fragment.arguments = args
             return fragment
@@ -157,7 +156,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-            if (text == null) {
+            if (text == null || text.equals("")) {
                 Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
             } else {
                 baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)

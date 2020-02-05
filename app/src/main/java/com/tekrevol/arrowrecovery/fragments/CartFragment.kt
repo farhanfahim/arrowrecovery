@@ -116,6 +116,17 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
                     txtTotalPrice.text = "Total: " + orderModel.estimatedAmount
                     arrData.clear()
                     arrData.addAll(orderModel.orderProductModels)
+                    if (arrData.isEmpty()) {
+                        layoutCart.visibility = View.GONE
+                        recyclerViewCart.visibility = View.GONE
+                        imgNoCart.visibility = View.VISIBLE
+                        contABC.visibility = View.GONE
+                    } else {
+                        layoutCart.visibility = View.VISIBLE
+                        recyclerViewCart.visibility = View.VISIBLE
+                        imgNoCart.visibility = View.GONE
+                        contABC.visibility = View.VISIBLE
+                    }
                     cartAdapter.notifyDataSetChanged()
                 } else {
                     if (recyclerViewCart == null) {

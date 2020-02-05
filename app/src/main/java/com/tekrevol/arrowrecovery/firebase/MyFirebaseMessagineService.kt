@@ -16,7 +16,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
-import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPDATED
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
@@ -28,10 +27,10 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
 
     private val TAG: String = "FIREBASE MESSAGE"
 
-    override fun onNewToken(p0: String) {
-        super.onNewToken(p0)
+    override fun onNewToken(s: String) {
+        super.onNewToken(s)
 
-        SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN, p0)
+        SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN, s)
         SharedPreferenceManager.getInstance(this).putValue(KEY_FIREBASE_TOKEN_UPDATED, true)
     }
 

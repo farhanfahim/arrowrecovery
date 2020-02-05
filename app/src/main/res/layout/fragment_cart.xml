@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:gravity="center"
+    android:background="@color/c_white"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layoutCart"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -45,19 +48,27 @@
 
     </LinearLayout>
 
-
     <com.todkars.shimmer.ShimmerRecyclerView
         android:id="@+id/recyclerViewCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:layout_weight="1"
         tools:listitem="@layout/item_cart">
 
 
     </com.todkars.shimmer.ShimmerRecyclerView>
 
+    <ImageView
+        android:id="@+id/imgNoCart"
+        android:src="@drawable/emptycart"
+        android:visibility="visible"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/contABC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
