@@ -146,7 +146,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
         queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
 
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<NotificationModel?>?>() {}.type
@@ -190,7 +190,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
 
         val id = arrData.filter { it.isSelected }.map { it.id }
 
-        webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS_SLASH + id, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallDelete = getBaseWebServices(true).deleteAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS_SLASH + id, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 UIHelper.showToast(context, webResponse.message)

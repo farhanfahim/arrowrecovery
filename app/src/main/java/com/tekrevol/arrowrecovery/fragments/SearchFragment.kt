@@ -46,9 +46,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchBarShimmerAdapter: SearchBarShimmerAdapter
     var webCall: Call<WebResponse<Any>>? = null
-
     var searchHistoryModel: SearchHistoryModel = SearchHistoryModel()
-
 
     companion object {
         var makeId: String = ""
@@ -71,7 +69,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         searchBarShimmerAdapter = SearchBarShimmerAdapter(context!!, arrDataSearchBar, this)
 
     }
-
 
     private fun onBind() {
 
@@ -103,17 +100,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             override fun afterTextChanged(s: Editable) {
                 text = edtSearch.text.toString()
                 arrDataSearchBar.clear()
-
                 if (text == null) {
-                    Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
-                } else {
-                    getProducts(text!!, makeId, modelId, year, serialNumber)
-                    searchHistoryModel.query = text
-
-                    recyclerViewSearchList.visibility = View.GONE
-                    rvSearch.visibility = View.VISIBLE
-                }
-                if (text!! == "") {
+                    Toast.makeText(context, "Search keyword required", Toast.LENGTH_SHORT).show()
+                } else if (text!! == "") {
                     arrDataSearchBar.clear()
                     recyclerViewSearchList.visibility = View.VISIBLE
                     rvSearch.visibility = View.GONE
@@ -121,7 +110,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                     modelId = ""
                     year = ""
                     serialNumber = ""
+                } else {
+                    getProducts(text!!, makeId, modelId, year, serialNumber)
+                    searchHistoryModel.query = text
+
+                    recyclerViewSearchList.visibility = View.GONE
+                    rvSearch.visibility = View.VISIBLE
                 }
+
             }
 
         })
@@ -156,11 +152,11 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-            if (text == null || text.equals("")) {
-                Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
-            } else {
-                baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
-            }
+            /* if (text == null || text.equals("")) {
+                 Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
+             } else {*/
+            baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
+            /*}*/
         })
     }
 
@@ -193,6 +189,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun getProducts(query: String, makeId: String, modelId: String, year: String, serialNumber: String) {
 
+        recyclerViewSearchList.visibility = View.GONE
         rvSearch.showShimmer()
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_QUERY] = query
@@ -200,13 +197,20 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
         queryMap[WebServiceConstants.Q_YEAR] = year
         queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
                 val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
+                if (arrayList.isEmpty()) {
+                    recyclerViewSearchList.visibility = View.VISIBLE
+                    rvSearch.visibility = View.GONE
+                } else {
+                    recyclerViewSearchList.visibility = View.GONE
+                    rvSearch.visibility = View.VISIBLE
+                }
 
                 rvSearch.hideShimmer()
                 arrDataSearchBar.clear()

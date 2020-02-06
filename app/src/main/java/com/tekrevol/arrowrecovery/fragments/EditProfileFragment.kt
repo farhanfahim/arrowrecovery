@@ -199,6 +199,7 @@ class EditProfileFragment : BaseFragment() {
         edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
         edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
         edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+        edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
         txtState.text = (sharedPreferenceManager.currentUser.userDetails.state.name)
 
     }
@@ -304,7 +305,12 @@ class EditProfileFragment : BaseFragment() {
         WebServices(baseActivity, token, BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                     override fun requestDataResponse(webResponse: WebResponse<Any>) {
-                        UIHelper.showToast(context, webResponse.message)
+
+
+                        UIHelper.showAlertDialog1(webResponse.message, "Update Profile", { dialog, which ->
+                            baseActivity.popBackStack()
+                        }, context)
+                        //  UIHelper.showToast(context, webResponse.message)
                         /*  val model: DataUpdate = GsonFactory.getSimpleGson()
                                     .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                             , DataUpdate::class.java)
@@ -316,7 +322,7 @@ class EditProfileFragment : BaseFragment() {
                             sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)*/
 //                        baseActivity.finish()
 //                        baseActivity.openActivity(HomeActivity::class.java)
-                        baseActivity.popBackStack()
+
                     }
 
                     override fun onError(`object`: Any) {

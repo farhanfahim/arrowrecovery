@@ -199,8 +199,6 @@ public class ImageLoaderHelper {
                     .showImageOnLoading(R.color.background_gray)
                     .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
         }
-
-
     }
 
 
@@ -221,7 +219,5 @@ public class ImageLoaderHelper {
                     .extraForDownloader(headers)
                     .imageScaleType(ImageScaleType.EXACTLY).displayer(new FadeInBitmapDisplayer(200)).build();
         }
-
-
     }
 }

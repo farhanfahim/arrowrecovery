@@ -60,6 +60,17 @@ public class SignupSendingModel {
     @Expose
     @SerializedName("title")
     private int title;
+    @Expose
+    @SerializedName("about")
+    private String about;
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     @Expose
     @SerializedName("kind_of_company")

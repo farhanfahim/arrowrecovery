@@ -65,6 +65,14 @@ public class EditProfileSendingModel {
     @SerializedName("title")
     private int title;
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     @Expose
     @SerializedName("kind_of_company")
     private String kindOfCompany;
@@ -114,13 +122,6 @@ public class EditProfileSendingModel {
         this.image = image;
     }
 
-    public String getAbout() {
-        return about;
-    }
-
-    public void setAbout(String about) {
-        this.about = about;
-    }
 
     public String getName() {
         return name;

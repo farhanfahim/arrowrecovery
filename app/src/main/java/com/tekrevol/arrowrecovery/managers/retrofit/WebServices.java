@@ -398,7 +398,7 @@ public class WebServices {
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
                         //            UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
                         dismissDialog();
-                        callBack.onError("");
+                        callBack.onError(call);
                     }
                 });
             } else {

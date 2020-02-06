@@ -154,7 +154,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private fun getFeaturedList() {
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_FEATURED] = 1
-        webCallFeatured = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallFeatured = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
@@ -341,7 +341,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvCategories.showShimmer()
         val mquery: Map<String, Any> = HashMap()
 
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
@@ -380,7 +380,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
         /*   queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
            queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset*/
-        webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallProductDetail = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type

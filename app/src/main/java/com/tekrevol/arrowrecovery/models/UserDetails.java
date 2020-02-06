@@ -6,7 +6,6 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class UserDetails {
 
-
     @Expose
     @SerializedName("full_name")
     private String fullName;

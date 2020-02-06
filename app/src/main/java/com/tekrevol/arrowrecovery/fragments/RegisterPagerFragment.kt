@@ -1,6 +1,7 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
@@ -178,6 +179,7 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
+
         editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
@@ -190,6 +192,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = (edtCountry.stringTrimmed)
+        editProfileSendingModel.about = (edtComment.stringTrimmed)
 
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
@@ -212,7 +215,12 @@ class RegisterPagerFragment : BaseFragment() {
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                 val currentUser: UserModel = sharedPreferenceManager.currentUser
                 currentUser.userDetails = userDetails*/
+                /*    UIHelper.showToast(context, webResponse.message)
 
+                    if (webResponse.message.equals("The email has already been taken.")) {
+                        setCurrentItemByPosition(0)
+                    }
+    */
                 val model: DataUpdate = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , DataUpdate::class.java)
@@ -242,7 +250,14 @@ class RegisterPagerFragment : BaseFragment() {
                 }
             }
 
-            override fun onError(`object`: Any?) {}
+            override fun onError(`object`: Any?) {
+
+                var web: WebResponse<Any?> = `object` as WebResponse<Any?>
+
+                if (web.message.contains("email")) {
+                    setCurrentItemByPosition(0)
+                }
+            }
         })
 
     }
@@ -295,6 +310,7 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
         signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (edtCity.stringTrimmed)
+        signUpSendingModel.about = (edtComment.stringTrimmed)
         signUpSendingModel.country = (edtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
@@ -321,11 +337,13 @@ class RegisterPagerFragment : BaseFragment() {
             signUpSendingModel.title = AppConstants.TITLE_MS
         }
 
-
-
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
+//                if (webResponse.message.equals("The email has already been taken.")) {
+//                    setCurrentItemByPosition(0)
+//                }
+
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                 when {
 
@@ -358,7 +376,15 @@ class RegisterPagerFragment : BaseFragment() {
                 }
             }
 
-            override fun onError(`object`: Any?) {}
+            override fun onError(`object`: Any?) {
+                // Log.d("test",`object`.toString())
+
+                var web: WebResponse<Any?> = `object` as WebResponse<Any?>
+
+                if (web.message.contains("email")) {
+                    setCurrentItemByPosition(0)
+                }
+            }
         })
     }
 

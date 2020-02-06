@@ -97,12 +97,13 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         if (isRefresh && !onCreated) {
             return
         }
-
+        btnDelete.visibility = View.GONE
+        cbSelectAll.isChecked = false
         recyclerViewCart.showShimmer()
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = 1
         queryMap[WebServiceConstants.Q_PARAM_STATUS] = 10
-        webCallCart = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallCart = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 if (webResponse.result != null) {
@@ -173,6 +174,11 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         cbSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
             arrData.forEach { it.isSelected = isChecked }
             cartAdapter.notifyDataSetChanged()
+            if (cbSelectAll.isChecked.equals(false)) {
+                btnDelete.visibility = View.GONE
+            } else {
+                btnDelete.visibility = View.VISIBLE
+            }
         }
 
         btnDelete.setOnClickListener {
@@ -234,13 +240,17 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
         val map = arrData.filter { it.isSelected }.map { it.id }
 
-        webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS + "/" + map, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallDelete = getBaseWebServices(true).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS + "/" + map, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
                 arrData.removeAll { it.isSelected }
                 cartAdapter.notifyDataSetChanged()
                 cbSelectAll.isChecked = false
                 dialog.dismiss()
+
+                arrData.clear()
+                arrDataCart.clear()
+                myCartApi()
             }
 
             override fun onError(`object`: Any?) {
@@ -248,24 +258,22 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             }
         })
     }
+    /*  private fun deleteAllApi(dialog: DialogInterface) {
 
+          webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERS + "/" + orderid, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
+              override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                  UIHelper.showToast(context, webResponse.message)
+                  arrData.removeAll { it.isSelected }
+                  cartAdapter.notifyDataSetChanged()
+                  dialog.dismiss()
+              }
 
-    private fun deleteAllApi(dialog: DialogInterface) {
+              override fun onError(`object`: Any?) {
 
-        webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERS + "/" + orderid, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
-            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                UIHelper.showToast(context, webResponse.message)
-                arrData.removeAll { it.isSelected }
-                cartAdapter.notifyDataSetChanged()
-                dialog.dismiss()
-            }
+              }
+          })
 
-            override fun onError(`object`: Any?) {
-
-            }
-        })
-
-    }
+      }*/
 
     override fun onClick(v: View?) {
     }
@@ -276,13 +284,26 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     override fun onItemClick(position: Int, `object`: Any?, view: View?, type: String?) {
         when (view?.id) {
             R.id.imgSelect -> {
+
                 arrData[position].isSelected = !arrData[position].isSelected
                 cartAdapter.notifyDataSetChanged()
+
+
+                val anyAvailableData = arrData.find { it.isSelected }
+
+                if (anyAvailableData == null) {
+                    btnDelete.visibility = View.GONE
+                } else {
+                    btnDelete.visibility = View.VISIBLE
+
+                }
+
+
             }
             R.id.contSelectQuality -> {
                 UIHelper.showCheckedDialogBox(context, "Select Quality", Constants.qualities, 0) { dialog, which ->
                     //                    val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
-//                    txtQuality.text = Constants.qualities[selectedPosition]
+                    //txtQuality.text = Constants.qualities[selectedPosition]
                     dialog.dismiss()
                 }
             }
@@ -377,6 +398,5 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         webCallUpdate?.cancel()
         super.onDestroyView()
     }
-
 
 }

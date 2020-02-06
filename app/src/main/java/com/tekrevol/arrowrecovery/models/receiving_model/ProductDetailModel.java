@@ -24,13 +24,13 @@ public class ProductDetailModel {
     private int isFeatured;
     @Expose
     @SerializedName("rhodium")
-    private int rhodium;
+    private double rhodium;
     @Expose
     @SerializedName("palladium")
-    private int palladium;
+    private double palladium;
     @Expose
     @SerializedName("platinum")
-    private int platinum;
+    private double platinum;
     @Expose
     @SerializedName("car_variation")
     private String car_variation;
@@ -63,25 +63,25 @@ public class ProductDetailModel {
     private int id;
     @Expose
     @SerializedName("estimated_amount")
-    private int estimatedAmount;
+    private double estimatedAmount;
 
     @Expose
     @SerializedName("estimated_price")
-    private int estimatedPrice;
+    private double estimatedPrice;
 
-    public int getEstimatedPrice() {
+    public double getEstimatedPrice() {
         return estimatedPrice;
     }
 
-    public void setEstimatedPrice(int estimatedPrice) {
+    public void setEstimatedPrice(double estimatedPrice) {
         this.estimatedPrice = estimatedPrice;
     }
 
-    public int getEstimatedAmount() {
+    public double getEstimatedAmount() {
         return estimatedAmount;
     }
 
-    public void setEstimatedAmount(int estimatedAmount) {
+    public void setEstimatedAmount(double estimatedAmount) {
         this.estimatedAmount = estimatedAmount;
     }
 
@@ -109,23 +109,23 @@ public class ProductDetailModel {
         this.vehicleModel = vehicleModel;
     }
 
-    public int getRhodium() {
+    public double getRhodium() {
         return rhodium;
     }
 
-    public void setRhodium(int rhodium) {
+    public void setRhodium(double rhodium) {
         this.rhodium = rhodium;
     }
 
-    public int getPalladium() {
+    public double getPalladium() {
         return palladium;
     }
 
-    public void setPalladium(int palladium) {
+    public void setPalladium(double palladium) {
         this.palladium = palladium;
     }
 
-    public int getPlatinum() {
+    public double getPlatinum() {
         return platinum;
     }
 

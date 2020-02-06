@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
-import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
@@ -18,14 +17,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.TimeSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
+import com.tekrevol.arrowrecovery.fragments.OrderDetailFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
-import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper.GoogleAddressModel
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.DateManager
@@ -35,10 +33,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
-import com.tekrevol.arrowrecovery.models.receiving_model.DateModels
-import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
-import com.tekrevol.arrowrecovery.models.receiving_model.Working_daysModel
+import com.tekrevol.arrowrecovery.models.receiving_model.*
 import com.tekrevol.arrowrecovery.models.sending_model.UpdateDeliveryCollectionCenterModel
 import com.tekrevol.arrowrecovery.models.sending_model.UpdatePickupModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
@@ -404,11 +399,16 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS + "/" + orderid, null,
                     updateOrderModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
-
+                    val orderModel: OrderModel = GsonFactory.getSimpleGson()
+                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse?.result)
+                                    , OrderModel::class.java)
                     dialog.dismiss()
                     UIHelper.showToast(context, "Order Placed Successfully")
                     dismiss()
-                    clearAllActivitiesExceptThis(HomeActivity::class.java)
+
+                    activity!!.supportFragmentManager.beginTransaction().replace(R.id.contMain, OrderDetailFragment.newInstance(orderModel)).addToBackStack(null).commit()
+
+                    // clearAllActivitiesExceptThis(HomeActivity::class.java)
                 }
 
                 override fun onError(`object`: Any?) {}
@@ -424,11 +424,14 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS + "/" + orderid, null,
                     updateOrderModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>?) {
-
+                    val orderModel: OrderModel = GsonFactory.getSimpleGson()
+                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse?.result)
+                                    , OrderModel::class.java)
                     dialog.dismiss()
                     UIHelper.showToast(context, "OrderModel Placed Successfully")
                     dismiss()
-                    clearAllActivitiesExceptThis(HomeActivity::class.java)
+                    // clearAllActivitiesExceptThis(HomeActivity::class.java)
+                    activity!!.supportFragmentManager.beginTransaction().replace(R.id.contMain, OrderDetailFragment.newInstance(orderModel)).addToBackStack(null).commit()
                 }
 
                 override fun onError(`object`: Any?) {}
@@ -489,7 +492,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null && addresses.size > 0) {
                 val state = addresses[0].adminArea
-                if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(state)!!) ) {
+                if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(state)!!)) {
                     txtPickupLocation.text = locationName
                     latitudee = latitude
                     longitudee = longitude
@@ -501,7 +504,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                 } else {
                     UIHelper.showAlertDialog(context, "Your current state doesn't match the state info you provided at the time of registration.")
                 }
-
 
             }
         } catch (e: IOException) {
@@ -515,7 +517,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         txtPick = arrData[position].text
         timeSelectorAdapter.notifyDataSetChanged()
     }
-
 
     fun clearAllActivitiesExceptThis(cls: Class<*>?) {
         val intents = Intent(context, cls)

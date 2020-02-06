@@ -53,6 +53,7 @@ public class UserModel {
     @SerializedName("name")
     private String name;
 
+
     transient boolean isSelected = false;
 
     public boolean isSelected() {

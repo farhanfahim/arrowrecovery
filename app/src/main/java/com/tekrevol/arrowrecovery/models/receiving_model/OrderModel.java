@@ -22,7 +22,7 @@ public class OrderModel {
     private int status;
     @Expose
     @SerializedName("amount")
-    private int amount;
+    private double amount;
     @Expose
     @SerializedName("rhodium_price")
     private double rhodium_price;
@@ -137,11 +137,11 @@ public class OrderModel {
         this.status = status;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

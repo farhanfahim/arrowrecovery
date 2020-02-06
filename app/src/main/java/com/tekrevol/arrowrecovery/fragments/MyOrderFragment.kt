@@ -107,8 +107,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
 
         var orderModel: OrderModel = anyObject as OrderModel
-        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(orderModel, position), true)
-
+        baseActivity.addDockableFragment(OrderDetailFragment.newInstance(orderModel), true)
 
     }
 
@@ -125,7 +124,7 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
         queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
 
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 if (webResponse.result != null) {

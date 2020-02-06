@@ -40,7 +40,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class OrderDetailFragment : BaseFragment(), OnItemClickListener ,PagingDelegate.OnPageListener {
+class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageListener {
 
     private var arrData: ArrayList<OrderProductModel> = ArrayList()
     var webCall: Call<WebResponse<Any>>? = null
@@ -49,20 +49,18 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener ,PagingDelegate.
     var path: String = ""
     lateinit var folder: File
     private var mDialog: KProgressHUD? = null
-    var pos: Int = 0
     var model: String? = null
     var orderModel: OrderModel? = null
 
     companion object {
 
-        fun newInstance(orderModel: OrderModel, position: Int): OrderDetailFragment {
+        fun newInstance(orderModel: OrderModel): OrderDetailFragment {
 
             val args = Bundle()
 
             val fragment = OrderDetailFragment()
             fragment.arguments = args
             fragment.orderModel = orderModel
-            fragment.pos = position
             return fragment
         }
     }
@@ -154,8 +152,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener ,PagingDelegate.
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.fbutton_color_sun_flower))
         }
 
-
-        if (orderModel!!.amount == (0)) {
+        if (orderModel!!.amount.equals(0)) {
 
             txtAmountStatus.text = "Amount"
             txtTotalPrice.text = "$" + 0
@@ -221,7 +218,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener ,PagingDelegate.
         recyclerViewOrderDetail.showShimmer()
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_ORDER_ID] = orderId
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<OrderProductModel?>?>() {}.type
