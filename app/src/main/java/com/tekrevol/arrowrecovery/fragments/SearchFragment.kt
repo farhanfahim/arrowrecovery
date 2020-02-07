@@ -103,7 +103,14 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 arrDataSearchBar.clear()
                 if (text == null) {
                     Toast.makeText(context, "Search keyword required", Toast.LENGTH_SHORT).show()
-                } else if (text!! == "") {
+                }else {
+                    getProducts(text!!, makeId, modelId, year, serialNumber)
+                    searchHistoryModel.query = text
+
+                    recyclerViewSearchList.visibility = View.GONE
+                    rvSearch.visibility = View.VISIBLE
+                }
+                /*if (text!! == "") {
                     arrDataSearchBar.clear()
                     recyclerViewSearchList.visibility = View.VISIBLE
                     rvSearch.visibility = View.GONE
@@ -111,16 +118,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                     modelId = ""
                     year = ""
                     serialNumber = ""
-                } else {
-                    getProducts(text!!, makeId, modelId, year, serialNumber)
-                    searchHistoryModel.query = text
-
-                    recyclerViewSearchList.visibility = View.GONE
-                    rvSearch.visibility = View.VISIBLE
-                }
+                }*/
 
             }
-
         })
 
     }

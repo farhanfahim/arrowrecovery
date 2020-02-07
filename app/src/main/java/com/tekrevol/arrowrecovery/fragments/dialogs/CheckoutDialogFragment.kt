@@ -341,7 +341,6 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             }
 
         }
-
     }
 
     private fun getSlot(txtDate: AnyTextView) {
@@ -492,7 +491,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
             if (addresses != null && addresses.size > 0) {
                 val state = addresses[0].adminArea
-                if (state.isNullOrBlank()) {
+                if (state != null) {
                     if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(state)!!)) {
                         txtPickupLocation.text = locationName
                         latitudee = latitude

@@ -109,30 +109,30 @@ public class AppConstants {
     public static final String KEY_IS_VERIFIED = "verified";
     public static final String KEY_PASSWORDSCREEN = "passwordscreen";
 
-    public static final int  USER_TYPE_INDIVIDUAL = 10;
-    public static final int  USER_TYPE_COMPANY = 20;
-    public static final int  TITLE_MR = 10;
-    public static final int  TITLE_MISS = 20;
-    public static final int  TITLE_MRS = 30;
-    public static final int  TITLE_MS = 40;
-    public static final int  ALL_ORDERS = 1;
-
-    public static final int  STATUS_CART = 10;
-    public static final int  STATUS_ORDERED = 11;
-    public static final int  STATUS_PENDING = 20;
-    public static final int  STATUS_RECEIVED = 30;
-    public static final int  STATUS_DELIVERED = 40;
-    public static final int  STATUS_VERIFIED = 50;
-    public static final int  STATUS_PAID = 60;
-    public static final int  STATUS_COMPLETED = 70;
-    public static final int  STATUS_RETURNED = 80;
-    public static final int  DELIVERED = 10;
-    public static final int  PICKUP = 20;
+    public static final int USER_TYPE_INDIVIDUAL = 10;
+    public static final int USER_TYPE_COMPANY = 20;
+    public static final int TITLE_MR = 10;
+    public static final int TITLE_MISS = 20;
+    public static final int TITLE_MRS = 30;
+    public static final int TITLE_MS = 40;
+    public static final int ALL_ORDERS = 1;
+    public static final int STATUS_CART = 10;
+    public static final int STATUS_ORDERED = 11;
+    public static final int STATUS_PENDING = 20;
+    public static final int STATUS_RECEIVED = 30;
+    public static final int STATUS_DELIVERED = 40;
+    public static final int STATUS_VERIFIED = 50;
+    public static final int STATUS_PAYABLE = 60;
+    public static final int STATUS_PAID = 70;
+    public static final int STATUS_COMPLETED = 80;
+    public static final int STATUS_RETURNED = 90;
+    public static final int DELIVERED = 10;
+    public static final int PICKUP = 20;
 
     public static final String CHAT_URL = "https://tekrevoldev.zendesk.com";
-    public static final String APP_ID ="243d829efe2547e73de8349765690c61ed14915157bfcbb8";
-    public static final String CLIENT_ID ="mobile_sdk_client_7d94c9e4e726ed7424ee";
-    public static final String ACCOUNT_KEY ="0ogfyFbIZhpMtrv4UEde6yTv8O80EDMO";
+    public static final String APP_ID = "243d829efe2547e73de8349765690c61ed14915157bfcbb8";
+    public static final String CLIENT_ID = "mobile_sdk_client_7d94c9e4e726ed7424ee";
+    public static final String ACCOUNT_KEY = "0ogfyFbIZhpMtrv4UEde6yTv8O80EDMO";
 
     public static final String KEY_PRIVACY = "2";
     public static final String KEY_TERMS = "1";

@@ -226,7 +226,6 @@ class AdvanceSearchFragment : BaseFragment() {
         webCallMake?.cancel()
         webCallModel?.cancel()
         super.onDestroyView()
-
     }
 
 }

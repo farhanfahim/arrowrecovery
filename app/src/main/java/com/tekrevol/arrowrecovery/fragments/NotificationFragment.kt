@@ -103,7 +103,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onBind()
-        getNotification(limit, 0)
+
 
     }
 
@@ -120,7 +120,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                 .build()
         recyclerViewNotification.adapter = shimmerNotificationAdapter
         recyclerViewNotification.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_notification })
-
+        getNotification(limit, 0)
     }
 
 
@@ -213,7 +213,11 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                 UIHelper.showToast(context, webResponse.message)
                 arrData.removeAll { it.isSelected }
                 shimmerNotificationAdapter.notifyDataSetChanged()
+                cbSelectAll.isChecked = false
                 dialog.dismiss()
+                btnDelete.visibility = View.GONE
+                getNotification(limit, 0)
+
             }
 
             override fun onError(`object`: Any?) {
@@ -244,8 +248,6 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
         webCall?.cancel()
         webCallDelete?.cancel()
         super.onDestroyView()
-
-
     }
 
 

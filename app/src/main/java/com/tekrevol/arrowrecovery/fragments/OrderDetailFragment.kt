@@ -128,6 +128,11 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
         }
 
+        if (orderModel!!.status == AppConstants.STATUS_PAYABLE) {
+            txtStatus!!.text = "Payable"
+            txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
+        }
+
         if (orderModel!!.status == AppConstants.STATUS_PAID) {
             txtStatus!!.text = "Paid"
             txtStatus!!.setTextColor(ContextCompat.getColor(context!!, R.color.green_bg))
