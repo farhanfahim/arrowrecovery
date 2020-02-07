@@ -36,7 +36,8 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        Log.d(TAG, "From: " + remoteMessage.from)
+        //      Log.d(TAG, "From: " + remoteMessage.from)
+/*
 
         if (SharedPreferenceManager.getInstance(this).currentUser == null) {
             return
@@ -50,15 +51,16 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
         } else {
             return
         }
+*/
 
-    /*    if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
-            val intent = Intent(applicationContext, java)
-            handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
-        } else {
-            val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
-            val intent = Intent(applicationContext, java)
-            handleNotification("Arrow Recovery", notificationModel.data.message, intent)
-        }*/
+        /*    if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
+                val intent = Intent(applicationContext, java)
+                handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
+            } else {
+                val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
+                val intent = Intent(applicationContext, java)
+                handleNotification("Arrow Recovery", notificationModel.data.message, intent)
+            }*/
 
     }
 

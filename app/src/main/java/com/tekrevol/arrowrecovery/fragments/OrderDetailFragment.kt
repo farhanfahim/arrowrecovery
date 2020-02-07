@@ -245,7 +245,6 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
 
     private fun savePdfFile(path: String) {
 
-
         mDialog = UIHelper.getProgressHUD(context)
         mDialog?.show() as KProgressHUD
 
