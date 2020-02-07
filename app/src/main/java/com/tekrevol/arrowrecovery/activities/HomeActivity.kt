@@ -50,14 +50,15 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         sharedPreferenceManager = SharedPreferenceManager.getInstance(this)
         if (getCurrentUser() != null) {
+            checkAproved()
             if (isFirebaseTokenUpdated()) {
                 updateProfileWithFirebaseToken()
+
             } else {
                 callRefreshApi()
             }
         }
 
-        // checkAproved()
 
     }
 
@@ -66,7 +67,6 @@ class HomeActivity : BaseActivity() {
         val services = WebServices(this, sharedPreferenceManager!!.getString(AppConstants.KEY_TOKEN), BaseURLTypes.BASE_URL, false)
         services.postAPIAnyObject(WebServiceConstants.PATH_ME, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-
 
                 val userModel = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModel::class.java)
                 val currentUser = sharedPreferenceManager!!.currentUser

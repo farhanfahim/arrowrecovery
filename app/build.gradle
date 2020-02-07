@@ -148,7 +148,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
-    
+
     //zendesk chat
     implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
     implementation group: 'com.zopim.android', name: 'sdk', version: '1.4.8'
