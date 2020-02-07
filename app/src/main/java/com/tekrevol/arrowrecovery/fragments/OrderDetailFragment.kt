@@ -235,9 +235,9 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
 
             override fun onError(`object`: Any?) {
                 if (recyclerViewOrderDetail == null) {
-                    recyclerViewOrderDetail.hideShimmer()
                     return
                 }
+                recyclerViewOrderDetail.hideShimmer()
             }
         })
     }

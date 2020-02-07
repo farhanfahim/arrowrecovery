@@ -51,14 +51,14 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
             return
         }
 
-        if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
+    /*    if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
             val intent = Intent(applicationContext, java)
             handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
         } else {
             val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
             val intent = Intent(applicationContext, java)
             handleNotification("Arrow Recovery", notificationModel.data.message, intent)
-        }
+        }*/
 
     }
 

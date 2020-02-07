@@ -33,6 +33,7 @@ import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
+import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import java.util.HashMap
@@ -220,6 +221,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             }
 
             override fun onError(`object`: Any?) {
+                if (rvSearch == null) {
+                    return
+                }
                 rvSearch.hideShimmer()
             }
         })
