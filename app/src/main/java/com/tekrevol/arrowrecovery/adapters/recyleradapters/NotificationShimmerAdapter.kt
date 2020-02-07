@@ -92,7 +92,7 @@ class NotificationShimmerAdapter(private val activity: Context, private val arrD
 
                 txtMessage!!.text = it.data.message
 
-                val date = it.created_at
+                val date = it.createdAt
                 val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 try {
                     val date1 = formatter.parse(date)

@@ -499,7 +499,7 @@
             android:backgroundTint="@color/green_bg"
             android:paddingLeft="@dimen/x10dp"
             android:paddingRight="@dimen/x10dp"
-            android:text="Take Screenshot"
+            android:text="Save As PDF"
             android:textAllCaps="false"
             android:textColor="@color/c_white"
             android:textSize="@dimen/s18"

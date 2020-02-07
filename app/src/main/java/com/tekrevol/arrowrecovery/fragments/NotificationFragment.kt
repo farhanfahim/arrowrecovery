@@ -33,7 +33,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
     var webCall: Call<WebResponse<Any>>? = null
     var webCallDelete: Call<WebResponse<Any>>? = null
     private var offset: Int = 0
-    private val limit = 2
+    private val limit = 10
     private var x = 0
 
     companion object {
@@ -154,7 +154,11 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-                if (arrayList.isEmpty()) {
+                if (x == 0) {
+                    recyclerViewNotification.hideShimmer()
+                }
+                arrData.addAll(arrayList)
+                if (arrData.isEmpty()) {
                     selectAllLayout.visibility = View.GONE
                     recyclerViewNotification.visibility = View.GONE
                     imgNoNotification.visibility = View.VISIBLE
@@ -165,10 +169,6 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                     imgNoNotification.visibility = View.GONE
                 }
 
-                if (x == 0) {
-                    recyclerViewNotification.hideShimmer()
-                }
-                arrData.addAll(arrayList)
                 shimmerNotificationAdapter.notifyDataSetChanged()
                 onDonePaging()
 

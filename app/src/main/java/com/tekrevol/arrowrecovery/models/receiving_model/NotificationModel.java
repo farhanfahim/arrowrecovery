@@ -6,12 +6,25 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
 public class NotificationModel {
 
+    transient boolean isSelected = false;
+    @Expose
+    @SerializedName("deleted_at")
+    private String deletedAt;
+    @Expose
+    @SerializedName("updated_at")
+    private String updatedAt;
+    @Expose
+    @SerializedName("created_at")
+    private String createdAt;
+    @Expose
+    @SerializedName("read_at")
+    private String readAt;
     @Expose
     @SerializedName("data")
     private DataModel data;
     @Expose
     @SerializedName("notifiable_id")
-    private int notifiableId;
+    private Double notifiableId;
     @Expose
     @SerializedName("notifiable_type")
     private String notifiableType;
@@ -20,13 +33,47 @@ public class NotificationModel {
     private String type;
     @Expose
     @SerializedName("id")
-    private String id;
-    @Expose
-    @SerializedName("updated_at")
-    private String updated_at;
-    @Expose
-    @SerializedName("created_at")
-    private String created_at;
+    private Double id;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public String getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getReadAt() {
+        return readAt;
+    }
+
+    public void setReadAt(String readAt) {
+        this.readAt = readAt;
+    }
 
     public DataModel getData() {
         return data;
@@ -36,11 +83,11 @@ public class NotificationModel {
         this.data = data;
     }
 
-    public int getNotifiableId() {
+    public Double getNotifiableId() {
         return notifiableId;
     }
 
-    public void setNotifiableId(int notifiableId) {
+    public void setNotifiableId(Double notifiableId) {
         this.notifiableId = notifiableId;
     }
 
@@ -60,42 +107,18 @@ public class NotificationModel {
         this.type = type;
     }
 
-    public String getId() {
+    public Double getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Double id) {
         this.id = id;
-    }
-
-    public String getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
-
-    transient boolean isSelected = false;
-
-    public boolean isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
     }
 
     @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);
     }
+
+
 }
