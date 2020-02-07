@@ -81,6 +81,11 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
         cbSelectAll.setOnCheckedChangeListener { buttonView, isChecked ->
             arrData.forEach { it.isSelected = isChecked }
             shimmerNotificationAdapter.notifyDataSetChanged()
+            if (cbSelectAll.isChecked.equals(false)) {
+                btnDelete.visibility = View.GONE
+            } else {
+                btnDelete.visibility = View.VISIBLE
+            }
         }
 
         btnDelete.setOnClickListener {
@@ -130,6 +135,17 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
             R.id.imgSelect -> {
                 arrData[position].isSelected = !arrData[position].isSelected
                 shimmerNotificationAdapter.notifyDataSetChanged()
+
+                val anyAvailableData = arrData.find { it.isSelected }
+
+                if (anyAvailableData == null) {
+                    btnDelete.visibility = View.GONE
+                } else {
+                    btnDelete.visibility = View.VISIBLE
+
+                }
+
+
             }
 
         }
@@ -141,6 +157,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
         if (x == 0) {
             recyclerViewNotification.showShimmer()
         }
+        btnDelete.visibility = View.GONE
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
