@@ -427,7 +427,6 @@ public class WebServices {
 
         Call<WebResponse<Object>> webResponseCall = apiService.getAPIForWebresponseAnyObject(path, queryMap);
 
-
         try {
             if (Helper.isNetworkConnected(activity, true)) {
                 webResponseCall.enqueue(new Callback<WebResponse<Object>>() {
