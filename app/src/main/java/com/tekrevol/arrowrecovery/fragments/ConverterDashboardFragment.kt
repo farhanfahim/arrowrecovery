@@ -226,7 +226,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         edtQuantity.setKeyListener(null)
 
         contQuality.setOnClickListener {
-            UIHelper.showCheckedDialogBox(activity, "Select Quality", Constants.qualities, selectedPosition) { dialog, which ->
+            UIHelper.showCheckedDialogBox(activity, "Select Condition", Constants.qualities, selectedPosition) { dialog, which ->
                 selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                 txtQuality.text = Constants.qualities[selectedPosition]
                 dialog.dismiss()
@@ -274,7 +274,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         btnSave.setOnClickListener(View.OnClickListener {
 
             if (txtQuality.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(activity, "Please select quality")
+                UIHelper.showAlertDialog(activity, "Please select Condition")
                 return@OnClickListener
             }
             if (edtQuantity.equals(0)) {

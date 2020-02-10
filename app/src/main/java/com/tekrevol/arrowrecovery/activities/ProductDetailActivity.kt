@@ -88,7 +88,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         }
 
         contQuality.setOnClickListener {
-            UIHelper.showCheckedDialogBox(this, "Select Quality", qualities, selectedPosition) { dialog, which ->
+            UIHelper.showCheckedDialogBox(this, "Select Condition", qualities, selectedPosition) { dialog, which ->
                 selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                 txtQuality.text = qualities[selectedPosition]
                 dialog.dismiss()
@@ -151,7 +151,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
     private fun addToCart(it: View) {
 
         if (txtQuality.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(this, "Please select quality")
+            UIHelper.showAlertDialog(this, "Please select Condition")
             return
         }
 

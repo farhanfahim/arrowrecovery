@@ -301,7 +301,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
 
             }
             R.id.contSelectQuality -> {
-                UIHelper.showCheckedDialogBox(context, "Select Quality", Constants.qualities, 0) { dialog, which ->
+                UIHelper.showCheckedDialogBox(context, "Select Condition ", Constants.qualities, 0) { dialog, which ->
                     //                    val selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                     //txtQuality.text = Constants.qualities[selectedPosition]
                     dialog.dismiss()
