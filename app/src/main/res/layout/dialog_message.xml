@@ -141,7 +141,7 @@
             android:background="@drawable/searchbar_grey"
             android:backgroundTint="@color/green_bg"
             android:gravity="center"
-            android:text="Save"
+            android:text="Add to Cart"
             android:textColor="@color/c_white"
             android:textSize="@dimen/s14" />
 
