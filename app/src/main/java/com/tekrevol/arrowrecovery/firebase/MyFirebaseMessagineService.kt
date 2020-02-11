@@ -16,6 +16,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
+import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPDATED
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
@@ -36,31 +37,34 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        //      Log.d(TAG, "From: " + remoteMessage.from)
-/*
-
-        if (SharedPreferenceManager.getInstance(this).currentUser == null) {
-            return
-        }
-
-        val java: Class<HomeActivity>
-        val user = SharedPreferenceManager.getInstance(this).currentUser
-
-        if ((user.userDetails.isCompleted == 1) && (user.userDetails.isVerified == 1) && (user.userDetails.isApproved == 1)) {
-            java = HomeActivity::class.java
-        } else {
-            return
-        }
-*/
-
-        /*    if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
-                val intent = Intent(applicationContext, java)
-                handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
-            } else {
-                val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
-                val intent = Intent(applicationContext, java)
-                handleNotification("Arrow Recovery", notificationModel.data.message, intent)
-            }*/
+//              Log.d(TAG, "From: " + remoteMessage.from)
+//              Log.d(TAG, "Data: " + remoteMessage.data)
+//              Log.d(TAG, "Extra Payload: " + remoteMessage.data["extra_payload"])
+//
+//
+//        if (SharedPreferenceManager.getInstance(this).currentUser == null) {
+//            return
+//        }
+//
+//        val classToOpen: Class<*>
+//
+//        val user = SharedPreferenceManager.getInstance(this).currentUser
+//
+//        classToOpen = if ((user.userDetails?.isCompleted == 1) && (user.userDetails?.isVerified == 1) && (user.userDetails.isApproved == 1)) {
+//            HomeActivity::class.java
+//        } else {
+//            MainActivity::class.java
+//        }
+//
+//
+//        if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
+//            val intent = Intent(applicationContext, classToOpen)
+//            handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
+//        } else {
+//            val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
+//            val intent = Intent(applicationContext, classToOpen)
+//            handleNotification("Arrow Recovery", notificationModel.data.message, intent)
+//        }
 
     }
 

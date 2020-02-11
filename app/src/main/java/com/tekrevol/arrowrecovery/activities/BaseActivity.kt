@@ -31,7 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setAndBindTitleBar()
         drawerLayout = findViewById(drawerLayoutId)
         drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
         //     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         addDrawerFragment()
         gson = GsonFactory.getSimpleGson()

@@ -38,12 +38,9 @@ public class SharedPreferenceManager {
         // Save Registered Device Data
 
         String token = getString(KEY_FIREBASE_TOKEN);
-        if (token == null) {
-            pref.edit().clear().commit();
-        } else {
-            pref.edit().clear().commit();
-            putObject(AppConstants.KEY_FIREBASE_TOKEN, token);
-        }
+        pref.edit().clear().commit();
+        putObject(AppConstants.KEY_FIREBASE_TOKEN, token);
+
     }
 
     public void clearKey(String key) {

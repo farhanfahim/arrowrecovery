@@ -35,8 +35,8 @@ public class WebServiceConstants {
      */
 
     // STAGING
-    public static final String BASE_URL = "http://app-arrow-recovery.servstaging.com/";
-    public static final String IMAGE_BASE_URL = "http://app-arrow-recovery.servstaging.com/api/resize/";
+    public static final String BASE_URL = "http://arrow-recovery.demo.servstaging.com/";
+    public static final String IMAGE_BASE_URL = "http://arrow-recovery.demo.servstaging.com/api/resize/";
 
 
     // DEV

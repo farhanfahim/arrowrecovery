@@ -300,7 +300,7 @@ public class GooglePlaceHelper {
      */
 
     public static String getMapSnapshotURL(double LAT, double LONG) {
-        return "https://maps.googleapis.com/maps/api/staticmap?center=" + LAT + "," + LONG + "&zoom=12&size=250x250&markers=color:red%7C" + LAT + "," + LONG + "&key=" + GEO_API_KEY;
+        return "https://maps.googleapis.com/maps/api/staticmap?center=" + LAT + "," + LONG + "&zoom=16&size=512x512&markers=color:red%7C" + LAT + "," + LONG + "&key=" + GEO_API_KEY;
     }
 
 
