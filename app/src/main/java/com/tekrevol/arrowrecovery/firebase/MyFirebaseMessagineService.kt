@@ -119,7 +119,7 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
         val pendingIntent = PendingIntent.getActivity(context, nextInt, intent, PendingIntent.FLAG_ONE_SHOT)
         val CHANNEL_ID = "arrow_recovery_channel" // The id of the channel.
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.icon_notification)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
