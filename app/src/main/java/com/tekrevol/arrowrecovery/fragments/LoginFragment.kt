@@ -80,62 +80,57 @@ class LoginFragment : BaseFragment() {
             return
         }
 
-        if (edtEmail.testValidity() && edtPassword.testValidity()) {
-            val loginSendingModel = LoginSendingModel()
-            loginSendingModel.email = edtEmail.stringTrimmed
-            loginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
-            if (edtEmail.testValidity() && edtPassword.testValidity()) {
-                var loginSendingModel = LoginSendingModel()
-                loginSendingModel.email = edtEmail.stringTrimmed
-                loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
-                loginSendingModel.password = edtPassword.stringTrimmed
-                val email: String = edtEmail.stringTrimmed
-                //var phone:String = inputPhoneNo.stringTrimmed
-                webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                        UIHelper.showToast(context, webResponse.message)
+        val loginSendingModel = LoginSendingModel()
+        loginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
+        loginSendingModel.email = edtEmail.stringTrimmed
+        loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
+        loginSendingModel.password = edtPassword.stringTrimmed
+        val email: String = edtEmail.stringTrimmed
+        //var phone:String = inputPhoneNo.stringTrimmed
+        webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                UIHelper.showToast(context, webResponse.message)
 
-                        val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
-                        /*sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
-                    sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                    sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
+                val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
+                /*sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+            sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+            sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)*/
 
-                        when {
+                when {
 
-                            (userModelWrapper.user.userDetails.isCompleted == 0) -> {
-                                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+                    (userModelWrapper.user.userDetails.isCompleted == 0) -> {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
-                                baseActivity.popBackStack()
-                                baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
-                            }
-                            (userModelWrapper.user.userDetails.isVerified) == 0 -> {
-                                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-
-                                baseActivity.popBackStack()
-                                baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
-                            }
-                            (userModelWrapper.user.userDetails.isApproved) == 0 -> {
-                                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-
-                                baseActivity.popBackStack()
-                                baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
-                            }
-                            else -> {
-                                sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
-                                sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
-                                sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                                baseActivity.popBackStack()
-                                baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
-                            }
-                        }
-
-
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
+                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
-                    override fun onError(`object`: Any?) {}
-                })
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
+                    }
+                    (userModelWrapper.user.userDetails.isApproved) == 0 -> {
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(ThankyouFragment.newInstance(), true)
+                    }
+                    else -> {
+                        sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
+                        sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
+                    }
+                }
+
+
             }
-        }
+
+            override fun onError(`object`: Any?) {}
+        })
+
     }
 
     override fun onClick(v: View?) {

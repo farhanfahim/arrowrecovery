@@ -22,11 +22,13 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPD
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.models.receiving_model.NotificationModel
+import com.tekrevol.arrowrecovery.models.receiving_model.PushNotificationModel
 import kotlin.random.Random
 
 class MyFirebaseMessagineService : FirebaseMessagingService() {
 
     private val TAG: String = "FIREBASE MESSAGE"
+    val title = "Arrow Recovery"
 
     override fun onNewToken(s: String) {
         super.onNewToken(s)
@@ -37,41 +39,55 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-//              Log.d(TAG, "From: " + remoteMessage.from)
-//              Log.d(TAG, "Data: " + remoteMessage.data)
-//              Log.d(TAG, "Extra Payload: " + remoteMessage.data["extra_payload"])
-//
-//
-//        if (SharedPreferenceManager.getInstance(this).currentUser == null) {
-//            return
-//        }
-//
-//        val classToOpen: Class<*>
-//
-//        val user = SharedPreferenceManager.getInstance(this).currentUser
-//
-//        classToOpen = if ((user.userDetails?.isCompleted == 1) && (user.userDetails?.isVerified == 1) && (user.userDetails.isApproved == 1)) {
-//            HomeActivity::class.java
-//        } else {
-//            MainActivity::class.java
-//        }
-//
-//
-//        if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
-//            val intent = Intent(applicationContext, classToOpen)
-//            handleNotification("Arrow Recovery", "NO PAYLOAD", intent)
-//        } else {
-//            val notificationModel: NotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], NotificationModel::class.java)
-//            val intent = Intent(applicationContext, classToOpen)
-//            handleNotification("Arrow Recovery", notificationModel.data.message, intent)
-//        }
+        Log.d(TAG, "From: " + remoteMessage.from)
+        Log.d(TAG, "Data: " + remoteMessage.data)
+        Log.d(TAG, "Extra Payload: " + remoteMessage.data["extra_payload"])
+
+        try {
+
+            if (SharedPreferenceManager.getInstance(this).currentUser == null) {
+                return
+            }
+
+            val classToOpen: Class<*>
+
+            val user = SharedPreferenceManager.getInstance(this).currentUser
+
+            classToOpen = if ((user.userDetails?.isCompleted == 1) && (user.userDetails?.isVerified == 1) && (user.userDetails.isApproved == 1)) {
+                HomeActivity::class.java
+            } else {
+                MainActivity::class.java
+            }
+
+
+            if (remoteMessage.data["extra_payload"].isNullOrEmpty()) {
+                remoteMessage.notification?.let {
+                    val intent = Intent(applicationContext, classToOpen)
+                    if (it.body.isNullOrEmpty()) {
+                        handleNotification("", intent)
+                    } else {
+                        handleNotification(it.body!!, intent)
+                    }
+                }
+
+            } else {
+                val notificationModel: PushNotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], PushNotificationModel::class.java)
+                val intent = Intent(applicationContext, classToOpen)
+                handleNotification(notificationModel.message, intent)
+
+            }
+
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+
 
     }
 
 
-    private fun handleNotification(title: String, message: String, intentToOpen: Intent) {
+    private fun handleNotification(message: String, intentToOpen: Intent) {
         playNotificationSound()
-        handleDataMessage(title, message, intentToOpen)
+        handleDataMessage(message, intentToOpen)
     }
 
 
@@ -85,7 +101,7 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
     }
 
 
-    private fun handleDataMessage(title: String, message: String, intentToOpen: Intent) {
+    private fun handleDataMessage(message: String, intentToOpen: Intent) {
         val mBundle = Bundle()
 
         intentToOpen.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP

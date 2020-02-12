@@ -61,10 +61,17 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         txtCarNum.text = (productDetailModel?.name)
         txtYear.text = (productDetailModel?.year.toString())
         txtReference.text = (productDetailModel?.serial_number)
-        txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
-        txtModel.text = (productDetailModel?.vehicleModel?.name)
-        txtPrice.setText(productDetailModel?.estimatedPrice.toString())
+
+        txtPrice.text = (productDetailModel?.estimatedPrice.toString())
         txtQuality.text = qualities[0]
+
+        if (productDetailModel?.vehicleModel == null){
+            txtMake.text = "-"
+            txtModel.text = "-"
+        } else {
+            txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
+            txtModel.text = (productDetailModel?.vehicleModel?.name)
+        }
 
         txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
         carouselView.setImageListener(imageListener)
