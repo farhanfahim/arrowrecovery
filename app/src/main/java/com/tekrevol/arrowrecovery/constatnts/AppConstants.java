@@ -129,6 +129,10 @@ public class AppConstants {
     public static final int DELIVERED = 10;
     public static final int PICKUP = 20;
 
+    public static final int TYPE_ORDER = 10;
+    public static final int TYPE_PRODUCT = 20;
+    public static final int TYPE_USER = 30;
+
     public static final String CHAT_URL = "https://tekrevoldev.zendesk.com";
     public static final String APP_ID = "243d829efe2547e73de8349765690c61ed14915157bfcbb8";
     public static final String CLIENT_ID = "mobile_sdk_client_7d94c9e4e726ed7424ee";

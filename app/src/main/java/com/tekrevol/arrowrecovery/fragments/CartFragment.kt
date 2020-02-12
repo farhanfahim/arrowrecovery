@@ -50,7 +50,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     var webCallDelete: Call<WebResponse<Any>>? = null
     var webCallUpdate: Call<WebResponse<Any>>? = null
     var orderid: Int? = null
-    var orderTotal: Int? = null
+    var orderTotal: Double? = null
     var quantity: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -17,6 +17,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.activities.MainActivity
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN_UPDATED
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
@@ -73,8 +74,12 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
             } else {
                 val notificationModel: PushNotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], PushNotificationModel::class.java)
                 val intent = Intent(applicationContext, classToOpen)
-                handleNotification(notificationModel.message, intent)
+                if (notificationModel.actionType == AppConstants.TYPE_ORDER) {
+                    handleNotification(notificationModel.message + "your order id is " + notificationModel.refId, intent)
+                } else {
+                    handleNotification(notificationModel.message, intent)
 
+                }
             }
 
         } catch (ex: Exception) {

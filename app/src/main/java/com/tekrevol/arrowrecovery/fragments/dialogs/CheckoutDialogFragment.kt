@@ -57,7 +57,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
     private var spinnerModelArrayList = java.util.ArrayList<SpinnerModel>()
     var latitudee: Double? = null
     var orderid: Int? = null
-    var orderTotal: Int? = null
+    var orderTotal: Double? = null
     var txtStr: String? = null
     var txtPick: String? = null
     var longitudee: Double? = null
@@ -70,7 +70,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
     companion object {
 
-        fun newInstance(orderProductModel: ArrayList<OrderProductModel>, arrCollectionModel: ArrayList<CollectionModel>, orderid: Int?, orderTotal: Int?): CheckoutDialogFragment {
+        fun newInstance(orderProductModel: ArrayList<OrderProductModel>, arrCollectionModel: ArrayList<CollectionModel>, orderid: Int?, orderTotal: Double?): CheckoutDialogFragment {
 
             val args = Bundle()
             val fragment = CheckoutDialogFragment()

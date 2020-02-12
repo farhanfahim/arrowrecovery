@@ -47,15 +47,6 @@ public class OrderModel {
     @Expose
     @SerializedName("id")
     private int id;
-
-    public String getInvoiceUrl() {
-        return invoiceUrl;
-    }
-
-    public void setInvoiceUrl(String invoiceUrl) {
-        this.invoiceUrl = invoiceUrl;
-    }
-
     @Expose
     @SerializedName("invoice_url")
     private String invoiceUrl;
@@ -63,7 +54,7 @@ public class OrderModel {
 
     @Expose
     @SerializedName("estimated_amount")
-    private int estimatedAmount;
+    private double estimatedAmount;
 
 
     @Expose
@@ -77,6 +68,14 @@ public class OrderModel {
     @Expose
     @SerializedName("user")
     private UserModel userModel;
+
+    public String getInvoiceUrl() {
+        return invoiceUrl;
+    }
+
+    public void setInvoiceUrl(String invoiceUrl) {
+        this.invoiceUrl = invoiceUrl;
+    }
 
 
     public UserModel getUserModel() {
@@ -209,11 +208,11 @@ public class OrderModel {
         this.id = id;
     }
 
-    public int getEstimatedAmount() {
+    public double getEstimatedAmount() {
         return estimatedAmount;
     }
 
-    public void setEstimatedAmount(int estimatedAmount) {
+    public void setEstimatedAmount(double estimatedAmount) {
         this.estimatedAmount = estimatedAmount;
     }
 

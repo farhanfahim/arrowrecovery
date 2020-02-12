@@ -125,7 +125,7 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:minLines="1"
-                            android:text="example@example.com"
+                            android:text=""
                             android:textColor="@color/title_color"
                             android:textSize="@dimen/s14"
                             app:typeface="@string/font_regular" />
@@ -157,7 +157,7 @@
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:minLines="1"
-                            android:text="216 San Andrew St, Miami, FL"
+                            android:text=""
                             android:textColor="@color/title_color"
                             android:textSize="@dimen/s14"
                             app:typeface="@string/font_regular" />

@@ -19,7 +19,7 @@ public class OrderProductModel {
     private String created_at;
     @Expose
     @SerializedName("amount")
-    private int amount;
+    private double amount;
     @Expose
     @SerializedName("quality")
     private int quality;
@@ -83,11 +83,11 @@ public class OrderProductModel {
         this.created_at = created_at;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

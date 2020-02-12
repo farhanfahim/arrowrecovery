@@ -16,7 +16,18 @@ public class PushNotificationModel {
     private ServerTime serverTime;
     @Expose
     @SerializedName("ref_id")
-    private Object refId;
+    private int refId;
+    @Expose
+    @SerializedName("action_type")
+    private int actionType;
+
+    public int getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(int actionType) {
+        this.actionType = actionType;
+    }
 
     public String getClickAction() {
         return clickAction;
@@ -42,7 +53,7 @@ public class PushNotificationModel {
         this.serverTime = serverTime;
     }
 
-    public Object getRefId() {
+    public int getRefId() {
         return refId;
     }
 
