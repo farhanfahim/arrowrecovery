@@ -41,7 +41,6 @@ import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
-import kotlinx.android.synthetic.main.fragment_myorder.*
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
@@ -270,7 +269,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             }
         })
 
-
         btnSave.setOnClickListener(View.OnClickListener {
 
             if (txtQuality.stringTrimmed.isEmpty()) {
@@ -302,8 +300,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 })
             }
         })
-
-
     }
 
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
@@ -326,7 +322,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
 
             arrConverters.clear()
-            getProductDetail(itemPos, limit, offset)
+            if (position == 0) {
+                getAllBrands()
+            } else {
+                getProductDetail(itemPos, limit, offset)
+
+            }
 
             arrCategories.forEach { it.isSelected = false }
             arrCategories[position].isSelected = true
@@ -351,12 +352,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
                 arrCategories.clear()
                 rvCategories.hideShimmer()
-
+                val modelAllBrands = VehicleMakeModel()
+                modelAllBrands.name = "All Brands"
+                arrCategories.add(modelAllBrands)
                 arrCategories.addAll(arrayList)
                 categorySelectorAdapter.notifyDataSetChanged()
-
                 arrCategories[0].isSelected = true
-                getProductDetail(arrCategories[0].id, limit, 0)
+                getAllBrands()
+                //getProductDetail(arrCategories[0].id, limit, 0)
             }
 
             override fun onError(`object`: Any?) {
@@ -367,6 +370,31 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             }
         })
 
+    }
+
+    private fun getAllBrands() {
+
+        val queryMap = HashMap<String, Any>()
+        webCallProductDetail = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+                rvConverters.hideShimmer()
+                arrConverters.addAll(arrayList)
+                converterItemShimmerAdapter.notifyDataSetChanged()
+                txtTotalItems.text = arrConverters.size.toString() + " items found"
+            }
+
+            override fun onError(`object`: Any?) {
+                if (rvConverters == null) {
+                    return
+                }
+                rvConverters.hideShimmer()
+            }
+        })
     }
 
     private fun getProductDetail(item: Int, limit: Int, offset: Int) {
@@ -392,8 +420,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                     rvConverters.hideShimmer()
                 }*/
                 rvConverters.hideShimmer()
-
-
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString() + " items found"
@@ -416,14 +442,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
     }
 
-
     override fun onPage(i: Int) {
     }
 
     override fun onDonePaging() {
 
     }
-
 
     override fun onDestroyView() {
         webCall?.cancel()

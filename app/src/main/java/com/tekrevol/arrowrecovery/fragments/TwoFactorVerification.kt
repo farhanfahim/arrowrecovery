@@ -30,7 +30,7 @@ class TwoFactorVerification : BaseFragment() {
 
         txtPhone.text = "We have sent you a SMS with a code to the number " + sharedPreferenceManager.currentUser.userDetails.phone + " and your email " + sharedPreferenceManager.currentUser.email
         txtBackToLoginScreen.visibility = View.GONE
-        sendOtp()
+        //sendOtp()
     }
 
     private fun sendOtp() {
