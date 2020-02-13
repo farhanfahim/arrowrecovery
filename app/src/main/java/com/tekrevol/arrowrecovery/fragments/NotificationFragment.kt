@@ -216,6 +216,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
                 cbSelectAll.isChecked = false
                 dialog.dismiss()
                 btnDelete.visibility = View.GONE
+                arrData.clear()
                 getNotification(limit, 0)
 
             }
