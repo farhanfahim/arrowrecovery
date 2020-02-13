@@ -103,7 +103,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 arrDataSearchBar.clear()
                 if (text == null) {
                     Toast.makeText(context, "Search keyword required", Toast.LENGTH_SHORT).show()
-                }else {
+                } else {
                     getProducts(text!!, makeId, modelId, year, serialNumber)
                     searchHistoryModel.query = text
 
@@ -153,11 +153,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-            /* if (text == null || text.equals("")) {
-                 Toast.makeText(context, "search keyword required", Toast.LENGTH_SHORT).show()
-             } else {*/
             baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
-            /*}*/
         })
     }
 

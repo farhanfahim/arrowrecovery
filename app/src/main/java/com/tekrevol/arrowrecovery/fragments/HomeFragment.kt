@@ -94,7 +94,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         x.isEnabled = false
 
         val y = chart.axisLeft
-        //        y.typeface = tfLight
         y.setLabelCount(6, false)
         y.textColor = ContextCompat.getColor(context!!, R.color.txtDarkGrey)
         y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)

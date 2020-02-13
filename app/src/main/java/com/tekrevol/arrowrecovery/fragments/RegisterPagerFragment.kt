@@ -46,7 +46,6 @@ import java.util.ArrayList
 
 class RegisterPagerFragment : BaseFragment() {
 
-    private var spinnerModelArrayList = ArrayList<SpinnerModel>()
     private var adapter: RegisterPagerAdapter? = null
 
     var email: String = ""

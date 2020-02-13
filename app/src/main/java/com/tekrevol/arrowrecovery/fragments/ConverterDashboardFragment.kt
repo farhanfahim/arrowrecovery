@@ -325,7 +325,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             if (position == 0) {
                 getAllBrands()
             } else {
-                getProductDetail(itemPos, limit, offset)
+                getProductDetail(itemPos)
 
             }
 
@@ -397,17 +397,12 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         })
     }
 
-    private fun getProductDetail(item: Int, limit: Int, offset: Int) {
+    private fun getProductDetail(item: Int) {
 
         productid = item
-        //  if (x == 0) {
         rvConverters.showShimmer()
-        //  }
-
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-        /*   queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
-           queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset*/
         webCallProductDetail = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -416,16 +411,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
-                /*if (x == 0) {
-                    rvConverters.hideShimmer()
-                }*/
                 rvConverters.hideShimmer()
                 arrConverters.addAll(arrayList)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString() + " items found"
-                //onDonePaging()
-
-
             }
 
             override fun onError(`object`: Any?) {

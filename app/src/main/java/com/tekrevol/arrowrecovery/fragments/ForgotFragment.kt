@@ -72,8 +72,6 @@ class ForgotFragment : BaseFragment() {
         }
 
         sharedPreferenceManager.putValue(AppConstants.KEY_CURRENT_USER_EMAIL, edtEmail.getStringTrimmed())
-        // key , fileTypeValue
-        // key , fileTypeValue
         val query: MutableMap<String, Any> = HashMap()
         query[WebServiceConstants.Q_PARAM_EMAIL] = edtEmail.getStringTrimmed()
 

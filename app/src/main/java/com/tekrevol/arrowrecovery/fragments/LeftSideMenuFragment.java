@@ -1,8 +1,10 @@
 package com.tekrevol.arrowrecovery.fragments;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
 import com.tekrevol.arrowrecovery.R;
 
 import com.tekrevol.arrowrecovery.widget.TitleBar;
@@ -66,7 +69,6 @@ public class LeftSideMenuFragment extends BaseFragment implements OnNewPacketRec
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ////        scrollToTop();
     }
 
     @Override
@@ -133,15 +135,12 @@ public class LeftSideMenuFragment extends BaseFragment implements OnNewPacketRec
                 break;
 
             case R.id.txtCardSubscription:
-//                getBaseActivity().addDockableFragment(CardSubscriptionFragment.newInstance());
                 showNextBuildToast();
                 break;
 
             case R.id.txtAbout:
-               // getBaseActivity().addDockableFragment(GenericContentFragment.newInstance("About", AppConstants.AboutUs), false);
                 break;
             case R.id.txtLogout:
-              //  logoutClick(this);
                 break;
         }
     }

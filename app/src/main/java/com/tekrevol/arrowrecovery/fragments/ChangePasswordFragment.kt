@@ -58,10 +58,6 @@ class ChangePasswordFragment : BaseFragment() {
 
     override fun setListeners() {
 
-        /* txtChangePass.setOnClickListener(View.OnClickListener {
-             baseActivity.popBackStack()
-         })*/
-
         txtChangePass.setOnClickListener(View.OnClickListener {
             changePassApi()
 

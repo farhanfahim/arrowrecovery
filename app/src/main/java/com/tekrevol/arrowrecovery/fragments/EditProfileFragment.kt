@@ -310,18 +310,6 @@ class EditProfileFragment : BaseFragment() {
                         UIHelper.showAlertDialog1(webResponse.message, "Update Profile", { dialog, which ->
                             baseActivity.popBackStack()
                         }, context)
-                        //  UIHelper.showToast(context, webResponse.message)
-                        /*  val model: DataUpdate = GsonFactory.getSimpleGson()
-                                    .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                            , DataUpdate::class.java)
-
-
-                         //   val userDetails = gson.fromJson(gson.toJson(webResponse.result), UserDetails::class.java)
-                            val currentUser = sharedPreferenceManager.currentUser
-                            currentUser.userDetails = model.details
-                            sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, currentUser)*/
-//                        baseActivity.finish()
-//                        baseActivity.openActivity(HomeActivity::class.java)
 
                     }
 

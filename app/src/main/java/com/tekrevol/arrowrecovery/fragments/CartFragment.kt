@@ -161,11 +161,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
     override fun setListeners() {
         btnCheckout.setOnClickListener {
             btnCheckout.disableClick()
-            //                if (ActivityCompat.checkSelfPermission(getHomeActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-//
-//                    ActivityCompat.requestPermissions(getHomeActivity(), new String[]{Manifest.permission.RECORD_AUDIO},
-//                            RECORD_AUDIO);
-//                }
             if (RunTimePermissions.isAllPermissionGiven(context, baseActivity, true)) {
                 getCollectionSelector()
             }
@@ -258,22 +253,6 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
             }
         })
     }
-    /*  private fun deleteAllApi(dialog: DialogInterface) {
-
-          webCallDelete = getBaseWebServices(false).deleteAPIAnyObject(WebServiceConstants.PATH_ORDERS + "/" + orderid, "", object : WebServices.IRequestWebResponseAnyObjectCallBack {
-              override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                  UIHelper.showToast(context, webResponse.message)
-                  arrData.removeAll { it.isSelected }
-                  cartAdapter.notifyDataSetChanged()
-                  dialog.dismiss()
-              }
-
-              override fun onError(`object`: Any?) {
-
-              }
-          })
-
-      }*/
 
     override fun onClick(v: View?) {
     }

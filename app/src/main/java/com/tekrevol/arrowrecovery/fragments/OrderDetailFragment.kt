@@ -85,9 +85,6 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
 
         recyclerViewOrderDetail.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         (recyclerViewOrderDetail.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-//        val resId = R.anim.layout_animation_fall_bottom
-//        val animation = AnimationUtils.loadLayoutAnimation(context, resId)
-//        recyclerViewOrderDetail.layoutAnimation = animation
         recyclerViewOrderDetail.adapter = myOrderAdapter
         recyclerViewOrderDetail.setItemViewType({ type: Int, position: Int -> R.layout.shimmer_item_order })
 

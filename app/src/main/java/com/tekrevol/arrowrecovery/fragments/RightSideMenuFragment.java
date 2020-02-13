@@ -131,15 +131,12 @@ public class RightSideMenuFragment extends BaseFragment implements OnNewPacketRe
                 break;
 
             case R.id.txtCardSubscription:
-//                getBaseActivity().addDockableFragment(CardSubscriptionFragment.newInstance());
                 showNextBuildToast();
                 break;
 
             case R.id.txtAbout:
-              //  getBaseActivity().addDockableFragment(GenericContentFragment.newInstance("About", AppConstants.AboutUs), false);
                 break;
             case R.id.txtLogout:
-                //logoutClick(this);
                 break;
         }
     }
