@@ -95,7 +95,6 @@ class ChangePasswordFragment : BaseFragment() {
 
             override fun onError(`object`: Any?) {}
         })
-
     }
 
     override fun onClick(v: View?) {
