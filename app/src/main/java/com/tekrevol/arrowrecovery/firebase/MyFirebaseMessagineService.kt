@@ -75,7 +75,7 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
                 val notificationModel: PushNotificationModel = GsonFactory.getSimpleGson().fromJson(remoteMessage.data["extra_payload"], PushNotificationModel::class.java)
                 val intent = Intent(applicationContext, classToOpen)
                 if (notificationModel.actionType == AppConstants.TYPE_ORDER) {
-                    handleNotification(notificationModel.message + "your order id is " + notificationModel.refId, intent)
+                    handleNotification(notificationModel.message + " Your Order id is " + notificationModel.refId, intent)
                 } else {
                     handleNotification(notificationModel.message, intent)
 
