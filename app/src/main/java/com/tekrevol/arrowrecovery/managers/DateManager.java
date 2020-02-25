@@ -35,6 +35,7 @@ public class DateManager {
     private static SimpleDateFormat sdfTimeInput = new SimpleDateFormat(AppConstants.INPUT_TIME_FORMAT);
     private static SimpleDateFormat sdfTimeOuput = new SimpleDateFormat(AppConstants.OUTPUT_TIME_FORMAT);
     private static SimpleDateFormat sdfUTCOutput = new SimpleDateFormat(AppConstants.OUTPUT_UTC);
+    private static SimpleDateFormat sdfCurrentDate = new SimpleDateFormat(AppConstants.FORMAT_PEOPLESOFT);
 
 
     // Custom FOR AKUH
@@ -170,7 +171,7 @@ public class DateManager {
 
     public static String getCurrentFormattedDate() {
 //        return sdfDateInput.format(Calendar.getInstance().getTime());
-        return sdfDateInputAmPm.format(Calendar.getInstance().getTime());
+        return sdfCurrentDate.format(Calendar.getInstance().getTime());
     }
 
     public static String getCurrentFormattedDate(String format) {

@@ -27,11 +27,53 @@ class WebServiceFactory {
 
     private static Retrofit retrofitBase;
     private static Retrofit retrofiltXML;
+    private static Retrofit retrofiltPrice;
     private static String staticToken = "";
 
     /***
      *      SINGLETON Design Pattern
      */
+
+    static WebServiceProxy getInstancePriceBaseURL() {
+
+        if (retrofiltPrice == null) {
+
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            // set your desired log level
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.connectTimeout(60, TimeUnit.SECONDS);
+            httpClient.readTimeout(60, TimeUnit.SECONDS);
+
+
+//             add your other interceptors …
+            httpClient.addInterceptor(new Interceptor() {
+
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+                    Request.Builder requestBuilder = original.newBuilder();
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
+
+                }
+            });
+
+            // add logging as last interceptor
+//            httpClient.addNetworkInterceptor(interceptor).addInterceptor(interceptor);  // <-- this is the important line!
+            httpClient.addInterceptor(interceptor);  // <-- this is the important line!
+            retrofiltPrice = new Retrofit.Builder()
+//                    .baseUrl(WebServiceConstants.BASE_URL_LIVE)
+                    .baseUrl(WebServiceConstants.PRICE_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSimpleGson()))
+                    .client(httpClient.build())
+                    .build();
+        }
+
+        return retrofiltPrice.create(WebServiceProxy.class);
+    }
+
     static WebServiceProxy getInstanceBaseURL(final String _token) {
 
         if (retrofitBase == null || staticToken.isEmpty() || !staticToken.equals(_token)) {

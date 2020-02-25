@@ -2,7 +2,8 @@ package com.tekrevol.arrowrecovery.enums;
 
 public enum BaseURLTypes {
     BASE_URL,
-    XML_URL;
+    XML_URL,
+    PRICE_BASE_URL;
 
 
 

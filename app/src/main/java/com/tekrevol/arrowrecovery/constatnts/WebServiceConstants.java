@@ -34,6 +34,9 @@ public class WebServiceConstants {
      * BaseApplication Fabric enable
      */
 
+    //PRICE BASEURL
+    public static final String PRICE_BASE_URL = " https://www.quandl.com/api/v3/datasets/";
+
     // STAGING
     public static final String BASE_URL = "http://arrow-recovery.demo.servstaging.com/";
     public static final String IMAGE_BASE_URL = "http://arrow-recovery.demo.servstaging.com/api/resize/";
@@ -67,6 +70,9 @@ public class WebServiceConstants {
     public static final String PATH_VERIFYOTP = "verify-otp";
     public static final String PATH_ORDERPRODUCTS = "order-products";
     public static final String PATH_ORDERS = "orders";
+    public static final String PATH_RHOD = "RHOD/data.json/";
+    public static final String PATH_PLAT = "PLAT/data.json/";
+    public static final String PATH_PALL = "PALL/data.json/";
     public static final String PATH_COLLECTIONCENTER = "collection-centers";
     public static final String PATH_NOTIFICATIONS = "notifications";
     public static final String PATH_GETAVAILABILITY = "check-availabilty";
@@ -92,6 +98,9 @@ public class WebServiceConstants {
     public static final String Q_MODEL_ID = "model_id";
     public static final String Q_ORDER_ID = "order_id";
     public static final String Q_FEATURED = "is_featured";
+    public static final String Q_APIKEY = "api_key";
+    public static final String Q_STARTDATE = "start_date";
+    public static final String Q_ENDDATE = "end_date";
     public static final String Q_LAT = "latitude";
     public static final String Q_LONG = "longitude";
     public static final String Q_COLLECTION_ID = "collection_center_id";
@@ -105,6 +114,9 @@ public class WebServiceConstants {
 
     public static final int PARAMS_TOKEN_EXPIRE = 401;
     public static final int PARAMS_TOKEN_BLACKLIST = 402;
+
+
+    public static final String KEY_PRICE = "r5KZHsWqMZMWHdmHYtzi";
 
 
     /**

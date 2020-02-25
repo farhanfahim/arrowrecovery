@@ -1,6 +1,7 @@
 package com.tekrevol.arrowrecovery.managers.retrofit;
 
 
+import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
 
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ public interface WebServiceProxy {
     );
 
 
-
     /**
      * @param postfix
      * @param queryMap
@@ -76,6 +76,10 @@ public interface WebServiceProxy {
             @QueryMap Map<String, Object> queryMap
     );
 
-
+    @GET("JOHNMATT/{path}")
+    Call<DataPriceModel> getAPIRhodiumPriceForWebresponseAnyObject(
+            @Path(value = "path", encoded = true) String postfix,
+            @QueryMap Map<String, Object> queryMap
+    );
 }
 

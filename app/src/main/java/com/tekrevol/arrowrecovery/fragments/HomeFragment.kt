@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
@@ -12,19 +13,26 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.google.common.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
-import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.KEY_PRICE
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.managers.DateManager.getCurrentFormattedDate
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
+import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment(), OnItemClickListener {
 
@@ -62,6 +70,133 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         arrData.addAll(Constants.daysSelector())
         rvDays.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvDays.adapter = daysSelectorAdapter
+        //getStartAndEndDate()
+    }
+
+    private fun getStartAndEndDate() {
+        var dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        var myDate: Date = dateFormat.parse("2020-02-02")
+        var callStart: Calendar = Calendar.getInstance()
+        var callEnd: Calendar = Calendar.getInstance()
+        var callDate: Calendar = Calendar.getInstance()
+        var startDate: String = ""
+        var endDate: String = ""
+        callStart.time = myDate
+        callEnd.time = myDate
+
+        if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+
+            callEnd.add(Calendar.DAY_OF_YEAR, -2)
+            endDate = dateFormat.format(callEnd.time)
+            callStart.add(Calendar.DAY_OF_YEAR, -4)
+            startDate = dateFormat.format(callStart.time)
+            priceApi(startDate, endDate)
+
+        } else if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+
+            callEnd.add(Calendar.DAY_OF_YEAR, -1)
+            endDate = dateFormat.format(callEnd.time)
+            callStart.add(Calendar.DAY_OF_YEAR, -3)
+            startDate = dateFormat.format(callStart.time)
+            priceApi(startDate, endDate)
+
+        } else {
+            endDate = "2020-02-01"
+            callEnd.add(Calendar.DAY_OF_YEAR, -2)
+            var date: Date = dateFormat.parse(dateFormat.format(callEnd.time))
+            callDate.time = date
+
+            if (callDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                callStart.add(Calendar.DAY_OF_YEAR, -4)
+                startDate = dateFormat.format(callStart.time)
+                priceApi(startDate, endDate)
+
+            } else if (callDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                callStart.add(Calendar.DAY_OF_YEAR, -3)
+                startDate = dateFormat.format(callStart.time)
+                priceApi(startDate, endDate)
+
+            } else {
+                callStart.add(Calendar.DAY_OF_YEAR, -2)
+                startDate = dateFormat.format(callStart.time)
+                priceApi(startDate, endDate)
+            }
+        }
+    }
+
+    private fun priceApi(startDate: String, endDate: String) {
+        priceRodium(startDate, endDate)
+        /* pricePlatinum(startDate, endDate)
+         pricePalladium(startDate, endDate)*/
+    }
+
+    private fun pricePalladium(startDate: String, endDate: String) {
+
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
+        queryMap[WebServiceConstants.Q_ENDDATE] = endDate
+        queryMap[WebServiceConstants.Q_STARTDATE] = startDate
+
+
+        WebServices(activity, "", BaseURLTypes.PRICE_BASE_URL, true).getAPIPriceAnyObject(WebServiceConstants.PATH_PALL, queryMap,
+                object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                        val type = object : TypeToken<java.util.ArrayList<DataPriceModel?>?>() {}.type
+                        val arrayList: java.util.ArrayList<DataPriceModel> = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type)
+
+
+                    }
+
+                    override fun onError(`object`: Any?) {}
+                })
+    }
+
+    private fun pricePlatinum(startDate: String, endDate: String) {
+
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
+        queryMap[WebServiceConstants.Q_STARTDATE] = startDate
+        queryMap[WebServiceConstants.Q_ENDDATE] = endDate
+
+
+        WebServices(activity, "", BaseURLTypes.PRICE_BASE_URL, true).getAPIPriceAnyObject(WebServiceConstants.PATH_PLAT, queryMap,
+                object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                        val type = object : TypeToken<java.util.ArrayList<DataPriceModel?>?>() {}.type
+                        val arrayList: java.util.ArrayList<DataPriceModel> = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type)
+
+                    }
+
+                    override fun onError(`object`: Any?) {}
+                })
+    }
+
+    private fun priceRodium(startDate: String, endDate: String) {
+
+        val queryMap = HashMap<String, Any>()
+        queryMap[WebServiceConstants.Q_STARTDATE] = startDate
+        queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
+        queryMap[WebServiceConstants.Q_ENDDATE] = endDate
+
+        WebServices(activity, "", BaseURLTypes.PRICE_BASE_URL, true).getAPIPriceAnyObject(WebServiceConstants.PATH_RHOD, queryMap,
+                object : WebServices.IRequestWebResponseAnyObjectCallBack {
+                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                        val type = object : TypeToken<java.util.ArrayList<DataPriceModel?>?>() {}.type
+                        val arrayList: java.util.ArrayList<DataPriceModel> = GsonFactory.getSimpleGson()
+                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                        , type)
+
+                        Log.d("price", arrayList.toString())
+
+                    }
+
+                    override fun onError(`object`: Any?) {}
+                })
+
 
     }
 

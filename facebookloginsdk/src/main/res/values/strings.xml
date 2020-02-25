@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mantra</string>
+    <string name="app_name">Arrow Recovery</string>
     <string name="facebook_app_id">461937664722134</string>
     <string name="fb_login_protocol_scheme">fb461937664722134</string>
     <string name="title_activity_facebook">FacebookActivity</string>

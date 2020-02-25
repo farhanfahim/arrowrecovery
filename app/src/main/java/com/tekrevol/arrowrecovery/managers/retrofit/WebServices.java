@@ -15,6 +15,7 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper;
 import com.tekrevol.arrowrecovery.managers.FileManager;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 import com.tekrevol.arrowrecovery.managers.retrofit.entities.MultiFileModel;
+import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel;
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -58,6 +59,9 @@ public class WebServices {
                 break;
             case XML_URL:
                 apiService = WebServiceFactory.getInstanceXML();
+                break;
+            case PRICE_BASE_URL:
+                apiService = WebServiceFactory.getInstancePriceBaseURL();
         }
 
 
@@ -74,6 +78,9 @@ public class WebServices {
                 break;
             case XML_URL:
                 apiService = WebServiceFactory.getInstanceXML();
+                break;
+            case PRICE_BASE_URL:
+                apiService = WebServiceFactory.getInstancePriceBaseURL();
         }
 
         this.activity = activity;
@@ -438,6 +445,37 @@ public class WebServices {
                     @Override
                     public void onFailure(Call<WebResponse<Object>> call, Throwable t) {
                         //            UIHelper.showShortToastInCenter(activity, "Something went wrong, Please check your internet connection.");
+                        dismissDialog();
+                        callBack.onError("");
+                    }
+                });
+            } else {
+                dismissDialog();
+            }
+
+        } catch (Exception e) {
+            dismissDialog();
+            e.printStackTrace();
+
+        }
+
+        return webResponseCall;
+    }
+
+    public Call<DataPriceModel> getAPIPriceAnyObject(String path, Map<String, Object> queryMap, final IRequestWebResponseAnyObjectCallBack callBack) {
+
+        Call<DataPriceModel> webResponseCall = apiService.getAPIRhodiumPriceForWebresponseAnyObject(path, queryMap);
+
+        try {
+            if (Helper.isNetworkConnected(activity, true)) {
+                webResponseCall.enqueue(new Callback<DataPriceModel>() {
+                    @Override
+                    public void onResponse(Call<DataPriceModel> call, Response<DataPriceModel> response) {
+                        dismissDialog();
+                    }
+
+                    @Override
+                    public void onFailure(Call<DataPriceModel> call, Throwable t) {
                         dismissDialog();
                         callBack.onError("");
                     }
