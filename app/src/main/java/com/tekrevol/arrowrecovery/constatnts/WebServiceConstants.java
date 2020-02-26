@@ -117,6 +117,9 @@ public class WebServiceConstants {
 
 
     public static final String KEY_PRICE = "r5KZHsWqMZMWHdmHYtzi";
+    public static final String KEY_MATERIAL_HISTORY = "material-histories";
+    public static final String Q_KEY_TO = "to";
+    public static final String Q_KEY_FROM = "from";
 
 
     /**

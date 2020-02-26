@@ -1,0 +1,76 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:5231464813269430267",
+      "lastPropertyId": "9:4023703025129995950",
+      "name": "MaterialHistoryModel",
+      "properties": [
+        {
+          "id": "1:2390066730320617545",
+          "name": "updated_at",
+          "type": 9
+        },
+        {
+          "id": "2:5121370394686937938",
+          "name": "created_at",
+          "type": 9
+        },
+        {
+          "id": "3:1920075388962705744",
+          "name": "rhodium_price",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "4:4659137197848074240",
+          "name": "palladium_price",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "5:4449844003914800706",
+          "name": "platinum_price",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "6:4199759339611043837",
+          "name": "currency",
+          "type": 9
+        },
+        {
+          "id": "7:973625373617706327",
+          "name": "date",
+          "type": 9
+        },
+        {
+          "id": "8:6778846333496148218",
+          "name": "id",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:4023703025129995950",
+          "name": "uId",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:5231464813269430267",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

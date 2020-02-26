@@ -31,12 +31,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
+import com.tekrevol.arrowrecovery.models.receiving_model.MyObjectBox;
 
 import io.fabric.sdk.android.Fabric;
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
+import io.objectbox.BoxStore;
 import io.reactivex.subjects.PublishSubject;
 
 import static com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_FIREBASE_TOKEN;
@@ -53,11 +55,17 @@ public class BaseApplication extends MultiDexApplication implements Application.
     private static String applicationName;
     private static Context mContext;
 
+    private static BaseApplication baseApplication;
+    private BoxStore boxStore;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         configImageLoader(this);
+
+        baseApplication = this;
+        boxStore = MyObjectBox.builder().androidContext(BaseApplication.this).build();
 
         mContext = this;
         applicationName = getApplicationName(this);
@@ -90,6 +98,13 @@ public class BaseApplication extends MultiDexApplication implements Application.
 
                 });
 
+    }
+    public static BaseApplication getApp() {
+        return baseApplication;
+    }
+
+    public BoxStore getBoxStore() {
+        return boxStore;
     }
 
     public static Context getContext() {

@@ -6,6 +6,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.YAxis
@@ -14,22 +15,28 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.google.common.reflect.TypeToken
+import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
-import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.KEY_PRICE
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
 import com.tekrevol.arrowrecovery.managers.DateManager.getCurrentFormattedDate
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
+import com.tekrevol.arrowrecovery.models.database.ObjectBoxManager
+import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
 import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel
+import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_home.*
+import retrofit2.Call
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,6 +46,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
 
+    val boxStore = BaseApplication.getApp().boxStore
+    val materialHistoryBox = boxStore.boxFor(MaterialHistoryModel::class.java)
+    val historyList: java.util.ArrayList<MaterialHistoryModel> = java.util.ArrayList()
+
+    var webCallCollection: Call<WebResponse<Any>>? = null
+    private val materialHistoryModel = MaterialHistoryModel()
     companion object {
 
         fun newInstance(): HomeFragment {
@@ -54,6 +67,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         daysSelectorAdapter = DaysSelectorAdapter(context!!, arrData, this)
+        materialHistoryBox.removeAll()
+        fetchData(getStartingDate(),getCurrentDate())
 
     }
 
@@ -200,6 +215,59 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
+    private fun getStartingDate():String {
+        val prevYear = Calendar.getInstance()
+        prevYear.add(Calendar.YEAR, -5)
+        var year:String =  prevYear.get(Calendar.YEAR).toString()
+        var month:String =  prevYear.get(Calendar.MONTH).toString()
+        var day:String =  prevYear.get(Calendar.DATE).toString()
+        return "$year-$month-$day"
+    }
+
+    private fun getCurrentDate():String {
+        val prevYear = Calendar.getInstance()
+        var year:String =  prevYear.get(Calendar.YEAR).toString()
+        var month:String =  prevYear.get(Calendar.MONTH).toString()
+        var day:String =  prevYear.get(Calendar.DATE).toString()
+        return "$year-$month-$day"
+    }
+
+    //If current date <= last available data date  then [No API Call because we have updated data]
+
+
+
+    //If current date > last available data but and no above cases found true. We will call the data from last available data date till Current date. and append this data in current DB.
+
+    
+    private fun fetchData(startDate: String, endDate: String) {
+
+        val queryMap = HashMap<String, Any>()
+
+        queryMap[Q_KEY_FROM] = startDate
+        queryMap[Q_KEY_TO] = endDate
+        webCallCollection = getBaseWebServices(true).getAPIAnyObject(KEY_MATERIAL_HISTORY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : com.google.gson.reflect.TypeToken<java.util.ArrayList<MaterialHistoryModel?>?>() {}.type
+                val arrayList: java.util.ArrayList<MaterialHistoryModel> = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , type)
+
+                if (webResponse.isSuccess) {
+                    materialHistoryBox.put(arrayList)
+                    for (i in 0 until  arrayList.size) {
+                        Log.d("historyData", materialHistoryBox.all[i].date)
+                    }
+
+                }
+            }
+
+            override fun onError(`object`: Any?) {
+
+            }
+        })
+    }
+
 
     private fun bindGraphData() {
         chart.setViewPortOffsets(0f, 0f, 0f, 0f)
@@ -307,8 +375,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 progressRefresh.visibility = View.GONE
                 setData((2 until 40).random(), (2 until 40).random().toFloat())
             }, 2000)
-
-
         }
     }
 
@@ -327,5 +393,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
+    override fun onDestroyView() {
+        webCallCollection?.cancel()
+        super.onDestroyView()
+    }
 
 }

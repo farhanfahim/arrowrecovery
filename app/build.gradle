@@ -13,6 +13,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
+apply plugin: 'io.objectbox'
 
 repositories {
     //maven { url 'https://maven.fabric.io/public' }
@@ -54,6 +55,7 @@ android {
 //            shrinkResources false
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //        }
+
 
     }
     productFlavors {
