@@ -33,8 +33,10 @@ import com.tekrevol.arrowrecovery.models.database.ObjectBoxManager
 import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
 import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel
 import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel
+import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel_
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import io.objectbox.Box
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import java.text.SimpleDateFormat
@@ -45,13 +47,14 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
-
+    var dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val boxStore = BaseApplication.getApp().boxStore
     val materialHistoryBox = boxStore.boxFor(MaterialHistoryModel::class.java)
     val historyList: java.util.ArrayList<MaterialHistoryModel> = java.util.ArrayList()
 
     var webCallCollection: Call<WebResponse<Any>>? = null
     private val materialHistoryModel = MaterialHistoryModel()
+
     companion object {
 
         fun newInstance(): HomeFragment {
@@ -67,8 +70,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         daysSelectorAdapter = DaysSelectorAdapter(context!!, arrData, this)
-        materialHistoryBox.removeAll()
-        fetchData(getStartingDate(),getCurrentDate())
+        //materialHistoryBox.removeAll()
 
     }
 
@@ -85,7 +87,42 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         arrData.addAll(Constants.daysSelector())
         rvDays.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         rvDays.adapter = daysSelectorAdapter
+
+        //var size : Int = getSize(materialHistoryBox);
+
+        //removeAll(materialHistoryBox)
+
+        if (materialHistoryBox.isEmpty) {
+            fetchData(getStartingDate(), "2020-02-19")
+            Log.d("fetchData", "fetchData")
+        } else {
+            Updatedata("2020-02-22")
+        }
+
         //getStartAndEndDate()
+    }
+
+    private fun Updatedata(date: String) {
+
+        var dateMaterial: String = materialHistoryBox.query().order(MaterialHistoryModel_.date).build().findFirst() .toString()// all[0].date.toString()
+        if (date <= dateMaterial) {
+        } else if (date > dateMaterial) {
+            var myDate: Date = dateFormat.parse(date)
+            var callStart: Calendar = Calendar.getInstance()
+            callStart.time = myDate
+            var updatedDate: String = ""
+            if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                callStart.add(Calendar.DAY_OF_YEAR, -2)
+                updatedDate = dateFormat.format(callStart.time)
+                Updatedata(updatedDate)
+            } else if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                callStart.add(Calendar.DAY_OF_YEAR, -1)
+                updatedDate = dateFormat.format(callStart.time)
+                Updatedata(updatedDate)
+            } else {
+                fetchData(dateMaterial, date)
+            }
+        }
     }
 
     private fun getStartAndEndDate() {
@@ -140,7 +177,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun priceApi(startDate: String, endDate: String) {
-        priceRodium(startDate, endDate)
+        //priceRodium(startDate, endDate)
         /* pricePlatinum(startDate, endDate)
          pricePalladium(startDate, endDate)*/
     }
@@ -149,7 +186,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
-        queryMap[WebServiceConstants.Q_ENDDATE] = endDate
+        queryMap[WebServiceConstants.Q_ENDDATE] = "2020-02-19"
         queryMap[WebServiceConstants.Q_STARTDATE] = startDate
 
 
@@ -215,34 +252,32 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
-    private fun getStartingDate():String {
+    private fun getStartingDate(): String {
         val prevYear = Calendar.getInstance()
         prevYear.add(Calendar.YEAR, -5)
-        var year:String =  prevYear.get(Calendar.YEAR).toString()
-        var month:String =  prevYear.get(Calendar.MONTH).toString()
-        var day:String =  prevYear.get(Calendar.DATE).toString()
+        var year: String = prevYear.get(Calendar.YEAR).toString()
+        var month: String = prevYear.get(Calendar.MONTH).toString()
+        var day: String = prevYear.get(Calendar.DATE).toString()
         return "$year-$month-$day"
     }
 
-    private fun getCurrentDate():String {
+    private fun getCurrentDate(): String {
         val prevYear = Calendar.getInstance()
-        var year:String =  prevYear.get(Calendar.YEAR).toString()
-        var month:String =  prevYear.get(Calendar.MONTH).toString()
-        var day:String =  prevYear.get(Calendar.DATE).toString()
+        var year: String = prevYear.get(Calendar.YEAR).toString()
+        var month: String = prevYear.get(Calendar.MONTH).toString()
+        var day: String = prevYear.get(Calendar.DATE).toString()
         return "$year-$month-$day"
     }
 
     //If current date <= last available data date  then [No API Call because we have updated data]
 
 
-
     //If current date > last available data but and no above cases found true. We will call the data from last available data date till Current date. and append this data in current DB.
 
-    
+
     private fun fetchData(startDate: String, endDate: String) {
 
         val queryMap = HashMap<String, Any>()
-
         queryMap[Q_KEY_FROM] = startDate
         queryMap[Q_KEY_TO] = endDate
         webCallCollection = getBaseWebServices(true).getAPIAnyObject(KEY_MATERIAL_HISTORY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -255,10 +290,10 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (webResponse.isSuccess) {
                     materialHistoryBox.put(arrayList)
-                    for (i in 0 until  arrayList.size) {
-                        Log.d("historyData", materialHistoryBox.all[i].date)
-                    }
 
+                    for (it in materialHistoryBox.query().build().find()) {
+                        Log.d("historyData", it.date)
+                    }
                 }
             }
 
@@ -397,5 +432,24 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         webCallCollection?.cancel()
         super.onDestroyView()
     }
+
+    /**
+     * remove records//////////////////////////////
+     */
+
+    fun removeAll(materialHistoryBox: Box<MaterialHistoryModel>) {
+        materialHistoryBox.removeAll()
+    }
+
+    /**
+     * get size//////////////////////////////
+     */
+
+    fun getSize(materialHistoryBox: Box<MaterialHistoryModel>): Int {
+        materialHistoryBox.removeAll()
+        var user = materialHistoryBox.all
+        return user.size
+    }
+
 
 }
