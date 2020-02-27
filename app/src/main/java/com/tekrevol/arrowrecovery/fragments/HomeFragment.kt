@@ -1,12 +1,15 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -22,6 +25,7 @@ import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
+import com.tekrevol.arrowrecovery.enums.DBType
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
@@ -185,79 +189,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun priceApi(startDate: String, endDate: String) {
-        //priceRodium(startDate, endDate)
-        /* pricePlatinum(startDate, endDate)
-         pricePalladium(startDate, endDate)*/
-    }
-
-    private fun pricePalladium(startDate: String, endDate: String) {
-
-        val queryMap = HashMap<String, Any>()
-        queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
-        queryMap[WebServiceConstants.Q_ENDDATE] = "2020-02-19"
-        queryMap[WebServiceConstants.Q_STARTDATE] = startDate
-
-
-        WebServices(activity, "", BaseURLTypes.PRICE_BASE_URL, true).getAPIPriceAnyObject(WebServiceConstants.PATH_PALL, queryMap,
-                object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                        val type = object : TypeToken<java.util.ArrayList<DataPriceModel?>?>() {}.type
-                        val arrayList: java.util.ArrayList<DataPriceModel> = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , type)
-
-
-                    }
-
-                    override fun onError(`object`: Any?) {}
-                })
-    }
-
-    private fun pricePlatinum(startDate: String, endDate: String) {
-
-        val queryMap = HashMap<String, Any>()
-        queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
-        queryMap[WebServiceConstants.Q_STARTDATE] = startDate
-        queryMap[WebServiceConstants.Q_ENDDATE] = endDate
-
-
-        WebServices(activity, "", BaseURLTypes.PRICE_BASE_URL, true).getAPIPriceAnyObject(WebServiceConstants.PATH_PLAT, queryMap,
-                object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                        val type = object : TypeToken<java.util.ArrayList<DataPriceModel?>?>() {}.type
-                        val arrayList: java.util.ArrayList<DataPriceModel> = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , type)
-
-                    }
-
-                    override fun onError(`object`: Any?) {}
-                })
-    }
-
-    private fun priceRodium(startDate: String, endDate: String) {
-
-        val queryMap = HashMap<String, Any>()
-        queryMap[WebServiceConstants.Q_STARTDATE] = startDate
-        queryMap[WebServiceConstants.Q_APIKEY] = KEY_PRICE
-        queryMap[WebServiceConstants.Q_ENDDATE] = endDate
-
-        WebServices(activity, "", BaseURLTypes.PRICE_BASE_URL, true).getAPIPriceAnyObject(WebServiceConstants.PATH_RHOD, queryMap,
-                object : WebServices.IRequestWebResponseAnyObjectCallBack {
-                    override fun requestDataResponse(webResponse: WebResponse<Any?>) {
-                        val type = object : TypeToken<java.util.ArrayList<DataPriceModel?>?>() {}.type
-                        val arrayList: java.util.ArrayList<DataPriceModel> = GsonFactory.getSimpleGson()
-                                .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                        , type)
-
-                        Log.d("price", arrayList.toString())
-
-                    }
-
-                    override fun onError(`object`: Any?) {}
-                })
-
-
     }
 
     private fun getStartingDate(): String {
@@ -320,29 +251,68 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         var platanumCurrentDate: String? = materialHistoryBox?.query()?.order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
         var platanumPreviousDate = getPreviousDate(platanumCurrentDate)
-        var df:DecimalFormat =  DecimalFormat("#.##")
-        txtPlatinumPerc.text = (prices(platanumCurrentDate, platanumPreviousDate)) + "%"
+        var df: DecimalFormat = DecimalFormat("#.##")
+        prices(platanumCurrentDate, platanumPreviousDate)
 
 /*
         var platinumCurrentPrice: Double? = materialHistoryBox?.query()?.build()?.findFirst()?.platinum_price?.toDouble()
         var platinumLastPrice: Double? = materialHistoryBox?.query()?.build()?.findFirst()?.platinum_price?.toDouble()*/
     }
 
-    fun prices(CurrentDate: String?, PreviousDate: String?): String {
+    fun prices(CurrentDate: String?, PreviousDate: String?) {
 
         var platanumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.platinum_price!!.toDouble()
         var platanumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.platinum_price!!.toDouble()
 
-        var current_price: Double = platanumCurrentPrice
-        var previous_price: Double = platanumPreviousPrice
-        var difference = ((current_price - previous_price)) / previous_price
+        var palladiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.palladium_price!!.toDouble()
+        var palladiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.palladium_price!!.toDouble()
 
-        var estimated = difference * 100
-        if (estimated > 0) {
-            return (estimated.toString())
+        var rhodiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.rhodium_price!!.toDouble()
+        var rhodiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.rhodium_price!!.toDouble()
+
+        var platinumDifference = ((platanumCurrentPrice - platanumPreviousPrice)) / platanumPreviousPrice
+        var palladiumDifference = ((palladiumCurrentPrice - palladiumPreviousPrice)) / palladiumPreviousPrice
+        var rhodiumDifference = ((rhodiumCurrentPrice - rhodiumPreviousPrice)) / rhodiumPreviousPrice
+
+        var platinumEstimatedPrice = platinumDifference * 100
+        var palladiumEstimatedPrice = palladiumDifference * 100
+        var rhodiumEstimatedPrice = rhodiumDifference * 100
+
+        txtPlatinumPerc.text = String.format("%.2f", platinumEstimatedPrice) + "%"
+        txtPalladiumPerc.text = String.format("%.2f", palladiumEstimatedPrice) + "%"
+        txtRhodiumPerc.text = String.format("%.2f", rhodiumEstimatedPrice) + "%"
+        txtPlatinumPrice.text = "$platanumCurrentPrice $/Oz t"
+        txtPalladiumPrice.text = "$palladiumCurrentPrice $/Oz t"
+        txtRhodiumPrice.text = "$rhodiumCurrentPrice $/Oz t"
+
+        if (platinumEstimatedPrice < 0) {
+
+            imgPlatinumStatus.setImageResource(R.drawable.img_arrow_down)
+            imgPlatinumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorAccent))
         } else {
-            return (estimated.toString())
+
+            imgPlatinumStatus.setImageResource(R.drawable.img_arrow_up)
+            imgPlatinumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorPrimary))
         }
+        if (palladiumEstimatedPrice < 0) {
+
+            imgPalladiumStatus.setImageResource(R.drawable.img_arrow_down)
+            imgPalladiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorAccent))
+        } else {
+
+            imgPalladiumStatus.setImageResource(R.drawable.img_arrow_up)
+            imgPalladiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        }
+        if (rhodiumEstimatedPrice < 0) {
+
+            imgRhodiumStatus.setImageResource(R.drawable.img_arrow_down)
+            imgRhodiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorAccent))
+        } else {
+
+            imgRhodiumStatus.setImageResource(R.drawable.img_arrow_up)
+            imgRhodiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        }
+
     }
 
     private fun getPreviousDate(platanumCurrentDate: String?): String? {
