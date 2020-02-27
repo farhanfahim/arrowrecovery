@@ -4,11 +4,26 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 
+import java.util.Date;
+
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class MaterialHistoryModel {
+public class MaterialHistoryModelDataBase {
+
+
+    public MaterialHistoryModelDataBase(String updated_at, String created_at, Double rhodium_price, Double palladium_price, Double platinum_price, String currency, Date date, int id, long uId) {
+        this.updated_at = updated_at;
+        this.created_at = created_at;
+        this.rhodium_price = rhodium_price;
+        this.palladium_price = palladium_price;
+        this.platinum_price = platinum_price;
+        this.currency = currency;
+        this.date = date;
+        this.id = id;
+        this.uId = uId;
+    }
 
     @Expose
     @SerializedName("updated_at")
@@ -30,7 +45,7 @@ public class MaterialHistoryModel {
     private String currency;
     @Expose
     @SerializedName("date")
-    private String date;
+    private Date date;
     @Expose
     @SerializedName("id")
     private int id;
@@ -94,11 +109,11 @@ public class MaterialHistoryModel {
         this.currency = currency;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

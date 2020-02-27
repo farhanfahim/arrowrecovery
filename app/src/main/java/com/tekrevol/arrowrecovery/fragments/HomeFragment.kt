@@ -1,45 +1,36 @@
 package com.tekrevol.arrowrecovery.fragments
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
-import com.google.common.reflect.TypeToken
 import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
-import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
-import com.tekrevol.arrowrecovery.enums.BaseURLTypes
-import com.tekrevol.arrowrecovery.enums.DBType
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel
-import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel
-import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel_
+import com.tekrevol.arrowrecovery.models.receiving_model.*
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import io.objectbox.Box
 import io.objectbox.query.QueryBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
-import java.text.DecimalFormat
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,7 +41,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
     var dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val boxStore = BaseApplication.getApp().boxStore
-    val materialHistoryBox = boxStore.boxFor(MaterialHistoryModel::class.java)
+    val materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase::class.java)
     val historyList: java.util.ArrayList<MaterialHistoryModel> = java.util.ArrayList()
 
     var webCallCollection: Call<WebResponse<Any>>? = null
@@ -90,7 +81,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //var size : Int = getSize(materialHistoryBox);
 
-        //removeAll(materialHistoryBox)
+        removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
             Log.d("fetchData", "fetchData")
@@ -103,7 +94,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun Updatedata(date: String) {
 
-        var dateMaterial: String = materialHistoryBox.query().order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
+        var datee: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
+        var dateMaterial: String = dateFormat.format(datee)
         if (date <= dateMaterial) {
             UpdateCurrentPrice(materialHistoryBox)
         } else if (date > dateMaterial) {
@@ -230,14 +222,23 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
+
                 if (webResponse.isSuccess) {
-                    materialHistoryBox.put(arrayList)
+
+                    for (arr in arrayList) {
+                        var date: Date = dateFormat.parse(arr.date)
+                        var priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(arr.updated_at, arr.created_at, arr.rhodium_price, arr.palladium_price, arr.platinum_price, arr.currency, date, arr.id, arr.getuId())
+                        materialHistoryBox.put(priceDb)
+                    }
+
+                    //materialHistoryBox.put(arrayList)
+
+                    /*  for (it in materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().find()) {
+                         // Log.d("historyData", it.date.toString())
+                      }*/
 
                     UpdateCurrentPrice(materialHistoryBox)
 
-                    for (it in materialHistoryBox.query().order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING).build().find()) {
-                        Log.d("historyData", it.date)
-                    }
                 }
             }
 
@@ -247,28 +248,24 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         })
     }
 
-    private fun UpdateCurrentPrice(materialHistoryBox: Box<MaterialHistoryModel>?) {
+    private fun UpdateCurrentPrice(materialHistoryBox: Box<MaterialHistoryModelDataBase>?) {
 
-        var platanumCurrentDate: String? = materialHistoryBox?.query()?.order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
-        var platanumPreviousDate = getPreviousDate(platanumCurrentDate)
-        var df: DecimalFormat = DecimalFormat("#.##")
-        prices(platanumCurrentDate, platanumPreviousDate)
-
-/*
-        var platinumCurrentPrice: Double? = materialHistoryBox?.query()?.build()?.findFirst()?.platinum_price?.toDouble()
-        var platinumLastPrice: Double? = materialHistoryBox?.query()?.build()?.findFirst()?.platinum_price?.toDouble()*/
+        var date: Date? = materialHistoryBox?.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
+        // var platanumCurrentDate: String = dateFormat.format(date)
+        var platanumPreviousDate: Date? = getPreviousDate(date)
+        prices(date, platanumPreviousDate)
     }
 
-    fun prices(CurrentDate: String?, PreviousDate: String?) {
+    fun prices(CurrentDate: Date?, PreviousDate: Date?) {
 
-        var platanumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.platinum_price!!.toDouble()
-        var platanumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.platinum_price!!.toDouble()
+        var platanumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, CurrentDate).build().findFirst()?.platinum_price!!.toDouble()
+        var platanumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, PreviousDate).build().findFirst()?.platinum_price!!.toDouble()
 
-        var palladiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.palladium_price!!.toDouble()
-        var palladiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.palladium_price!!.toDouble()
+        var palladiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, CurrentDate).build().findFirst()?.palladium_price!!.toDouble()
+        var palladiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, PreviousDate).build().findFirst()?.palladium_price!!.toDouble()
 
-        var rhodiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.rhodium_price!!.toDouble()
-        var rhodiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.rhodium_price!!.toDouble()
+        var rhodiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, CurrentDate).build().findFirst()?.rhodium_price!!.toDouble()
+        var rhodiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, PreviousDate).build().findFirst()?.rhodium_price!!.toDouble()
 
         var platinumDifference = ((platanumCurrentPrice - platanumPreviousPrice)) / platanumPreviousPrice
         var palladiumDifference = ((palladiumCurrentPrice - palladiumPreviousPrice)) / palladiumPreviousPrice
@@ -315,23 +312,28 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
-    private fun getPreviousDate(platanumCurrentDate: String?): String? {
+    private fun getPreviousDate(currentDate: Date?): Date? {
 
         var calendar: Calendar = Calendar.getInstance()
-        var currentDate: Date = dateFormat.parse(platanumCurrentDate)
+        // var currentDate: Date = dateFormat.parse(platanumCurrentDate)
         calendar.time = currentDate
+
+        Log.d("current",currentDate.toString())
         calendar.add(Calendar.DAY_OF_YEAR, -1)
-        var previousDate: String = dateFormat.format(calendar.time)
-        var date: String = materialHistoryBox.query().contains(MaterialHistoryModel_.date, previousDate).build().find().toString()
+        var d: Date = calendar.time
+
+        Log.d("current",d.toString())
+
+        //var previousDate: String = dateFormat.format(calendar.time)
+        var date: String = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, d).build().find().toString()
         if (date.isNullOrEmpty()) {
-            getPreviousDate(previousDate)
+            getPreviousDate(currentDate)
             return null
         } else {
-            return previousDate
+            return d
         }
 
     }
-
 
     private fun bindGraphData() {
         chart.setViewPortOffsets(0f, 0f, 0f, 0f)
@@ -437,7 +439,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             Handler().postDelayed({
                 imgArrow.visibility = View.VISIBLE
                 progressRefresh.visibility = View.GONE
-                setData((2 until 40).random(), (2 until 40).random().toFloat())
+                //setData((2 until 40).random(), (2 until 40).random().toFloat())
             }, 2000)
         }
     }
@@ -451,6 +453,36 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(position: Int, anyObject: Any?, view: View?, type: String?) {
         arrData.forEach { it.isSelected = false }
         arrData[position].isSelected = true
+        if (position == 0) {
+
+            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date).build().findFirst()?.date!!
+            var calendar: Calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            calendar.add(Calendar.DAY_OF_YEAR, -5)
+            var prevDate = calendar.time
+
+            // yeh hata hai
+            var startDate = dateFormat.format(calendar.time)
+
+            Log.d("current",prevDate.toString())
+            Log.d("current",startDate)
+
+
+            var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
+            Log.d("range", range.toString())
+
+
+        } else if (position == 1) {
+
+        } else if (position == 2) {
+
+        } else if (position == 3) {
+
+        } else if (position == 4) {
+
+
+        }
+
         daysSelectorAdapter.notifyDataSetChanged()
 
         contRefresh.performClick()
@@ -466,7 +498,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
      * remove records//////////////////////////////
      */
 
-    fun removeAll(materialHistoryBox: Box<MaterialHistoryModel>) {
+    fun removeAll(materialHistoryBox: Box<MaterialHistoryModelDataBase>) {
         materialHistoryBox.removeAll()
     }
 
@@ -474,7 +506,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
      * get size//////////////////////////////
      */
 
-    fun getSize(materialHistoryBox: Box<MaterialHistoryModel>): Int {
+    fun getSize(materialHistoryBox: Box<MaterialHistoryModelDataBase>): Int {
         var user = materialHistoryBox.all
         return user.size
     }
