@@ -6,7 +6,6 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.components.YAxis
@@ -24,13 +23,9 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.fragments.dialogs.CheckoutDialogFragment
-import com.tekrevol.arrowrecovery.managers.DateManager.getCurrentFormattedDate
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
-import com.tekrevol.arrowrecovery.models.database.ObjectBoxManager
-import com.tekrevol.arrowrecovery.models.receiving_model.CollectionModel
 import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel
 import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel
 import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel_
@@ -40,6 +35,7 @@ import io.objectbox.Box
 import io.objectbox.query.QueryBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -92,10 +88,10 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
-            fetchData(getStartingDate(), "2020-01-31")
+            fetchData(getStartingDate(), getCurrentDate())
             Log.d("fetchData", "fetchData")
         } else {
-            Updatedata("2020-02-01")
+            Updatedata(getCurrentDate())
         }
 
         //getStartAndEndDate()
@@ -105,7 +101,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         var dateMaterial: String = materialHistoryBox.query().order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
         if (date <= dateMaterial) {
-
+            UpdateCurrentPrice(materialHistoryBox)
         } else if (date > dateMaterial) {
             var myDate: Date = dateFormat.parse(date)
             var callStart: Calendar = Calendar.getInstance()
@@ -127,11 +123,10 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 var updatedDt: String = ""
                 updatedDt = dateFormat.format(endDate.time)
 
-                if (date == updatedDt)
-                {
-
-                }else{
-                    fetchData(updatedDt,date)
+                if (date == updatedDt) {
+                    UpdateCurrentPrice(materialHistoryBox)
+                } else {
+                    fetchData(updatedDt, date)
 
                 }
             }
@@ -271,15 +266,18 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         var year: String = prevYear.get(Calendar.YEAR).toString()
         var month: String = prevYear.get(Calendar.MONTH).toString()
         var day: String = prevYear.get(Calendar.DATE).toString()
+        var m: Int = month.toInt() + 1
         return "$year-$month-$day"
     }
 
     private fun getCurrentDate(): String {
+
         val prevYear = Calendar.getInstance()
         var year: String = prevYear.get(Calendar.YEAR).toString()
         var month: String = prevYear.get(Calendar.MONTH).toString()
         var day: String = prevYear.get(Calendar.DATE).toString()
-        return "$year-$month-$day"
+        var m: Int = month.toInt() + 1
+        return "$year-$m-$day"
     }
 
     //If current date <= last available data date  then [No API Call because we have updated data]
@@ -304,6 +302,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 if (webResponse.isSuccess) {
                     materialHistoryBox.put(arrayList)
 
+                    UpdateCurrentPrice(materialHistoryBox)
+
                     for (it in materialHistoryBox.query().order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING).build().find()) {
                         Log.d("historyData", it.date)
                     }
@@ -314,6 +314,52 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
             }
         })
+    }
+
+    private fun UpdateCurrentPrice(materialHistoryBox: Box<MaterialHistoryModel>?) {
+
+        var platanumCurrentDate: String? = materialHistoryBox?.query()?.order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
+        var platanumPreviousDate = getPreviousDate(platanumCurrentDate)
+        var df:DecimalFormat =  DecimalFormat("#.##")
+        txtPlatinumPerc.text = (prices(platanumCurrentDate, platanumPreviousDate)) + "%"
+
+/*
+        var platinumCurrentPrice: Double? = materialHistoryBox?.query()?.build()?.findFirst()?.platinum_price?.toDouble()
+        var platinumLastPrice: Double? = materialHistoryBox?.query()?.build()?.findFirst()?.platinum_price?.toDouble()*/
+    }
+
+    fun prices(CurrentDate: String?, PreviousDate: String?): String {
+
+        var platanumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, CurrentDate).build().findFirst()?.platinum_price!!.toDouble()
+        var platanumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModel_.date, PreviousDate).build().findFirst()?.platinum_price!!.toDouble()
+
+        var current_price: Double = platanumCurrentPrice
+        var previous_price: Double = platanumPreviousPrice
+        var difference = ((current_price - previous_price)) / previous_price
+
+        var estimated = difference * 100
+        if (estimated > 0) {
+            return (estimated.toString())
+        } else {
+            return (estimated.toString())
+        }
+    }
+
+    private fun getPreviousDate(platanumCurrentDate: String?): String? {
+
+        var calendar: Calendar = Calendar.getInstance()
+        var currentDate: Date = dateFormat.parse(platanumCurrentDate)
+        calendar.time = currentDate
+        calendar.add(Calendar.DAY_OF_YEAR, -1)
+        var previousDate: String = dateFormat.format(calendar.time)
+        var date: String = materialHistoryBox.query().contains(MaterialHistoryModel_.date, previousDate).build().find().toString()
+        if (date.isNullOrEmpty()) {
+            getPreviousDate(previousDate)
+            return null
+        } else {
+            return previousDate
+        }
+
     }
 
 

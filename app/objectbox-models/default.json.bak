@@ -21,20 +21,20 @@
         {
           "id": "3:1920075388962705744",
           "name": "rhodium_price",
-          "type": 5,
-          "flags": 4
+          "type": 8,
+          "flags": 2
         },
         {
           "id": "4:4659137197848074240",
           "name": "palladium_price",
-          "type": 5,
-          "flags": 4
+          "type": 8,
+          "flags": 2
         },
         {
           "id": "5:4449844003914800706",
           "name": "platinum_price",
-          "type": 5,
-          "flags": 4
+          "type": 8,
+          "flags": 2
         },
         {
           "id": "6:4199759339611043837",
