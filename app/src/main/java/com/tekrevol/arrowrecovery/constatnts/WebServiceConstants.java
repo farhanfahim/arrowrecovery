@@ -106,6 +106,7 @@ public class WebServiceConstants {
     public static final String Q_COLLECTION_ID = "collection_center_id";
     public static final String Q_DATE = "date";
     public static final String Q_WITH_ORDER_PRODUCTS = "with_order_products";
+    public static final String Q_SORTED = "sortedBy";
 
 
     /**
@@ -119,6 +120,7 @@ public class WebServiceConstants {
     public static final String KEY_PRICE = "r5KZHsWqMZMWHdmHYtzi";
     public static final String KEY_MATERIAL_HISTORY = "material-histories";
     public static final String Q_KEY_TO = "to";
+    public static final String Q_ASC = "asc";
     public static final String Q_KEY_FROM = "from";
 
 

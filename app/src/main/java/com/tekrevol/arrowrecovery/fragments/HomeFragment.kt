@@ -37,6 +37,7 @@ import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel_
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import io.objectbox.Box
+import io.objectbox.query.QueryBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import java.text.SimpleDateFormat
@@ -70,7 +71,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         daysSelectorAdapter = DaysSelectorAdapter(context!!, arrData, this)
-        //materialHistoryBox.removeAll()
 
     }
 
@@ -91,12 +91,11 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         //var size : Int = getSize(materialHistoryBox);
 
         //removeAll(materialHistoryBox)
-
         if (materialHistoryBox.isEmpty) {
-            fetchData(getStartingDate(), "2020-02-19")
+            fetchData(getStartingDate(), "2020-01-31")
             Log.d("fetchData", "fetchData")
         } else {
-            Updatedata("2020-02-22")
+            Updatedata("2020-02-01")
         }
 
         //getStartAndEndDate()
@@ -104,11 +103,13 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun Updatedata(date: String) {
 
-        var dateMaterial: String = materialHistoryBox.query().order(MaterialHistoryModel_.date).build().findFirst() .toString()// all[0].date.toString()
+        var dateMaterial: String = materialHistoryBox.query().order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
         if (date <= dateMaterial) {
+
         } else if (date > dateMaterial) {
             var myDate: Date = dateFormat.parse(date)
             var callStart: Calendar = Calendar.getInstance()
+            var endDate: Calendar = Calendar.getInstance()
             callStart.time = myDate
             var updatedDate: String = ""
             if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
@@ -120,7 +121,19 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 updatedDate = dateFormat.format(callStart.time)
                 Updatedata(updatedDate)
             } else {
-                fetchData(dateMaterial, date)
+                var endDatee: Date = dateFormat.parse(dateMaterial)
+                endDate.time = endDatee
+                endDate.add(Calendar.DAY_OF_YEAR, 1)
+                var updatedDt: String = ""
+                updatedDt = dateFormat.format(endDate.time)
+
+                if (date == updatedDt)
+                {
+
+                }else{
+                    fetchData(updatedDt,date)
+
+                }
             }
         }
     }
@@ -291,7 +304,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 if (webResponse.isSuccess) {
                     materialHistoryBox.put(arrayList)
 
-                    for (it in materialHistoryBox.query().build().find()) {
+                    for (it in materialHistoryBox.query().order(MaterialHistoryModel_.date, QueryBuilder.DESCENDING).build().find()) {
                         Log.d("historyData", it.date)
                     }
                 }
@@ -446,7 +459,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
      */
 
     fun getSize(materialHistoryBox: Box<MaterialHistoryModel>): Int {
-        materialHistoryBox.removeAll()
         var user = materialHistoryBox.all
         return user.size
     }
