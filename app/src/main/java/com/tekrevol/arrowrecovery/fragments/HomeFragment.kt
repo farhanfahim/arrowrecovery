@@ -2,7 +2,6 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -19,13 +18,13 @@ import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
-import com.tekrevol.arrowrecovery.enums.DBType
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.*
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.utils.MyMarkerView
 import com.tekrevol.arrowrecovery.widget.SwitchMultiButton
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import io.objectbox.Box
@@ -277,9 +276,23 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         var palladiumEstimatedPrice = palladiumDifference * 100
         var rhodiumEstimatedPrice = rhodiumDifference * 100
 
-        txtPlatinumPerc.text = String.format("%.2f", platinumEstimatedPrice) + "%"
-        txtPalladiumPerc.text = String.format("%.2f", palladiumEstimatedPrice) + "%"
-        txtRhodiumPerc.text = String.format("%.2f", rhodiumEstimatedPrice) + "%"
+        if (platinumEstimatedPrice < 0) {
+            txtPlatinumPerc.text = String.format("%.2f", platinumEstimatedPrice * -1) + "%"
+        } else {
+            txtPlatinumPerc.text = String.format("%.2f", platinumEstimatedPrice) + "%"
+        }
+
+        if (palladiumEstimatedPrice < 0) {
+            txtPalladiumPerc.text = String.format("%.2f", palladiumEstimatedPrice * -1) + "%"
+        } else {
+            txtPalladiumPerc.text = String.format("%.2f", palladiumEstimatedPrice) + "%"
+        }
+
+        if (rhodiumEstimatedPrice < 0) {
+            txtRhodiumPerc.text = String.format("%.2f", rhodiumEstimatedPrice * -1) + "%"
+        } else {
+            txtRhodiumPerc.text = String.format("%.2f", rhodiumEstimatedPrice) + "%"
+        }
         txtPlatinumPrice.text = "$platanumCurrentPrice $/Oz t"
         txtPalladiumPrice.text = "$palladiumCurrentPrice $/Oz t"
         txtRhodiumPrice.text = "$rhodiumCurrentPrice $/Oz t"
@@ -432,11 +445,29 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         chart.invalidate()
     }*/
 
-    private fun setData(count: Int, range: ArrayList<Double>) {
+    private fun setData(range: List<MaterialHistoryModelDataBase>) {
+
+        var priceList: ArrayList<Double> = ArrayList()
+        var dateList: ArrayList<Date> = ArrayList()
+        priceList.clear()
+        dateList.clear()
+        for (arr in range) {
+            dateList.add(arr.date)
+
+            if (switchMultiButton.selectedTab == 0) {
+                priceList.add(arr.platinum_price)
+            } else if (switchMultiButton.selectedTab == 1) {
+                priceList.add(arr.palladium_price)
+            } else if (switchMultiButton.selectedTab == 2) {
+                priceList.add(arr.rhodium_price)
+            }
+
+        }
+
         val values = java.util.ArrayList<Entry>()
-        currentPrice.text = range[0].toString()
-        for (a in 0 until count) {
-            values.add(Entry(a.toFloat(), range[a].toFloat()))
+        currentPrice.text = priceList[0].toString()
+        for (a in range.indices) {
+            values.add(Entry(a.toFloat(), priceList[a].toFloat()))
         }
 
         val set1: LineDataSet
@@ -445,6 +476,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             set1.values = values
             chart.data.notifyDataChanged()
             chart.notifyDataSetChanged()
+            // create marker to display box when values are selected
+            val mv = MyMarkerView(activity, R.layout.custom_marker_view)
+
+            // Set the marker to the chart
+            mv.chartView = chart
+            chart.marker = mv
         } else { // create a dataset and give it a type
             set1 = LineDataSet(values, "DataSet 1")
             set1.mode = LineDataSet.Mode.CUBIC_BEZIER
@@ -525,26 +562,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             calendar.add(Calendar.DAY_OF_YEAR, -7)
             var prevDate = calendar.time
 
-            var range: List<MaterialHistoryModelDataBase> = ArrayList()
+            var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
 
-            range = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-
-
-            Log.d("range", range.toString())
-            var priceList: ArrayList<Double> = ArrayList()
-            priceList.clear()
-            for (arr in range) {
-
-                if (switchMultiButton.selectedTab == 0) {
-                    priceList.add(arr.platinum_price)
-                } else if (switchMultiButton.selectedTab == 1) {
-                    priceList.add(arr.palladium_price)
-                } else if (switchMultiButton.selectedTab == 2) {
-                    priceList.add(arr.rhodium_price)
-                }
-
-            }
-            setData(priceList.size, priceList)
+            setData(range)
 
         } else if (position == 1) {
             var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
@@ -555,22 +575,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
 
             var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-            Log.d("range", range.toString())
-            var priceList: ArrayList<Double> = ArrayList()
-            priceList.clear()
 
-            for (arr in range) {
-
-
-                if (switchMultiButton.selectedTab == 0) {
-                    priceList.add(arr.platinum_price)
-                } else if (switchMultiButton.selectedTab == 1) {
-                    priceList.add(arr.palladium_price)
-                } else if (switchMultiButton.selectedTab == 2) {
-                    priceList.add(arr.rhodium_price)
-                }
-            }
-            setData(priceList.size, priceList)
+            setData(range)
 
         } else if (position == 2) {
 
@@ -582,21 +588,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
 
             var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-            Log.d("range", range.toString())
-            var priceList: ArrayList<Double> = ArrayList()
-            priceList.clear()
 
-            for (arr in range) {
-
-                if (switchMultiButton.selectedTab == 0) {
-                    priceList.add(arr.platinum_price)
-                } else if (switchMultiButton.selectedTab == 1) {
-                    priceList.add(arr.palladium_price)
-                } else if (switchMultiButton.selectedTab == 2) {
-                    priceList.add(arr.rhodium_price)
-                }
-            }
-            setData(priceList.size, priceList)
+            setData(range)
 
 
         } else if (position == 3) {
@@ -609,21 +602,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
 
             var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-            Log.d("range", range.toString())
-            var priceList: ArrayList<Double> = ArrayList()
-            priceList.clear()
 
-            for (arr in range) {
-
-                if (switchMultiButton.selectedTab == 0) {
-                    priceList.add(arr.platinum_price)
-                } else if (switchMultiButton.selectedTab == 1) {
-                    priceList.add(arr.palladium_price)
-                } else if (switchMultiButton.selectedTab == 2) {
-                    priceList.add(arr.rhodium_price)
-                }
-            }
-            setData(priceList.size, priceList)
+            setData(range)
         } else if (position == 4) {
             var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
             var calendar: Calendar = Calendar.getInstance()
@@ -633,21 +613,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
 
             var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-            Log.d("range", range.toString())
-            var priceList: ArrayList<Double> = ArrayList()
-            priceList.clear()
 
-            for (arr in range) {
-
-                if (switchMultiButton.selectedTab == 0) {
-                    priceList.add(arr.platinum_price)
-                } else if (switchMultiButton.selectedTab == 1) {
-                    priceList.add(arr.palladium_price)
-                } else if (switchMultiButton.selectedTab == 2) {
-                    priceList.add(arr.rhodium_price)
-                }
-            }
-            setData(priceList.size, priceList)
+            setData(range)
 
         }
 
@@ -687,26 +654,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         var prevDate = calendar.time
         var range: List<MaterialHistoryModelDataBase> = ArrayList()
         range = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-        //   Log.d("range", range.toString())
-        var priceList: ArrayList<Double> = ArrayList()
-        priceList.clear()
-        for (arr in range) {
 
-            if (switchMultiButton.selectedTab == 0) {
-                priceList.add(arr.platinum_price)
-            } else if (switchMultiButton.selectedTab == 1) {
-                priceList.add(arr.palladium_price)
-            } else if (switchMultiButton.selectedTab == 2) {
-                priceList.add(arr.rhodium_price)
-            }
-
-            arrData.forEach { it.isSelected = false }
-            arrData[0].isSelected = true
-
-            daysSelectorAdapter.notifyDataSetChanged()
-
-        }
-        setData(priceList.size, priceList)
+        setData(range)
     }
 
 }
