@@ -36,6 +36,8 @@ import com.tekrevol.arrowrecovery.managers.DateManager;
 import com.tekrevol.arrowrecovery.managers.FileManager;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices;
+import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModel;
+import com.tekrevol.arrowrecovery.models.receiving_model.MaterialHistoryModelDataBase;
 import com.tekrevol.arrowrecovery.models.receiving_model.UserModel;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType;
@@ -48,6 +50,8 @@ import com.tekrevol.arrowrecovery.activities.BaseActivity;
 import com.tekrevol.arrowrecovery.callbacks.OnNewPacketReceivedListener;
 import com.tekrevol.arrowrecovery.widget.TitleBar;
 
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -66,6 +70,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public boolean onCreated = false;
     Disposable subscription;
 
+    private BoxStore boxStore=BaseApplication.getApp().getBoxStore();
+    private Box<MaterialHistoryModelDataBase> materialHistoryBox =boxStore.boxFor(MaterialHistoryModelDataBase.class);
 
     /**
      * This is an abstract class, we should inherit our fragment from this class
@@ -256,6 +262,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                materialHistoryBox.removeAll();
                 sharedPreferenceManager.clearDB();
                 getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
             }

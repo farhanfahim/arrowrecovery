@@ -45,6 +45,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     val materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase::class.java)
     val historyList: java.util.ArrayList<MaterialHistoryModel> = java.util.ArrayList()
 
+    var x: Int = 0
     var webCallCollection: Call<WebResponse<Any>>? = null
     private val materialHistoryModel = MaterialHistoryModel()
 
@@ -82,7 +83,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //var size : Int = getSize(materialHistoryBox);
 
-        removeAll(materialHistoryBox)
+        //removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
         } else {
@@ -217,6 +218,11 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
 
+                if (x == 1) {
+                    imgArrow.visibility = View.VISIBLE
+                    progressRefresh.visibility = View.GONE
+                    x = 0
+                }
 
                 if (webResponse.isSuccess) {
 
@@ -278,7 +284,11 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         txtPalladiumPrice.text = "$palladiumCurrentPrice $/Oz t"
         txtRhodiumPrice.text = "$rhodiumCurrentPrice $/Oz t"
 
-        if (platinumEstimatedPrice < 0) {
+        if (platinumEstimatedPrice == 0.0) {
+
+            imgPlatinumStatus.setImageResource(R.drawable.minus)
+            imgPlatinumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.quantum_grey))
+        } else if (platinumEstimatedPrice < 0) {
 
             imgPlatinumStatus.setImageResource(R.drawable.img_arrow_down)
             imgPlatinumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorAccent))
@@ -287,7 +297,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             imgPlatinumStatus.setImageResource(R.drawable.img_arrow_up)
             imgPlatinumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorPrimary))
         }
-        if (palladiumEstimatedPrice < 0) {
+
+        if (palladiumEstimatedPrice == 0.0) {
+
+            imgPalladiumStatus.setImageResource(R.drawable.minus)
+            imgPalladiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.quantum_grey))
+        } else if (palladiumEstimatedPrice < 0) {
 
             imgPalladiumStatus.setImageResource(R.drawable.img_arrow_down)
             imgPalladiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorAccent))
@@ -296,7 +311,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             imgPalladiumStatus.setImageResource(R.drawable.img_arrow_up)
             imgPalladiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorPrimary))
         }
-        if (rhodiumEstimatedPrice < 0) {
+
+        if (rhodiumEstimatedPrice == 0.0) {
+
+            imgRhodiumStatus.setImageResource(R.drawable.minus)
+            imgRhodiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.quantum_grey))
+        } else if (rhodiumEstimatedPrice < 0) {
 
             imgRhodiumStatus.setImageResource(R.drawable.img_arrow_down)
             imgRhodiumStatus.background.setTint(ContextCompat.getColor(context!!, R.color.colorAccent))
@@ -466,22 +486,23 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     override fun setListeners() {
         contRefresh.setOnClickListener {
+            x = 1
             imgArrow.visibility = View.GONE
             progressRefresh.visibility = View.VISIBLE
 
-            Handler().postDelayed({
-                imgArrow.visibility = View.VISIBLE
-                progressRefresh.visibility = View.GONE
-                //setData((2 until 40).random(), (2 until 40).random().toFloat())
-            }, 2000)
+            removeAll(materialHistoryBox)
+            fetchData(getStartingDate(), getCurrentDate())
+            /*
+             Handler().postDelayed({
+                 imgArrow.visibility = View.VISIBLE
+                 progressRefresh.visibility = View.GONE
+                 //setData((2 until 40).random(), (2 until 40).random().toFloat())
+             }, 2000)*/
         }
 
-        switchMultiButton.setOnSwitchListener(object: SwitchMultiButton.OnSwitchListener {
-            override fun onSwitch(position:Int, tabText:String) {
-                arrData.forEach { it.isSelected = false }
-                arrData[0].isSelected = true
+        switchMultiButton.setOnSwitchListener(object : SwitchMultiButton.OnSwitchListener {
+            override fun onSwitch(position: Int, tabText: String) {
 
-                daysSelectorAdapter.notifyDataSetChanged()
                 drawGraph()
             }
         })
@@ -516,9 +537,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (switchMultiButton.selectedTab == 0) {
                     priceList.add(arr.platinum_price)
-                }else if(switchMultiButton.selectedTab == 1){
+                } else if (switchMultiButton.selectedTab == 1) {
                     priceList.add(arr.palladium_price)
-                } else if(switchMultiButton.selectedTab == 2){
+                } else if (switchMultiButton.selectedTab == 2) {
                     priceList.add(arr.rhodium_price)
                 }
 
@@ -543,9 +564,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (switchMultiButton.selectedTab == 0) {
                     priceList.add(arr.platinum_price)
-                }else if(switchMultiButton.selectedTab == 1){
+                } else if (switchMultiButton.selectedTab == 1) {
                     priceList.add(arr.palladium_price)
-                } else if(switchMultiButton.selectedTab == 2){
+                } else if (switchMultiButton.selectedTab == 2) {
                     priceList.add(arr.rhodium_price)
                 }
             }
@@ -569,9 +590,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (switchMultiButton.selectedTab == 0) {
                     priceList.add(arr.platinum_price)
-                }else if(switchMultiButton.selectedTab == 1){
+                } else if (switchMultiButton.selectedTab == 1) {
                     priceList.add(arr.palladium_price)
-                } else if(switchMultiButton.selectedTab == 2){
+                } else if (switchMultiButton.selectedTab == 2) {
                     priceList.add(arr.rhodium_price)
                 }
             }
@@ -596,9 +617,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (switchMultiButton.selectedTab == 0) {
                     priceList.add(arr.platinum_price)
-                }else if(switchMultiButton.selectedTab == 1){
+                } else if (switchMultiButton.selectedTab == 1) {
                     priceList.add(arr.palladium_price)
-                } else if(switchMultiButton.selectedTab == 2){
+                } else if (switchMultiButton.selectedTab == 2) {
                     priceList.add(arr.rhodium_price)
                 }
             }
@@ -620,9 +641,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (switchMultiButton.selectedTab == 0) {
                     priceList.add(arr.platinum_price)
-                }else if(switchMultiButton.selectedTab == 1){
+                } else if (switchMultiButton.selectedTab == 1) {
                     priceList.add(arr.palladium_price)
-                } else if(switchMultiButton.selectedTab == 2){
+                } else if (switchMultiButton.selectedTab == 2) {
                     priceList.add(arr.rhodium_price)
                 }
             }
@@ -658,30 +679,31 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         return user.size
     }
 
-    fun drawGraph(){
+    fun drawGraph() {
         var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
         var calendar: Calendar = Calendar.getInstance()
         calendar.time = currentDate
         calendar.add(Calendar.DAY_OF_YEAR, -7)
         var prevDate = calendar.time
-
         var range: List<MaterialHistoryModelDataBase> = ArrayList()
-
         range = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
-
-
-        Log.d("range", range.toString())
+        //   Log.d("range", range.toString())
         var priceList: ArrayList<Double> = ArrayList()
         priceList.clear()
         for (arr in range) {
 
             if (switchMultiButton.selectedTab == 0) {
                 priceList.add(arr.platinum_price)
-            }else if(switchMultiButton.selectedTab == 1){
+            } else if (switchMultiButton.selectedTab == 1) {
                 priceList.add(arr.palladium_price)
-            } else if(switchMultiButton.selectedTab == 2){
+            } else if (switchMultiButton.selectedTab == 2) {
                 priceList.add(arr.rhodium_price)
             }
+
+            arrData.forEach { it.isSelected = false }
+            arrData[0].isSelected = true
+
+            daysSelectorAdapter.notifyDataSetChanged()
 
         }
         setData(priceList.size, priceList)

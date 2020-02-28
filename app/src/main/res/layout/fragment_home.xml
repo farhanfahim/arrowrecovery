@@ -193,7 +193,7 @@
                             android:background="@drawable/circle_stroke_1d_primary"
                             android:elevation="@dimen/x40dp"
                             android:padding="@dimen/x10dp"
-                            android:src="@drawable/img_arrow_up" />
+                            android:src="@drawable/minus" />
 
                         <LinearLayout
                             android:layout_width="0dp"
