@@ -414,6 +414,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun setData(count: Int, range: ArrayList<Double>) {
         val values = java.util.ArrayList<Entry>()
+        currentPrice.text = range[0].toString()
         for (a in 0 until count) {
             values.add(Entry(a.toFloat(), range[a].toFloat()))
         }
