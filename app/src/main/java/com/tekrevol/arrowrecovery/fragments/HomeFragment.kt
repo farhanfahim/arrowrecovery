@@ -2,7 +2,6 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
@@ -24,7 +23,8 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.*
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
-import com.tekrevol.arrowrecovery.utils.MyMarkerView
+import com.tekrevol.arrowrecovery.utils.DayAxisValueFormatter
+import com.tekrevol.arrowrecovery.utils.XYMarkerView
 import com.tekrevol.arrowrecovery.widget.SwitchMultiButton
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import io.objectbox.Box
@@ -477,11 +477,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             chart.data.notifyDataChanged()
             chart.notifyDataSetChanged()
             // create marker to display box when values are selected
-            val mv = MyMarkerView(activity, R.layout.custom_marker_view)
-
-            // Set the marker to the chart
-            mv.chartView = chart
-            chart.marker = mv
         } else { // create a dataset and give it a type
             set1 = LineDataSet(values, "DataSet 1")
             set1.mode = LineDataSet.Mode.CUBIC_BEZIER
@@ -505,6 +500,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             // set data
             chart.data = data
         }
+
+        val xAxisFormatter = DayAxisValueFormatter(chart,dateList)
+        val mv = XYMarkerView(activity, xAxisFormatter)
+        mv.chartView = chart
+        chart.marker = mv
+
 
         // redraw
         chart.invalidate()
