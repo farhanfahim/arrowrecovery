@@ -394,6 +394,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             updateOrderModel.deliveryDate = txtDate.stringTrimmed
             updateOrderModel.deliveryMode = AppConstants.PICKUP
             updateOrderModel.timeSlot = txtPick
+            updateOrderModel.address = txtPickupLocation.stringTrimmed
 
             WebServices(activity, sharedPreferenceManager?.currentUser?.accessToken, BaseURLTypes.BASE_URL, true).putMultipartAPI(WebServiceConstants.PATH_ORDERS + "/" + orderid, null,
                     updateOrderModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {

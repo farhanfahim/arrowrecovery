@@ -16,6 +16,9 @@ public class UpdatePickupModel {
     @Expose
     @SerializedName("delivery_mode")
     private int deliveryMode;
+    @Expose
+    @SerializedName("pickup_address")
+    private String address;
 
 
     @Override
@@ -47,4 +50,11 @@ public class UpdatePickupModel {
         this.deliveryMode = deliveryMode;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
