@@ -44,7 +44,7 @@
         {
           "id": "7:973625373617706327",
           "name": "date",
-          "type": 10
+          "type": 9
         },
         {
           "id": "8:6778846333496148218",
@@ -60,9 +60,67 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:4573884342000417537",
+      "lastPropertyId": "9:8908923122578598456",
+      "name": "MaterialHistoryModelDataBase",
+      "properties": [
+        {
+          "id": "1:2681638950660551451",
+          "name": "updated_at",
+          "type": 9
+        },
+        {
+          "id": "2:7837821762378983132",
+          "name": "created_at",
+          "type": 9
+        },
+        {
+          "id": "3:8931723301522808095",
+          "name": "rhodium_price",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "4:4426035851143660211",
+          "name": "palladium_price",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "5:1418668060779339509",
+          "name": "platinum_price",
+          "type": 8,
+          "flags": 2
+        },
+        {
+          "id": "6:5954143904712461053",
+          "name": "currency",
+          "type": 9
+        },
+        {
+          "id": "7:3838986716009436867",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "8:7448736571511479313",
+          "name": "id",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "9:8908923122578598456",
+          "name": "uId",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:5231464813269430267",
+  "lastEntityId": "2:4573884342000417537",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

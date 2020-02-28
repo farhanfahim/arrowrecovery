@@ -19,18 +19,19 @@ import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
+import com.tekrevol.arrowrecovery.enums.DBType
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.receiving_model.*
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.widget.SwitchMultiButton
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import io.objectbox.Box
 import io.objectbox.query.QueryBuilder
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -84,9 +85,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
-            Log.d("fetchData", "fetchData")
         } else {
             Updatedata(getCurrentDate())
+
         }
 
         //getStartAndEndDate()
@@ -203,12 +204,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         return "$year-$m-$day"
     }
 
-    //If current date <= last available data date  then [No API Call because we have updated data]
-
-
-    //If current date > last available data but and no above cases found true. We will call the data from last available data date till Current date. and append this data in current DB.
-
-
     private fun fetchData(startDate: String, endDate: String) {
 
         val queryMap = HashMap<String, Any>()
@@ -250,6 +245,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun UpdateCurrentPrice(materialHistoryBox: Box<MaterialHistoryModelDataBase>?) {
 
+        drawGraph()
         var date: Date? = materialHistoryBox?.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
         // var platanumCurrentDate: String = dateFormat.format(date)
         var platanumPreviousDate: Date? = getPreviousDate(date)
@@ -317,12 +313,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         var calendar: Calendar = Calendar.getInstance()
         // var currentDate: Date = dateFormat.parse(platanumCurrentDate)
         calendar.time = currentDate
-
-        Log.d("current",currentDate.toString())
         calendar.add(Calendar.DAY_OF_YEAR, -1)
         var d: Date = calendar.time
-
-        Log.d("current",d.toString())
 
         //var previousDate: String = dateFormat.format(calendar.time)
         var date: String = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, d).build().find().toString()
@@ -380,12 +372,52 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         chart.invalidate()
     }
 
-    private fun setData(count: Int, range: Float) {
+    /*private fun setData(count: Int, range: Float) {
         val values = java.util.ArrayList<Entry>()
         for (i in 0 until count) {
             val `val` = (Math.random() * (range + 1)).toFloat() + 20
             values.add(Entry(i.toFloat(), `val`))
         }
+        val set1: LineDataSet
+        if (chart.data != null && chart.data.dataSetCount > 0) {
+            set1 = chart.data.getDataSetByIndex(0) as LineDataSet
+            set1.values = values
+            chart.data.notifyDataChanged()
+            chart.notifyDataSetChanged()
+        } else { // create a dataset and give it a type
+            set1 = LineDataSet(values, "DataSet 1")
+            set1.mode = LineDataSet.Mode.CUBIC_BEZIER
+            set1.cubicIntensity = 0.2f
+            set1.setDrawFilled(true)
+            set1.setDrawCircles(false)
+            set1.lineWidth = 3f
+            set1.circleRadius = 4f
+            set1.setCircleColor(Color.BLUE)
+            set1.highLightColor = Color.rgb(244, 117, 117)
+            set1.color = ContextCompat.getColor(context!!, R.color.colorPrimary)
+            set1.fillColor = Color.BLACK
+            set1.fillAlpha = 0
+            set1.setDrawHorizontalHighlightIndicator(false)
+            set1.fillFormatter = IFillFormatter { dataSet, dataProvider -> chart.axisLeft.axisMinimum }
+            // create a data object with the data sets
+            val data = LineData(set1)
+//            data.setValueTypeface(tfLight)
+            data.setValueTextSize(9f)
+            data.setDrawValues(false)
+            // set data
+            chart.data = data
+        }
+
+        // redraw
+        chart.invalidate()
+    }*/
+
+    private fun setData(count: Int, range: ArrayList<Double>) {
+        val values = java.util.ArrayList<Entry>()
+        for (a in 0 until count) {
+            values.add(Entry(a.toFloat(), range[a].toFloat()))
+        }
+
         val set1: LineDataSet
         if (chart.data != null && chart.data.dataSetCount > 0) {
             set1 = chart.data.getDataSetByIndex(0) as LineDataSet
@@ -442,6 +474,16 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 //setData((2 until 40).random(), (2 until 40).random().toFloat())
             }, 2000)
         }
+
+        switchMultiButton.setOnSwitchListener(object: SwitchMultiButton.OnSwitchListener {
+            override fun onSwitch(position:Int, tabText:String) {
+                arrData.forEach { it.isSelected = false }
+                arrData[0].isSelected = true
+
+                daysSelectorAdapter.notifyDataSetChanged()
+                drawGraph()
+            }
+        })
     }
 
     override fun onClick(v: View?) {
@@ -455,37 +497,141 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         arrData[position].isSelected = true
         if (position == 0) {
 
-            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date).build().findFirst()?.date!!
+            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
             var calendar: Calendar = Calendar.getInstance()
             calendar.time = currentDate
-            calendar.add(Calendar.DAY_OF_YEAR, -5)
+            calendar.add(Calendar.DAY_OF_YEAR, -7)
             var prevDate = calendar.time
 
-            // yeh hata hai
-            var startDate = dateFormat.format(calendar.time)
+            var range: List<MaterialHistoryModelDataBase> = ArrayList()
 
-            Log.d("current",prevDate.toString())
-            Log.d("current",startDate)
+            range = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
+
+
+            Log.d("range", range.toString())
+            var priceList: ArrayList<Double> = ArrayList()
+            priceList.clear()
+            for (arr in range) {
+
+                if (switchMultiButton.selectedTab == 0) {
+                    priceList.add(arr.platinum_price)
+                }else if(switchMultiButton.selectedTab == 1){
+                    priceList.add(arr.palladium_price)
+                } else if(switchMultiButton.selectedTab == 2){
+                    priceList.add(arr.rhodium_price)
+                }
+
+            }
+            setData(priceList.size, priceList)
+
+        } else if (position == 1) {
+            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
+            var calendar: Calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            calendar.add(Calendar.MONTH, -1)
+            var prevDate = calendar.time
 
 
             var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
             Log.d("range", range.toString())
+            var priceList: ArrayList<Double> = ArrayList()
+            priceList.clear()
+
+            for (arr in range) {
 
 
-        } else if (position == 1) {
+                if (switchMultiButton.selectedTab == 0) {
+                    priceList.add(arr.platinum_price)
+                }else if(switchMultiButton.selectedTab == 1){
+                    priceList.add(arr.palladium_price)
+                } else if(switchMultiButton.selectedTab == 2){
+                    priceList.add(arr.rhodium_price)
+                }
+            }
+            setData(priceList.size, priceList)
 
         } else if (position == 2) {
 
+            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
+            var calendar: Calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            calendar.add(Calendar.MONTH, -6)
+            var prevDate = calendar.time
+
+
+            var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
+            Log.d("range", range.toString())
+            var priceList: ArrayList<Double> = ArrayList()
+            priceList.clear()
+
+            for (arr in range) {
+
+                if (switchMultiButton.selectedTab == 0) {
+                    priceList.add(arr.platinum_price)
+                }else if(switchMultiButton.selectedTab == 1){
+                    priceList.add(arr.palladium_price)
+                } else if(switchMultiButton.selectedTab == 2){
+                    priceList.add(arr.rhodium_price)
+                }
+            }
+            setData(priceList.size, priceList)
+
+
         } else if (position == 3) {
 
-        } else if (position == 4) {
+            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
+            var calendar: Calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            calendar.add(Calendar.YEAR, -1)
+            var prevDate = calendar.time
 
+
+            var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
+            Log.d("range", range.toString())
+            var priceList: ArrayList<Double> = ArrayList()
+            priceList.clear()
+
+            for (arr in range) {
+
+                if (switchMultiButton.selectedTab == 0) {
+                    priceList.add(arr.platinum_price)
+                }else if(switchMultiButton.selectedTab == 1){
+                    priceList.add(arr.palladium_price)
+                } else if(switchMultiButton.selectedTab == 2){
+                    priceList.add(arr.rhodium_price)
+                }
+            }
+            setData(priceList.size, priceList)
+        } else if (position == 4) {
+            var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
+            var calendar: Calendar = Calendar.getInstance()
+            calendar.time = currentDate
+            calendar.add(Calendar.YEAR, -5)
+            var prevDate = calendar.time
+
+
+            var range: List<MaterialHistoryModelDataBase> = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
+            Log.d("range", range.toString())
+            var priceList: ArrayList<Double> = ArrayList()
+            priceList.clear()
+
+            for (arr in range) {
+
+                if (switchMultiButton.selectedTab == 0) {
+                    priceList.add(arr.platinum_price)
+                }else if(switchMultiButton.selectedTab == 1){
+                    priceList.add(arr.palladium_price)
+                } else if(switchMultiButton.selectedTab == 2){
+                    priceList.add(arr.rhodium_price)
+                }
+            }
+            setData(priceList.size, priceList)
 
         }
 
         daysSelectorAdapter.notifyDataSetChanged()
 
-        contRefresh.performClick()
+        // contRefresh.performClick()
 
     }
 
@@ -511,5 +657,33 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         return user.size
     }
 
+    fun drawGraph(){
+        var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
+        var calendar: Calendar = Calendar.getInstance()
+        calendar.time = currentDate
+        calendar.add(Calendar.DAY_OF_YEAR, -7)
+        var prevDate = calendar.time
+
+        var range: List<MaterialHistoryModelDataBase> = ArrayList()
+
+        range = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
+
+
+        Log.d("range", range.toString())
+        var priceList: ArrayList<Double> = ArrayList()
+        priceList.clear()
+        for (arr in range) {
+
+            if (switchMultiButton.selectedTab == 0) {
+                priceList.add(arr.platinum_price)
+            }else if(switchMultiButton.selectedTab == 1){
+                priceList.add(arr.palladium_price)
+            } else if(switchMultiButton.selectedTab == 2){
+                priceList.add(arr.rhodium_price)
+            }
+
+        }
+        setData(priceList.size, priceList)
+    }
 
 }
