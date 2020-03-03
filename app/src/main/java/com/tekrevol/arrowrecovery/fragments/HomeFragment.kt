@@ -2,6 +2,7 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
@@ -82,7 +83,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //var size : Int = getSize(materialHistoryBox);
 
-        //removeAll(materialHistoryBox)
+        removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
         } else {
@@ -109,7 +110,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 callStart.add(Calendar.DAY_OF_YEAR, -2)
                 updatedDate = dateFormat.format(callStart.time)
                 Updatedata(updatedDate)
-            } else if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            } else if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
                 callStart.add(Calendar.DAY_OF_YEAR, -1)
                 updatedDate = dateFormat.format(callStart.time)
                 Updatedata(updatedDate)
@@ -130,56 +131,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         }
     }
 
-    private fun getStartAndEndDate() {
-        var dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-        var myDate: Date = dateFormat.parse("2020-02-02")
-        var callStart: Calendar = Calendar.getInstance()
-        var callEnd: Calendar = Calendar.getInstance()
-        var callDate: Calendar = Calendar.getInstance()
-        var startDate: String = ""
-        var endDate: String = ""
-        callStart.time = myDate
-        callEnd.time = myDate
-
-        if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-
-            callEnd.add(Calendar.DAY_OF_YEAR, -2)
-            endDate = dateFormat.format(callEnd.time)
-            callStart.add(Calendar.DAY_OF_YEAR, -4)
-            startDate = dateFormat.format(callStart.time)
-            priceApi(startDate, endDate)
-
-        } else if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-
-            callEnd.add(Calendar.DAY_OF_YEAR, -1)
-            endDate = dateFormat.format(callEnd.time)
-            callStart.add(Calendar.DAY_OF_YEAR, -3)
-            startDate = dateFormat.format(callStart.time)
-            priceApi(startDate, endDate)
-
-        } else {
-            endDate = "2020-02-01"
-            callEnd.add(Calendar.DAY_OF_YEAR, -2)
-            var date: Date = dateFormat.parse(dateFormat.format(callEnd.time))
-            callDate.time = date
-
-            if (callDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                callStart.add(Calendar.DAY_OF_YEAR, -4)
-                startDate = dateFormat.format(callStart.time)
-                priceApi(startDate, endDate)
-
-            } else if (callDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                callStart.add(Calendar.DAY_OF_YEAR, -3)
-                startDate = dateFormat.format(callStart.time)
-                priceApi(startDate, endDate)
-
-            } else {
-                callStart.add(Calendar.DAY_OF_YEAR, -2)
-                startDate = dateFormat.format(callStart.time)
-                priceApi(startDate, endDate)
-            }
-        }
-    }
 
     private fun priceApi(startDate: String, endDate: String) {
     }
@@ -229,6 +180,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                         var date: Date = dateFormat.parse(arr.date)
                         var priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(arr.updated_at, arr.created_at, arr.rhodium_price, arr.palladium_price, arr.platinum_price, arr.currency, date, arr.id, arr.getuId())
                         materialHistoryBox.put(priceDb)
+
+                        if (getSize(materialHistoryBox) == arrayList.size) {
+                            UpdateCurrentPrice(materialHistoryBox)
+
+                        }
+
                     }
 
                     //materialHistoryBox.put(arrayList)
@@ -237,7 +194,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                          // Log.d("historyData", it.date.toString())
                       }*/
 
-                    UpdateCurrentPrice(materialHistoryBox)
 
                 }
             }
@@ -348,7 +304,15 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         calendar.time = currentDate
         calendar.add(Calendar.DAY_OF_YEAR, -1)
         var d: Date = calendar.time
-
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            calendar.add(Calendar.DAY_OF_YEAR, -2)
+            d = calendar.time
+            //   getPreviousDate(updatedDate)
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            d = calendar.time
+            //     Updatedata(updatedDate)
+        }
         //var previousDate: String = dateFormat.format(calendar.time)
         var date: String = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, d).build().find().toString()
         if (date.isNullOrEmpty()) {
@@ -501,7 +465,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             chart.data = data
         }
 
-        val xAxisFormatter = DayAxisValueFormatter(chart,dateList)
+        val xAxisFormatter = DayAxisValueFormatter(chart, dateList)
         val mv = XYMarkerView(activity, xAxisFormatter)
         mv.chartView = chart
         chart.marker = mv
