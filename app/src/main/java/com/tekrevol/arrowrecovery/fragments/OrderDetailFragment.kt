@@ -57,7 +57,6 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
         fun newInstance(orderModel: OrderModel): OrderDetailFragment {
 
             val args = Bundle()
-
             val fragment = OrderDetailFragment()
             fragment.arguments = args
             fragment.orderModel = orderModel
@@ -293,6 +292,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
     override fun onDestroyView() {
         super.onDestroyView()
         webCall?.cancel()
+        mDialog?.dismiss()
     }
 
     override fun onDonePaging() {

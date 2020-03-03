@@ -56,6 +56,7 @@ public class WebServiceConstants {
     public static final String PATH_REGISTER = "register";
     public static final String PATH_LOGIN = "login";
     public static final String PATH_GET_PRODUCT = "products";
+    public static final String PATH_LOGOUT = "logout";
     public static final String PATH_GET_REFRESH = "refresh";
     public static final String PATH_SLOTS = "get-slots";
     public static final String PATH_PROFILE = "profile";

@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.kaopiz.kprogresshud.KProgressHUD
 import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.DaysSelectorAdapter
@@ -19,6 +20,7 @@ import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.*
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.DummyModel
@@ -44,6 +46,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     val boxStore = BaseApplication.getApp().boxStore
     val materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase::class.java)
     val historyList: java.util.ArrayList<MaterialHistoryModel> = java.util.ArrayList()
+    private var mDialog: KProgressHUD? = null
+
 
     var x: Int = 0
     var webCallCollection: Call<WebResponse<Any>>? = null
@@ -85,10 +89,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
-            fetchData(getStartingDate(), getCurrentDate())
+            fetchData(getStartingDate(), getCurrentDate(), "")
         } else {
             Updatedata(getCurrentDate())
-
         }
 
         //getStartAndEndDate()
@@ -124,8 +127,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 if (date == updatedDt) {
                     UpdateCurrentPrice(materialHistoryBox)
                 } else {
-                    fetchData(updatedDt, date)
-
+                    fetchData(updatedDt, date, "isUpdated")
                 }
             }
         }
@@ -155,24 +157,28 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         return "$year-$m-$day"
     }
 
-    private fun fetchData(startDate: String, endDate: String) {
+    private fun fetchData(startDate: String, endDate: String, s: String) {
+
+        mDialog = UIHelper.getProgressHUD(context)
+        mDialog?.show() as KProgressHUD
+        var size: Int = 0
+        if (s.equals("isUpdated")) {
+            if (materialHistoryBox.isEmpty) {
+            } else {
+                size = getSize(materialHistoryBox)
+            }
+        }
 
         val queryMap = HashMap<String, Any>()
         queryMap[Q_KEY_FROM] = startDate
         queryMap[Q_KEY_TO] = endDate
-        webCallCollection = getBaseWebServices(true).getAPIAnyObject(KEY_MATERIAL_HISTORY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallCollection = getBaseWebServices(false).getAPIAnyObject(KEY_MATERIAL_HISTORY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : com.google.gson.reflect.TypeToken<java.util.ArrayList<MaterialHistoryModel?>?>() {}.type
                 val arrayList: java.util.ArrayList<MaterialHistoryModel> = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , type)
-
-                if (x == 1) {
-                    imgArrow.visibility = View.VISIBLE
-                    progressRefresh.visibility = View.GONE
-                    x = 0
-                }
 
                 if (webResponse.isSuccess) {
 
@@ -181,11 +187,31 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                         var priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(arr.updated_at, arr.created_at, arr.rhodium_price, arr.palladium_price, arr.platinum_price, arr.currency, date, arr.id, arr.getuId())
                         materialHistoryBox.put(priceDb)
 
-                        if (getSize(materialHistoryBox) == arrayList.size) {
-                            UpdateCurrentPrice(materialHistoryBox)
+                        if (s.equals("isUpdated")) {
+                            if (materialHistoryBox.isEmpty) {
+                            } else if (getSize(materialHistoryBox) == (arrayList.size + size)) {
+                                UpdateCurrentPrice(materialHistoryBox)
 
+                            }
                         }
 
+                        if (getSize(materialHistoryBox) == arrayList.size) {
+                            UpdateCurrentPrice(materialHistoryBox)
+                            imgArrow.visibility = View.VISIBLE
+                            progressRefresh.visibility = View.GONE
+                            setDay()
+                            mDialog?.dismiss()
+                        }
+
+                    }
+
+                    if (s.equals("isUpdated")) {
+                        if (materialHistoryBox.isEmpty) {
+                        } else {
+                            UpdateCurrentPrice(materialHistoryBox)
+                            mDialog?.dismiss()
+
+                        }
                     }
 
                     //materialHistoryBox.put(arrayList)
@@ -195,6 +221,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                       }*/
 
 
+                } else {
+
+                    mDialog?.dismiss()
                 }
             }
 
@@ -209,8 +238,10 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         drawGraph()
         var date: Date? = materialHistoryBox?.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
         // var platanumCurrentDate: String = dateFormat.format(date)
-        var platanumPreviousDate: Date? = getPreviousDate(date)
-        prices(date, platanumPreviousDate)
+        Log.d("current", date.toString())
+        var previousDate: Date? = getPreviousDate(date)
+        Log.d("previous", previousDate.toString())
+        prices(date, previousDate)
     }
 
     fun prices(CurrentDate: Date?, PreviousDate: Date?) {
@@ -410,7 +441,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }*/
 
     private fun setData(range: List<MaterialHistoryModelDataBase>) {
-
         var priceList: ArrayList<Double> = ArrayList()
         var dateList: ArrayList<Date> = ArrayList()
         priceList.clear()
@@ -488,12 +518,10 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     override fun setListeners() {
         contRefresh.setOnClickListener {
-            x = 1
             imgArrow.visibility = View.GONE
             progressRefresh.visibility = View.VISIBLE
-
             removeAll(materialHistoryBox)
-            fetchData(getStartingDate(), getCurrentDate())
+            fetchData(getStartingDate(), getCurrentDate(), "")
             /*
              Handler().postDelayed({
                  imgArrow.visibility = View.VISIBLE
@@ -504,7 +532,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         switchMultiButton.setOnSwitchListener(object : SwitchMultiButton.OnSwitchListener {
             override fun onSwitch(position: Int, tabText: String) {
-
+                setDay()
                 drawGraph()
             }
         })
@@ -591,6 +619,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     override fun onDestroyView() {
         webCallCollection?.cancel()
+        mDialog?.dismiss()
         super.onDestroyView()
     }
 
@@ -621,6 +650,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         range = materialHistoryBox.query().between(MaterialHistoryModelDataBase_.date, currentDate, prevDate).build().find()
 
         setData(range)
+    }
+
+    fun setDay() {
+        arrData.forEach { it.isSelected = false }
+        arrData[0].isSelected = true
+        daysSelectorAdapter.notifyDataSetChanged()
     }
 
 }

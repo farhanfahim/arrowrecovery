@@ -56,6 +56,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import retrofit2.Call;
+
+import static com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.PATH_LOGOUT;
 
 
 /**
@@ -69,9 +72,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public String TAG = "Logging Tag";
     public boolean onCreated = false;
     Disposable subscription;
+    Call<WebResponse<Object>> webCall;
 
-    private BoxStore boxStore=BaseApplication.getApp().getBoxStore();
-    private Box<MaterialHistoryModelDataBase> materialHistoryBox =boxStore.boxFor(MaterialHistoryModelDataBase.class);
+    private BoxStore boxStore = BaseApplication.getApp().getBoxStore();
+    private Box<MaterialHistoryModelDataBase> materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase.class);
 
     /**
      * This is an abstract class, we should inherit our fragment from this class
@@ -211,8 +215,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public void onDestroyView() {
         super.onDestroyView();
         Log.e("abc", "onDestroyView");
-        if (subscription != null)
+        if (subscription != null) {
             subscription.dispose();
+        }
+        if (webCall != null) {
+            webCall.cancel();
+        }
+
     }
 
 
@@ -261,14 +270,27 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         UIHelper.showAlertDialog("Do you want to logout?", "Logout", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                materialHistoryBox.removeAll();
-                sharedPreferenceManager.clearDB();
-                getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
+
+                webCall = getBaseWebServices(true).postAPIAnyObject(PATH_LOGOUT, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
+
+                    @Override
+                    public void requestDataResponse(WebResponse<Object> webResponse) {
+                        materialHistoryBox.removeAll();
+                        sharedPreferenceManager.clearDB();
+                        getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
+                    }
+
+                    @Override
+                    public void onError(Object object) {
+
+                    }
+                });
+
             }
         }, "Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
 
                 dialog.dismiss();
 
@@ -276,8 +298,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }, "No", getContext());
     }
 
-    public WebServices getBaseWebServices(boolean isShowLoader){
-        return new WebServices(getBaseActivity(),getToken(), BaseURLTypes.BASE_URL,isShowLoader);
+    public WebServices getBaseWebServices(boolean isShowLoader) {
+        return new WebServices(getBaseActivity(), getToken(), BaseURLTypes.BASE_URL, isShowLoader);
     }
 
     public Gson getGson() {
@@ -288,5 +310,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     public MainActivity getMainActivity() {
         return (MainActivity) getActivity();
     }
+
 
 }
