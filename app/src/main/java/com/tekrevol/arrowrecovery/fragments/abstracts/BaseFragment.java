@@ -271,6 +271,8 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                dialog.dismiss();
+
                 webCall = getBaseWebServices(true).postAPIAnyObject(PATH_LOGOUT, "", new WebServices.IRequestWebResponseAnyObjectCallBack() {
 
                     @Override

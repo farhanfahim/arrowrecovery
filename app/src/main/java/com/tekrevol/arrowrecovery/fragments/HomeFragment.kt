@@ -89,7 +89,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
-            fetchData(getStartingDate(), getCurrentDate(), "")
+            fetchData(getStartingDate(), getCurrentDate())
         } else {
             Updatedata(getCurrentDate())
         }
@@ -127,7 +127,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                 if (date == updatedDt) {
                     UpdateCurrentPrice(materialHistoryBox)
                 } else {
-                    fetchData(updatedDt, date, "isUpdated")
+                    fetchData(updatedDt, date, true)
                 }
             }
         }
@@ -157,12 +157,12 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         return "$year-$m-$day"
     }
 
-    private fun fetchData(startDate: String, endDate: String, s: String) {
+    private fun fetchData(startDate: String, endDate: String, isUpdated: Boolean = false) {
 
         mDialog = UIHelper.getProgressHUD(context)
         mDialog?.show() as KProgressHUD
         var size: Int = 0
-        if (s.equals("isUpdated")) {
+        if (isUpdated) {
             if (materialHistoryBox.isEmpty) {
             } else {
                 size = getSize(materialHistoryBox)
@@ -187,7 +187,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                         var priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(arr.updated_at, arr.created_at, arr.rhodium_price, arr.palladium_price, arr.platinum_price, arr.currency, date, arr.id, arr.getuId())
                         materialHistoryBox.put(priceDb)
 
-                        if (s.equals("isUpdated")) {
+                        if (isUpdated) {
                             if (materialHistoryBox.isEmpty) {
                             } else if (getSize(materialHistoryBox) == (arrayList.size + size)) {
                                 UpdateCurrentPrice(materialHistoryBox)
@@ -205,7 +205,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                     }
 
-                    if (s.equals("isUpdated")) {
+                    if (isUpdated) {
                         if (materialHistoryBox.isEmpty) {
                         } else {
                             UpdateCurrentPrice(materialHistoryBox)
@@ -521,7 +521,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             imgArrow.visibility = View.GONE
             progressRefresh.visibility = View.VISIBLE
             removeAll(materialHistoryBox)
-            fetchData(getStartingDate(), getCurrentDate(), "")
+            fetchData(getStartingDate(), getCurrentDate())
             /*
              Handler().postDelayed({
                  imgArrow.visibility = View.VISIBLE
