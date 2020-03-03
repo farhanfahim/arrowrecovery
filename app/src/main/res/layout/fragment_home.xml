@@ -190,10 +190,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/x5dp"
+                            android:backgroundTint="@color/txtGrey"
                             android:background="@drawable/circle_stroke_1d_primary"
                             android:elevation="@dimen/x40dp"
-                            android:padding="@dimen/x10dp"
-                            android:src="@drawable/minus" />
+                            android:padding="@dimen/x10dp"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -207,7 +207,7 @@
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text=""
+                                android:text="0%"
                                 android:id="@+id/txtPlatinumPerc"
                                 android:textColor="@color/title_color"
                                 android:textSize="18sp"
@@ -218,7 +218,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/x5dp"
                                 android:id="@+id/txtPlatinumPrice"
-                                android:text="5.73042 $/Oz t"
+                                android:text="0 $/Oz t"
                                 android:textColor="@color/txtGrey"
                                 android:textSize="15sp"
                                 app:typeface="@string/font_regular" />
@@ -265,10 +265,8 @@
                             android:layout_margin="@dimen/x5dp"
                             android:id="@+id/imgPalladiumStatus"
                             android:background="@drawable/circle_stroke_1d_primary"
-                            android:backgroundTint="@color/colorAccent"
-                            android:elevation="@dimen/x40dp"
-                            android:padding="@dimen/x10dp"
-                            android:src="@drawable/img_arrow_down" />
+                            android:backgroundTint="@color/txtGrey"                            android:elevation="@dimen/x40dp"
+                            android:padding="@dimen/x10dp" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -282,7 +280,7 @@
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="-50%"
+                                android:text="0%"
 
                                 android:id="@+id/txtPalladiumPerc"
                                 android:textColor="@color/title_color"
@@ -293,7 +291,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/x5dp"
-                                android:text="5.73042 $/Oz t"
+                                android:text="0 $/Oz t"
                                 android:id="@+id/txtPalladiumPrice"
                                 android:textColor="@color/txtGrey"
                                 android:textSize="15sp"
@@ -343,7 +341,7 @@
                             android:elevation="@dimen/x40dp"
                             android:padding="@dimen/x10dp"
                             android:id="@+id/imgRhodiumStatus"
-                            android:src="@drawable/img_arrow_up" />
+                            android:backgroundTint="@color/txtGrey"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -357,7 +355,7 @@
                             <com.tekrevol.arrowrecovery.widget.AnyTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="22%"
+                                android:text="0%"
 
                                 android:id="@+id/txtRhodiumPerc"
                                 android:textColor="@color/title_color"
@@ -368,7 +366,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/x5dp"
-                                android:text="5.73042 $/Oz t"
+                                android:text="0 $/Oz t"
                                 android:textColor="@color/txtGrey"
                                 android:textSize="15sp"
                                 android:id="@+id/txtRhodiumPrice"

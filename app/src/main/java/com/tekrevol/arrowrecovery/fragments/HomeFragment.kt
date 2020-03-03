@@ -83,7 +83,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //var size : Int = getSize(materialHistoryBox);
 
-        removeAll(materialHistoryBox)
+        //removeAll(materialHistoryBox)
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
         } else {
