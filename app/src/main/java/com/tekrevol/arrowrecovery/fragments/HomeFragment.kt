@@ -45,9 +45,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     var dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
     val boxStore = BaseApplication.getApp().boxStore
     val materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase::class.java)
-    val historyList: java.util.ArrayList<MaterialHistoryModel> = java.util.ArrayList()
     private var mDialog: KProgressHUD? = null
-
 
     var x: Int = 0
     var webCallCollection: Call<WebResponse<Any>>? = null
@@ -237,10 +235,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         drawGraph()
         var date: Date? = materialHistoryBox?.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
-        // var platanumCurrentDate: String = dateFormat.format(date)
-        Log.d("current", date.toString())
         var previousDate: Date? = getPreviousDate(date)
-        Log.d("previous", previousDate.toString())
         prices(date, previousDate)
     }
 
@@ -357,8 +352,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun bindGraphData() {
         chart.setViewPortOffsets(0f, 0f, 0f, 0f)
-        //        chart.setBackgroundColor(Color.rgb(104, 241, 175))
-
+        // chart.setBackgroundColor(Color.rgb(104, 241, 175))
         // no description text
         // no description text
         chart.description.isEnabled = false
@@ -395,7 +389,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         chart.animateXY(2000, 2000)
 
-        // don't forget to refresh the drawing
         // don't forget to refresh the drawing
         chart.invalidate()
     }
@@ -441,6 +434,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }*/
 
     private fun setData(range: List<MaterialHistoryModelDataBase>) {
+
         var priceList: ArrayList<Double> = ArrayList()
         var dateList: ArrayList<Date> = ArrayList()
         priceList.clear()
@@ -485,7 +479,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             set1.fillColor = Color.BLACK
             set1.fillAlpha = 0
             set1.setDrawHorizontalHighlightIndicator(false)
-            set1.fillFormatter = IFillFormatter { dataSet, dataProvider -> chart.axisLeft.axisMinimum }
+       //     set1.fillFormatter = IFillFormatter { dataSet, dataProvider -> chart.axisLeft.axisMinimum }
             // create a data object with the data sets
             val data = LineData(set1)
 //            data.setValueTypeface(tfLight)
