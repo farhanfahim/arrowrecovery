@@ -45,9 +45,9 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
     var searchHistoryModel: SearchHistoryModel = SearchHistoryModel()
 
     companion object {
-        var makeId: String = ""
-        var modelId: String = ""
-        var year: String = ""
+        var makeId:     String = ""
+        var modelId:    String = ""
+        var year:       String = ""
         var serialNumber: String = ""
         fun newInstance(): SearchFragment {
 
@@ -88,10 +88,11 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                                        count: Int) {
                 text = s.toString()
                 arrDataSearchBar.clear()
-                if (s.length < 1) {
+                if (s.isEmpty()) {
                     recyclerViewSearchList.visibility = View.VISIBLE
                     rvSearch.visibility = View.GONE
                     if (makeId.isNullOrEmpty() && modelId.isNullOrEmpty() && year.isNullOrEmpty() && serialNumber.isNullOrEmpty()) {
+
                     } else {
                         getProducts(text!!, makeId, modelId, year, serialNumber)
                         searchHistoryModel.query = text
@@ -187,11 +188,27 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         recyclerViewSearchList.visibility = View.GONE
         rvSearch.showShimmer()
         val queryMap = HashMap<String, Any>()
+
+        // Query can be empty
         queryMap[WebServiceConstants.Q_QUERY] = query
-        queryMap[WebServiceConstants.Q_MAKE_ID] = makeId
-        queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
-        queryMap[WebServiceConstants.Q_YEAR] = year
-        queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
+
+        if (makeId.isNotEmpty()) {
+            queryMap[WebServiceConstants.Q_MAKE_ID] = makeId
+        }
+
+        if (modelId.isNotEmpty()) {
+            queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
+        }
+
+        if (year.isNotEmpty()) {
+            queryMap[WebServiceConstants.Q_YEAR] = year
+        }
+
+        if (serialNumber.isNotEmpty()) {
+            queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
+        }
+
+
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 

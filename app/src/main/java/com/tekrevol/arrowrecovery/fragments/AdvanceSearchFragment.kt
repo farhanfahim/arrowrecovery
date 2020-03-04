@@ -78,7 +78,7 @@ class AdvanceSearchFragment : BaseFragment() {
             spinnerModelArrayList1.add(SpinnerModel(carModel.text))
         }
 
-        serialNumber = edtSerialNumber.toString()
+        serialNumber = edtSerialNumber.text.toString()
     }
 
     override fun getFragmentLayout(): Int {
@@ -112,8 +112,8 @@ class AdvanceSearchFragment : BaseFragment() {
                 } else {
                     makeId = getMakeId().toString()
                 }
-                year = txtYear.stringTrimmed
-                serialNumber = edtSerialNumber.stringTrimmed
+                year = txtYear.text.toString().trim()
+                serialNumber = edtSerialNumber.text.toString().trim()
             }
         })
 
@@ -121,8 +121,14 @@ class AdvanceSearchFragment : BaseFragment() {
             txtYear.text = ""
             txtMake.text = ""
             txtModel.text = ""
-            edtSerialNumber.text = null
+            edtSerialNumber.setText("")
 
+            makeId = ""
+            modelId = ""
+            year = ""
+            serialNumber = ""
+
+            baseActivity.popBackStack()
         }
 
         contMake.setOnClickListener(View.OnClickListener {
