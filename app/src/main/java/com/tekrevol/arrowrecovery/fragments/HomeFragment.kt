@@ -2,7 +2,6 @@ package com.tekrevol.arrowrecovery.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
@@ -11,7 +10,6 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import com.kaopiz.kprogresshud.KProgressHUD
 import com.tekrevol.arrowrecovery.BaseApplication
 import com.tekrevol.arrowrecovery.R
@@ -43,8 +41,15 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     private var arrData: ArrayList<DummyModel> = ArrayList()
     private lateinit var daysSelectorAdapter: DaysSelectorAdapter
     var dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-    val boxStore = BaseApplication.getApp().boxStore
-    val materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase::class.java)
+
+    val materialHistoryBox: Box<MaterialHistoryModelDataBase> by lazy {
+        requireNotNull(this) {
+            "You can only initialize DB after onActivityCreated()"
+        }
+
+        BaseApplication.getApp().boxStore.boxFor(MaterialHistoryModelDataBase::class.java)
+    }
+
     private var mDialog: KProgressHUD? = null
 
     var x: Int = 0
@@ -72,8 +77,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onBind()
         bindGraphData()
+        onBind()
 
     }
 
@@ -89,50 +94,49 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
         } else {
-            Updatedata(getCurrentDate())
+            updateData(getCurrentDate())
         }
 
         //getStartAndEndDate()
     }
 
-    private fun Updatedata(date: String) {
+    private fun updateData(date: String) {
 
-        var datee: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
-        var dateMaterial: String = dateFormat.format(datee)
-        if (date <= dateMaterial) {
-            UpdateCurrentPrice(materialHistoryBox)
-        } else if (date > dateMaterial) {
-            var myDate: Date = dateFormat.parse(date)
+        var endDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
+        var currentDate: Date = dateFormat.parse(date)
+
+        if (!currentDate.after(endDate)) {
+            updateCurrentPrice()
+        } else {
             var callStart: Calendar = Calendar.getInstance()
-            var endDate: Calendar = Calendar.getInstance()
-            callStart.time = myDate
+            var endCalendar: Calendar = Calendar.getInstance()
+            callStart.time = currentDate
             var updatedDate: String = ""
             if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                 callStart.add(Calendar.DAY_OF_YEAR, -2)
                 updatedDate = dateFormat.format(callStart.time)
-                Updatedata(updatedDate)
+                updateData(updatedDate)
             } else if (callStart.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
                 callStart.add(Calendar.DAY_OF_YEAR, -1)
                 updatedDate = dateFormat.format(callStart.time)
-                Updatedata(updatedDate)
+                updateData(updatedDate)
             } else {
-                var endDatee: Date = dateFormat.parse(dateMaterial)
-                endDate.time = endDatee
-                endDate.add(Calendar.DAY_OF_YEAR, 1)
+                endCalendar.time = endDate
+                endCalendar.add(Calendar.DAY_OF_YEAR, 1)
                 var updatedDt: String = ""
-                updatedDt = dateFormat.format(endDate.time)
+                updatedDt = dateFormat.format(endCalendar.time)
+                val strCurrentDate = dateFormat.format(currentDate)
 
-                if (date == updatedDt) {
-                    UpdateCurrentPrice(materialHistoryBox)
+                if (strCurrentDate == updatedDt) {
+                    updateCurrentPrice()
                 } else {
-                    fetchData(updatedDt, date, true)
+                    fetchData(updatedDt, strCurrentDate, true)
                 }
             }
         }
-    }
 
 
-    private fun priceApi(startDate: String, endDate: String) {
+
     }
 
     private fun getStartingDate(): String {
@@ -158,18 +162,19 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     private fun fetchData(startDate: String, endDate: String, isUpdated: Boolean = false) {
 
         mDialog = UIHelper.getProgressHUD(context)
-        mDialog?.show() as KProgressHUD
-        var size: Int = 0
-        if (isUpdated) {
-            if (materialHistoryBox.isEmpty) {
-            } else {
-                size = getSize(materialHistoryBox)
-            }
-        }
+        mDialog?.show()
+
+//        var size: Int = 0
+//        if (isUpdated) {
+//            if (!materialHistoryBox.isEmpty) {
+//                size = materialHistoryBox.all.size
+//            }
+//        }
 
         val queryMap = HashMap<String, Any>()
         queryMap[Q_KEY_FROM] = startDate
         queryMap[Q_KEY_TO] = endDate
+
         webCallCollection = getBaseWebServices(false).getAPIAnyObject(KEY_MATERIAL_HISTORY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -180,83 +185,97 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 if (webResponse.isSuccess) {
 
-                    for (arr in arrayList) {
-                        var date: Date = dateFormat.parse(arr.date)
-                        var priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(arr.updated_at, arr.created_at, arr.rhodium_price, arr.palladium_price, arr.platinum_price, arr.currency, date, arr.id, arr.getuId())
+//                    for (item in arrayList) {
+//                        val date: Date = dateFormat.parse(item.date)
+//                        val priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(item.updated_at, item.created_at, item.rhodium_price, item.palladium_price, item.platinum_price, item.currency, date, item.id, item.getuId())
+//                        materialHistoryBox.put(priceDb)
+//
+//
+//
+//                        if (isUpdated) {
+//                            if (materialHistoryBox.isEmpty) {
+//                            } else if (getSize(materialHistoryBox) == (arrayList.size + size)) {
+//                                updateCurrentPrice(materialHistoryBox)
+//
+//                            }
+//                        }
+//
+//                        if (getSize(materialHistoryBox) == arrayList.size) {
+//                            updateCurrentPrice(materialHistoryBox)
+//                            setDay()
+//                        }
+//
+//                    }
+//
+//                    if (isUpdated) {
+//                        if (!materialHistoryBox.isEmpty) {
+//                            updateCurrentPrice(materialHistoryBox)
+//                        }
+//                    }
+
+
+                    for (item in arrayList) {
+                        val date: Date = dateFormat.parse(item.date)
+                        val priceDb: MaterialHistoryModelDataBase = MaterialHistoryModelDataBase(item.updated_at, item.created_at, item.rhodium_price, item.palladium_price, item.platinum_price, item.currency, date, item.id, item.getuId())
                         materialHistoryBox.put(priceDb)
 
-                        if (isUpdated) {
-                            if (materialHistoryBox.isEmpty) {
-                            } else if (getSize(materialHistoryBox) == (arrayList.size + size)) {
-                                UpdateCurrentPrice(materialHistoryBox)
-
-                            }
-                        }
-
-                        if (getSize(materialHistoryBox) == arrayList.size) {
-                            UpdateCurrentPrice(materialHistoryBox)
-                            imgArrow.visibility = View.VISIBLE
-                            progressRefresh.visibility = View.GONE
-                            setDay()
-                            mDialog?.dismiss()
-                        }
-
                     }
 
-                    if (isUpdated) {
-                        if (materialHistoryBox.isEmpty) {
-                        } else {
-                            UpdateCurrentPrice(materialHistoryBox)
-                            mDialog?.dismiss()
 
-                        }
+
+
+                    if (arrayList.isNotEmpty()){
+                        updateCurrentPrice()
+                        setDay()
                     }
 
-                    //materialHistoryBox.put(arrayList)
-
-                    /*  for (it in materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().find()) {
-                         // Log.d("historyData", it.date.toString())
-                      }*/
-
-
-                } else {
-
-                    mDialog?.dismiss()
                 }
+
+                imgArrow.visibility = View.VISIBLE
+                progressRefresh.visibility = View.GONE
+                mDialog?.dismiss()
+
             }
 
             override fun onError(`object`: Any?) {
-
+                imgArrow.visibility = View.VISIBLE
+                progressRefresh.visibility = View.GONE
+                mDialog?.dismiss()
             }
         })
     }
 
-    private fun UpdateCurrentPrice(materialHistoryBox: Box<MaterialHistoryModelDataBase>?) {
+    private fun updateCurrentPrice() {
 
         drawGraph()
-        var date: Date? = materialHistoryBox?.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
-        var previousDate: Date? = getPreviousDate(date)
-        prices(date, previousDate)
+        val date: Date? = materialHistoryBox.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
+        val previousDate: Date? = getPreviousDate(date)
+
+        date?.let {
+            previousDate?.let {
+                prices(date, previousDate)
+            }
+        }
     }
 
-    fun prices(CurrentDate: Date?, PreviousDate: Date?) {
+    fun prices(currentDate: Date, previousDate: Date) {
 
-        var platanumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, CurrentDate).build().findFirst()?.platinum_price!!.toDouble()
-        var platanumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, PreviousDate).build().findFirst()?.platinum_price!!.toDouble()
+        val platanumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, currentDate).build().findFirst()?.platinum_price!!.toDouble()
+        val platanumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, previousDate).build().findFirst()?.platinum_price!!.toDouble()
 
-        var palladiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, CurrentDate).build().findFirst()?.palladium_price!!.toDouble()
-        var palladiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, PreviousDate).build().findFirst()?.palladium_price!!.toDouble()
+        val palladiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, currentDate).build().findFirst()?.palladium_price!!.toDouble()
+        val palladiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, previousDate).build().findFirst()?.palladium_price!!.toDouble()
 
-        var rhodiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, CurrentDate).build().findFirst()?.rhodium_price!!.toDouble()
-        var rhodiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, PreviousDate).build().findFirst()?.rhodium_price!!.toDouble()
+        val rhodiumCurrentPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, currentDate).build().findFirst()?.rhodium_price!!.toDouble()
+        val rhodiumPreviousPrice: Double = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, previousDate).build().findFirst()?.rhodium_price!!.toDouble()
 
-        var platinumDifference = ((platanumCurrentPrice - platanumPreviousPrice)) / platanumPreviousPrice
-        var palladiumDifference = ((palladiumCurrentPrice - palladiumPreviousPrice)) / palladiumPreviousPrice
-        var rhodiumDifference = ((rhodiumCurrentPrice - rhodiumPreviousPrice)) / rhodiumPreviousPrice
+        val platinumDifference = ((platanumCurrentPrice - platanumPreviousPrice)) / platanumPreviousPrice
+        val palladiumDifference = ((palladiumCurrentPrice - palladiumPreviousPrice)) / palladiumPreviousPrice
+        val rhodiumDifference = ((rhodiumCurrentPrice - rhodiumPreviousPrice)) / rhodiumPreviousPrice
 
-        var platinumEstimatedPrice = platinumDifference * 100
-        var palladiumEstimatedPrice = palladiumDifference * 100
-        var rhodiumEstimatedPrice = rhodiumDifference * 100
+        val platinumEstimatedPrice = platinumDifference * 100
+        val palladiumEstimatedPrice = palladiumDifference * 100
+        val rhodiumEstimatedPrice = rhodiumDifference * 100
 
         if (platinumEstimatedPrice < 0) {
             txtPlatinumPerc.text = String.format("%.2f", platinumEstimatedPrice * -1) + "%"
@@ -479,7 +498,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             set1.fillColor = Color.BLACK
             set1.fillAlpha = 0
             set1.setDrawHorizontalHighlightIndicator(false)
-       //     set1.fillFormatter = IFillFormatter { dataSet, dataProvider -> chart.axisLeft.axisMinimum }
+            //     set1.fillFormatter = IFillFormatter { dataSet, dataProvider -> chart.axisLeft.axisMinimum }
             // create a data object with the data sets
             val data = LineData(set1)
 //            data.setValueTypeface(tfLight)
@@ -516,12 +535,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             progressRefresh.visibility = View.VISIBLE
             removeAll(materialHistoryBox)
             fetchData(getStartingDate(), getCurrentDate())
-            /*
-             Handler().postDelayed({
-                 imgArrow.visibility = View.VISIBLE
-                 progressRefresh.visibility = View.GONE
-                 //setData((2 until 40).random(), (2 until 40).random().toFloat())
-             }, 2000)*/
         }
 
         switchMultiButton.setOnSwitchListener(object : SwitchMultiButton.OnSwitchListener {
@@ -630,8 +643,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
      */
 
     fun getSize(materialHistoryBox: Box<MaterialHistoryModelDataBase>): Int {
-        var user = materialHistoryBox.all
-        return user.size
+        return materialHistoryBox.all.size
     }
 
     fun drawGraph() {

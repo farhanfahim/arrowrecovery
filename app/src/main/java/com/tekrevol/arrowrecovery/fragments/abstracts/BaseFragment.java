@@ -74,9 +74,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     Disposable subscription;
     Call<WebResponse<Object>> webCall;
 
-    private BoxStore boxStore = BaseApplication.getApp().getBoxStore();
-    private Box<MaterialHistoryModelDataBase> materialHistoryBox = boxStore.boxFor(MaterialHistoryModelDataBase.class);
-
     /**
      * This is an abstract class, we should inherit our fragment from this class
      */
@@ -277,7 +274,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
                     @Override
                     public void requestDataResponse(WebResponse<Object> webResponse) {
-                        materialHistoryBox.removeAll();
+                        BaseApplication.getApp().getBoxStore().boxFor(MaterialHistoryModelDataBase.class).removeAll();
                         sharedPreferenceManager.clearDB();
                         getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
                     }
