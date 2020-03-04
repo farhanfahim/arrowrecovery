@@ -219,7 +219,7 @@ class OrderDetailFragment : BaseFragment(), OnItemClickListener, PagingDelegate.
         recyclerViewOrderDetail.showShimmer()
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_ORDER_ID] = orderId
-        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERPRODUCTS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<OrderProductModel?>?>() {}.type

@@ -163,7 +163,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
         queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
 
-        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_NOTIFICATIONS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<NotificationModel?>?>() {}.type

@@ -103,7 +103,7 @@ class CartFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPageL
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = 1
         queryMap[WebServiceConstants.Q_PARAM_STATUS] = 10
-        webCallCart = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallCart = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 if (webResponse.result != null) {

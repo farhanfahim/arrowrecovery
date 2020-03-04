@@ -342,7 +342,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvCategories.showShimmer()
         val mquery: Map<String, Any> = HashMap()
 
-        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
@@ -375,7 +375,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private fun getAllBrands() {
 
         val queryMap = HashMap<String, Any>()
-        webCallProductDetail = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
@@ -403,7 +403,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvConverters.showShimmer()
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_MAKE_ID] = item
-        webCallProductDetail = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type

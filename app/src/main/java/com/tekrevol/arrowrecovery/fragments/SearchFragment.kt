@@ -1,14 +1,11 @@
 package com.tekrevol.arrowrecovery.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,27 +13,25 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
-import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemShimmerAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
-import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
-import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.DummyModel
 import com.tekrevol.arrowrecovery.models.SearchHistoryModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
-import kotlinx.android.synthetic.main.fragment_notification.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
-import java.util.HashMap
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.firstOrNull
+import kotlin.collections.set
 
 class SearchFragment : BaseFragment(), OnItemClickListener {
 
@@ -73,6 +68,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     private fun onBind() {
 
+        arrData.clear()
+        arrData2.clear()
         loadData()
         recyclerViewSearchList.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (recyclerViewSearchList.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
@@ -83,15 +80,32 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
         rvSearch.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         (rvSearch.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-//        val resId2 = R.anim.layout_animation_fall_bottom
-//        val animation2 = AnimationUtils.loadLayoutAnimation(context, resId2)
-//        rvSearch.layoutAnimation = animation2
         rvSearch.adapter = searchBarShimmerAdapter
         rvSearch.setItemViewType(ShimmerAdapter.ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_searchbar })
 
         edtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
+                text = s.toString()
+                arrDataSearchBar.clear()
+                if (s.length < 1) {
+                    recyclerViewSearchList.visibility = View.VISIBLE
+                    rvSearch.visibility = View.GONE
+                    if (makeId.isNullOrEmpty() && modelId.isNullOrEmpty() && year.isNullOrEmpty() && serialNumber.isNullOrEmpty()) {
+                    } else {
+                        getProducts(text!!, makeId, modelId, year, serialNumber)
+                        searchHistoryModel.query = text
+                        recyclerViewSearchList.visibility = View.GONE
+                        rvSearch.visibility = View.VISIBLE
+                    }
+                    //Toast.makeText(context, "Search keyword required", Toast.LENGTH_SHORT).show()
+                } else if (s.length > 2 && count > before) {
+                    getProducts(text!!, makeId, modelId, year, serialNumber)
+                    searchHistoryModel.query = text
+
+                    recyclerViewSearchList.visibility = View.GONE
+                    rvSearch.visibility = View.VISIBLE
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
@@ -99,26 +113,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable) {
-                text = edtSearch.text.toString()
-                arrDataSearchBar.clear()
-                if (text == null) {
-                    Toast.makeText(context, "Search keyword required", Toast.LENGTH_SHORT).show()
-                } else {
-                    getProducts(text!!, makeId, modelId, year, serialNumber)
-                    searchHistoryModel.query = text
-
-                    recyclerViewSearchList.visibility = View.GONE
-                    rvSearch.visibility = View.VISIBLE
-                }
-                /*if (text!! == "") {
-                    arrDataSearchBar.clear()
-                    recyclerViewSearchList.visibility = View.VISIBLE
-                    rvSearch.visibility = View.GONE
-                    makeId = ""
-                    modelId = ""
-                    year = ""
-                    serialNumber = ""
-                }*/
 
             }
         })
@@ -173,6 +167,10 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
                 if (type != null) {
                     arrData2 = gson.fromJson(json, type)
+                    makeId = ""
+                    modelId = ""
+                    year = ""
+                    serialNumber = ""
                     edtSearch?.setText(arrData2[position].query)
                 }
             }
@@ -194,7 +192,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
         queryMap[WebServiceConstants.Q_YEAR] = year
         queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
-        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
@@ -238,62 +236,39 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         }
     }
 
-    private fun insertItem(query: String) {
-        val gsonSaveData = Gson()
+    private fun insertItem(searchKeyword: String) {
         val jsonSaveData = sharedPreferenceManager.getString(AppConstants.KEY_SAVESEARCH)
         if (jsonSaveData != "") {
             val type = object : TypeToken<java.util.ArrayList<SearchHistoryModel?>?>() {}.type
-            arrData2 = gsonSaveData.fromJson(jsonSaveData, type)
-            val firstOrNull = arrData2.firstOrNull { it.equals(query) }
+            arrData2 = gson.fromJson(jsonSaveData, type)
+            val firstOrNull = arrData2.firstOrNull { it.query.equals(searchKeyword, true) }
+
             if (firstOrNull == null) {
                 if (arrData2.size > 4) {
                     arrData2.removeAt(0)
                     searchAdapter.notifyItemRemoved(0)
                     arrData.clear()
                     arrData.addAll(arrData2)
-                    val gson = Gson()
                     val json = gson.toJson(arrData)
                     sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
-                    arrData.add(SearchHistoryModel(query))
+                    arrData.add(SearchHistoryModel(searchKeyword))
                     searchAdapter.notifyItemInserted(arrData.size)
-                    return
                 } else {
-                    val gson = Gson()
-                    arrData.add(SearchHistoryModel(query))
+                    arrData.add(SearchHistoryModel(searchKeyword))
                     val json = gson.toJson(arrData)
                     sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
                     searchAdapter.notifyItemInserted(arrData.size)
-                    return
                 }
-            } else {
-                if (arrData2.size > 4) {
-                    arrData2.removeAt(0)
-                    searchAdapter.notifyItemRemoved(0)
-                    arrData.clear()
-                    arrData.addAll(arrData2)
-                    val gson = Gson()
-                    val json = gson.toJson(arrData)
-                    sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
-                    arrData.add(SearchHistoryModel(query))
-                    searchAdapter.notifyItemInserted(arrData.size)
-                    return
-                }
-
-                val gson = Gson()
-                arrData.add(SearchHistoryModel(query))
-                val json = gson.toJson(arrData)
-                sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
-                arrData.add(SearchHistoryModel(query))
-                searchAdapter.notifyItemInserted(arrData.size)
                 return
+
             }
+        } else {
+            arrData.add(SearchHistoryModel(searchKeyword))
+            val json = gson.toJson(arrData)
+            sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
+            searchAdapter.notifyItemInserted(arrData.size)
         }
 
-        val gson = Gson()
-        arrData.add(SearchHistoryModel(query))
-        val json = gson.toJson(arrData)
-        sharedPreferenceManager.putValue(AppConstants.KEY_SAVESEARCH, json)
-        searchAdapter.notifyItemInserted(arrData.size)
     }
 
     override fun onDestroyView() {
