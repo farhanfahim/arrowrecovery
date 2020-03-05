@@ -58,7 +58,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:gravity="center|start"
-                    android:text="1397.00"
+                    android:text=""
                     android:textColor="@color/green_bg"
                     android:textSize="@dimen/s30"
                     app:typeface="@string/font_regular" />
@@ -125,8 +125,10 @@
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/x30dp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/x200dp" />
+                android:layout_height="@dimen/x200dp"/>
 
 
             <LinearLayout

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -370,7 +371,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun bindGraphData() {
-        chart.setViewPortOffsets(0f, 0f, 0f, 0f)
+//        chart.setViewPortOffsets(0f, 0f, 0f, 0f)
+        chart.setExtraOffsets(10f, 10f, 10f, 10f)
         // chart.setBackgroundColor(Color.rgb(104, 241, 175))
         // no description text
         // no description text
@@ -387,26 +389,28 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         // if disabled, scaling can be done on x- and y-axis separately
         // if disabled, scaling can be done on x- and y-axis separately
-        chart.setPinchZoom(false)
+        chart.setPinchZoom(true)
+        chart.isDoubleTapToZoomEnabled = false
 
         chart.setDrawGridBackground(false)
-        chart.maxHighlightDistance = 300f
+//        chart.maxHighlightDistance = 300f
 
         val x = chart.xAxis
         x.isEnabled = false
 
         val y = chart.axisLeft
+        y.isEnabled = true
+        y.setDrawLabels(true)
         y.setLabelCount(6, false)
         y.textColor = ContextCompat.getColor(context!!, R.color.txtDarkGrey)
-        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
-        y.setDrawGridLines(false)
-        y.axisLineColor = Color.WHITE
+//        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+        y.setDrawGridLines(true)
+        y.axisLineColor = Color.BLACK
 
         chart.axisRight.isEnabled = false
-
         chart.legend.isEnabled = false
 
-        chart.animateXY(2000, 2000)
+        chart.animateXY(1000,1000)
 
         // don't forget to refresh the drawing
         chart.invalidate()
