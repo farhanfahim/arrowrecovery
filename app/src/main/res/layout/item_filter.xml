@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jcminarro.roundkornerlayout.RoundKornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/x5dp"
+    android:background="@color/base_green"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/x1dp"
+    app:corner_radius="@dimen/x12dp">
+
+    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+        android:id="@+id/contDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/c_white"
+        android:gravity="center"
+        android:paddingLeft="@dimen/x12dp"
+        android:paddingRight="@dimen/x12dp"
+        app:corner_radius="@dimen/x12dp">
+
+        <TextView
+            android:id="@+id/txtFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="model: "
+            android:textColor="@color/title_grey" />
+
+        <TextView
+            android:id="@+id/txtQuery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="model"
+            android:layout_marginRight="@dimen/x12dp"
+            android:textColor="@color/colorPrimary" />
+
+        <ImageView
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/x2dp"
+            android:src="@drawable/ic_cancel"/>
+    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+</com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>

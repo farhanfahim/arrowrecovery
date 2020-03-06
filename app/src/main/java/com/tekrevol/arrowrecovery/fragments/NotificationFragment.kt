@@ -211,6 +211,7 @@ class NotificationFragment : BaseFragment(), OnItemClickListener, PagingDelegate
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 UIHelper.showToast(context, webResponse.message)
+
                 arrData.removeAll { it.isSelected }
                 shimmerNotificationAdapter.notifyDataSetChanged()
                 cbSelectAll.isChecked = false

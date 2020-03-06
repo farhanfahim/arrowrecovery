@@ -8,7 +8,9 @@ import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.makeId
+import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.makeString
 import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.modelId
+import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.modelString
 import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.serialNumber
 import com.tekrevol.arrowrecovery.fragments.SearchFragment.Companion.year
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
@@ -62,6 +64,10 @@ class AdvanceSearchFragment : BaseFragment() {
 
         getMakeName()
         getModelName()
+        txtYear.text = year
+        txtMake.text = makeString
+        txtModel.text = modelString
+        edtSerialNumber.setText(serialNumber)
 
         for (carMake in Constants.carMakeSelector()) {
             spinnerModelArrayList.add(SpinnerModel(carMake.text))
@@ -105,12 +111,14 @@ class AdvanceSearchFragment : BaseFragment() {
                     modelId = ""
                 } else {
                     modelId = getModelId().toString()
+                    modelString = txtModel.text.toString().trim()
                 }
 
                 if (getMakeId() == -1) {
                     makeId = ""
                 } else {
                     makeId = getMakeId().toString()
+                    makeString = txtMake.text.toString().trim()
                 }
                 year = txtYear.text.toString().trim()
                 serialNumber = edtSerialNumber.text.toString().trim()
@@ -121,6 +129,8 @@ class AdvanceSearchFragment : BaseFragment() {
             txtYear.text = ""
             txtMake.text = ""
             txtModel.text = ""
+            modelString = ""
+            makeString = ""
             edtSerialNumber.setText("")
 
             makeId = ""

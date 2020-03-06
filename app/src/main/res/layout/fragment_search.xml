@@ -21,17 +21,17 @@
             android:layout_height="@dimen/x40dp"
             android:layout_marginLeft="@dimen/x5dp"
             android:layout_marginRight="@dimen/x10dp"
-            android:src="@drawable/ic_back"
-            android:tint="@color/title_color"
             android:background="@color/transparent"
-            android:padding="@dimen/x5dp" />
+            android:padding="@dimen/x5dp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/title_color" />
 
 
         <LinearLayout
-            android:layout_marginRight="@dimen/x5dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="@dimen/x5dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_stroke_grey_search"
             android:gravity="center"
@@ -78,10 +78,24 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
         android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_filter">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearchList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="visible"
         tools:listitem="@layout/item_search">
 
 

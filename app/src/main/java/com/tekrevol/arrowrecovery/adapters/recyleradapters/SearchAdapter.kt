@@ -37,7 +37,7 @@ class SearchAdapter(private val activity: Context?, private var arrData: List<Se
     }
 
     private fun setListener(holder: ViewHolder, model: SearchHistoryModel) {
-        holder.txtSearched!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, SearchFragment::class.java.simpleName) }
+        holder.txtSearched!!.setOnClickListener { onItemClick.onItemClick(holder.adapterPosition, model, it, SearchAdapter::class.java.simpleName) }
 
     }
 
