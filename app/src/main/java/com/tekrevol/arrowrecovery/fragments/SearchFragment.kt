@@ -218,6 +218,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                     modelId = ""
                     year = ""
                     serialNumber = ""
+                    makeString = ""
+                    modelString = ""
                     edtSearch?.setText(arrData2[position].query)
                 }
             }
@@ -351,6 +353,13 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
     override fun onDestroyView() {
         webCall?.cancel()
+        makeId = ""
+        modelId = ""
+        year = ""
+        serialNumber = ""
+        makeString = ""
+        modelString = ""
+        edtSearch?.setText("")
         super.onDestroyView()
     }
 }

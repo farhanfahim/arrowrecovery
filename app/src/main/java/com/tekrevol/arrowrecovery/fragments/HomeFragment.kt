@@ -137,7 +137,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         }
 
 
-
     }
 
     private fun getStartingDate(): String {
@@ -223,12 +222,10 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
                     }
 
 
-
-
-                    if (arrayList.isNotEmpty()){
-                        updateCurrentPrice()
-                        setDay()
-                    }
+                    //if (arrayList.isNotEmpty()){
+                    updateCurrentPrice()
+                    setDay()
+                    //}
 
                 }
 
@@ -410,7 +407,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         chart.axisRight.isEnabled = false
         chart.legend.isEnabled = false
 
-        chart.animateXY(1000,1000)
+        chart.animateXY(1000, 1000)
 
         // don't forget to refresh the drawing
         chart.invalidate()
@@ -537,7 +534,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         contRefresh.setOnClickListener {
             imgArrow.visibility = View.GONE
             progressRefresh.visibility = View.VISIBLE
-            removeAll(materialHistoryBox)
+            materialHistoryBox.removeAll()
             fetchData(getStartingDate(), getCurrentDate())
         }
 
@@ -634,13 +631,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         super.onDestroyView()
     }
 
-    /**
-     * remove records//////////////////////////////
-     */
 
-    fun removeAll(materialHistoryBox: Box<MaterialHistoryModelDataBase>) {
-        materialHistoryBox.removeAll()
-    }
 
     /**
      * get size//////////////////////////////

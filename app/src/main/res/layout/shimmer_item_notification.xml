@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
+           <!--     <com.tekrevol.arrowrecovery.widget.AnyTextView
                     app:typeface="@string/font_regular"
                     android:id="@+id/txtTitle"
                     android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                     android:minLines="1"
                     android:text="Your orde is arriving soon!"
                     android:textColor="@color/material_grey400"
-                    android:textSize="@dimen/s12" />
+                    android:textSize="@dimen/s12" />-->
 
                 <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
                     android:layout_width="@dimen/x10dp"
@@ -98,8 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/x10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/x20dp"
+                android:layout_marginBottom="@dimen/x20dp"
                 android:gravity="center"
                 android:visibility="visible">
 
