@@ -72,7 +72,7 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
             txtModel.text = (productDetailModel?.vehicleModel?.name)
         }
 
-        if (productDetailModel?.description == null) {
+        if (productDetailModel?.description.isNullOrEmpty()) {
             txtDescription.setText("-")
         } else {
             txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
