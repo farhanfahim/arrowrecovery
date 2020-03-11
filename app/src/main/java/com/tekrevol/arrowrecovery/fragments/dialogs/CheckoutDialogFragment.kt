@@ -272,6 +272,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         })
 
         contPickupSelected.setOnClickListener {
+
+            contPickupSelected.setClickable(false)
             txtCollectionCenterLocation.text = ""
             txtPickupLocation.text = ""
             txtDate.text = ""
@@ -527,6 +529,12 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
                 or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intents)
         activity?.finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        contPickupSelected.setClickable(true)
+
     }
 
 }
