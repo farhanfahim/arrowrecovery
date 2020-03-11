@@ -72,7 +72,11 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
             txtModel.text = (productDetailModel?.vehicleModel?.name)
         }
 
-        txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
+        if (productDetailModel?.description == null) {
+            txtDescription.setText("-")
+        } else {
+            txtDescription.setText(Html.fromHtml(productDetailModel?.description), TextView.BufferType.SPANNABLE)
+        }
         carouselView.setImageListener(imageListener)
         carouselView.pageCount = productDetailModel?.attachments?.size!!
 
