@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -273,7 +274,8 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
 
         contPickupSelected.setOnClickListener {
 
-            contPickupSelected.setClickable(false)
+            sleepThread()
+            //  contPickupSelected.setClickable(false)
             txtCollectionCenterLocation.text = ""
             txtPickupLocation.text = ""
             txtDate.text = ""
@@ -354,7 +356,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             return
         }
 
-        Log.d("txtDate", txtDate.stringTrimmed.toString())
+        // Log.d("txtDate", txtDate.stringTrimmed.toString())
 
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_COLLECTION_ID] = idFromSpinner
@@ -531,10 +533,20 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
         activity?.finish()
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         contPickupSelected.setClickable(true)
 
+    }*/
+
+    private fun sleepThread() {
+        contPickupSelected.setEnabled(false)
+        val handler = Handler()
+        handler.postDelayed({
+            if (contPickupSelected != null) {
+                contPickupSelected.setEnabled(true)
+            }
+        }, 3000)
     }
 
 }
