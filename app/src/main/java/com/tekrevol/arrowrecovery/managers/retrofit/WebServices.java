@@ -566,8 +566,7 @@ public class WebServices {
 
                             sharedPreferenceManager.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.getUser());
                             sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN, userModelWrapper.getUser().getAccessToken());
-//
-                            UIHelper.showAlertDialog(activity, "Token refreshed successfully");
+//UIHelper.showAlertDialog(activity, "Token refreshed successfully");
                             if (activity instanceof HomeActivity) {
                                 reload();
                             } else {

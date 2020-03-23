@@ -123,6 +123,8 @@ public class WebServiceConstants {
     public static final String Q_KEY_TO = "to";
     public static final String Q_ASC = "asc";
     public static final String Q_KEY_FROM = "from";
+    public static final String Q_ORDER_BY = "orderBy";
+    public static final String Q_ORDER_BY_DATE = "date";
 
 
     /**

@@ -48,10 +48,10 @@ public class ProductDetailModel {
     private String feature_image;
     @Expose
     @SerializedName("name")
-    private String name;
+    private String name;/*
     @Expose
     @SerializedName("manufacturer_id")
-    private int manufacturer_id;
+    private int manufacturer_id;*/
     @Expose
     @SerializedName("model_id")
     private int model_id;
@@ -180,14 +180,14 @@ public class ProductDetailModel {
     public void setName(String name) {
         this.name = name;
     }
-
+/*
     public int getManufacturer_id() {
         return manufacturer_id;
     }
 
     public void setManufacturer_id(int manufacturer_id) {
         this.manufacturer_id = manufacturer_id;
-    }
+    }*/
 
     public int getModel_id() {
         return model_id;

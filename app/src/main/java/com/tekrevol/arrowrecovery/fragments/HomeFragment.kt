@@ -91,7 +91,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         //var size : Int = getSize(materialHistoryBox);
 
-        //removeAll(materialHistoryBox)
+        //materialHistoryBox.removeAll()
         if (materialHistoryBox.isEmpty) {
             fetchData(getStartingDate(), getCurrentDate())
         } else {
@@ -174,6 +174,8 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         val queryMap = HashMap<String, Any>()
         queryMap[Q_KEY_FROM] = startDate
         queryMap[Q_KEY_TO] = endDate
+        queryMap[Q_ORDER_BY] = Q_ORDER_BY_DATE
+        queryMap[Q_SORTED] = Q_ASC
 
         webCallCollection = getBaseWebServices(false).getAPIAnyObject(KEY_MATERIAL_HISTORY, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {

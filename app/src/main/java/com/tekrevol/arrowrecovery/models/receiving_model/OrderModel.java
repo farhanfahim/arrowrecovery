@@ -61,9 +61,9 @@ public class OrderModel {
     @SerializedName("order_products")
     private List<OrderProductModel> orderProductModels;
 
-    @Expose
+   /* @Expose
     @SerializedName("manufacturerModel")
-    private ManufacturerModel manufacturerModel;
+    private ManufacturerModel manufacturerModel;*/
 
     @Expose
     @SerializedName("user")
@@ -95,13 +95,13 @@ public class OrderModel {
     }
 
 
-    public ManufacturerModel getManufacturerModel() {
+    /*public ManufacturerModel getManufacturerModel() {
         return manufacturerModel;
     }
 
     public void setManufacturerModel(ManufacturerModel manufacturerModel) {
         this.manufacturerModel = manufacturerModel;
-    }
+    }*/
 
 
     public int getProduct_count() {
