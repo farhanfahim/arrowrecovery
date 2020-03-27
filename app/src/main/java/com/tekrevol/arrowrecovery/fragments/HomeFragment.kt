@@ -103,7 +103,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun updateData(date: String) {
 
-        var endDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
+        var endDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING ).build().findFirst()!!.date
         var currentDate: Date = dateFormat.parse(date)
 
         if (!currentDate.after(endDate)) {
@@ -475,7 +475,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         }
 
         val values = java.util.ArrayList<Entry>()
-        currentPrice.text = priceList[0].toString()
+        currentPrice.text = priceList[range.size-1].toString()
         for (a in range.indices) {
             values.add(Entry(a.toFloat(), priceList[a].toFloat()))
         }
@@ -534,9 +534,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     override fun setListeners() {
         contRefresh.setOnClickListener {
+            materialHistoryBox.removeAll()
             imgArrow.visibility = View.GONE
             progressRefresh.visibility = View.VISIBLE
-            materialHistoryBox.removeAll()
             fetchData(getStartingDate(), getCurrentDate())
         }
 
@@ -644,7 +644,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
     fun drawGraph() {
-        var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
+        var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING ).build().findFirst()?.date!!
         var calendar: Calendar = Calendar.getInstance()
         calendar.time = currentDate
         calendar.add(Calendar.DAY_OF_YEAR, -7)
