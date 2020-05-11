@@ -100,8 +100,6 @@ class NotificationShimmerAdapter(private val activity: Context, private val arrD
                 } catch (e: ParseException) {
                     e.printStackTrace()
                 }
-
-
             }
 
 
