@@ -1,6 +1,7 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment

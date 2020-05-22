@@ -82,7 +82,7 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
                 txtQtyAndPrice!!.text = it.amount.toString() + "x" + it.quantity.toString()
                 txtTotalPrice!!.text = calculatedAmount.toString()
                 txtQuality!!.text = it.quality.toString() + "%"
-                ImageLoaderHelper.loadImageWithouAnimationByPath(imgOrderItem, it.product.feature_image, true)
+         //       ImageLoaderHelper.loadImageWithAnimationsByPath(imgOrderItem, it.product.feature_image, true)
             }
 
         }

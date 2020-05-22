@@ -97,7 +97,7 @@ class ProfileFragment : BaseFragment() {
         val address = sharedPreferenceManager.currentUser.userDetails.address
         val city = sharedPreferenceManager.currentUser.userDetails.city
         val country = sharedPreferenceManager.currentUser.country
-        ImageLoaderHelper.loadImageWithouAnimationByPath(imgProfile, currentUser.userDetails.image, true)
+        ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
 
         txtName.text = fullName
         txtUsername.text = userName

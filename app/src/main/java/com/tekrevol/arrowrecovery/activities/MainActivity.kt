@@ -73,7 +73,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
             }
         } else {
             mFbHelper!!.onActivityResult(requestCode, resultCode, data)
-
         }
 
     }
@@ -97,6 +96,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
         socialLoginSendingModel.username = name
         socialLoginSendingModel.token = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
         socialLoginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
+        Log.d("device_token", sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
@@ -134,7 +134,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
 
             override fun onError(`object`: Any?) {}
         })
-
     }
 
     override val viewId: Int = R.layout.activity_main
@@ -253,7 +252,6 @@ class MainActivity : BaseActivity(), FacebookResponse {
                     }
                 }
             }
-
             override fun onError(`object`: Any?) {}
         })
     }

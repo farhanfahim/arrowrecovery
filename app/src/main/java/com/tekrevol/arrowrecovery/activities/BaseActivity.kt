@@ -45,7 +45,7 @@ abstract class BaseActivity : AppCompatActivity() {
         return gson
     }
 
-    /**
+    /** window.setFlags
      * Give Resource id of the view you want to inflate
      *
      * @return

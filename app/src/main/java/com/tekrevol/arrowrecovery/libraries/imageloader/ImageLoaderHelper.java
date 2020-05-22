@@ -83,7 +83,6 @@ public class ImageLoaderHelper {
                 ImageLoaderHelper.getOptionsWithAnimation(isUser));
     }
 
-
     /**
      * WITHOUT ANIMATION, WITHOUT HEADER, will create URL from path
      *

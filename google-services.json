@@ -1,43 +1,42 @@
 {
   "project_info": {
-    "project_number": "855958676622",
-    "firebase_url": "https://arrow-1953a.firebaseio.com",
-    "project_id": "arrow-1953a",
-    "storage_bucket": "arrow-1953a.appspot.com"
+    "project_number": "517216664959",
+    "firebase_url": "https://arrow-recovery.firebaseio.com",
+    "project_id": "arrow-recovery",
+    "storage_bucket": "arrow-recovery.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:855958676622:android:69d58c5dbd0f2825d015df",
+        "mobilesdk_app_id": "1:517216664959:android:e84fbfe4d6cf4cb610ee4a",
         "android_client_info": {
           "package_name": "com.tekrevol.arrowrecovery"
         }
       },
       "oauth_client": [
         {
-          "client_id": "855958676622-15fhsvnge7st8q32elcre0gb9ioohiep.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tekrevol.arrowrecovery",
-            "certificate_hash": "8db1fa47b268bf5a6bae51461eadfded4f2002ec"
-          }
-        },
-        {
-          "client_id": "855958676622-sbk965175c13m1qq42nr6q7ek1vu8k9g.apps.googleusercontent.com",
+          "client_id": "517216664959-g71c3h9p505rqisu0ru7tac4ac1qivgs.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD_JcXpkjaZVgWGq9Y_UQFRbChCX7iVx1M"
+          "current_key": "AIzaSyDl6QIpIYZpLjWlnwF-3WtfAkn4gLbTiIw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "855958676622-sbk965175c13m1qq42nr6q7ek1vu8k9g.apps.googleusercontent.com",
+              "client_id": "517216664959-g71c3h9p505rqisu0ru7tac4ac1qivgs.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "517216664959-uie2j1es7ug31vq8ejjaf951m1eqgflc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.formark.apparrowrecovery"
+              }
             }
           ]
         }
