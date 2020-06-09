@@ -10,8 +10,11 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.FragmentName
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.receiving_model.Slug
 import com.tekrevol.arrowrecovery.models.sending_model.LoginSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
@@ -19,11 +22,14 @@ import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.edtEmail
 import retrofit2.Call
+import java.util.HashMap
 
 
 class LoginFragment : BaseFragment() {
 
     var webCall: Call<WebResponse<Any>>? = null
+    var aboutCall: Call<WebResponse<Any>>? = null
+
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -58,6 +64,24 @@ class LoginFragment : BaseFragment() {
             baseActivity.popBackStack()
             baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, "", 0), true)
         }
+        contTermsAndConditions.setOnClickListener {
+            privacyAPI(AppConstants.KEY_TERMS)
+        }
+
+    }
+
+    private fun privacyAPI(slugId: String) {
+        val queryMap: Map<String, Any> = HashMap()
+        aboutCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_PAGES.toString() + "/" +  slugId, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                val pagesModel: Slug = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , Slug::class.java)
+                baseActivity.addDockableFragment(GenericContentFragment.newInstance(pagesModel.getTitle(), pagesModel.getContent(), true), false)
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
 
     }
 
@@ -78,6 +102,10 @@ class LoginFragment : BaseFragment() {
         }
         if (!edtPassword.testValidity()) {
             UIHelper.showAlertDialog(context, getString(R.string.password_validation))
+            return
+        }
+        if (!checked.isChecked) {
+            UIHelper.showAlertDialog(context, "Please accept Term of Use")
             return
         }
 
@@ -154,6 +182,7 @@ class LoginFragment : BaseFragment() {
 
     override fun onDestroyView() {
         webCall?.cancel()
+        aboutCall?.cancel()
         super.onDestroyView()
     }
 }

@@ -10,15 +10,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.google.common.reflect.TypeToken
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.States
+import com.tekrevol.arrowrecovery.models.receiving_model.Slug
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
@@ -31,6 +34,7 @@ public class AddressFragment : BaseFragment() {
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
 
     var webCall: Call<WebResponse<Any>>? = null
+    var aboutCall: Call<WebResponse<Any>>? = null
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -66,6 +70,10 @@ public class AddressFragment : BaseFragment() {
 
         contState.setOnClickListener {
             UIHelper.showSpinnerDialog(this@AddressFragment, spinnerModelArrayList, "Select Category", txtState, null, null, IntWrapper(0))
+        }
+
+        contTermsAndConditions.setOnClickListener {
+            privacyAPI(AppConstants.KEY_TERMS)
         }
     }
 
@@ -107,8 +115,23 @@ public class AddressFragment : BaseFragment() {
 
     }
 
+    private fun privacyAPI(slugId: String) {
+        val queryMap: Map<String, Any> = HashMap()
+        aboutCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_PAGES.toString() + "/" + slugId, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+                val pagesModel: Slug = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , Slug::class.java)
+                baseActivity.addDockableFragment(GenericContentFragment.newInstance(pagesModel.getTitle(), pagesModel.getContent(), true), false)
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+    }
+
     override fun onDestroyView() {
         webCall?.cancel()
+        aboutCall?.cancel()
         super.onDestroyView()
     }
 

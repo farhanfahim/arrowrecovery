@@ -108,6 +108,40 @@
                 app:typeface="@string/font_light" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <CheckBox
+                android:id="@+id/checked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/x5dp" />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I have read and I accept the"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_medium"
+                />
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:layout_width="wrap_content"
+                android:padding="@dimen/x5dp"
+                android:layout_height="wrap_content"
+                android:text="@string/terms"
+                android:id="@+id/contTermsAndConditions"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_bold"
+                />
+
+        </LinearLayout>
+
 
         <!-- <View
              android:layout_width="match_parent"
@@ -118,10 +152,12 @@
  -->
         <com.tekrevol.arrowrecovery.widget.AnyTextView
             android:id="@+id/txtForgot"
-            android:layout_width="match_parent"
+            android:padding="@dimen/x5dp"
+            android:layout_marginTop="@dimen/x5dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
-            android:gravity="end"
+            android:layout_gravity="end"
             android:text="Forgot Password?"
             android:textColor="@color/title_color"
             android:textSize="@dimen/s16"

@@ -1,21 +1,25 @@
 package com.tekrevol.arrowrecovery.activities
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Base64
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.mikhaellopez.rxanimation.RxAnimation
 import com.mikhaellopez.rxanimation.fadeIn
 import com.mikhaellopez.rxanimation.resize
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.KEY_IS_VERIFIED
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_splash.*
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 
 class SplashActivityKotlin : AppCompatActivity() {
@@ -29,6 +33,7 @@ class SplashActivityKotlin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        printHashKey(baseContext)
         //        contParentLayout.setVisibility(View.INVISIBLE);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -108,6 +113,21 @@ class SplashActivityKotlin : AppCompatActivity() {
 
         super.onDestroy()
 
+    }
+
+    fun printHashKey(context: Context) { // Add code to print out the key hash
+        try {
+            val info = context.packageManager.getPackageInfo(
+                    context.packageName,
+                    PackageManager.GET_SIGNATURES)
+            for (signature in info.signatures) {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+        } catch (e: NoSuchAlgorithmException) {
+        }
     }
 
     companion object {

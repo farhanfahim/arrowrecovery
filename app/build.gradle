@@ -25,6 +25,14 @@ repositories {
 
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('D:\\Marium\\Projects\\arrowrecovery\\keystore\\keystore.jks')
+            storePassword 'tekrevol123'
+            keyPassword 'tekrevol123'
+            keyAlias = 'arrowrecovery'
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
@@ -32,7 +40,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
-        versionName "1.2.0.12"
+        versionName "1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -47,13 +55,14 @@ android {
             useProguard true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
 
 //        debug {
 //            debuggable true
 //            minifyEnabled true
 //            useProguard true
-//            shrinkResources false
+//            shrinkResources falses
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //        }
 
