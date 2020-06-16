@@ -8,12 +8,44 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:517216664959:android:e84fbfe4d6cf4cb610ee4a",
+        "mobilesdk_app_id": "1:517216664959:android:91949b12efd6fac410ee4a",
         "android_client_info": {
           "package_name": "com.tekrevol.arrowrecovery"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "517216664959-4vf5jl43ois77ucr7f0k653o2cv8tmmg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.arrowrecovery",
+            "certificate_hash": "792d29dc9a0ec2e1413a2ff6c9047961452d9dcf"
+          }
+        },
+        {
+          "client_id": "517216664959-r79p08j179phjpu1qbm58dhcqe1ee3r4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.arrowrecovery",
+            "certificate_hash": "60657bccd387bd482426d8662d0e6b2052925e49"
+          }
+        },
+        {
+          "client_id": "517216664959-d6uli883sag3klnhkecme51e0qqtqmmk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.arrowrecovery",
+            "certificate_hash": "8336ece01d5e4bd4bf21639964d153f7ce1cc101"
+          }
+        },
+        {
+          "client_id": "517216664959-lb9ljh6epcsc0mopkpup409l90jr4rmc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tekrevol.arrowrecovery",
+            "certificate_hash": "5da1e05a677b1c7f41d6383a29ed5ff90361c422"
+          }
+        },
         {
           "client_id": "517216664959-g71c3h9p505rqisu0ru7tac4ac1qivgs.apps.googleusercontent.com",
           "client_type": 3

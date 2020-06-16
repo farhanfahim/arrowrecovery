@@ -88,7 +88,7 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
                 }
                 txtModel.text = it.name
                 txtPrice.text = it.estimatedPrice.toString()
-                ImageLoaderHelper.loadImageWithAnimationsByPath(imgConverter, it.feature_image, true)
+                ImageLoaderHelper.loadImageWithAnimations(imgConverter, it.feature_image_url, true)
             }
         }
     }

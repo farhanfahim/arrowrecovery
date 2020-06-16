@@ -25,6 +25,8 @@ import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.Q_ASC
+import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants.Q_ORDER_BY_NAME
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.StringHelper
@@ -340,9 +342,11 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     private fun getVehicle() {
 
         rvCategories.showShimmer()
-        val mquery: Map<String, Any> = HashMap()
+        val query: MutableMap<String, Any> = HashMap()
+        query[WebServiceConstants.Q_SORTED] = Q_ASC
+        query[WebServiceConstants.Q_ORDER_BY] = Q_ORDER_BY_NAME
 
-        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, mquery, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.Q_PARAM_VEHICLEMAKE, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
                 val type = object : TypeToken<java.util.ArrayList<VehicleMakeModel?>?>() {}.type
