@@ -58,18 +58,20 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         edtQuantity.setKeyListener(null)
         model = intent.getStringExtra(AppConstants.JSON_STRING_KEY)
         productDetailModel = GsonFactory.getSimpleGson().fromJson(model, ProductDetailModel::class.java)
-        txtCarNum.text = (productDetailModel?.name + " " + productDetailModel?.serial_number)
-        txtYear.text = (productDetailModel?.year.toString())
+        // txtCarNum.text = (productDetailModel?.name + " " + productDetailModel?.serial_number)
+        // txtYear.text = (productDetailModel?.year.toString())
         txtReference.text = (productDetailModel?.serial_number)
         txtPrice.text = (productDetailModel?.estimatedPrice.toString())
         txtQuality.text = qualities[0]
 
         if (productDetailModel?.vehicleModel == null) {
             txtMake.text = "-"
-            txtModel.text = "-"
+            txtCarNum.text = "-"
+            //  txtModel.text = "-"
         } else {
+            txtCarNum.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
             txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
-            txtModel.text = (productDetailModel?.vehicleModel?.name)
+            //  txtModel.text = (productDetailModel?.vehicleModel?.name)
         }
 
         if (productDetailModel?.description.isNullOrEmpty()) {

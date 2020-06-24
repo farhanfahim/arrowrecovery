@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/x10dp"
-        android:padding="@dimen/x10dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:padding="@dimen/x10dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -19,16 +19,16 @@
             android:layout_weight="2.5">
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
-                app:typeface="@string/font_regular"
                 android:id="@+id/index"
                 android:layout_width="wrap_content"
-                android:background="@color/material_grey400"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/x15dp"
+                android:background="@color/material_grey400"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:text="1"
-                android:textColor="@color/material_grey400" />
+                android:textColor="@color/material_grey400"
+                app:typeface="@string/font_regular" />
 
 
             <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
@@ -40,8 +40,8 @@
                     android:id="@+id/imgStatus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:background="@color/material_grey400" />
+                    android:background="@color/material_grey400"
+                    android:scaleType="fitXY" />
 
             </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
 
@@ -55,101 +55,98 @@
                 android:orientation="vertical">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    app:typeface="@string/font_regular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:layout_marginBottom="@dimen/x1dp"
-                    android:id="@+id/txtRef"
-                    android:gravity="center|start"
-                    android:maxLines="1"
-                    android:background="@color/material_grey400"
-                    android:minLines="1"
-                    android:text="034311"
-                    android:textColor="@color/material_grey400"
-                    android:textSize="@dimen/s12" />
-
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    app:typeface="@string/font_regular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center|start"
-                    android:layout_marginBottom="@dimen/x1dp"
-                    android:maxLines="1"
-                    android:background="@color/material_grey400"
-                    android:minLines="1"
                     android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x1dp"
+                    android:background="@color/material_grey400"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:minLines="1"
                     android:text="General Motors"
                     android:textColor="@color/material_grey400"
-                    android:textSize="@dimen/s12" />
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    app:typeface="@string/font_regular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
+                    android:layout_marginBottom="@dimen/x1dp"
                     android:background="@color/material_grey400"
+                    android:ellipsize="end"
                     android:gravity="center|start"
                     android:maxLines="1"
+                    android:minLines="1"
+                    android:text="General Motors"
+                    android:textColor="@color/material_grey400"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/material_grey400"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:maxLines="1"
                     android:minLines="1"
                     android:text="$254.89"
                     android:textColor="@color/material_grey400"
-                    android:textSize="@dimen/s12" />
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
 
             </LinearLayout>
         </LinearLayout>
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
-            app:typeface="@string/font_regular"
+            android:id="@+id/txtQtyAndPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:id="@+id/txtQtyAndPrice"
-            android:background="@color/material_grey400"
             android:layout_marginRight="@dimen/x1dp"
+            android:layout_weight="1"
+            android:background="@color/material_grey400"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="580 x 2"
             android:paddingLeft="@dimen/x3dp"
             android:paddingRight="@dimen/x3dp"
+            android:text="580 x 2"
             android:textColor="@color/material_grey400"
-            android:textSize="@dimen/s12" />
-
-
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
 
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
-            app:typeface="@string/font_regular"
+            android:id="@+id/txtTotalPrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:background="@color/material_grey400"
-            android:paddingLeft="@dimen/x3dp"
-            android:id="@+id/txtTotalPrice"
             android:layout_marginRight="@dimen/x1dp"
-            android:paddingRight="@dimen/x3dp"
+            android:layout_weight="1"
+            android:background="@color/material_grey400"
+            android:ellipsize="end"
             android:gravity="center"
+            android:paddingLeft="@dimen/x3dp"
+            android:paddingRight="@dimen/x3dp"
             android:text="$1160"
             android:textColor="@color/material_grey400"
-            android:textSize="@dimen/s12" />
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
 
         <com.tekrevol.arrowrecovery.widget.AnyTextView
-            app:typeface="@string/font_regular"
+            android:id="@+id/txtQuality"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:id="@+id/txtQuality"
-            android:text="75%"
             android:background="@color/material_grey400"
+            android:ellipsize="end"
+            android:gravity="center"
             android:paddingLeft="@dimen/x3dp"
             android:paddingRight="@dimen/x3dp"
+            android:text="75%"
             android:textColor="@color/material_grey400"
-            android:textSize="@dimen/s12" />
+            android:textSize="@dimen/s12"
+            app:typeface="@string/font_regular" />
 
 
     </LinearLayout>

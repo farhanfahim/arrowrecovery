@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_advanced_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/c_white"
-    android:id="@+id/fragment_advanced_search"
     android:orientation="vertical">
 
     <ScrollView
@@ -72,6 +72,7 @@
                 android:text="Model"
                 android:textColor="@color/txtBlack"
                 android:textSize="@dimen/s20"
+                android:visibility="gone"
                 app:typeface="@string/font_regular" />
 
             <LinearLayout
@@ -83,7 +84,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_stroke_grey"
                 android:gravity="center"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtModel"
@@ -112,13 +113,12 @@
 
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Serial Year"
                 android:textColor="@color/txtBlack"
-
                 android:textSize="@dimen/s20"
+                android:visibility="gone"
                 app:typeface="@string/font_regular" />
 
             <LinearLayout
@@ -130,7 +130,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_stroke_grey"
                 android:gravity="center"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     android:id="@+id/txtYear"
@@ -178,12 +178,12 @@
                 android:visibility="visible">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtSerialNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/s5"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:id="@+id/edtSerialNumber"
                     android:hint="Enter Serial Number..."
                     android:padding="10dp"
                     android:singleLine="true"
@@ -220,10 +220,10 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btnClear"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:id="@+id/btnClear"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_stroke_green"
                 android:gravity="center"

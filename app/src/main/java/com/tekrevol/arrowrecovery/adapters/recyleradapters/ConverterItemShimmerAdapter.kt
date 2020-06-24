@@ -83,7 +83,7 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
                     txtMake.text = "-"
                     txtModel.text = "-"
                 } else {
-                    txtMake.text = (it?.vehicleModel?.name)
+                    txtMake.text = (it?.vehicleModel?.vehicleMake?.name)
                     // txtModel.text = (it?.vehicleModel?.name)
                 }
                 txtModel.text = it.name

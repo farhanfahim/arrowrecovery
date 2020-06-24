@@ -54,6 +54,7 @@
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/txtSerialNo"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
@@ -84,7 +85,6 @@
                 android:id="@+id/txtPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:ellipsize="end"
                 android:gravity="center|start"
                 android:maxLines="1"

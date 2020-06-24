@@ -87,6 +87,8 @@ class MainActivity : BaseActivity(), FacebookResponse {
         } else {
             account.photoUrl.toString() //photo_url is String
         }
+        System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
+
         var socialLoginSendingModel = SocialLoginSendingModel()
         socialLoginSendingModel.clientId = userid
         socialLoginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
@@ -94,9 +96,8 @@ class MainActivity : BaseActivity(), FacebookResponse {
         socialLoginSendingModel.image = imUrl
         socialLoginSendingModel.platform = AppConstants.SOCIAL_MEDIA_PLATFORM_GOOGLE
         socialLoginSendingModel.username = name
-        socialLoginSendingModel.token = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
+        socialLoginSendingModel.token = "abcd"
         socialLoginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
-        Log.d("device_token", sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
@@ -208,6 +209,10 @@ class MainActivity : BaseActivity(), FacebookResponse {
     }
 
     override fun onFbProfileReceived(facebookUser: FacebookUser) {
+
+
+        System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
+
         var socialLoginSendingModel = SocialLoginSendingModel()
         socialLoginSendingModel.clientId = facebookUser.facebookID
         socialLoginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
@@ -218,7 +223,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
         var email: String = facebookUser.email
         // var phone:String = inputPhoneNo.stringTrimmed
         socialLoginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
-        socialLoginSendingModel.token = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
+        socialLoginSendingModel.token = "abcd"
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)

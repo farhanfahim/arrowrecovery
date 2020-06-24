@@ -78,7 +78,6 @@ class MyFirebaseMessagineService : FirebaseMessagingService() {
                     handleNotification(notificationModel.message + " Your Order id is " + notificationModel.refId, intent)
                 } else {
                     handleNotification(notificationModel.message, intent)
-
                 }
             }
 

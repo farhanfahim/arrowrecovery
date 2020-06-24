@@ -28,12 +28,13 @@
 
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
+
                     android:id="@+id/txtCarNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="BMW-0418189"
+                    android:text=""
                     android:textColor="@color/txtBlack"
                     android:textSize="@dimen/s22"
                     app:typeface="@string/font_regular" />
@@ -170,38 +171,41 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
 
+            <!--
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Year"
+                                android:textColor="@color/txtGrey"
+                                android:textSize="@dimen/s14"
+                                app:typeface="@string/font_regular" />
+
+                            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                                android:id="@+id/txtYear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="2014"
+                                android:textColor="@color/title_color"
+                                android:textSize="@dimen/s16"
+                                app:typeface="@string/font_regular" />
+
+                        </LinearLayout>
+            -->
+
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Year"
-                    android:textColor="@color/txtGrey"
-                    android:textSize="@dimen/s14"
-                    app:typeface="@string/font_regular" />
-
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:id="@+id/txtYear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="2014"
-                    android:textColor="@color/title_color"
-                    android:textSize="@dimen/s16"
-                    app:typeface="@string/font_regular" />
-
-            </LinearLayout>
-
-            <LinearLayout
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -226,46 +230,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="BMW"
-                    android:textColor="@color/title_color"
-                    android:textSize="@dimen/s16"
-                    app:typeface="@string/font_regular" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="Model"
-                    android:textColor="@color/txtGrey"
-                    android:textSize="@dimen/s14"
-                    app:typeface="@string/font_regular" />
-
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:id="@+id/txtModel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="5 Series"
+                    android:text=""
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16"
                     app:typeface="@string/font_regular" />
@@ -297,7 +262,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="0418189"
+                    android:text=""
                     android:textColor="@color/title_color"
                     android:textSize="@dimen/s16"
                     app:typeface="@string/font_regular" />
@@ -306,6 +271,49 @@
 
 
         </LinearLayout>
+
+        <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Model"
+                            android:textColor="@color/txtGrey"
+                            android:textSize="@dimen/s14"
+                            app:typeface="@string/font_regular" />
+
+                        <com.tekrevol.arrowrecovery.widget.AnyTextView
+                            android:id="@+id/txtModel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="5 Series"
+                            android:textColor="@color/title_color"
+                            android:textSize="@dimen/s16"
+                            app:typeface="@string/font_regular" />
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+        -->
 
 
     </LinearLayout>

@@ -55,6 +55,7 @@
 
                 <com.tekrevol.arrowrecovery.widget.AnyTextView
                     app:typeface="@string/font_regular"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"

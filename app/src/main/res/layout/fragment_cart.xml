@@ -55,7 +55,7 @@
         android:layout_height="0dp"
         android:visibility="gone"
         android:layout_weight="1"
-        tools:listitem="@layout/item_cart">
+        tools:listitem="@layout/shimmer_item_cart">
 
 
     </com.todkars.shimmer.ShimmerRecyclerView>

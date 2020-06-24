@@ -91,10 +91,12 @@ public class BaseApplication extends MultiDexApplication implements Application.
                     String token = task.getResult().getToken();
 
                     // Log and toast
-                    Log.d("FIREBASE TOKEN: ", token);
+                    System.out.println(token);
 
                     SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, token);
                     SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN_UPDATED, true);
+
+
 
                 });
 

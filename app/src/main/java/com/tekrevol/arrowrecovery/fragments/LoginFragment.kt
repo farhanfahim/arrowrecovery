@@ -110,6 +110,7 @@ class LoginFragment : BaseFragment() {
         }
 
         val loginSendingModel = LoginSendingModel()
+        System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
         loginSendingModel.deviceToken = sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN)
         loginSendingModel.email = edtEmail.stringTrimmed
         loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID

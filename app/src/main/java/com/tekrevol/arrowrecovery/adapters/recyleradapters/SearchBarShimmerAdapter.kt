@@ -77,7 +77,7 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
             this.model = model
 
             this.model?.let {
-                txtName.text = it.name
+                txtName.text = it.vehicleModel.vehicleMake.name
                 txtRef.text = it.serial_number
                 txtPrice.text = "$"+it.estimatedPrice
                 ImageLoaderHelper.loadImageWithAnimations(imgConverter, it.feature_image_url, true)

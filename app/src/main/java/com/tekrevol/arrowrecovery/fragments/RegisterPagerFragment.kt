@@ -47,10 +47,7 @@ import java.util.ArrayList
 class RegisterPagerFragment : BaseFragment() {
 
     private var adapter: RegisterPagerAdapter? = null
-
     var email: String = ""
-
-
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
     lateinit var fragmentName: FragmentName
@@ -192,6 +189,9 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = (edtCountry.stringTrimmed)
         editProfileSendingModel.about = (edtComment.stringTrimmed)
+
+        System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
+
 
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR

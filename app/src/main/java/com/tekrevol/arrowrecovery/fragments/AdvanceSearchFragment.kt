@@ -76,7 +76,7 @@ class AdvanceSearchFragment : BaseFragment() {
         var thisYear: Int = Calendar.getInstance().get(Calendar.YEAR)
         for (i in thisYear downTo 1900) {
 
-            spinnerModelArrayList2.add(SpinnerModel(i.toString()))
+            //  spinnerModelArrayList2.add(SpinnerModel(i.toString()))
 
         }
 
@@ -103,16 +103,17 @@ class AdvanceSearchFragment : BaseFragment() {
     override fun setListeners() {
 
         btnAdvSearch.setOnClickListener(View.OnClickListener {
-            if (txtMake.equals("") && txtModel.equals("")) {
+            if (txtMake.equals("")) {
+         //   if (txtMake.equals("") && txtModel.equals("")) {
                 Toast.makeText(context, "select at least one field", Toast.LENGTH_LONG).show()
             } else {
                 baseActivity.popBackStack()
-                if (getModelId() == -1) {
+                /*if (getModelId() == -1) {
                     modelId = ""
                 } else {
                     modelId = getModelId().toString()
                     modelString = txtModel.text.toString().trim()
-                }
+                }*/
 
                 if (getMakeId() == -1) {
                     makeId = ""
@@ -120,7 +121,7 @@ class AdvanceSearchFragment : BaseFragment() {
                     makeId = getMakeId().toString()
                     makeString = txtMake.text.toString().trim()
                 }
-                year = txtYear.text.toString().trim()
+                //year = txtYear.text.toString().trim()
                 serialNumber = edtSerialNumber.text.toString().trim()
             }
         })
@@ -195,27 +196,27 @@ class AdvanceSearchFragment : BaseFragment() {
 
     private fun getModelName() {
 
-        val query: MutableMap<String, Any> = HashMap()
-        webCallModel = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MODEL, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
-            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+        /*  val query: MutableMap<String, Any> = HashMap()
+          webCallModel = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_VEHICLE_MODEL, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+              override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                val type = object : com.google.gson.reflect.TypeToken<ArrayList<VehicleModels>>() {
+                  val type = object : com.google.gson.reflect.TypeToken<ArrayList<VehicleModels>>() {
 
-                }.type
+                  }.type
 
-                arrDataModel = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
+                  arrDataModel = GsonFactory.getSimpleGson()
+                          .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
 
-                spinnerModelArrayList1.clear()
+                  spinnerModelArrayList1.clear()
 
-                for (modelName in arrDataModel) {
-                    spinnerModelArrayList1.add(SpinnerModel(modelName.name))
-                }
-            }
+                  for (modelName in arrDataModel) {
+                      spinnerModelArrayList1.add(SpinnerModel(modelName.name))
+                  }
+              }
 
-            override fun onError(`object`: Any?) {}
-        })
-
+              override fun onError(`object`: Any?) {}
+          })
+  */
     }
 
     private fun getMakeId(): Int {
