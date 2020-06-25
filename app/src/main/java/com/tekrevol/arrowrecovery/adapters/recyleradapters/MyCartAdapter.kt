@@ -82,7 +82,7 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
                 }
 
                 txtSerialNo.text = it.product?.serial_number
-                txtName.text = it.product?.vehicleModel?.vehicleMake?.name
+                txtName.text = it.product?.vehicleMake?.name
              //   txtName.text = it.product?.name
                 txtPrice.text = "$" + it.amount
                 txtQuality.text = it.quality.toString() + "%"

@@ -25,6 +25,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.FilterModel
 import com.tekrevol.arrowrecovery.models.SearchHistoryModel
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
+import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
@@ -226,7 +227,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         } else if (type == SearchBarShimmerAdapter::class.java.simpleName) {
             var product: ProductDetailModel = anyObject as ProductDetailModel
             baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-            insertItem(product.name)
+            insertItem(product?.serial_number)
         }
 
     }

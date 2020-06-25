@@ -11,8 +11,8 @@ public class ProductDetailModel {
 
 
     @Expose
-    @SerializedName("vehicle_model")
-    private VehicleModel vehicleModel;
+    @SerializedName("vehicle_make")
+    private VehicleMakeModel vehicleMake;
     @Expose
     @SerializedName("attachments")
     private List<Attachments> attachments;
@@ -101,12 +101,16 @@ public class ProductDetailModel {
         this.feature_image_url = feature_image_url;
     }
 
-    public VehicleModel getVehicleModel() {
-        return vehicleModel;
+    public VehicleMakeModel getVehicleMake() {
+        return vehicleMake;
     }
 
-    public void setVehicleModel(VehicleModel vehicleModel) {
-        this.vehicleModel = vehicleModel;
+    public void setVehicleMake(VehicleMakeModel vehicleMake) {
+        this.vehicleMake = vehicleMake;
+    }
+
+    public void setPlatinum(double platinum) {
+        this.platinum = platinum;
     }
 
     public double getRhodium() {

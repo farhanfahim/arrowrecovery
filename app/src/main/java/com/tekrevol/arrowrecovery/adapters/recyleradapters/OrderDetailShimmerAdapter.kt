@@ -77,10 +77,10 @@ class OrderDetailShimmerAdapter(private val activity: Context, private val arrDa
             this.model?.let {
                 txtRef!!.text = it.product.serial_number
                 txtPrice!!.text = it.amount.toString()
-                if (it?.product?.vehicleModel == null) {
+                if (it?.product?.vehicleMake == null) {
                     txtName!!.text = ""
                 } else {
-                    txtName!!.text = it.product?.vehicleModel?.vehicleMake?.name
+                    txtName!!.text = it.product?.vehicleMake?.name
                     // txtModel.text = (it?.vehicleModel?.name)
                 }
                 var calculatedAmount = it.amount * it.quantity

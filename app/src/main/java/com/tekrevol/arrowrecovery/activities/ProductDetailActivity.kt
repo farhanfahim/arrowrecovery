@@ -64,13 +64,13 @@ class ProductDetailActivity : AppCompatActivity(), ImageListener {
         txtPrice.text = (productDetailModel?.estimatedPrice.toString())
         txtQuality.text = qualities[0]
 
-        if (productDetailModel?.vehicleModel == null) {
+        if (productDetailModel?.vehicleMake == null) {
             txtMake.text = "-"
             txtCarNum.text = "-"
             //  txtModel.text = "-"
         } else {
-            txtCarNum.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
-            txtMake.text = (productDetailModel?.vehicleModel?.vehicleMake?.name)
+            txtCarNum.text = (productDetailModel?.vehicleMake?.name)
+            txtMake.text = (productDetailModel?.vehicleMake?.name)
             //  txtModel.text = (productDetailModel?.vehicleModel?.name)
         }
 
