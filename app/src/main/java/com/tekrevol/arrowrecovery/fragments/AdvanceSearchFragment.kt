@@ -119,10 +119,10 @@ class AdvanceSearchFragment : BaseFragment() {
                     makeId = ""
                 } else {
                     makeId = getMakeId().toString()
-                    makeString = txtMake.text.toString().trim()
+                    makeString = txtMake?.text.toString().trim()
                 }
                 //year = txtYear.text.toString().trim()
-                serialNumber = edtSerialNumber.text.toString().trim()
+                serialNumber = edtSerialNumber?.text.toString().trim()
             }
         })
 
@@ -222,8 +222,8 @@ class AdvanceSearchFragment : BaseFragment() {
     private fun getMakeId(): Int {
 
         for (makeId in arrDataMake) {
-            if (makeId.name == txtMake.stringTrimmed) {
-                return makeId.id
+            if (makeId?.name == txtMake.stringTrimmed) {
+                return makeId?.id
             }
         }
         return -1

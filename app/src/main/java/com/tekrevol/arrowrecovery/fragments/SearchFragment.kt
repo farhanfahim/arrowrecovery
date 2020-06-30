@@ -227,7 +227,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         } else if (type == SearchBarShimmerAdapter::class.java.simpleName) {
             var product: ProductDetailModel = anyObject as ProductDetailModel
             baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-            insertItem(product?.serial_number)
+            product?.vehicleMake?.name?.let { insertItem(it) }
         }
 
     }
