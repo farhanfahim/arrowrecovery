@@ -133,10 +133,20 @@ public class AppConstants {
     public static final int TYPE_PRODUCT = 20;
     public static final int TYPE_USER = 30;
 
-    public static final String CHAT_URL = "https://tekrevoldev.zendesk.com";
-    public static final String APP_ID = "243d829efe2547e73de8349765690c61ed14915157bfcbb8";
-    public static final String CLIENT_ID = "mobile_sdk_client_7d94c9e4e726ed7424ee";
-    public static final String ACCOUNT_KEY = "0ogfyFbIZhpMtrv4UEde6yTv8O80EDMO";
+
+
+
+    //zendesk old account
+    //public static final String ACCOUNT_KEY = "0ogfyFbIZhpMtrv4UEde6yTv8O80EDMO";
+    //public static final String CHAT_URL = "https://tekrevoldev.zendesk.com";
+    //public static final String APP_ID = "243d829efe2547e73de8349765690c61ed14915157bfcbb8";
+    //public static final String CLIENT_ID = "mobile_sdk_client_7d94c9e4e726ed7424ee";
+
+
+    public static final String CHAT_URL = "https://arrowrecovery.zendesk.com";
+    public static final String APP_ID = "14514de29a413f71f5fb342a9b79383101d93847eea2a432";
+    public static final String CLIENT_ID = "mobile_sdk_client_6c2527d023c6549da1c7";
+    public static final String ACCOUNT_KEY = "7dSg3b4ImQhyXaE7xYgtLvI6DG46fyua";
 
     public static final String KEY_PRIVACY = "2";
     public static final String KEY_TERMS = "1";
