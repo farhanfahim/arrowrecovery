@@ -66,6 +66,7 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
         val contAddToCart = view.findViewById<RoundKornerRelativeLayout>(R.id.contAddToCart)
         val txtMake = view.findViewById<TextView>(R.id.txtMake)
         val txtModel = view.findViewById<TextView>(R.id.txtModel)
+        val txtRefNo = view.findViewById<TextView>(R.id.txtRef)
         val txtPrice = view.findViewById<TextView>(R.id.txtPrice)
         val imgConverter = view.findViewById<ImageView>(R.id.imgConverter)
         var model: ProductDetailModel? = null
@@ -86,6 +87,7 @@ class ConverterItemShimmerAdapter(private val activity: Context, private val arr
                     txtMake.text = (it?.vehicleMake?.name)
                     // txtModel.text = (it?.vehicleModel?.name)
                 }
+                txtRefNo.text = it.serial_number
                 txtModel.text = it.name
                 txtPrice.text = it.estimatedPrice.toString()
                 ImageLoaderHelper.loadImageWithAnimations(imgConverter, it.feature_image_url, true)
