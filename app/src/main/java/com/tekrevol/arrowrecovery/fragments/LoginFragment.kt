@@ -135,12 +135,12 @@ class LoginFragment : BaseFragment() {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                   /* (userModelWrapper.user.userDetails.isVerified) == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
-                    }*/
+                    }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
@@ -151,9 +151,9 @@ class LoginFragment : BaseFragment() {
                         sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                        //baseActivity.popBackStack()
-                        baseActivity.finish()
-                        baseActivity.openActivity(HomeActivity::class.java)
+                        baseActivity.popBackStack()
+                        baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
+
                     }
                 }
 

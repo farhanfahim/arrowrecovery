@@ -109,17 +109,18 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email!!, 1), true)
                     }
-                 /*   (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
                         addDockableFragment(OtpVerificationFragment.newInstance(email!!, ""), true)
-                    }*/
+                    }
                     (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
-                        addDockableFragment(ThankyouFragment.newInstance(), true)
+                        addDockableFragment(TwoFactorVerification.newInstance(), true)
+
                     }
                     else -> {
                         sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
@@ -156,8 +157,9 @@ class MainActivity : BaseActivity(), FacebookResponse {
             (SharedPreferenceManager.getInstance(applicationContext).currentUser == null) ->
                 addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.SimpleLogin, "", 0), false)
             ((SharedPreferenceManager.getInstance(applicationContext).currentUser != null) && SharedPreferenceManager.getInstance(applicationContext).getString(AppConstants.KEY_IS_VERIFIED).equals("0")) -> {
-                finish()
-                openActivity(HomeActivity::class.java)
+                popBackStack()
+                addDockableFragment(TwoFactorVerification.newInstance(), true)
+
             }
             else -> {
                 finish()
@@ -235,12 +237,12 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                   /* (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
                         addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
-                    }*/
+                    }
                     (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
@@ -251,10 +253,9 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                        finish()
-                        openActivity(HomeActivity::class.java)
-                        //popBackStack()
-                        //addDockableFragment(TwoFactorVerification.newInstance(), true)
+
+                        popBackStack()
+                        addDockableFragment(TwoFactorVerification.newInstance(), true)
                     }
                 }
             }

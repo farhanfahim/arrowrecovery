@@ -32,10 +32,10 @@
                 android:fitsSystemWindows="true"
                 app:fillColor="@color/green_bg"
                 app:layout_collapseMode="parallax"
-                app:pageColor="#FFFFFF"
-                app:radius="6dp"
+                app:pageColor="#48040404"
+                app:radius="4dp"
                 app:slideInterval="3000"
-                app:strokeColor="#FF777777"
+                app:strokeColor="#48040404"
                 app:strokeWidth="1dp"
                 tools:ignore="MissingConstraints" />
 

@@ -490,11 +490,4 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         return queryMap
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-
-        if (isResumed && isVisibleToUser){
-            Toast.makeText(context,"Visible",Toast.LENGTH_SHORT).show()
-        }
-    }
 }
