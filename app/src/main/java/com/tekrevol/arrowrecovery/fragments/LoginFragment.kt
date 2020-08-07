@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.FragmentName
@@ -134,12 +135,12 @@ class LoginFragment : BaseFragment() {
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
+                   /* (userModelWrapper.user.userDetails.isVerified) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
                         baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
-                    }
+                    }*/
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
@@ -150,8 +151,9 @@ class LoginFragment : BaseFragment() {
                         sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-                        baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(TwoFactorVerification.newInstance(), true)
+                        //baseActivity.popBackStack()
+                        baseActivity.finish()
+                        baseActivity.openActivity(HomeActivity::class.java)
                     }
                 }
 

@@ -34,10 +34,12 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
+import com.tekrevol.arrowrecovery.models.receiving_model.Product
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.sending_model.OrderProductSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.utils.PaginatedRecyclerOnScrollListener
 import com.tekrevol.arrowrecovery.widget.AnyEditTextView
 import com.tekrevol.arrowrecovery.widget.AnyTextView
 import com.tekrevol.arrowrecovery.widget.TitleBar
@@ -46,9 +48,10 @@ import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
-class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickListener, PagingDelegate.OnPageListener {
+class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickListener {
 
     private var selectedPosition: Int = 0
     private var arrCategories: ArrayList<VehicleMakeModel> = ArrayList()
@@ -60,13 +63,31 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
     var webCallProductDetail: Call<WebResponse<Any>>? = null
     var webCallFeatured: Call<WebResponse<Any>>? = null
     var itemPos: Int = 0
-    var productid: Int = 0
+    var productid: String? = null
 
-    private var offset: Int = 0
-    private val limit = 2
-    private var x = 0
+    private var totalPages = -1
+    private var currentPage = 0
+
+    private val limit = 20
+
+    val queryMap = HashMap<String, String?>()
+
     private var progressConverters: ProgressBar? = null
 
+    val scrollListener = object : PaginatedRecyclerOnScrollListener(){
+        override fun onLoadMore(page: Int) {
+
+            if (page+1 < totalPages){
+                currentPage = page+1
+
+                getProductsList(buildHashMap(currentPage, productid))
+            }
+        }
+
+        override fun onPageChanged(currentPage: Int) {
+
+        }
+    }
 
     companion object {
 
@@ -128,28 +149,24 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         rvCategories.layoutManager = mLayoutManager1
         (rvCategories.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
-        val pagingDelegate: PagingDelegate = PagingDelegate.Builder(categorySelectorAdapter)
-                .attachTo(rvCategories)
-                .listenWith(this@ConverterDashboardFragment)
-                .build()
         rvCategories.adapter = categorySelectorAdapter
         rvCategories.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_categories })
 
-        val mLayoutManager2: RecyclerView.LayoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+        val mLayoutManager2 = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
         rvConverters.layoutManager = mLayoutManager2
         (rvConverters.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
-        val pagingDelegate2: PagingDelegate = PagingDelegate.Builder(converterItemShimmerAdapter)
-                .attachTo(rvConverters)
-                .listenWith(this@ConverterDashboardFragment)
-                .build()
+
+        scrollListener?.gridLayoutManager = mLayoutManager2
+        scrollListener?.pageSize = 20
+        rvConverters.addOnScrollListener(scrollListener)
+
         rvConverters.adapter = converterItemShimmerAdapter
         rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
         arrConverters.clear()
 
-        getVehicle()
         getFeaturedList()
 
-
+        getVehicle()
     }
 
     private fun getFeaturedList() {
@@ -158,16 +175,16 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         webCallFeatured = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
-                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+
+                val product: Product = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
+                                , Product::class.java)
 
                 arrFeatured.clear()
-                arrFeatured.addAll(arrayList)
+                arrFeatured.addAll(product.products)
 
                 carouselView.setImageListener(imageListener)
-                carouselView.pageCount = arrayList.size
+                carouselView.pageCount = product.products.size
 
 
             }
@@ -185,10 +202,13 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         }
 
         pullToRefresh.setOnRefreshListener {
-            arrConverters.clear()
-            getVehicle()
-            getFeaturedList()
+            totalPages = -1
+            currentPage = 0
 
+            arrConverters.clear()
+            scrollListener.reset()
+            getFeaturedList()
+            getVehicle()
             pullToRefresh.isRefreshing = false
         }
 
@@ -324,13 +344,18 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             //Toast.makeText(context,itemPos.toString(),Toast.LENGTH_SHORT).show()
 
             arrConverters.clear()
+            scrollListener.reset()
+            totalPages = -1
+            currentPage = 0
+
             if (position == 0) {
-                getAllBrands()
+
+                productid = null
+                getProductsList(buildHashMap(currentPage, productid))
             } else {
-                getProductDetail(itemPos)
-
+                productid = itemPos.toString()
+                getProductsList(buildHashMap(currentPage, productid))
             }
-
             arrCategories.forEach { it.isSelected = false }
             arrCategories[position].isSelected = true
             categorySelectorAdapter.notifyDataSetChanged()
@@ -362,8 +387,8 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 arrCategories.addAll(arrayList)
                 categorySelectorAdapter.notifyDataSetChanged()
                 arrCategories[0].isSelected = true
-                getAllBrands()
-                //getProductDetail(arrCategories[0].id, limit, 0)
+
+                getProductsList(buildHashMap(currentPage, productid))
             }
 
             override fun onError(`object`: Any?) {
@@ -382,12 +407,14 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
-                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+                val product: Product = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
+                                , Product::class.java)
+
                 rvConverters.hideShimmer()
-                arrConverters.addAll(arrayList)
+
+                totalPages = product.total_pages
+                arrConverters.addAll(product.products)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString() + " items found"
             }
@@ -401,22 +428,30 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         })
     }
 
-    private fun getProductDetail(item: Int) {
+    private fun getProductsList(queryMap : HashMap<String, String?>) {
+//        productid = item
+       rvConverters.showShimmer()
 
-        productid = item
-        rvConverters.showShimmer()
-        val queryMap = HashMap<String, Any>()
-        queryMap[WebServiceConstants.Q_MAKE_ID] = item
-        webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+        webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap as Map<String, Any>?, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
-                val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
-                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                , type)
-
                 rvConverters.hideShimmer()
-                arrConverters.addAll(arrayList)
+
+                val product: Product = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , Product::class.java)
+                totalPages = product.total_pages
+                arrConverters.addAll(product.products)
+                if (arrConverters.isNullOrEmpty()){
+                    txtStatus.visibility = View.VISIBLE
+                    rvConverters.visibility = View.GONE
+                    rvConverters.hideShimmer()
+                }else{
+
+                    txtStatus.visibility = View.VISIBLE
+                    rvConverters.hideShimmer()
+                    rvConverters.visibility = View.VISIBLE
+                }
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString() + " items found"
             }
@@ -435,12 +470,6 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         ImageLoaderHelper.loadImageWithAnimations(imageView, arrFeatured[position].feature_image_url, true)
     }
 
-    override fun onPage(i: Int) {
-    }
-
-    override fun onDonePaging() {
-
-    }
 
     override fun onDestroyView() {
         webCall?.cancel()
@@ -449,4 +478,23 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         super.onDestroyView()
     }
 
+    fun buildHashMap(page : Int, id : String?) : HashMap<String, String?>{
+
+        queryMap.clear()
+        if(!id.isNullOrEmpty()){
+            queryMap[WebServiceConstants.Q_MAKE_ID] = id
+        }
+        queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit.toString()
+        queryMap[WebServiceConstants.Q_PARAM_OFFSET] = page.toString()
+
+        return queryMap
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if (isResumed && isVisibleToUser){
+            Toast.makeText(context,"Visible",Toast.LENGTH_SHORT).show()
+        }
+    }
 }

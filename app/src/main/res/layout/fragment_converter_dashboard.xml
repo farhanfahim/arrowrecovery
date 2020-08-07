@@ -69,11 +69,11 @@
                         android:layout_height="@dimen/x180dp"
                         android:background="@color/c_black"
                         app:fillColor="@color/green_bg"
-                        app:pageColor="#FFFFFF"
-                        app:radius="6dp"
+                        app:pageColor="#48FDFDFD"
+                        app:radius="3dp"
                         app:slideInterval="3000"
-                        app:strokeColor="#FF777777"
-                        app:strokeWidth="1dp"
+                        app:strokeColor="#48FDFDFD"
+                        app:strokeWidth="@dimen/x1dp"
                         tools:ignore="MissingConstraints" />
 
                     <LinearLayout
@@ -163,11 +163,22 @@
                         android:clipToPadding="false"
                         android:orientation="vertical"
                         android:paddingBottom="@dimen/x60dp"
+                        android:visibility="gone"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="2"
                         tools:listitem="@layout/item_converter">
 
                     </com.todkars.shimmer.ShimmerRecyclerView>
+
+                    <TextView
+                        android:id="@+id/txtStatus"
+                        android:layout_width="match_parent"
+                        android:text="No product available"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/x100dp"
+                        android:visibility="visible"
+                        android:layout_height="match_parent" />
 
                     <ProgressBar
 
