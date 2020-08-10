@@ -158,7 +158,9 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
         scrollListener?.gridLayoutManager = mLayoutManager2
         scrollListener?.pageSize = 20
+
         rvConverters.addOnScrollListener(scrollListener)
+
 
         rvConverters.adapter = converterItemShimmerAdapter
         rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
@@ -445,6 +447,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 if (arrConverters.isNullOrEmpty()){
                     txtStatus.visibility = View.VISIBLE
                     rvConverters.visibility = View.GONE
+
                     rvConverters.hideShimmer()
                 }else{
 
@@ -452,6 +455,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                     rvConverters.hideShimmer()
                     rvConverters.visibility = View.VISIBLE
                 }
+                rvConverters.scrollToPosition(arrConverters.size-20)
                 converterItemShimmerAdapter.notifyDataSetChanged()
                 txtTotalItems.text = arrConverters.size.toString() + " items found"
             }

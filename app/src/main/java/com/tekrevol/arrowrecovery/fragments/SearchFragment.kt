@@ -24,6 +24,7 @@ import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.FilterModel
 import com.tekrevol.arrowrecovery.models.SearchHistoryModel
+import com.tekrevol.arrowrecovery.models.receiving_model.Product
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
@@ -162,6 +163,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
+            edtSearch.setText("")
             baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
         })
     }
@@ -273,11 +275,12 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
                 override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                    val type = object : TypeToken<java.util.ArrayList<ProductDetailModel?>?>() {}.type
-                    val arrayList: java.util.ArrayList<ProductDetailModel> = GsonFactory.getSimpleGson()
+
+                    val product: Product = GsonFactory.getSimpleGson()
                             .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
-                                    , type)
-                    if (arrayList.isEmpty()) {
+                                    , Product::class.java)
+
+                    if (product.products.isEmpty()) {
                         recyclerViewSearchList.visibility = View.VISIBLE
                         rvSearch.visibility = View.GONE
                     } else {
@@ -287,7 +290,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
                     rvSearch.hideShimmer()
                     arrDataSearchBar.clear()
-                    arrDataSearchBar.addAll(arrayList)
+                    arrDataSearchBar.addAll(product.products)
                     searchBarShimmerAdapter.notifyDataSetChanged()
 
                 }
