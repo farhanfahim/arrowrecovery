@@ -1,5 +1,7 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,13 +10,11 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants.*
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.zopim.android.sdk.api.ZopimChat
+import com.zopim.android.sdk.prechat.ZopimChatActivity
 import kotlinx.android.synthetic.main.fragment_support_customer.*
+import zendesk.core.AnonymousIdentity
 import zendesk.core.Zendesk
 import zendesk.support.Support
-import zendesk.core.AnonymousIdentity
-import com.zopim.android.sdk.prechat.ZopimChatActivity
-import android.content.Intent
-
 
 
 class CustomerSupportFragment : BaseFragment() {
@@ -62,9 +62,19 @@ class CustomerSupportFragment : BaseFragment() {
     override fun setListeners() {
 
 
-        btnCustomerSupport.setOnClickListener {
+        btnLiveChat.setOnClickListener {
 
             startActivity(Intent(context, ZopimChatActivity::class.java))
+        }
+
+        btnCall.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:800-222-6832")
+            startActivity(intent)
+        }
+
+        btnLocation.setOnClickListener{
+            baseActivity.addDockableFragment(CollectionCentersFragment.newInstance(), true)
         }
 
 

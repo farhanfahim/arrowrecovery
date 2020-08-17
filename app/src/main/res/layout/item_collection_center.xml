@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_white"
+    android:orientation="vertical">
+
+
+    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/x10dp"
+        android:background="@color/c_white"
+        android:elevation="@dimen/x5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        app:corner_radius="@dimen/x5dp">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:orientation="vertical">
+
+            <com.tekrevol.arrowrecovery.widget.AnyTextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:minLines="1"
+                android:text="Name"
+                android:textColor="@color/title_color"
+                android:textSize="@dimen/s14"
+                app:typeface="@string/font_regular" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:text="Address: "
+                    android:textStyle="bold"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    android:id="@+id/txtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:text="Name"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/s12"
+                    app:typeface="@string/font_regular" />
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+
+</LinearLayout>

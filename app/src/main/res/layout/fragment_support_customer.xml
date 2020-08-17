@@ -88,8 +88,9 @@
             android:textSize="20sp"
             android:textStyle="bold" />-->
 
+
     <info.hoang8f.widget.FButton
-        android:id="@+id/btnCustomerSupport"
+        android:id="@+id/btnCall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/x20dp"
@@ -97,7 +98,38 @@
         android:backgroundTint="@color/green_bg"
         android:paddingLeft="@dimen/x10dp"
         android:paddingRight="@dimen/x10dp"
-        android:text="Customer Support"
+        android:text="Call us now"
+        android:textAllCaps="false"
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/s18"
+        app:shadowHeight="@dimen/x1dp" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/btnLiveChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x20dp"
+        android:background="@drawable/searchbar_grey"
+        android:backgroundTint="@color/green_bg"
+        android:paddingLeft="@dimen/x10dp"
+        android:paddingRight="@dimen/x10dp"
+        android:text="Live Chat"
+        android:textAllCaps="false"
+        android:textColor="@color/c_white"
+        android:textSize="@dimen/s18"
+        app:shadowHeight="@dimen/x1dp" />
+
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/btnLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x20dp"
+        android:background="@drawable/searchbar_grey"
+        android:backgroundTint="@color/green_bg"
+        android:paddingLeft="@dimen/x10dp"
+        android:paddingRight="@dimen/x10dp"
+        android:text="Locations"
         android:textAllCaps="false"
         android:textColor="@color/c_white"
         android:textSize="@dimen/s18"
