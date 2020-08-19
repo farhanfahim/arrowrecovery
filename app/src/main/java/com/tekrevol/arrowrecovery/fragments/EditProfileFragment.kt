@@ -30,7 +30,6 @@ import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
-import kotlinx.android.synthetic.main.fragment_editprofile.edtKindCompany
 import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnCompany
 import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnIndividual
 import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
@@ -70,14 +69,14 @@ class EditProfileFragment : BaseFragment() {
 
         if (radioBtnCompany.isChecked) {
             edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
-            edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+           // edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
             edtCompany.visibility = View.VISIBLE
-            edtKindCompany.visibility = View.VISIBLE
+            //edtKindCompany.visibility = View.VISIBLE
         } else {
             edtCompany.visibility = View.GONE
             edtCompany.setText("")
-            edtKindCompany.visibility = View.GONE
-            edtKindCompany.setText("")
+           // edtKindCompany.visibility = View.GONE
+           // edtKindCompany.setText("")
         }
 
     }
@@ -123,15 +122,15 @@ class EditProfileFragment : BaseFragment() {
         radioBtnIndividual.setOnClickListener {
             edtCompany.visibility = View.GONE
             edtCompany.setText("")
-            edtKindCompany.visibility = View.GONE
-            edtKindCompany.setText("")
+           // edtKindCompany.visibility = View.GONE
+           // edtKindCompany.setText("")
         }
 
         radioBtnCompany.setOnClickListener {
             edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
-            edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+           // edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
             edtCompany.visibility = View.VISIBLE
-            edtKindCompany.visibility = View.VISIBLE
+           // edtKindCompany.visibility = View.VISIBLE
         }
     }
 
@@ -198,8 +197,8 @@ class EditProfileFragment : BaseFragment() {
         edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
         edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
         edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
-        edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
-        edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
+        //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+        //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
         txtState.text = (sharedPreferenceManager.currentUser.userDetails.state.name)
 
     }
@@ -290,7 +289,7 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.country = (edtCountry.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.isCompleted = (1)
-        editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
+       // editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
 
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR

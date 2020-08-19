@@ -53,12 +53,12 @@ class PersonalFragment : BaseFragment() {
 
         radioBtnIndividual.setOnClickListener {
             edtCompanyName.visibility = View.GONE
-            edtKindCompany.visibility = View.GONE
+            //edtKindCompany.visibility = View.GONE
         }
 
         radioBtnCompany.setOnClickListener {
             edtCompanyName.visibility = View.VISIBLE
-            edtKindCompany.visibility = View.VISIBLE
+            //edtKindCompany.visibility = View.VISIBLE
         }
     }
 

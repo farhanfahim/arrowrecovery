@@ -265,7 +265,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Pickup Time"
+                android:text="Delivery Time"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s18"
                 app:typeface="@string/font_medium" />

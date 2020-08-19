@@ -37,9 +37,10 @@
             app:corner_radius="2dp">
 
             <ImageView
+                android:id="@+id/img_item"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/clip" />
 
         </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>

@@ -36,7 +36,7 @@
                     app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+          <!--  <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/s14"
@@ -56,7 +56,7 @@
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_light" />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"

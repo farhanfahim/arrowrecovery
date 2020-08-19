@@ -135,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Individual"
+                android:text="Personal"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s14" />
 
@@ -163,7 +163,7 @@
                 app:typeface="@string/font_light" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+     <!--   <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x10dp"
@@ -182,7 +182,7 @@
                 android:textColorHint="@color/txtGrey"
                 android:textSize="@dimen/s14"
                 app:typeface="@string/font_light" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
     </LinearLayout>
 </ScrollView>

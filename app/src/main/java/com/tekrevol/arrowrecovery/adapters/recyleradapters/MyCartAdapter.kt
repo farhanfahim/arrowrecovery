@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.models.receiving_model.OrderProductModel
 import com.tekrevol.arrowrecovery.widget.AnyTextView
+import kotlinx.android.synthetic.main.fragment_editprofile.*
 
 class MyCartAdapter(private val activity: Context, private val arrData: List<OrderProductModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -61,6 +63,7 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val imgSelect = view.findViewById<ImageView>(R.id.imgSelect)
+        val imgItem = view.findViewById<ImageView>(R.id.img_item)
         val btnAdd = view.findViewById<ImageView>(R.id.btnAdd)
         val txtSerialNo = view.findViewById<AnyTextView>(R.id.txtSerialNo)
         val btnSubtract = view.findViewById<ImageView>(R.id.btnSubtract)
@@ -87,6 +90,8 @@ class MyCartAdapter(private val activity: Context, private val arrData: List<Ord
                 txtPrice.text = "$" + it.amount
                 txtQuality.text = it.quality.toString() + "%"
                 edtQuantity.text = it.quantity.toString()
+
+                ImageLoaderHelper.loadImageWithAnimations(imgItem, it.product.feature_image_url, true)
 
             }
         }

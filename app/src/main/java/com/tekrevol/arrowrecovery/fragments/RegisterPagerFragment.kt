@@ -185,10 +185,10 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (edtFirstname.stringTrimmed)
         editProfileSendingModel.stateId = getIdFromSpinner()
-        editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
+        //editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = (edtCountry.stringTrimmed)
-        editProfileSendingModel.about = (edtComment.stringTrimmed)
+        //editProfileSendingModel.about = (edtComment.stringTrimmed)
 
         System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
 
@@ -309,11 +309,11 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
         signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (edtCity.stringTrimmed)
-        signUpSendingModel.about = (edtComment.stringTrimmed)
+        //signUpSendingModel.about = (edtComment.stringTrimmed)
         signUpSendingModel.country = (edtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
-        signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
+        //signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         signUpSendingModel.isCompleted = (1)
 
         if (radioBtnCompany.isChecked) {
