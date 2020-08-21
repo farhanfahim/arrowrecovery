@@ -38,15 +38,15 @@ public class WebServiceConstants {
     public static final String PRICE_BASE_URL = " https://www.quandl.com/api/v3/datasets/";
 
     // STAGING
-/*    public static final String BASE_URL = "http://arrow-recovery.demo.servstaging.com/";
-    public static final String IMAGE_BASE_URL = "http://arrow-recovery.demo.servstaging.com/api/resize/";*/
+    public static final String BASE_URL = "http://arrow-recovery.demo.servstaging.com/";
+    public static final String IMAGE_BASE_URL = "http://arrow-recovery.demo.servstaging.com/api/resize/";
     //LIVE
    /* public static final String BASE_URL = "http://54.70.47.244/";
     public static final String IMAGE_BASE_URL = "http://54.70.47.244/api/resize/";*/
 
     //LIVE ClIENT
-    public static final String BASE_URL = "http://arrowcatapp.com/";
-    public static final String IMAGE_BASE_URL = "http://arrowcatapp.com/";
+/*    public static final String BASE_URL = "http://arrowcatapp.com/";
+    public static final String IMAGE_BASE_URL = "http://arrowcatapp.com/";*/
 
     // DEV
 
@@ -95,6 +95,8 @@ public class WebServiceConstants {
     public static final String Q_PARAM_STATUS = "status";
     public static final String Q_PARAM_EMAIL = "email";
     public static final String Q_PARAM_STATES = "states";
+    public static final String Q_PARAM_COUNTRY = "countries";
+    public static final String Q_PARAM_COUNTRY_ID = "country_id";
     public static final String Q_PARAM_VEHICLEMAKE = "vehicle-makes";
     public static final String Q_VEHICLE_MAKES = "vehicle-makes";
     public static final String Q_VEHICLE_MODEL = "vehicle-models";

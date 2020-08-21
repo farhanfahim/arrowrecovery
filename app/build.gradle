@@ -9,13 +9,11 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
 apply plugin: 'io.objectbox'
-
+apply plugin: 'com.google.firebase.crashlytics'
 repositories {
     //maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
@@ -133,9 +131,7 @@ dependencies {
     implementation 'com.kaopiz:kprogresshud:1.1.0'
     implementation 'com.jcminarro:RoundKornerLayouts:0.4.0'
     implementation 'com.github.jd-alexander:android-flat-button:v1.1'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-        transitive = true
-    }
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}"
@@ -157,8 +153,10 @@ dependencies {
 
     implementation 'com.facebook.shimmer:shimmer:0.4.0'
     implementation 'com.github.hamzaahmedkhan:ShimmerRecyclerView:v0.4.0'
+    implementation 'com.github.hamzaahmedkhan:SpinnerDialog:v1.2.1'
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
 
 
     //zendesk chat

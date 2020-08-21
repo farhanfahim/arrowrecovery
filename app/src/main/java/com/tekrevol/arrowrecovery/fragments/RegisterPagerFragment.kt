@@ -32,10 +32,12 @@ import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_address.edtAddress
 import kotlinx.android.synthetic.main.fragment_address.edtCity
 import kotlinx.android.synthetic.main.fragment_address.edtZipCode
+import kotlinx.android.synthetic.main.fragment_address.txtCountry
 import kotlinx.android.synthetic.main.fragment_address.txtState
 import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_contact.edtPhoneNo
 import kotlinx.android.synthetic.main.fragment_personal.*
+import kotlinx.android.synthetic.main.fragment_personal.edtLastName
 import kotlinx.android.synthetic.main.fragment_personal.radioBtnCompany
 import kotlinx.android.synthetic.main.fragment_personal.radioBtnIndividual
 import kotlinx.android.synthetic.main.fragment_personal.txtTitle
@@ -187,7 +189,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.stateId = getIdFromSpinner()
         //editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
-        editProfileSendingModel.country = (edtCountry.stringTrimmed)
+        editProfileSendingModel.country = getCountryFromSpinner()
         //editProfileSendingModel.about = (edtComment.stringTrimmed)
 
         System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
@@ -310,7 +312,7 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.stateId = getIdFromSpinner()
         signUpSendingModel.city = (edtCity.stringTrimmed)
         //signUpSendingModel.about = (edtComment.stringTrimmed)
-        signUpSendingModel.country = (edtCountry.stringTrimmed)
+        signUpSendingModel.country = (txtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
         //signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
@@ -576,6 +578,18 @@ class RegisterPagerFragment : BaseFragment() {
             }
         }
         return -1
+    }
+
+    private fun getCountryFromSpinner(): String {
+
+        for (country in AddressFragment.arrCountryData) {
+            if (country.name == txtCountry.stringTrimmed) {
+                txtCountry.text = country.name
+                return country.name
+            }
+        }
+
+        return ""
     }
 
 }

@@ -5,26 +5,21 @@ import com.google.gson.annotations.SerializedName;
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory;
 import com.tekrevol.arrowrecovery.searchdialog.core.Searchable;
 
-public class States implements Searchable {
+public class Country {
 
+    @Expose
+    @SerializedName("updated_at")
+    private String updatedAt;
+    @Expose
+    @SerializedName("created_at")
+    private String createdAt;
     @Expose
     @SerializedName("name")
     private String name;
     @Expose
-    @SerializedName("short_name")
-    private String shortName;
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    @Expose
     @SerializedName("id")
     private int id;
+
 
     public int getId() {
         return id;
@@ -42,13 +37,13 @@ public class States implements Searchable {
         this.name = states;
     }
 
-    @Override
+  /*  @Override
     public String toString() {
         return GsonFactory.getSimpleGson().toJson(this);
     }
-
+*/
     @Override
-    public String getTitle() {
+    public String toString() {
         return name;
     }
 }

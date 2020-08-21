@@ -18,11 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:clickable="false" />
+
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:id="@+id/txtChoice"
@@ -33,11 +29,17 @@
                 android:gravity="center_vertical"
                 android:lines="2"
                 android:maxLines="2"
-                android:padding="@dimen/x1dp"
+                android:paddingStart="@dimen/x10dp"
                 android:text="Choice"
                 android:textColor="@color/txtBlue"
                 android:textSize="@dimen/s12"
                 app:typeface="@string/font_medium" />
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false" />
 
 
         </LinearLayout>

@@ -4,7 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListAdapter
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.tekrevol.arrowrecovery.R
@@ -19,19 +23,25 @@ import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.managers.retrofit.entities.MultiFileModel
-import com.tekrevol.arrowrecovery.models.IntWrapper
-import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.States
-import com.tekrevol.arrowrecovery.models.UserDetails
+import com.tekrevol.arrowrecovery.models.*
 import com.tekrevol.arrowrecovery.models.receiving_model.DataUpdate
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
+import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_editprofile.*
+import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
+import kotlinx.android.synthetic.main.fragment_editprofile.contState
 import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
+import kotlinx.android.synthetic.main.fragment_editprofile.edtAddress
+import kotlinx.android.synthetic.main.fragment_editprofile.edtCity
+import kotlinx.android.synthetic.main.fragment_editprofile.edtZipCode
 import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnCompany
 import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnIndividual
+import kotlinx.android.synthetic.main.fragment_editprofile.txtCountry
+import kotlinx.android.synthetic.main.fragment_editprofile.txtState
 import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
 import retrofit2.Call
 import java.io.File
@@ -43,11 +53,15 @@ class EditProfileFragment : BaseFragment() {
     private var selectedPosition: Int = 0
     var webCall: Call<WebResponse<Any>>? = null
     private var fileTemporaryProfilePicture: File? = null
+    var countryListAdapter: ListAdapter? = null
+    private var selectedCountryIndex: Int = -1
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
+    private var spinnerCountryArrayList = ArrayList<SpinnerModel>()
 
     companion object {
 
         var arrData: ArrayList<States> = ArrayList()
+        var arrCountryData: ArrayList<Country> = ArrayList()
 
         fun newInstance(): EditProfileFragment {
 
@@ -63,7 +77,7 @@ class EditProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getStates()
+        getCountry()
         setFields()
 
 
@@ -103,7 +117,10 @@ class EditProfileFragment : BaseFragment() {
     override fun setListeners() {
 
         contState.setOnClickListener {
-            UIHelper.showSpinnerDialog(this@EditProfileFragment, spinnerModelArrayList, "Selected States", txtState, null, null, IntWrapper(0))
+            showProvidersInDialog(arrData)
+        }
+        contCountry.setOnClickListener {
+            showCountrySelectDialog()
         }
 
         imgCamera.setOnClickListener {
@@ -133,6 +150,52 @@ class EditProfileFragment : BaseFragment() {
            // edtKindCompany.visibility = View.VISIBLE
         }
     }
+
+
+    fun showProvidersInDialog(insuranceProvidersList: ArrayList<States>) {
+        val dialog = SimpleSearchDialogCompat(context, "Select State",
+                "Search here...", null, insuranceProvidersList, SearchResultListener<States> { dialog, item, position ->
+            dialog.dismiss()
+            txtState.text = item.name
+        })
+
+        dialog.show()
+    }
+
+
+    fun initCountryAdapter() {
+        countryListAdapter = object : ArrayAdapter<Country?>(
+                context!!,
+                R.layout.dialog_item,
+                android.R.id.text1,
+                arrCountryData as List<Country>
+        ) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val v: View = super.getView(position, convertView, parent)
+                val tv = v.findViewById<TextView>(android.R.id.text1)
+                val dp10 =
+                        (10 * context.resources.displayMetrics.density + 0.5f).toInt()
+                tv.compoundDrawablePadding = dp10
+                return v
+            }
+        }
+    }
+
+    private fun showCountrySelectDialog() {
+        val builder = android.app.AlertDialog.Builder(context, R.style.MyAlertDialogTheme)
+        builder.setTitle("Select Country")
+        builder.setSingleChoiceItems(
+                countryListAdapter, selectedCountryIndex
+        ) { dialog, index ->
+            selectedCountryIndex = index
+
+            txtCountry.text = arrCountryData[selectedCountryIndex].name
+            getStates(arrCountryData[selectedCountryIndex].id)
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
 
     override fun onClick(v: View?) {
     }
@@ -196,7 +259,7 @@ class EditProfileFragment : BaseFragment() {
         edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
         edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
         edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
-        edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
+        txtCountry.text = (sharedPreferenceManager.currentUser.userDetails.country)
         //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
         //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
         txtState.text = (sharedPreferenceManager.currentUser.userDetails.state.name)
@@ -261,6 +324,11 @@ class EditProfileFragment : BaseFragment() {
             return
         }
 
+        if (txtCountry.stringTrimmed.isEmpty()) {
+            UIHelper.showAlertDialog(context, "Please select country")
+            return
+        }
+
         // Initialize Models
         val editProfileSendingModel = EditProfileSendingModel()
         val arrMultiFileModel = ArrayList<MultiFileModel>()
@@ -286,7 +354,7 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.company = (edtCompany.stringTrimmed)
         editProfileSendingModel.name = (edtFirstName.stringTrimmed)
         editProfileSendingModel.city = (edtCity.stringTrimmed)
-        editProfileSendingModel.country = (edtCountry.stringTrimmed)
+        editProfileSendingModel.country = getCountryFromSpinner()
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.isCompleted = (1)
        // editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
@@ -318,9 +386,13 @@ class EditProfileFragment : BaseFragment() {
                 })
     }
 
-    private fun getStates() {
+    private fun getStates(statId:Int) {
+
+        contState.visibility = View.VISIBLE
 
         val query: MutableMap<String, Any> = HashMap()
+
+        query[WebServiceConstants.Q_PARAM_COUNTRY_ID] = statId
         webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_PARAM_STATES, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -353,6 +425,40 @@ class EditProfileFragment : BaseFragment() {
             }
         }
         return -1
+    }
+    private fun getCountry() {
+
+        val query: MutableMap<String, Any> = HashMap()
+        webCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.Q_PARAM_COUNTRY, query, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val type = object : com.google.gson.reflect.TypeToken<ArrayList<Country>>() {
+
+                }.type
+
+                arrCountryData = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
+
+                spinnerCountryArrayList.clear()
+
+                initCountryAdapter()
+
+            }
+
+            override fun onError(`object`: Any?) {}
+        })
+    }
+    private fun getCountryFromSpinner(): String {
+
+        for (country in arrCountryData) {
+            if (country.name == txtCountry.stringTrimmed) {
+                txtCountry.text = country.name
+                getStates(country.id)
+                return country.name
+            }
+        }
+
+        return ""
     }
 
     override fun onDestroyView() {

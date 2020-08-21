@@ -23,7 +23,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.tekrevol.arrowrecovery.activities.MainActivity;
 import com.tekrevol.arrowrecovery.libraries.imageloader.CustomImageDownaloder;
-import com.crashlytics.android.Crashlytics;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,7 +32,6 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 import com.tekrevol.arrowrecovery.models.receiving_model.MyObjectBox;
 
-import io.fabric.sdk.android.Fabric;
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
 import io.github.inflationx.viewpump.ViewPump;
@@ -61,7 +59,6 @@ public class BaseApplication extends MultiDexApplication implements Application.
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
         configImageLoader(this);
 
         baseApplication = this;
@@ -162,7 +159,7 @@ public class BaseApplication extends MultiDexApplication implements Application.
                     @Override
                     public void run() {
 //                        SharedPreferenceManager.getInstance().setForcedRestart(true);
-                        Crashlytics.logException(paramThrowable);
+
                     }
                 });
                 t.start();
