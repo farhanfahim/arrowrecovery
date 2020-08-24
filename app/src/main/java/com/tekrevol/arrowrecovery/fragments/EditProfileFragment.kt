@@ -187,6 +187,7 @@ class EditProfileFragment : BaseFragment() {
             selectedCountryIndex = index
 
             txtCountry.text = arrCountryData[selectedCountryIndex].name
+            txtState.text = ""
             getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
@@ -455,6 +456,7 @@ class EditProfileFragment : BaseFragment() {
         for (country in arrCountryData) {
             if (country.name == txtCountry.stringTrimmed) {
                 txtCountry.text = country.name
+                txtState.text = ""
                 getStates(country.id)
                 return country.name
             }

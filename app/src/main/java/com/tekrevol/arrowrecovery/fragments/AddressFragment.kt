@@ -197,6 +197,7 @@ class AddressFragment : BaseFragment() {
             selectedCountryIndex = index
 
             txtCountry.text = arrCountryData[selectedCountryIndex].name
+            txtState.text = ""
             getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
