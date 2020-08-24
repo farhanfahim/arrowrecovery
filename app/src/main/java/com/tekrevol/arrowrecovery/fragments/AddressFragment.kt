@@ -138,8 +138,6 @@ class AddressFragment : BaseFragment() {
     private fun getStates(statId: Int) {
 
         txtState.text = ""
-        contState.visibility = View.VISIBLE
-
         val query: MutableMap<String, Any> = HashMap()
 
         query[WebServiceConstants.Q_PARAM_COUNTRY_ID] = statId
@@ -157,6 +155,13 @@ class AddressFragment : BaseFragment() {
 
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
+                }
+
+                if (spinnerModelArrayList.isEmpty()){
+                    contState.visibility = View.GONE
+                    Toast.makeText(context,"No State Available",Toast.LENGTH_SHORT).show()
+                }else{
+                    contState.visibility = View.VISIBLE
                 }
             }
 

@@ -287,10 +287,6 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please enter City")
             return
         }
-        if (txtState.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select State")
-            return
-        }
         if (!checked.isChecked) {
             UIHelper.showAlertDialog(context, "Please accept Term of Use")
             return

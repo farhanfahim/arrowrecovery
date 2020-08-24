@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.tekrevol.arrowrecovery.R
@@ -319,11 +316,6 @@ class EditProfileFragment : BaseFragment() {
             return
         }
 
-        if (txtState.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select state")
-            return
-        }
-
         if (txtCountry.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please select country")
             return
@@ -388,7 +380,6 @@ class EditProfileFragment : BaseFragment() {
 
     private fun getStates(statId:Int) {
 
-        contState.visibility = View.VISIBLE
 
         val query: MutableMap<String, Any> = HashMap()
 
@@ -407,6 +398,12 @@ class EditProfileFragment : BaseFragment() {
 
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
+                }
+                if (spinnerModelArrayList.isEmpty()){
+                    contParentState.visibility = View.GONE
+                    Toast.makeText(context,"No State Available", Toast.LENGTH_SHORT).show()
+                }else{
+                    contParentState.visibility = View.VISIBLE
                 }
 
 
@@ -441,6 +438,11 @@ class EditProfileFragment : BaseFragment() {
 
                 spinnerCountryArrayList.clear()
 
+                for (country in arrCountryData) {
+                    if (country.name == txtCountry.stringTrimmed) {
+                        getStates(country.id)
+                    }
+                }
                 initCountryAdapter()
 
             }
