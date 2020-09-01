@@ -273,6 +273,8 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun signUpApi() {
 
+        sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN,"");
+
         if (!edtAddress.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter Address")
             return
@@ -341,6 +343,7 @@ class RegisterPagerFragment : BaseFragment() {
 //                    setCurrentItemByPosition(0)
 //                }
 
+
                 val userModelWrapper: UserModelWrapper = gson.fromJson(gson.toJson(webResponse.result), UserModelWrapper::class.java)
                 when {
 
@@ -354,7 +357,7 @@ class RegisterPagerFragment : BaseFragment() {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, phone), true)
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)

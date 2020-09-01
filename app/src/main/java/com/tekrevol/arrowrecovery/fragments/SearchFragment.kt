@@ -115,7 +115,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                         rvSearch.visibility = View.VISIBLE
                     }
                     //Toast.makeText(context, "Search keyword required", Toast.LENGTH_SHORT).show()
-                } else if (s.length > 2 && count > before) {
+                } else if (s.length >= 2 && count > before) {
                     getProducts(text!!)
                     searchHistoryModel.query = text
 
