@@ -63,13 +63,16 @@ class DashboardPagerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dashboardTitleBar = view.findViewById(R.id.dashboardTitleBar)
-
+/*
         if (onCreated) {
             setViewPagerAdapter()
         } else {
             adapter = DashboardPagerAdapter(childFragmentManager)
             setViewPagerAdapter()
-        }
+        }*/
+        addFragment(HomeFragment.newInstance(), "HomeFragment")
+        setCurrentItem(0)
+        setViewPagerAdapter()
     }
 
 
@@ -79,9 +82,9 @@ class DashboardPagerFragment : BaseFragment() {
         navigationBar.add(MeowBottomNavigation.Model(2, R.drawable.coloredcarticon))
         navigationBar.add(MeowBottomNavigation.Model(3, R.drawable.coloredcontacticon))
         navigationBar.add(MeowBottomNavigation.Model(4, R.drawable.coloredprofileicon))
-        viewpager.adapter = adapter
-        viewpager.setPagingEnabled(false)
-        viewpager.offscreenPageLimit = 4
+//        viewpager.adapter = adapter
+//        viewpager.setPagingEnabled(false)
+//        viewpager.offscreenPageLimit = 4
         navigationBar.show(positionToSelect, false)
 
     }
@@ -90,7 +93,7 @@ class DashboardPagerFragment : BaseFragment() {
     override fun setListeners() {
         // Check model.id for position
 
-        navigationBar.setOnClickMenuListener { model ->
+     /*   navigationBar.setOnClickMenuListener { model ->
 
             setCurrentItem(model.id)
         }
@@ -115,13 +118,28 @@ class DashboardPagerFragment : BaseFragment() {
                 }
 
             }
-        })
+        })*/
+
+        navigationBar.setOnClickMenuListener { model ->
+
+            setCurrentItem(model.id)
+
+            when(model.id){
+                0 -> replaceFragment(HomeFragment.newInstance(), "HomeFragment")
+                1 -> replaceFragment(ConverterDashboardFragment.newInstance(), "ConverterDashboardFragment")
+                2 -> replaceFragment(CartFragment.newInstance(), "CartFragment")
+                3 -> replaceFragment(CustomerSupportFragment.newInstance(), "CustomerSupportFragment")
+                4 -> replaceFragment(ProfileFragment.newInstance(), "ProfileFragment")
+            }
+
+            navigationBar.show(model.id, false)
+        }
     }
 
     private fun setCurrentItem(position: Int) {
 
         positionToSelect = position
-        viewpager!!.setCurrentItem(position, true)
+        //viewpager!!.setCurrentItem(position, true)
         //        ((BaseFragment)adapter.getItem(position)).setTitlebar(getHomeActivity().getTitleBar());
         dashboardTitleBar.resetViews()
         dashboardTitleBar.visibility = View.VISIBLE

@@ -13,10 +13,17 @@
 
     </com.tekrevol.arrowrecovery.widget.TitleBar>
 
-    <com.tekrevol.arrowrecovery.widget.CustomViewPager
+ <!--   <com.tekrevol.arrowrecovery.widget.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/dashboardTitleBar" />-->
+
+    <FrameLayout
+        android:layout_marginBottom="@dimen/s5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"
         android:layout_below="@id/dashboardTitleBar" />
 
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation

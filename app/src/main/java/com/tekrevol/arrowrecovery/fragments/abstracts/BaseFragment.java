@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.util.Pair;
@@ -308,6 +309,21 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     public MainActivity getMainActivity() {
         return (MainActivity) getActivity();
+    }
+
+    public void addFragment(Fragment fragment, String TAG) {
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, fragment, TAG)
+                .commit();
+    }
+    public void replaceFragment(Fragment fragment, String TAG) {
+
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment, TAG)
+                .commit();
     }
 
 
