@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
@@ -103,7 +104,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     private fun updateData(date: String) {
 
-        var endDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING ).build().findFirst()!!.date
+        var endDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()!!.date
         var currentDate: Date = dateFormat.parse(date)
 
         if (!currentDate.after(endDate)) {
@@ -249,10 +250,13 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
         drawGraph()
         val date: Date? = materialHistoryBox.query()?.order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING)?.build()?.findFirst()!!.date
-        val previousDate: Date? = getPreviousDate(date)
+        var previousDate: Date? = getPreviousDate(date)
 
+        previousDate = checkPreviousDateExistInDb(previousDate!!)
+//        var previousDate: Date = dateFormat.parse("")
         date?.let {
             previousDate?.let {
+
                 prices(date, previousDate)
             }
         }
@@ -342,6 +346,48 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
     }
 
+    fun checkPreviousDateExistInDb(previousDate: Date): Date {
+
+        var previousDateNew: Date
+        val platanumPreviousPrice = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, previousDate).build().count()
+        if (platanumPreviousPrice != null && platanumPreviousPrice > 0) {
+            previousDateNew = previousDate
+        } else {
+            var calendar: Calendar = Calendar.getInstance()
+            // var currentDate: Date = dateFormat.parse(platanumCurrentDate)
+            calendar.time = previousDate
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            var d: Date = calendar.time
+
+            previousDateNew= checkIfDayIsSundayOrSaturday(d)
+
+            checkPreviousDateExistInDb(previousDateNew)
+        }
+
+        return previousDateNew
+
+    }
+
+    fun checkIfDayIsSundayOrSaturday(date: Date): Date {
+        var calendar: Calendar = Calendar.getInstance()
+        calendar.time = date
+
+        var d: Date = calendar.time
+
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            calendar.add(Calendar.DAY_OF_YEAR, -2)
+            d = calendar.time
+            //   getPreviousDate(updatedDate)
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            calendar.add(Calendar.DAY_OF_YEAR, -1)
+            d = calendar.time
+            //     Updatedata(updatedDate)
+        }
+
+        return d
+
+    }
+
     private fun getPreviousDate(currentDate: Date?): Date? {
 
         var calendar: Calendar = Calendar.getInstance()
@@ -349,6 +395,9 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         calendar.time = currentDate
         calendar.add(Calendar.DAY_OF_YEAR, -1)
         var d: Date = calendar.time
+
+
+
         if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             calendar.add(Calendar.DAY_OF_YEAR, -2)
             d = calendar.time
@@ -367,6 +416,34 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
             return d
         }
 
+    }
+
+    private fun getPreviousDate2(currentDate: Date?): Date? {
+
+        var calendar: Calendar = Calendar.getInstance()
+        // var currentDate: Date = dateFormat.parse(platanumCurrentDate)
+        calendar.time = currentDate
+        calendar.add(Calendar.DAY_OF_YEAR, -4)
+        var d: Date = calendar.time
+
+//        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+//            calendar.add(Calendar.DAY_OF_YEAR, -2)
+//            d = calendar.time
+//            //   getPreviousDate(updatedDate)
+//        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+//            calendar.add(Calendar.DAY_OF_YEAR, -1)
+//            d = calendar.time
+//            //     Updatedata(updatedDate)
+//        }
+        //var previousDate: String = dateFormat.format(calendar.time)
+//        var date: String = materialHistoryBox.query().equal(MaterialHistoryModelDataBase_.date, d).build().find().toString()
+//        if (date.isNullOrEmpty()) {
+//            getPreviousDate(currentDate)
+//            return null
+//        } else {
+//            return d
+//        }
+        return d
     }
 
     private fun bindGraphData() {
@@ -475,7 +552,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
         }
 
         val values = java.util.ArrayList<Entry>()
-        currentPrice.text = priceList[range.size-1].toString()
+        currentPrice.text = priceList[range.size - 1].toString()
         for (a in range.indices) {
             values.add(Entry(a.toFloat(), priceList[a].toFloat()))
         }
@@ -634,7 +711,6 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
 
-
     /**
      * get size//////////////////////////////
      */
@@ -644,7 +720,7 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
     }
 
     fun drawGraph() {
-        var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING ).build().findFirst()?.date!!
+        var currentDate: Date = materialHistoryBox.query().order(MaterialHistoryModelDataBase_.date, QueryBuilder.DESCENDING).build().findFirst()?.date!!
         var calendar: Calendar = Calendar.getInstance()
         calendar.time = currentDate
         calendar.add(Calendar.DAY_OF_YEAR, -7)
