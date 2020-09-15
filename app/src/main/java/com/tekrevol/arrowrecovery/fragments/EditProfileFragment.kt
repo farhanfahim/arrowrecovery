@@ -448,7 +448,9 @@ class EditProfileFragment : BaseFragment() {
 
             }
 
-            override fun onError(`object`: Any?) {}
+            override fun onError(`object`: Any?) {
+                Toast.makeText(context,`object`.toString(),Toast.LENGTH_SHORT).show()
+            }
         })
     }
     private fun getCountryFromSpinner(): String {

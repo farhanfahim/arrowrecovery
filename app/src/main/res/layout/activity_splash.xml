@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/x100dp"
+        android:layout_height="@dimen/x100dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/img_logo_with_tag" />
+        android:src="@drawable/ic_arrow_new_logo" />
 
 
     <com.tekrevol.arrowrecovery.widget.AnyTextView
