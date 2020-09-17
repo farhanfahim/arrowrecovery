@@ -154,7 +154,7 @@
                     </LinearLayout>
 
 
-                    <com.todkars.shimmer.ShimmerRecyclerView
+                <!--    <com.todkars.shimmer.ShimmerRecyclerView
                         android:id="@+id/rvConverters"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -166,9 +166,24 @@
                         android:visibility="gone"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="2"
-                        tools:listitem="@layout/item_converter">
+                        tools:listitem="@layout/item_converter">-->
 
-                    </com.todkars.shimmer.ShimmerRecyclerView>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvConverters"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/x10dp"
+                            android:background="@color/background_color"
+                            android:clipToPadding="false"
+                            android:orientation="vertical"
+                            android:paddingBottom="@dimen/x60dp"
+                            android:visibility="gone"
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                            app:spanCount="2"
+                            tools:listitem="@layout/item_converter"
+                            android:scrollbars="vertical"
+                            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 
                     <TextView
                         android:id="@+id/txtStatus"

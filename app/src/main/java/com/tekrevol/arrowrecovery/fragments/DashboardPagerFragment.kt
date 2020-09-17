@@ -11,6 +11,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.MainActivity
 import com.tekrevol.arrowrecovery.adapters.DashboardPagerAdapter
+import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
 import com.tekrevol.arrowrecovery.helperclasses.RunTimePermissions
@@ -63,16 +64,15 @@ class DashboardPagerFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dashboardTitleBar = view.findViewById(R.id.dashboardTitleBar)
-/*
-        if (onCreated) {
-            setViewPagerAdapter()
-        } else {
-            adapter = DashboardPagerAdapter(childFragmentManager)
-            setViewPagerAdapter()
-        }*/
-        addFragment(HomeFragment.newInstance(), "HomeFragment")
-        setCurrentItem(0)
         setViewPagerAdapter()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+            setCurrentFragment(AppConstants.POSITION)
+            setCurrentItem(AppConstants.POSITION)
+
     }
 
 
@@ -82,65 +82,66 @@ class DashboardPagerFragment : BaseFragment() {
         navigationBar.add(MeowBottomNavigation.Model(2, R.drawable.coloredcarticon))
         navigationBar.add(MeowBottomNavigation.Model(3, R.drawable.coloredcontacticon))
         navigationBar.add(MeowBottomNavigation.Model(4, R.drawable.coloredprofileicon))
-//        viewpager.adapter = adapter
-//        viewpager.setPagingEnabled(false)
-//        viewpager.offscreenPageLimit = 4
         navigationBar.show(positionToSelect, false)
 
     }
 
 
     override fun setListeners() {
-        // Check model.id for position
-
-     /*   navigationBar.setOnClickMenuListener { model ->
-
-            setCurrentItem(model.id)
-        }
-
-        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-
-                if (position == 2) {
-                    adapter?.let {
-                        val cartFragment = it.registeredFragments[2] as CartFragment?
-                        cartFragment?.myCartApi(true)
-                    }
-
-                }
-
-            }
-        })*/
-
         navigationBar.setOnClickMenuListener { model ->
 
             setCurrentItem(model.id)
 
-            when(model.id){
-                0 -> replaceFragment(HomeFragment.newInstance(), "HomeFragment")
-                1 -> replaceFragment(ConverterDashboardFragment.newInstance(), "ConverterDashboardFragment")
-                2 -> replaceFragment(CartFragment.newInstance(), "CartFragment")
-                3 -> replaceFragment(CustomerSupportFragment.newInstance(), "CustomerSupportFragment")
-                4 -> replaceFragment(ProfileFragment.newInstance(), "ProfileFragment")
+            when (model.id) {
+                0 -> {
+                    AppConstants.POSITION = 0
+                    setCurrentFragment(0)
+                }
+                1 -> {
+                    AppConstants.POSITION = 1
+                    setCurrentFragment(1)
+                }
+                2 -> {
+                    AppConstants.POSITION = 2
+                    setCurrentFragment(2)
+                }
+                3 -> {
+                    AppConstants.POSITION = 3
+                    setCurrentFragment(3)
+                }
+                4 -> {
+                    AppConstants.POSITION = 4
+                    setCurrentFragment(4)
+                }
             }
 
             navigationBar.show(model.id, false)
         }
     }
 
+    private fun setCurrentFragment(position: Int) {
+        when (position) {
+            0 -> {
+                replaceFragment(HomeFragment.newInstance(), "HomeFragment")
+            }
+            1 -> {
+                replaceFragment(ConverterDashboardFragment.newInstance(), "ConverterDashboardFragment")
+            }
+            2 -> {
+                replaceFragment(CartFragment.newInstance(), "CartFragment")
+            }
+            3 -> {
+                replaceFragment(CustomerSupportFragment.newInstance(), "CustomerSupportFragment")
+            }
+            4 -> {
+                replaceFragment(ProfileFragment.newInstance(), "ProfileFragment")
+            }
+        }
+    }
+
     private fun setCurrentItem(position: Int) {
 
         positionToSelect = position
-        //viewpager!!.setCurrentItem(position, true)
-        //        ((BaseFragment)adapter.getItem(position)).setTitlebar(getHomeActivity().getTitleBar());
         dashboardTitleBar.resetViews()
         dashboardTitleBar.visibility = View.VISIBLE
 

@@ -112,6 +112,7 @@ public class AppConstants {
     public static final int USER_TYPE_INDIVIDUAL = 10;
     public static final int USER_TYPE_COMPANY = 20;
     public static final int TITLE_MR = 10;
+    public static int POSITION = 0;
     public static final int TITLE_MISS = 20;
     public static final int TITLE_MRS = 30;
     public static final int TITLE_MS = 40;

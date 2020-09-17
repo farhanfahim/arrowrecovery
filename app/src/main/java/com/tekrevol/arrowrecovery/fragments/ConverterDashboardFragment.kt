@@ -18,7 +18,6 @@ import com.google.gson.reflect.TypeToken
 import com.synnapps.carouselview.ImageListener
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.ProductDetailActivity
-import com.tekrevol.arrowrecovery.adapters.pagingadapter.PagingDelegate
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.CategorySelectorShimmerAdapter
 import com.tekrevol.arrowrecovery.adapters.recyleradapters.ConverterItemShimmerAdapter
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
@@ -46,9 +45,6 @@ import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter.ItemViewType
 import kotlinx.android.synthetic.main.fragment_converter_dashboard.*
 import retrofit2.Call
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickListener {
@@ -128,7 +124,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         progressConverters = view.findViewById(R.id.progressConverters) as ProgressBar
 
         onBind()
-        calculateRecyclerHeight(view)
+        //calculateRecyclerHeight(view)
     }
 
     private fun calculateRecyclerHeight(view: View) {
@@ -160,10 +156,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
         scrollListener?.pageSize = 20
 
         rvConverters.addOnScrollListener(scrollListener)
-
-
         rvConverters.adapter = converterItemShimmerAdapter
-        rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
+
+
+        //rvConverters.setItemViewType(ItemViewType { type: Int, position: Int -> R.layout.shimmer_converter_dashboard })
         arrConverters.clear()
 
         getFeaturedList()
@@ -413,7 +409,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , Product::class.java)
 
-                rvConverters.hideShimmer()
+                //rvConverters.hideShimmer()
 
                 totalPages = product.total_pages
                 arrConverters.addAll(product.products)
@@ -425,19 +421,19 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 if (rvConverters == null) {
                     return
                 }
-                rvConverters.hideShimmer()
+                //rvConverters.hideShimmer()
             }
         })
     }
 
     private fun getProductsList(queryMap : HashMap<String, String?>) {
 //        productid = item
-       rvConverters.showShimmer()
+       //rvConverters.showShimmer()
 
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap as Map<String, Any>?, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
-                rvConverters.hideShimmer()
+                //rvConverters.hideShimmer()
 
                 val product: Product = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
@@ -448,12 +444,13 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                     txtStatus.visibility = View.VISIBLE
                     rvConverters.visibility = View.GONE
 
-                    rvConverters.hideShimmer()
+                    //rvConverters.hideShimmer()
                 }else{
 
                     txtStatus.visibility = View.VISIBLE
-                    rvConverters.hideShimmer()
+                    //rvConverters.hideShimmer()
                     rvConverters.visibility = View.VISIBLE
+                    calculateRecyclerHeight(view)
                 }
                 rvConverters.scrollToPosition(arrConverters.size-20)
                 converterItemShimmerAdapter.notifyDataSetChanged()
@@ -464,7 +461,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                 if (rvConverters == null) {
                     return
                 }
-                rvConverters.hideShimmer()
+                //rvConverters.hideShimmer()
             }
         })
     }
