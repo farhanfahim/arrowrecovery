@@ -277,6 +277,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                     public void requestDataResponse(WebResponse<Object> webResponse) {
                         BaseApplication.getApp().getBoxStore().boxFor(MaterialHistoryModelDataBase.class).removeAll();
                         sharedPreferenceManager.clearDB();
+                        AppConstants.POSITION = 0;
                         getBaseActivity().clearAllActivitiesExceptThis(MainActivity.class);
                     }
 
