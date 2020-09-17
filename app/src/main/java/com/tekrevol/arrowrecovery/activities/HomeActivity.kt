@@ -192,6 +192,7 @@ class HomeActivity : BaseActivity() {
         get() = R.id.contDrawer
 
     private fun initFragments() {
+        AppConstants.POSITION = 0
         addDockableFragment(DashboardPagerFragment.newInstance(), false)
     }
 
