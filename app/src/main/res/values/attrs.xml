@@ -62,6 +62,8 @@
         <attr name="disableColor" format="color|reference" />
     </declare-styleable>
 
+    
+
     <declare-styleable name="RangeSeekBar">
         <!--RangeSeekBar common attrs-->
 
@@ -159,5 +161,9 @@
     </declare-styleable>
 
 
+    <attr format="dimension" name="top_left_corner_radius"/>
+    <attr format="dimension" name="top_right_corner_radius"/>
+    <attr format="dimension" name="bottom_right_corner_radius"/>
+    <attr format="dimension" name="bottom_left_corner_radius"/>
 
 </resources>

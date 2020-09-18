@@ -32,7 +32,14 @@ class SplashActivityKotlin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_splash)
+
+       /* val sha1 = byteArrayOf(
+                0x79, 0x2D, 0x29, 0xDC.toByte(), 0x9A.toByte(), 0x0E, 0xC2.toByte(), 0xE1.toByte(), 0x41, 0x3A, 0x2F, 0xF6.toByte(), 0xC9.toByte(), 0x04, 0x79, 0x61, 0x45, 0x2D, 0x9D.toByte(), 0xCF.toByte()
+        )
+        Log.e("key","keyhashGooglePlaySignIn:" + Base64.encodeToString(sha1, Base64.NO_WRAP))*/
         printHashKey(baseContext)
         //        contParentLayout.setVisibility(View.INVISIBLE);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
