@@ -109,26 +109,25 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email!!, 1), true)
                     }
-                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
                         addDockableFragment(OtpVerificationFragment.newInstance(email!!, ""), true)
                     }
-                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
-                        addDockableFragment(TwoFactorVerification.newInstance(), true)
-
+                        addDockableFragment(ThankyouFragment.newInstance(), true)
                     }
                     else -> {
                         sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
+                        popBackStack()
+                        addDockableFragment(TwoFactorVerification.newInstance(), true)
 
-                        finish()
-                        openActivity(HomeActivity::class.java)
                     }
                 }
 
@@ -231,6 +230,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
         WebServices(this, "", BaseURLTypes.BASE_URL, true).postAPIAnyObject(PATH_SOCIAL_LOGIN, socialLoginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 val userModelWrapper: UserModelWrapper = getGson()!!.fromJson(getGson()!!.toJson(webResponse.result), UserModelWrapper::class.java)
+
                 when {
 
                     (userModelWrapper.user.userDetails.isCompleted == 0) -> {
@@ -239,13 +239,13 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         popBackStack()
                         addDockableFragment(RegisterPagerFragment.newInstance(FragmentName.RegistrationRequired, email, 1), true)
                     }
-                    (userModelWrapper.user.userDetails.isVerified)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isVerified) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
                         addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
                     }
-                    (userModelWrapper.user.userDetails.isApproved)!! == 0 -> {
+                    (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
@@ -255,9 +255,9 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         sharedPreferenceManager?.putObject(AppConstants.KEY_CURRENT_USER_MODEL, userModelWrapper.user)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_CURRENT_USER_ID, userModelWrapper.user.id)
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
-
                         popBackStack()
                         addDockableFragment(TwoFactorVerification.newInstance(), true)
+
                     }
                 }
             }
