@@ -122,6 +122,8 @@ class MyOrderFragment : BaseFragment(), OnItemClickListener, PagingDelegate.OnPa
         val queryMap = HashMap<String, Any>()
         queryMap[WebServiceConstants.Q_WITH_ORDER_PRODUCTS] = AppConstants.ALL_ORDERS
         queryMap[WebServiceConstants.Q_PARAM_LIMIT] = limit
+        queryMap[WebServiceConstants.Q_ORDER_BY] = WebServiceConstants.Q_ORDER_BY_CREATED_DATE
+        queryMap[WebServiceConstants.Q_SORTED] = WebServiceConstants.Q_DESC
         queryMap[WebServiceConstants.Q_PARAM_OFFSET] = offset
 
         webCall = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_ORDERS, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {

@@ -132,8 +132,10 @@ public class WebServiceConstants {
     public static final String KEY_MATERIAL_HISTORY = "material-histories";
     public static final String Q_KEY_TO = "to";
     public static final String Q_ASC = "asc";
+    public static final String Q_DESC = "desc";
     public static final String Q_KEY_FROM = "from";
     public static final String Q_ORDER_BY_DATE = "date";
+    public static final String Q_ORDER_BY_CREATED_DATE = "created_at";
     public static final String Q_ORDER_BY_NAME = "name";
 
 

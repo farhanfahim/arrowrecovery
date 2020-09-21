@@ -232,16 +232,21 @@ class HomeFragment : BaseFragment(), OnItemClickListener {
 
                 }
 
-                imgArrow.visibility = View.VISIBLE
-                progressRefresh.visibility = View.GONE
-                mDialog?.dismiss()
+                if (imgArrow != null || progressRefresh != null) {
+                    imgArrow.visibility = View.VISIBLE
+                    progressRefresh.visibility = View.GONE
+                    mDialog?.dismiss()
+                }
 
             }
 
             override fun onError(`object`: Any?) {
-                imgArrow.visibility = View.VISIBLE
-                progressRefresh.visibility = View.GONE
-                mDialog?.dismiss()
+
+                if (imgArrow != null || progressRefresh != null) {
+                    imgArrow.visibility = View.VISIBLE
+                    progressRefresh.visibility = View.GONE
+                    mDialog?.dismiss()
+                }
             }
         })
     }

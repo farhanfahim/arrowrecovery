@@ -66,7 +66,7 @@ android {
     }
     buildTypes {
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
             useProguard true
             shrinkResources true

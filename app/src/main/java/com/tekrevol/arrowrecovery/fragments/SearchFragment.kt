@@ -182,20 +182,20 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
                 val strFilter = arrFilter.firstOrNull { it.filter.equals(arrFilter[position].filter, true) }
 
                 if (strFilter != null) {
-                    if (strFilter.filter.equals("model")) {
+                    if (strFilter.filter.equals("Model")) {
 
                         modelId = ""
                         modelString = ""
 
-                    } else if (strFilter.filter.equals("make")) {
+                    } else if (strFilter.filter.equals("Make")) {
 
                         makeId = ""
                         makeString = ""
 
-                    } else if (strFilter.filter.equals("year")) {
+                    } else if (strFilter.filter.equals("Year")) {
 
                         year = ""
-                    } else if (strFilter.filter.equals("serialNumber")) {
+                    } else if (strFilter.filter.equals("Serial Number")) {
                         serialNumber = ""
 
                     }
@@ -249,24 +249,24 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             arrFilter.clear()
             if (makeId.isNotEmpty()) {
                 queryMap[WebServiceConstants.Q_MAKE_ID] = makeId
-                arrFilter.add(FilterModel(": " + makeString, "make"))
+                arrFilter.add(FilterModel(": " + makeString, "Make"))
             }
 
             if (modelId.isNotEmpty()) {
                 queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
-                arrFilter.add(FilterModel(": " + modelString, "model"))
+                arrFilter.add(FilterModel(": " + modelString, "Model"))
 
             }
 
             if (year.isNotEmpty()) {
                 queryMap[WebServiceConstants.Q_YEAR] = year
-                arrFilter.add(FilterModel(": " + year, "year"))
+                arrFilter.add(FilterModel(": " + year, "Year"))
 
             }
 
             if (serialNumber.isNotEmpty()) {
                 queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
-                arrFilter.add(FilterModel(": " + serialNumber, "serialNumber"))
+                arrFilter.add(FilterModel(": " + serialNumber, "Serial Number"))
 
             }
 
