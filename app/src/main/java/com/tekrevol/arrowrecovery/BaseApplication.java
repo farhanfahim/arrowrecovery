@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.tekrevol.arrowrecovery.activities.MainActivity;
+import com.tekrevol.arrowrecovery.constatnts.AppConstants;
 import com.tekrevol.arrowrecovery.libraries.imageloader.CustomImageDownaloder;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -90,7 +91,28 @@ public class BaseApplication extends MultiDexApplication implements Application.
                     // Log and toast
                     System.out.println(token);
 
-                    SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, token);
+                    String strNew  = "";
+                    String device_token = SharedPreferenceManager.getInstance(this).getString(AppConstants.KEY_FIREBASE_TOKEN);
+
+                    if (device_token.contains("\\")) {
+
+                        strNew = device_token.replace("\\", "");
+
+                        if (strNew.contains("\"")) {
+                            strNew = strNew.replace("\"", "");
+                            SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, strNew);
+                        } else {
+                            SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, strNew);
+                        }
+                    }
+                    else if (device_token.contains("\"")) {
+                        strNew = device_token.replace("\"", "");
+                        SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, strNew);
+
+                    } else {
+                        SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN, device_token);
+                    }
+
                     SharedPreferenceManager.getInstance(getContext()).putValue(KEY_FIREBASE_TOKEN_UPDATED, true);
 
 
