@@ -7,7 +7,7 @@
     android:background="@color/c_white"
     android:orientation="vertical">
 
-    <com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -20,75 +20,81 @@
         app:corner_radius="@dimen/x5dp">
 
 
-        <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="5dp"
-            app:corner_radius="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <ImageView
+            <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginLeft="5dp"
+                app:corner_radius="2dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/img"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/clip" />
+
+            </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/img"
-                android:scaleType="fitCenter"
-                android:src="@drawable/clip" />
+                android:layout_marginStart="15dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:id="@+id/txtRef"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="034311"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/_10ssp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:gravity="center|start"
-            android:orientation="vertical">
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center|start"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:paddingBottom="@dimen/_2sdp"
+                    android:id="@+id/txtName"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="General Motors"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/_10ssp"/>
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:ellipsize="end"
-                android:id="@+id/txtRef"
-                android:gravity="center|start"
-                android:maxLines="1"
-                android:minLines="1"
-                android:text="034311"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s12" />
+                <com.tekrevol.arrowrecovery.widget.AnyTextView
+                    app:typeface="@string/font_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:id="@+id/txtPrice"
+                    android:gravity="center|start"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:text="$254.89"
+                    android:textColor="@color/title_color"
+                    android:textSize="@dimen/_10ssp" />
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:ellipsize="end"
-                android:gravity="center|start"
-
-                android:id="@+id/txtName"
-                android:maxLines="1"
-                android:minLines="1"
-                android:text="General Motors"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s12" />
-
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
-                app:typeface="@string/font_regular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:id="@+id/txtPrice"
-                android:gravity="center|start"
-                android:maxLines="1"
-                android:minLines="1"
-                android:text="$254.89"
-                android:textColor="@color/title_color"
-                android:textSize="@dimen/s12" />
+            </LinearLayout>
 
         </LinearLayout>
 
 
-    </com.jcminarro.roundkornerlayout.RoundKornerLinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

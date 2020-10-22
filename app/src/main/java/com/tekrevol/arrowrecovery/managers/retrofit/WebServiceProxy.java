@@ -2,21 +2,26 @@ package com.tekrevol.arrowrecovery.managers.retrofit;
 
 
 import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel;
+import com.tekrevol.arrowrecovery.models.receiving_model.Product;
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -78,6 +83,12 @@ public interface WebServiceProxy {
 
     @GET("JOHNMATT/{path}")
     Call<DataPriceModel> getAPIRhodiumPriceForWebresponseAnyObject(
+            @Path(value = "path", encoded = true) String postfix,
+            @QueryMap Map<String, Object> queryMap
+    );
+
+    @GET("api/v1/{path}")
+    Observable<WebResponse<Object>> getProductsSearchByQuery(
             @Path(value = "path", encoded = true) String postfix,
             @QueryMap Map<String, Object> queryMap
     );

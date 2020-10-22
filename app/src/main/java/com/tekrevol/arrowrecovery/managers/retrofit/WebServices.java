@@ -16,6 +16,8 @@ import com.tekrevol.arrowrecovery.managers.FileManager;
 import com.tekrevol.arrowrecovery.managers.SharedPreferenceManager;
 import com.tekrevol.arrowrecovery.managers.retrofit.entities.MultiFileModel;
 import com.tekrevol.arrowrecovery.models.receiving_model.DataPriceModel;
+import com.tekrevol.arrowrecovery.models.receiving_model.Product;
+import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel;
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper;
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -491,6 +494,10 @@ public class WebServices {
         }
 
         return webResponseCall;
+    }
+
+    public Observable<WebResponse<Object>> getProductsBySearch(String path, Map<String, Object> queryMap){
+       return apiService.getProductsSearchByQuery(path, queryMap);
     }
 
 

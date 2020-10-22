@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.jcminarro.roundkornerlayout.RoundKornerLinearLayout
 import com.tekrevol.arrowrecovery.R
@@ -16,7 +17,10 @@ import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
 
 /**
  */
-class SearchBarShimmerAdapter(private val activity: Context, private val arrData: List<ProductDetailModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
+class SearchBarShimmerAdapter(private val activity: Context, private val arrData: ArrayList<ProductDetailModel>, private val onItemClick: OnItemClickListener) : PagingAdapter() {
+
+    private var  arrData1: ArrayList<ProductDetailModel> = arrData
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var itemView: View? = null
         itemView = LayoutInflater.from(activity)
@@ -27,7 +31,7 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
         if (holder is ViewHolder) {
-            val model = arrData[position]
+            val model = arrData1[position]
 
             val viewHolder: ViewHolder = holder
             with(viewHolder)
@@ -48,7 +52,7 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
     }
 
     override fun getItemCount(): Int {
-        return arrData.size
+        return arrData1.size
     }
 
     override fun getPagingLayout(): Int {
@@ -57,11 +61,16 @@ class SearchBarShimmerAdapter(private val activity: Context, private val arrData
     }
 
     override fun getPagingItemCount(): Int {
-        return arrData.size
+        return arrData1.size
+    }
+
+    fun resetAdapter() {
+        arrData1.clear()
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var contSearch: RoundKornerLinearLayout? = view.findViewById(R.id.contSearch)
+        var contSearch: CardView? = view.findViewById(R.id.contSearch)
         val txtName = view.findViewById<TextView>(R.id.txtName)
         val txtRef = view.findViewById<TextView>(R.id.txtRef)
         val txtPrice = view.findViewById<TextView>(R.id.txtPrice)

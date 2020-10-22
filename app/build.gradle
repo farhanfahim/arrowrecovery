@@ -56,7 +56,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 8
-        versionName "1.2.8"
+        versionName "1.2.11"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -176,7 +176,9 @@ dependencies {
     // Add the Firebase Crashlytics SDK.
     implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
 
-
+    //sdp-ssp
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
     //zendesk chat
     implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
     implementation group: 'com.zopim.android', name: 'sdk', version: '1.4.8'

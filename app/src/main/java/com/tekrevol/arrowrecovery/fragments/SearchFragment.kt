@@ -1,11 +1,17 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
+import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +25,7 @@ import com.tekrevol.arrowrecovery.adapters.recyleradapters.SearchBarShimmerAdapt
 import com.tekrevol.arrowrecovery.callbacks.OnItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
+import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
@@ -26,15 +33,18 @@ import com.tekrevol.arrowrecovery.models.FilterModel
 import com.tekrevol.arrowrecovery.models.SearchHistoryModel
 import com.tekrevol.arrowrecovery.models.receiving_model.Product
 import com.tekrevol.arrowrecovery.models.receiving_model.ProductDetailModel
-import com.tekrevol.arrowrecovery.models.receiving_model.VehicleMakeModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
+import com.tekrevol.arrowrecovery.utils.RxSearchObserver
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.todkars.shimmer.ShimmerAdapter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search.*
 import retrofit2.Call
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
-import kotlin.collections.firstOrNull
 import kotlin.collections.set
 
 class SearchFragment : BaseFragment(), OnItemClickListener {
@@ -59,6 +69,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         var makeString: String = ""
         var year: String = ""
         var serialNumber: String = ""
+        var searchKeyword: String = ""
         fun newInstance(): SearchFragment {
 
             val args = Bundle()
@@ -68,12 +79,137 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         }
     }
 
+    @SuppressLint("CheckResult")
+    fun searchProductsByKeywords() {
+
+        val observer : DisposableObserver<WebResponse<Any>> = getSearchObserver2()
+
+        val services = WebServices(activity, sharedPreferenceManager!!.getString(AppConstants.KEY_TOKEN), BaseURLTypes.BASE_URL, false)
+
+        val query = HashMap<String, Any>()
+
+        if (query.isNullOrEmpty() && makeId.isNullOrEmpty() && modelId.isNullOrEmpty() && year.isNullOrEmpty() && serialNumber.isNullOrEmpty()) {
+            recyclerViewSearchList.visibility = View.VISIBLE
+            rvSearch.visibility = View.GONE
+        } else {
+            recyclerViewSearchList.visibility = View.GONE
+            rvSearch.showShimmer()
+            val queryMap = HashMap<String, Any>()
+            if (query.isNotEmpty()) {
+                queryMap[WebServiceConstants.Q_QUERY] = query
+            }
+            arrFilter.clear()
+            if (makeId.isNotEmpty()) {
+                queryMap[WebServiceConstants.Q_MAKE_ID] = makeId
+                arrFilter.add(FilterModel(": " + makeString, "Make"))
+            }
+
+            if (modelId.isNotEmpty()) {
+                queryMap[WebServiceConstants.Q_MODEL_ID] = modelId
+                arrFilter.add(FilterModel(": " + modelString, "Model"))
+
+            }
+
+            if (year.isNotEmpty()) {
+                queryMap[WebServiceConstants.Q_YEAR] = year
+                arrFilter.add(FilterModel(": " + year, "Year"))
+
+            }
+
+            if (serialNumber.isNotEmpty()) {
+                queryMap[WebServiceConstants.Q_SERIAL_NUMBER] = serialNumber
+                arrFilter.add(FilterModel(": " + serialNumber, "Serial Number"))
+
+            }
+        }
+
+            filterAdapter.notifyDataSetChanged()
+
+        searchKeyword = edtSearch.stringTrimmed
+        if (makeId.isNotEmpty() || modelId.isNotEmpty() || year.isNotEmpty() || serialNumber.isNotEmpty()){
+
+            getProducts(edtSearch.stringTrimmed)
+
+        }else{
+
+            RxSearchObserver.fromView(edtSearch)
+                    .debounce(500, TimeUnit.MILLISECONDS)
+                    .distinctUntilChanged()
+                    .switchMap { s ->
+                        query[WebServiceConstants.Q_QUERY] = s
+                        services.getProductsBySearch (WebServiceConstants.PATH_GET_PRODUCT, query )
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                    }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(observer)
+        }
+
+    }
+
+    private fun getSearchObserver2(): DisposableObserver<WebResponse<Any>> {
+        return object : DisposableObserver<WebResponse<Any>>() {
+            override fun onComplete() {
+            }
+
+            override fun onNext(webResponse: WebResponse<Any>) {
+
+                if (edtSearch.stringTrimmed != "" || edtSearch.stringTrimmed != null){
+                    val product: Product = GsonFactory.getSimpleGson()
+                            .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                    , Product::class.java)
+
+                    if (recyclerViewSearchList != null || rvSearch != null) {
+                        if (product.products.size > 0) {
+
+                            searchHistoryModel.query = edtSearch.stringTrimmed
+                            recyclerViewSearchList.visibility = View.GONE
+                            rvSearch.visibility = View.VISIBLE
+
+                            rvSearch.hideShimmer()
+                            arrDataSearchBar.clear()
+                            arrDataSearchBar.addAll(product.products)
+                            searchBarShimmerAdapter.notifyDataSetChanged()
+
+                        } else {
+                            recyclerViewSearchList.visibility = View.VISIBLE
+                            rvSearch.visibility = View.GONE
+
+                            rvSearch.hideShimmer()
+                            arrDataSearchBar.clear()
+                            searchBarShimmerAdapter.resetAdapter()
+                        }
+                    }
+                }else{
+                    recyclerViewSearchList.visibility = View.VISIBLE
+                    rvSearch.visibility = View.GONE
+
+                    rvSearch.hideShimmer()
+                    arrDataSearchBar.clear()
+                    searchBarShimmerAdapter.resetAdapter()
+                }
+
+
+
+            }
+
+            override fun onError(throwable: Throwable) {
+                if (rvSearch == null) {
+                    return
+                }
+                rvSearch.hideShimmer()
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         searchAdapter = SearchAdapter(context!!, arrData, this)
         searchBarShimmerAdapter = SearchBarShimmerAdapter(context!!, arrDataSearchBar, this)
         filterAdapter = FilterAdapter(context!!, arrFilter, this)
+
 
     }
 
@@ -98,7 +234,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         rvSearch.adapter = searchBarShimmerAdapter
         rvSearch.setItemViewType(ShimmerAdapter.ItemViewType { type: Int, position: Int -> R.layout.shimmer_item_searchbar })
 
-        edtSearch.addTextChangedListener(object : TextWatcher {
+        /*edtSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
                 text = s.toString()
@@ -131,7 +267,21 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             override fun afterTextChanged(s: Editable) {
 
             }
+        })*/
+
+        edtSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    performSearch()
+                    return true
+                }
+                return false
+            }
         })
+
+
+
+        searchProductsByKeywords()
 
     }
 
@@ -141,8 +291,15 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         onBind()
 
 
-    }
 
+
+    }
+    private fun performSearch() {
+        edtSearch.clearFocus()
+        val `in` = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        `in`.hideSoftInputFromWindow(edtSearch.windowToken, 0)
+        //...perform search
+    }
     override fun getDrawerLockMode(): Int {
         return 0
 
@@ -163,7 +320,6 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
             baseActivity.popBackStack()
         })
         advSearch.setOnClickListener(View.OnClickListener {
-            edtSearch.setText("")
             baseActivity.addDockableFragment(AdvanceSearchFragment.newInstance(), true)
         })
     }
@@ -202,10 +358,8 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
 
                     arrFilter.removeAt(position)
                     filterAdapter.notifyItemRemoved(position)
-                    getProducts(text!!)
-
+                    searchProductsByKeywords()
                 }
-
 
             }
         }
@@ -229,12 +383,13 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         } else if (type == SearchBarShimmerAdapter::class.java.simpleName) {
             var product: ProductDetailModel = anyObject as ProductDetailModel
             baseActivity.openActivity(ProductDetailActivity::class.java, product.toString())
-            product?.vehicleMake?.name?.let { insertItem(it) }
+            product.vehicleMake?.name?.let { insertItem(it) }
         }
 
     }
 
     private fun getProducts(query: String) {
+        edtSearch.setText("")
 
         if (query.isNullOrEmpty() && makeId.isNullOrEmpty() && modelId.isNullOrEmpty() && year.isNullOrEmpty() && serialNumber.isNullOrEmpty()) {
             recyclerViewSearchList.visibility = View.VISIBLE
@@ -363,7 +518,7 @@ class SearchFragment : BaseFragment(), OnItemClickListener {
         serialNumber = ""
         makeString = ""
         modelString = ""
-        edtSearch?.setText("")
+        //edtSearch?.setText("")
         super.onDestroyView()
     }
 }

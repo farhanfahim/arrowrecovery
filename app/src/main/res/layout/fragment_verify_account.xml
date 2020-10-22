@@ -47,7 +47,7 @@
 
         <com.tekrevol.arrowrecovery.widget.PinEntryEditText
             android:id="@+id/pinEditText"
-            android:layout_width="@dimen/x200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/x50dp"

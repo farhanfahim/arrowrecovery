@@ -15,6 +15,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
@@ -67,6 +68,8 @@ class WebServiceFactory {
 //                    .baseUrl(WebServiceConstants.BASE_URL_LIVE)
                     .baseUrl(WebServiceConstants.PRICE_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSimpleGson()))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
                     .client(httpClient.build())
                     .build();
         }
@@ -118,6 +121,8 @@ class WebServiceFactory {
 //                    .baseUrl(WebServiceConstants.BASE_URL_LIVE)
                     .baseUrl(WebServiceConstants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(GsonFactory.getSimpleGson()))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
                     .client(httpClient.build())
                     .build();
         }
@@ -161,6 +166,8 @@ class WebServiceFactory {
             httpClient.addInterceptor(interceptor);  // <-- this is the important line!
             retrofiltXML = new Retrofit.Builder()
                     .baseUrl(WebServiceConstants.BASE_URL)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
                     .addConverterFactory(
                             SimpleXmlConverterFactory.createNonStrict(
                                     new Persister(new AnnotationStrategy() // important part!
