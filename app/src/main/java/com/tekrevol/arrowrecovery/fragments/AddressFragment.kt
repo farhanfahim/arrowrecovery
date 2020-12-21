@@ -1,37 +1,28 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.adapters.SpinnerDialogAdapter
-import com.tekrevol.arrowrecovery.callbacks.OnSpinnerItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
-import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
-import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.Country
-import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.receiving_model.Slug
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
-import com.tekrevol.arrowrecovery.searchdialog.core.BaseSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_address.contCountry
-import kotlinx.android.synthetic.main.fragment_address.contState
-import kotlinx.android.synthetic.main.fragment_address.txtCountry
-import kotlinx.android.synthetic.main.fragment_address.txtState
-import kotlinx.android.synthetic.main.fragment_editprofile.*
 import retrofit2.Call
 import java.util.*
 import kotlin.collections.ArrayList
@@ -43,6 +34,8 @@ class AddressFragment : BaseFragment() {
     private var spinnerCountryArrayList = ArrayList<SpinnerModel>()
     var webCall: Call<WebResponse<Any>>? = null
     var aboutCall: Call<WebResponse<Any>>? = null
+
+    var googlePlaceHelper: GooglePlaceHelper? = null
     override fun getDrawerLockMode(): Int {
         return 0
 
@@ -86,8 +79,34 @@ class AddressFragment : BaseFragment() {
         contTermsAndConditions.setOnClickListener {
             privacyAPI(AppConstants.KEY_TERMS)
         }
+
+        tvAddress.setOnClickListener {
+            googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
+                override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
+                    tvAddress.text = locationName
+                    AppConstants.LAT = latitude
+                    AppConstants.LNG = longitude
+
+                        var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
+                        ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                        map.visibility = View.VISIBLE
+
+                }
+
+                override fun onError(error: String?) {}
+            }, this@AddressFragment, onCreated)
+
+            googlePlaceHelper!!.openMapsActivity()
+        }
+
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (googlePlaceHelper != null) {
+            googlePlaceHelper!!.onActivityResult(requestCode, resultCode, data)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getCountry()

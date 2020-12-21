@@ -29,7 +29,6 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_address.edtAddress
 import kotlinx.android.synthetic.main.fragment_address.edtCity
 import kotlinx.android.synthetic.main.fragment_address.edtZipCode
 import kotlinx.android.synthetic.main.fragment_address.txtCountry
@@ -153,7 +152,7 @@ class RegisterPagerFragment : BaseFragment() {
         if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter Address")
             return
         }
@@ -181,7 +180,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (edtAddress.stringTrimmed)
+        editProfileSendingModel.address = (tvAddress.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
@@ -275,7 +274,7 @@ class RegisterPagerFragment : BaseFragment() {
 
         sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN,"");
 
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter Address")
             return
         }
@@ -304,7 +303,7 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.phone = (edtPhoneNo.stringTrimmed)
         signUpSendingModel.firstName = (edtFirstname.stringTrimmed)
         signUpSendingModel.lastName = (edtLastName.stringTrimmed)
-        signUpSendingModel.address = (edtAddress.stringTrimmed)
+        signUpSendingModel.address = (tvAddress.stringTrimmed)
         signUpSendingModel.zipCode = (edtZipCode.stringTrimmed)
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
         signUpSendingModel.stateId = getIdFromSpinner()
@@ -313,6 +312,8 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.country = (txtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
+        signUpSendingModel.latitude = AppConstants.LAT
+        signUpSendingModel.longitude = AppConstants.LNG
         //signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         signUpSendingModel.isCompleted = (1)
 

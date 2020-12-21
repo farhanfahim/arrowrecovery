@@ -15,28 +15,31 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.BaseURLTypes
 import com.tekrevol.arrowrecovery.enums.FileType
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.managers.retrofit.entities.MultiFileModel
 import com.tekrevol.arrowrecovery.models.*
-import com.tekrevol.arrowrecovery.models.receiving_model.DataUpdate
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
 import kotlinx.android.synthetic.main.fragment_editprofile.contState
 import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
-import kotlinx.android.synthetic.main.fragment_editprofile.edtAddress
 import kotlinx.android.synthetic.main.fragment_editprofile.edtCity
 import kotlinx.android.synthetic.main.fragment_editprofile.edtZipCode
+import kotlinx.android.synthetic.main.fragment_editprofile.imgMap
+import kotlinx.android.synthetic.main.fragment_editprofile.map
 import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnCompany
 import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnIndividual
+import kotlinx.android.synthetic.main.fragment_editprofile.txtAddress
 import kotlinx.android.synthetic.main.fragment_editprofile.txtCountry
 import kotlinx.android.synthetic.main.fragment_editprofile.txtState
 import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
@@ -55,6 +58,9 @@ class EditProfileFragment : BaseFragment() {
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
     private var spinnerCountryArrayList = ArrayList<SpinnerModel>()
 
+    var lat = 0.0
+    var lng = 0.0
+    var googlePlaceHelper: GooglePlaceHelper? = null
     companion object {
 
         var arrData: ArrayList<States> = ArrayList()
@@ -146,7 +152,27 @@ class EditProfileFragment : BaseFragment() {
             edtCompany.visibility = View.VISIBLE
            // edtKindCompany.visibility = View.VISIBLE
         }
+
+        txtAddress.setOnClickListener {
+            googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
+                override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
+                    txtAddress.text = locationName
+                    lat = latitude
+                    lng = longitude
+
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
+                    ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                    map.visibility = View.VISIBLE
+
+                }
+
+                override fun onError(error: String?) {}
+            }, this@EditProfileFragment, onCreated)
+
+            googlePlaceHelper!!.openMapsActivity()
+        }
     }
+
 
 
     fun showProvidersInDialog(insuranceProvidersList: ArrayList<States>) {
@@ -213,6 +239,9 @@ class EditProfileFragment : BaseFragment() {
                 error.printStackTrace()
             }
         }
+        if (googlePlaceHelper != null) {
+            googlePlaceHelper!!.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     private fun setImageAfterResult(uploadFilePath: String) {
@@ -254,7 +283,15 @@ class EditProfileFragment : BaseFragment() {
         edtLastName.setText(sharedPreferenceManager.currentUser.userDetails.lastName)
         edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
         edtPhoneNo.setText(sharedPreferenceManager.currentUser.userDetails.phone)
-        edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
+        txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+        if (sharedPreferenceManager.currentUser.userDetails.lat != null &&
+                sharedPreferenceManager.currentUser.userDetails.lng != null){
+            lat = sharedPreferenceManager.currentUser.userDetails.lat
+            lng = sharedPreferenceManager.currentUser.userDetails.lng
+            var str: String = GooglePlaceHelper.getMapSnapshotURL(sharedPreferenceManager.currentUser.userDetails.lat,sharedPreferenceManager.currentUser.userDetails.lng)
+            ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+            map.visibility = View.VISIBLE
+        }
         edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
         edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
         txtCountry.text = (sharedPreferenceManager.currentUser.userDetails.country)
@@ -302,7 +339,7 @@ class EditProfileFragment : BaseFragment() {
             return
         }
 
-        if (!edtAddress.testValidity()) {
+        if (txtAddress.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter your address")
             return
 
@@ -342,7 +379,7 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
         editProfileSendingModel.firstName = (edtFirstName.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (edtAddress.stringTrimmed)
+        editProfileSendingModel.address = (txtAddress.stringTrimmed)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompany.stringTrimmed)
         editProfileSendingModel.name = (edtFirstName.stringTrimmed)
@@ -350,6 +387,8 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.country = getCountryFromSpinner()
         editProfileSendingModel.stateId = getIdFromSpinner()
         editProfileSendingModel.isCompleted = (1)
+        editProfileSendingModel.latitude = lat
+        editProfileSendingModel.longitude = lng
        // editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
 
         if (txtTitle.text == Constants.title[0]) {
