@@ -1,7 +1,6 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
@@ -18,10 +17,7 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.UserDetails
 import com.tekrevol.arrowrecovery.models.receiving_model.DataUpdate
-import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.sending_model.SignupSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
@@ -29,20 +25,10 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_address.edtCity
-import kotlinx.android.synthetic.main.fragment_address.edtZipCode
-import kotlinx.android.synthetic.main.fragment_address.txtCountry
-import kotlinx.android.synthetic.main.fragment_address.txtState
 import kotlinx.android.synthetic.main.fragment_contact.*
-import kotlinx.android.synthetic.main.fragment_contact.edtPhoneNo
 import kotlinx.android.synthetic.main.fragment_personal.*
-import kotlinx.android.synthetic.main.fragment_personal.edtLastName
-import kotlinx.android.synthetic.main.fragment_personal.radioBtnCompany
-import kotlinx.android.synthetic.main.fragment_personal.radioBtnIndividual
-import kotlinx.android.synthetic.main.fragment_personal.txtTitle
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
-import java.util.ArrayList
 
 
 class RegisterPagerFragment : BaseFragment() {
@@ -52,6 +38,9 @@ class RegisterPagerFragment : BaseFragment() {
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
     lateinit var fragmentName: FragmentName
+    var USrx = "[\\(]?\\d{3}[\\)]?([-.]?)\\s*\\d{3}\\1\\s*\\d{4}"
+    var CArx = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})\$"
+    var MXrx = "(\\(\\d{3}\\)[.-]?|\\d{3}[.-]?)?\\d{3}[.-]?\\d{4}"
 
 
     companion object {
@@ -118,7 +107,9 @@ class RegisterPagerFragment : BaseFragment() {
                 when (positionToSelect) {
                     0 -> accountDetails(positionToSelect)
                     1 -> personalDetails(positionToSelect)
-                    2 -> contactDetails(positionToSelect)
+                    2 -> {
+                        contactDetails(positionToSelect)
+                    }
 
                 }
             } else {
@@ -393,19 +384,29 @@ class RegisterPagerFragment : BaseFragment() {
     private fun contactDetails(positionToSelect: Int) {
 
 
-        if (!edtPhoneNo.testValidity() || edtPhoneNo.text.toString().trim().length < 10) {
+        if (!edtPhoneNo.testValidity() || edtPhoneNo.text.toString().trim().length < 9) {
             UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
             return
+        }else {
+
+            var phoneNo = edtPhoneNo.stringTrimmed
+            if(phoneNo.matches(USrx.toRegex()) || phoneNo.matches(CArx.toRegex()) || phoneNo.matches(MXrx.toRegex())){
+                val builder = AlertDialog.Builder(context!!)
+                builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid Phone Number? ")
+                        .setTitle("Alert")
+                        .setCancelable(true)
+                        .setNegativeButton("No"
+                        ) { dialog, id -> dialog.cancel() }
+                        .setPositiveButton("Yes") { dialog, id -> setCurrentItemByPosition(positionToSelect + 1) }
+                val alert = builder.create()
+                alert.show()
+            }else{
+                UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
+
+            }
+
+
         }
-        val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid Phone Number? ")
-                .setTitle("Alert")
-                .setCancelable(true)
-                .setNegativeButton("No"
-                ) { dialog, id -> dialog.cancel() }
-                .setPositiveButton("Yes") { dialog, id -> setCurrentItemByPosition(positionToSelect + 1) }
-        val alert = builder.create()
-        alert.show()
     }
 
     private fun personalDetails(positionToSelect: Int) {

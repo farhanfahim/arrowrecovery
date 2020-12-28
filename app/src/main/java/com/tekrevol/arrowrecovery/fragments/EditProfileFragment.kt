@@ -21,32 +21,23 @@ import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.managers.retrofit.entities.MultiFileModel
-import com.tekrevol.arrowrecovery.models.*
+import com.tekrevol.arrowrecovery.models.Country
+import com.tekrevol.arrowrecovery.models.SpinnerModel
+import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.fragment_address.*
+import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_editprofile.*
-import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
-import kotlinx.android.synthetic.main.fragment_editprofile.contState
-import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
-import kotlinx.android.synthetic.main.fragment_editprofile.edtCity
-import kotlinx.android.synthetic.main.fragment_editprofile.edtZipCode
-import kotlinx.android.synthetic.main.fragment_editprofile.imgMap
-import kotlinx.android.synthetic.main.fragment_editprofile.map
-import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnCompany
-import kotlinx.android.synthetic.main.fragment_editprofile.radioBtnIndividual
-import kotlinx.android.synthetic.main.fragment_editprofile.txtAddress
-import kotlinx.android.synthetic.main.fragment_editprofile.txtCountry
-import kotlinx.android.synthetic.main.fragment_editprofile.txtState
-import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
+import kotlinx.android.synthetic.main.fragment_editprofile.edtPhoneNo
 import retrofit2.Call
 import java.io.File
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 class EditProfileFragment : BaseFragment() {
 
@@ -57,6 +48,10 @@ class EditProfileFragment : BaseFragment() {
     private var selectedCountryIndex: Int = -1
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
     private var spinnerCountryArrayList = ArrayList<SpinnerModel>()
+    var USrx = "[\\(]?\\d{3}[\\)]?([-.]?)\\s*\\d{3}\\1\\s*\\d{4}"
+    var CArx = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})\$"
+    var MXrx = "(\\(\\d{3}\\)[.-]?|\\d{3}[.-]?)?\\d{3}[.-]?\\d{4}"
+
 
     var lat = 0.0
     var lng = 0.0
@@ -337,6 +332,9 @@ class EditProfileFragment : BaseFragment() {
         if (!edtPhoneNo.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your phone no")
             return
+        }
+        if(!edtPhoneNo.stringTrimmed.matches(USrx.toRegex()) || !edtPhoneNo.stringTrimmed.matches(CArx.toRegex()) || !edtPhoneNo.stringTrimmed.matches(MXrx.toRegex())){
+            println("Invalid phone no")
         }
 
         if (txtAddress.stringTrimmed.isEmpty()) {
