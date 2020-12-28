@@ -152,7 +152,7 @@
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Company Name"
+                android:hint="Business Name"
                 android:id="@+id/edtCompanyName"
                 android:inputType="textPersonName"
                 android:maxLength="50"

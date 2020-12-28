@@ -1,7 +1,11 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -24,6 +28,7 @@ import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
 import retrofit2.Call
+import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -35,6 +40,7 @@ class AddressFragment : BaseFragment() {
     var webCall: Call<WebResponse<Any>>? = null
     var aboutCall: Call<WebResponse<Any>>? = null
 
+    private var locationClick: Long = 0
     var googlePlaceHelper: GooglePlaceHelper? = null
     override fun getDrawerLockMode(): Int {
         return 0
@@ -72,7 +78,7 @@ class AddressFragment : BaseFragment() {
             showProvidersInDialog(arrData)
         }
         contCountry.setOnClickListener {
-            showCountrySelectDialog()
+            //showCountrySelectDialog()
         }
 
 
@@ -81,11 +87,43 @@ class AddressFragment : BaseFragment() {
         }
 
         tvAddress.setOnClickListener {
+
+            if (SystemClock.elapsedRealtime() - locationClick < 2000) {
+                return@setOnClickListener
+            }
+            locationClick = SystemClock.elapsedRealtime()
+
             googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
                 override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
                     tvAddress.text = locationName
                     AppConstants.LAT = latitude
                     AppConstants.LNG = longitude
+
+                    var countryName = getCountryName(context,latitude,longitude)
+                    for (arr in arrCountryData){
+                        if (countryName == "United States"){
+                            txtCountry.text = arrCountryData[0].name
+                            txtState.text = ""
+                            getStates(arrCountryData[0].id)
+                            return
+
+                        }else if (countryName == "Canada"){
+                            txtCountry.text = arrCountryData[1].name
+                            txtState.text = ""
+                            getStates(arrCountryData[1].id)
+                            return
+
+                        }else if (countryName == "Mexico"){
+                            txtCountry.text = arrCountryData[2].name
+                            txtState.text = ""
+                            getStates(arrCountryData[2].id)
+                            return
+                        }else{
+                            Toast.makeText(context,"Wrong country",Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                    }
+
 
                         var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
                         ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
@@ -241,6 +279,26 @@ class AddressFragment : BaseFragment() {
         webCall?.cancel()
         aboutCall?.cancel()
         super.onDestroyView()
+    }
+
+    fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        var addresses: List<Address>? = null
+        var addressResult = ""
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            var result: Address
+             if (addresses != null && !addresses.isEmpty()) {
+                addresses[0].countryName
+                addressResult = addresses[0].countryName
+            } else {
+                 addressResult = ""
+
+             }
+        } catch (ignored: IOException) {
+            //do something
+        }
+        return addressResult
     }
 
 

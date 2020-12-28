@@ -1,8 +1,12 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -30,11 +34,21 @@ import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_editprofile.*
+import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
+import kotlinx.android.synthetic.main.fragment_editprofile.contState
+import kotlinx.android.synthetic.main.fragment_editprofile.edtCity
 import kotlinx.android.synthetic.main.fragment_editprofile.edtPhoneNo
+import kotlinx.android.synthetic.main.fragment_editprofile.edtZipCode
+import kotlinx.android.synthetic.main.fragment_editprofile.imgMap
+import kotlinx.android.synthetic.main.fragment_editprofile.map
+import kotlinx.android.synthetic.main.fragment_editprofile.txtCountry
+import kotlinx.android.synthetic.main.fragment_editprofile.txtState
 import retrofit2.Call
 import java.io.File
+import java.io.IOException
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -52,6 +66,7 @@ class EditProfileFragment : BaseFragment() {
     var CArx = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})\$"
     var MXrx = "(\\(\\d{3}\\)[.-]?|\\d{3}[.-]?)?\\d{3}[.-]?\\d{4}"
 
+    private var locationClick: Long = 0
 
     var lat = 0.0
     var lng = 0.0
@@ -118,7 +133,7 @@ class EditProfileFragment : BaseFragment() {
             showProvidersInDialog(arrData)
         }
         contCountry.setOnClickListener {
-            showCountrySelectDialog()
+           // showCountrySelectDialog()
         }
 
         imgCamera.setOnClickListener {
@@ -149,11 +164,40 @@ class EditProfileFragment : BaseFragment() {
         }
 
         txtAddress.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - locationClick < 2000) {
+                return@setOnClickListener
+            }
+            locationClick = SystemClock.elapsedRealtime()
             googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
                 override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
                     txtAddress.text = locationName
                     lat = latitude
                     lng = longitude
+
+                    var countryName = getCountryName(context,latitude,longitude)
+                    for (arr in AddressFragment.arrCountryData){
+                        if (countryName == "United States"){
+                            txtCountry.text = AddressFragment.arrCountryData[0].name
+                            txtState.text = ""
+                            getStates(AddressFragment.arrCountryData[0].id)
+                            return
+
+                        }else if (countryName == "Canada"){
+                            txtCountry.text = AddressFragment.arrCountryData[1].name
+                            txtState.text = ""
+                            getStates(AddressFragment.arrCountryData[1].id)
+                            return
+
+                        }else if (countryName == "Mexico"){
+                            txtCountry.text = AddressFragment.arrCountryData[2].name
+                            txtState.text = ""
+                            getStates(AddressFragment.arrCountryData[2].id)
+                            return
+                        }else{
+                            Toast.makeText(context,"Wrong country",Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                    }
 
                     var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
                     ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
@@ -324,7 +368,7 @@ class EditProfileFragment : BaseFragment() {
 
         if (radioBtnCompany.isChecked) {
             if (edtCompany.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(context, "Please enter your company name")
+                UIHelper.showAlertDialog(context, "Please enter your business name")
                 return
             }
         }
@@ -508,6 +552,27 @@ class EditProfileFragment : BaseFragment() {
         webCall?.cancel()
         super.onDestroyView()
     }
+
+    fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        var addresses: List<Address>? = null
+        var addressResult = ""
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            var result: Address
+            if (addresses != null && !addresses.isEmpty()) {
+                addresses[0].getCountryName()
+                addressResult = addresses[0].getCountryName()
+            } else {
+                addressResult = ""
+
+            }
+        } catch (ignored: IOException) {
+            //do something
+        }
+        return addressResult
+    }
+
 
 }
 

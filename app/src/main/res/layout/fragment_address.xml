@@ -179,7 +179,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Select Country..."
+                        android:hint="Country"
                         android:padding="5dp"
                         android:textColor="@color/title_color"
                         android:textColorHint="@color/txtGrey"
@@ -190,8 +190,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:contentDescription="Select country"
+                        android:contentDescription="country"
                         android:padding="@dimen/x10dp"
+                        android:visibility="gone"
                         android:src="@drawable/spinner" />
                 </LinearLayout>
 

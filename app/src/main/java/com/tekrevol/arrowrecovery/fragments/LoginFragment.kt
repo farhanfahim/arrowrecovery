@@ -117,7 +117,6 @@ class LoginFragment : BaseFragment() {
         loginSendingModel.deviceType = AppConstants.DEVICE_OS_ANDROID
         loginSendingModel.password = edtPassword.stringTrimmed
         val email: String = edtEmail.stringTrimmed
-        //var phone:String = inputPhoneNo.stringTrimmed
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_LOGIN, loginSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
                 UIHelper.showToast(context, webResponse.message)
@@ -139,7 +138,7 @@ class LoginFragment : BaseFragment() {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, userModelWrapper.user.userDetails.phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)

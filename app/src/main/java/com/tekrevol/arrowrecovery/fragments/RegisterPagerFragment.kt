@@ -349,7 +349,7 @@ class RegisterPagerFragment : BaseFragment() {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
@@ -437,7 +437,7 @@ class RegisterPagerFragment : BaseFragment() {
 
         if (radioBtnCompany.isChecked) {
             if (edtCompanyName.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(context, "Please enter your Company Name")
+                UIHelper.showAlertDialog(context, "Please enter your Business Name")
                 return
             }
         }
