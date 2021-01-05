@@ -14,27 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/x10dp"
-                android:textSize="@dimen/s14"
-                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
-                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
-                    android:id="@+id/edtPhoneNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone Number"
-                    android:inputType="phone"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/title_color"
-                    android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14"
-                    app:testType="phone"
-                    app:typeface="@string/font_light" />
-            </com.google.android.material.textfield.TextInputLayout>
 
           <!--  <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -57,6 +37,46 @@
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultNameCode="US"
+                    app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
+                    app:ccp_showFullName="false"
+                    app:ccp_showPhoneCode="false"
+                    app:ccp_customMasterCountries="US,CA,MX,PK"
+                    app:ccp_showNameCode="false"
+                    app:ccp_defaultLanguage="ENGLISH"
+                    app:ccp_showFlag="true"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/s14"
+                    app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                    <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                        android:id="@+id/edtPhoneNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Phone Number"
+                        android:inputType="phone"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:textColor="@color/title_color"
+                        android:textColorHint="@color/txtGrey"
+                        android:textSize="@dimen/s14"
+                        app:testType="phone"
+                        app:typeface="@string/font_light" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"

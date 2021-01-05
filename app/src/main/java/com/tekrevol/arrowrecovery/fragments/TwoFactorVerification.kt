@@ -28,7 +28,7 @@ class TwoFactorVerification : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        txtPhone.text = "Please enter the OTP code sent to your email " + sharedPreferenceManager.currentUser.email
+        txtPhone.text = "Please enter the OTP code sent to your phone number ${sharedPreferenceManager.currentUser.userDetails.phone}"
         txtBackToLoginScreen.visibility = View.GONE
         //sendOtp()
     }

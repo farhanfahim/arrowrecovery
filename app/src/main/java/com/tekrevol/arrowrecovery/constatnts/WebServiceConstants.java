@@ -38,16 +38,16 @@ public class WebServiceConstants {
     public static final String PRICE_BASE_URL = " https://www.quandl.com/api/v3/datasets/";
 
     // STAGING
-   /* public static final String BASE_URL = "http://arrow-recovery.demo.servstaging.com/";
-    public static final String IMAGE_BASE_URL = "http://arrow-recovery.demo.servstaging.com/api/resize/";*/
+    public static final String BASE_URL = "http://arrow-recovery.demo.servstaging.com/";
+    public static final String IMAGE_BASE_URL = "http://arrow-recovery.demo.servstaging.com/api/resize/";
 
     //LIVE
    /* public static final String BASE_URL = "http://54.70.47.244/";
     public static final String IMAGE_BASE_URL = "http://54.70.47.244/api/resize/";*/
 
     //LIVE ClIENT
-    public static final String BASE_URL = "http://arrowcatapp.com/";
-    public static final String IMAGE_BASE_URL = "http://arrowcatapp.com/";
+//    public static final String BASE_URL = "http://arrowcatapp.com/";
+//    public static final String IMAGE_BASE_URL = "http://arrowcatapp.com/";
 
     // DEV
 
@@ -83,6 +83,7 @@ public class WebServiceConstants {
     public static final String PATH_PALL = "PALL/data.json/";
     public static final String PATH_COLLECTIONCENTER = "collection-centers";
     public static final String PATH_NOTIFICATIONS = "notifications";
+    public static final String PATH_USER_SLASH = "users/";
     public static final String PATH_GETAVAILABILITY = "check-availabilty";
     public static final String PATH_NOTIFICATIONS_SLASH = "notifications/";
 

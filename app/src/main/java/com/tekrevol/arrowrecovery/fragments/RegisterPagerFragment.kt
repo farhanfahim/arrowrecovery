@@ -3,8 +3,10 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.hbb20.CountryCodePicker
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.adapters.RegisterPagerAdapter
@@ -29,18 +31,19 @@ import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_personal.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class RegisterPagerFragment : BaseFragment() {
 
+    private lateinit var ccpLoadNumber: CountryCodePicker
     private var adapter: RegisterPagerAdapter? = null
     var email: String = ""
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
+
     lateinit var fragmentName: FragmentName
-    var USrx = "[\\(]?\\d{3}[\\)]?([-.]?)\\s*\\d{3}\\1\\s*\\d{4}"
-    var CArx = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})\$"
-    var MXrx = "(\\(\\d{3}\\)[.-]?|\\d{3}[.-]?)?\\d{3}[.-]?\\d{4}"
 
 
     companion object {
@@ -59,6 +62,7 @@ class RegisterPagerFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
         if (onCreated) {
             setViewPagerAdapter()
         } else {
@@ -71,6 +75,14 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
     }
+//    private fun registerCarrierEditText() {
+//        ccpLoadNumber.registerCarrierNumberEditText(edtPhoneNo)
+//        ccpLoadNumber.setPhoneNumberValidityChangeListener { isValidNumber ->
+//            isValid = isValidNumber
+//        }
+//
+//        ccpLoadNumber.registerCarrierNumberEditText(edtPhoneNo)
+//    }
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -109,6 +121,11 @@ class RegisterPagerFragment : BaseFragment() {
                     1 -> personalDetails(positionToSelect)
                     2 -> {
                         contactDetails(positionToSelect)
+
+                        /*ccpLoadNumber = ccp
+                        registerCarrierEditText()
+                        ccp.registerCarrierNumberEditText(edtPhoneNo)
+                        ccp.setNumberAutoFormattingEnabled(true)*/
                     }
 
                 }
@@ -168,7 +185,7 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
 
-        editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
         editProfileSendingModel.address = (tvAddress.stringTrimmed)
@@ -176,7 +193,12 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (edtFirstname.stringTrimmed)
-        editProfileSendingModel.stateId = getIdFromSpinner()
+        if (getIdFromSpinner() == -1){
+            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
+            return
+        }else {
+            editProfileSendingModel.stateId = getIdFromSpinner()
+        }
         //editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = getCountryFromSpinner()
@@ -291,14 +313,20 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.email = (edtEmail.stringTrimmed)
         var email: String = edtEmail.stringTrimmed
         var phone: String = edtPhoneNo.stringTrimmed
-        signUpSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        signUpSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         signUpSendingModel.firstName = (edtFirstname.stringTrimmed)
         signUpSendingModel.lastName = (edtLastName.stringTrimmed)
         signUpSendingModel.address = (tvAddress.stringTrimmed)
         signUpSendingModel.zipCode = (edtZipCode.stringTrimmed)
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
-        signUpSendingModel.stateId = getIdFromSpinner()
+        if (getIdFromSpinner() == -1){
+            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
+            return
+        }else {
+            signUpSendingModel.stateId = getIdFromSpinner()
+        }
         signUpSendingModel.city = (edtCity.stringTrimmed)
+
         //signUpSendingModel.about = (edtComment.stringTrimmed)
         signUpSendingModel.country = (txtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
@@ -384,13 +412,16 @@ class RegisterPagerFragment : BaseFragment() {
     private fun contactDetails(positionToSelect: Int) {
 
 
-        if (!edtPhoneNo.testValidity() || edtPhoneNo.text.toString().trim().length < 9) {
-            UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
-            return
-        }else {
+        var phoneNo = ccp.fullNumberWithPlus.toString()
 
-            var phoneNo = edtPhoneNo.stringTrimmed
-            if(phoneNo.matches(USrx.toRegex()) || phoneNo.matches(CArx.toRegex()) || phoneNo.matches(MXrx.toRegex())){
+        if (edtPhoneNo.text.toString() == ""){
+            UIHelper.showAlertDialog(context, "Phone number is required")
+        }else {
+            /*val regex = "^\\+(?:[0-9] ?){6,14}[0-9]$"
+
+            val pattern: Pattern = Pattern.compile(regex)
+            val matcher: Matcher = pattern.matcher(phoneNo)*/
+            if (/*matcher.matches() && phoneNo.length <= 15 &&*/ ContactFragment.isValid) {
                 val builder = AlertDialog.Builder(context!!)
                 builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid Phone Number? ")
                         .setTitle("Alert")
@@ -404,8 +435,6 @@ class RegisterPagerFragment : BaseFragment() {
                 UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
 
             }
-
-
         }
     }
 

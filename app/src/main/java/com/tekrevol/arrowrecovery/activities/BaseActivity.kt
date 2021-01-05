@@ -76,6 +76,15 @@ abstract class BaseActivity : AppCompatActivity() {
                 .commit()
     }
 
+    fun addFragment(fragment: Fragment, isTransition: Boolean) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        if (isTransition) {
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+        fragmentTransaction.add(dockableFragmentId, fragment).addToBackStack(fragment.javaClass.simpleName)
+                .commit()
+    }
+
     fun openActivity(tClass: Class<*>?) {
         val i = Intent(this, tClass)
         startActivity(i)

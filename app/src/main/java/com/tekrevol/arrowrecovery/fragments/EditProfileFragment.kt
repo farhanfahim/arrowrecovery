@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.hbb20.CountryCodePicker
 import com.nostra13.universalimageloader.core.ImageLoader
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
@@ -28,14 +29,13 @@ import com.tekrevol.arrowrecovery.managers.retrofit.entities.MultiFileModel
 import com.tekrevol.arrowrecovery.models.Country
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.States
+import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
 import kotlinx.android.synthetic.main.fragment_editprofile.contState
@@ -55,16 +55,16 @@ import java.util.regex.Pattern
 
 class EditProfileFragment : BaseFragment() {
 
+    var isValid = false
+    private lateinit var ccpLoadNumber: CountryCodePicker
     private var selectedPosition: Int = 0
     var webCall: Call<WebResponse<Any>>? = null
+    var userCall: Call<WebResponse<Any>>? = null
     private var fileTemporaryProfilePicture: File? = null
     var countryListAdapter: ListAdapter? = null
     private var selectedCountryIndex: Int = -1
     private var spinnerModelArrayList = ArrayList<SpinnerModel>()
     private var spinnerCountryArrayList = ArrayList<SpinnerModel>()
-    var USrx = "[\\(]?\\d{3}[\\)]?([-.]?)\\s*\\d{3}\\1\\s*\\d{4}"
-    var CArx = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})\$"
-    var MXrx = "(\\(\\d{3}\\)[.-]?|\\d{3}[.-]?)?\\d{3}[.-]?\\d{4}"
 
     private var locationClick: Long = 0
 
@@ -90,9 +90,14 @@ class EditProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getCountry()
-        setFields()
+        ccpLoadNumber = ccp
+        registerCarrierEditText()
+        ccp.registerCarrierNumberEditText(edtPhoneNo)
+        ccp.setNumberAutoFormattingEnabled(true)
 
+        getCountry()
+        //setFields()
+        getUserDetail(sharedPreferenceManager.currentUser.id)
 
         if (radioBtnCompany.isChecked) {
             edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
@@ -130,7 +135,7 @@ class EditProfileFragment : BaseFragment() {
     override fun setListeners() {
 
         contState.setOnClickListener {
-            showProvidersInDialog(arrData)
+           // showProvidersInDialog(arrData)
         }
         contCountry.setOnClickListener {
            // showCountrySelectDialog()
@@ -174,30 +179,30 @@ class EditProfileFragment : BaseFragment() {
                     lat = latitude
                     lng = longitude
 
-                    var countryName = getCountryName(context,latitude,longitude)
-                    for (arr in AddressFragment.arrCountryData){
+                    getCountryName(context,latitude,longitude)
+                    /*for (arr in arrCountryData){
                         if (countryName == "United States"){
-                            txtCountry.text = AddressFragment.arrCountryData[0].name
+                            txtCountry.text = arrCountryData[0].name
                             txtState.text = ""
-                            getStates(AddressFragment.arrCountryData[0].id)
+                            getStates(arrCountryData[0].id)
                             return
 
                         }else if (countryName == "Canada"){
-                            txtCountry.text = AddressFragment.arrCountryData[1].name
+                            txtCountry.text = arrCountryData[1].name
                             txtState.text = ""
-                            getStates(AddressFragment.arrCountryData[1].id)
+                            getStates(arrCountryData[1].id)
                             return
 
                         }else if (countryName == "Mexico"){
-                            txtCountry.text = AddressFragment.arrCountryData[2].name
+                            txtCountry.text = arrCountryData[2].name
                             txtState.text = ""
-                            getStates(AddressFragment.arrCountryData[2].id)
+                            getStates(arrCountryData[2].id)
                             return
                         }else{
                             Toast.makeText(context,"Wrong country",Toast.LENGTH_SHORT).show()
                             return
                         }
-                    }
+                    }*/
 
                     var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
                     ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
@@ -293,6 +298,71 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
+    private fun getUserDetail(id: Int) {
+
+
+        val queryMap = java.util.HashMap<String, Any>()
+
+        userCall = getBaseWebServices(true).getAPIAnyObject(WebServiceConstants.PATH_USER_SLASH + id, queryMap, object : WebServices.IRequestWebResponseAnyObjectCallBack {
+            override fun requestDataResponse(webResponse: WebResponse<Any?>) {
+
+                val user: UserModel = GsonFactory.getSimpleGson()
+                        .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
+                                , UserModel::class.java)
+
+                ImageLoaderHelper.loadImageWithAnimations(imgProfile, user.userDetails.imageUrl, true)
+
+                if (user.userDetails.title == AppConstants.TITLE_MR) {
+                    txtTitle.text = Constants.title[0]
+                }
+                if (user.userDetails.title == AppConstants.TITLE_MISS) {
+                    txtTitle.text = Constants.title[1]
+                }
+                if (user.userDetails.title == AppConstants.TITLE_MRS) {
+                    txtTitle.text = Constants.title[2]
+                }
+                if (user.userDetails.title == AppConstants.TITLE_MS) {
+                    txtTitle.text = Constants.title[3]
+                }
+
+                if (user.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
+                    radioBtnIndividual.isChecked = true
+                }
+                if (user.userDetails.userType == AppConstants.USER_TYPE_COMPANY) {
+                    radioBtnCompany.isChecked = true
+                }
+
+                edtFirstName.setText(user.userDetails.firstName)
+                edtLastName.setText(user.userDetails.lastName)
+                edtCompany.setText(user.userDetails.company)
+                edtPhoneNo.setText(user.userDetails.phone)
+                ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
+                txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+                if (user.userDetails.lat != null &&
+                        user.userDetails.lng != null){
+                    lat = user.userDetails.lat
+                    lng = user.userDetails.lng
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(user.userDetails.lat,user.userDetails.lng)
+                    ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                    map.visibility = View.VISIBLE
+                }
+                edtZipCode.setText(user.userDetails.zipCode)
+                edtCity.setText(user.userDetails.city)
+                txtCountry.text = (user.userDetails.country)
+                //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+                //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
+                txtState.text = (user.userDetails.state.name)
+
+
+            }
+
+            override fun onError(`object`: Any?) {
+            }
+        })
+
+    }
+
+
     private fun setFields() {
 
         ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
@@ -322,6 +392,7 @@ class EditProfileFragment : BaseFragment() {
         edtLastName.setText(sharedPreferenceManager.currentUser.userDetails.lastName)
         edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
         edtPhoneNo.setText(sharedPreferenceManager.currentUser.userDetails.phone)
+        ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
         txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
         if (sharedPreferenceManager.currentUser.userDetails.lat != null &&
                 sharedPreferenceManager.currentUser.userDetails.lng != null){
@@ -373,12 +444,23 @@ class EditProfileFragment : BaseFragment() {
             }
         }
 
-        if (!edtPhoneNo.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter your phone no")
+
+        var phoneNo = ccp.fullNumberWithPlus.toString()
+
+        if (!edtPhoneNo.testValidity()){
+            UIHelper.showAlertDialog(context, "Phone number is required")
             return
-        }
-        if(!edtPhoneNo.stringTrimmed.matches(USrx.toRegex()) || !edtPhoneNo.stringTrimmed.matches(CArx.toRegex()) || !edtPhoneNo.stringTrimmed.matches(MXrx.toRegex())){
-            println("Invalid phone no")
+        }else {
+            val regex = "^\\+(?:[0-9] ?){6,14}[0-9]$"
+
+            val pattern: Pattern = Pattern.compile(regex)
+            val matcher: Matcher = pattern.matcher(phoneNo)
+            if (matcher.matches() && phoneNo.length <= 15 && isValid) {
+                println("Invalid phone no")
+            }else{
+                UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
+
+            }
         }
 
         if (txtAddress.stringTrimmed.isEmpty()) {
@@ -418,7 +500,7 @@ class EditProfileFragment : BaseFragment() {
         if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
-        editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstName.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
         editProfileSendingModel.address = (txtAddress.stringTrimmed)
@@ -427,7 +509,13 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.name = (edtFirstName.stringTrimmed)
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = getCountryFromSpinner()
-        editProfileSendingModel.stateId = getIdFromSpinner()
+        if (getIdFromSpinner() == -1){
+            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
+            return
+
+        }else {
+            editProfileSendingModel.stateId = getIdFromSpinner()
+        }
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.latitude = lat
         editProfileSendingModel.longitude = lng
@@ -446,7 +534,6 @@ class EditProfileFragment : BaseFragment() {
         WebServices(baseActivity, token, BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
                     override fun requestDataResponse(webResponse: WebResponse<Any>) {
-
 
                         UIHelper.showAlertDialog1(webResponse.message, "Update Profile", { dialog, which ->
                             baseActivity.popBackStack()
@@ -482,10 +569,10 @@ class EditProfileFragment : BaseFragment() {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
                 if (spinnerModelArrayList.isEmpty()){
-                    contParentState.visibility = View.GONE
+                    contState.visibility = View.GONE
                     Toast.makeText(context,"No State Available", Toast.LENGTH_SHORT).show()
                 }else{
-                    contParentState.visibility = View.VISIBLE
+                    contState.visibility = View.VISIBLE
                 }
 
 
@@ -550,10 +637,11 @@ class EditProfileFragment : BaseFragment() {
 
     override fun onDestroyView() {
         webCall?.cancel()
+        userCall?.cancel()
         super.onDestroyView()
     }
 
-    fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
+    /*fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
         val geocoder = Geocoder(context, Locale.getDefault())
         var addresses: List<Address>? = null
         var addressResult = ""
@@ -561,8 +649,13 @@ class EditProfileFragment : BaseFragment() {
             addresses = geocoder.getFromLocation(latitude, longitude, 1)
             var result: Address
             if (addresses != null && !addresses.isEmpty()) {
-                addresses[0].getCountryName()
-                addressResult = addresses[0].getCountryName()
+                if (addresses[0].countryName != null){
+                    addresses[0].countryName
+                    addressResult = addresses[0].countryName
+                }else{
+                    return ""
+                }
+
             } else {
                 addressResult = ""
 
@@ -571,6 +664,103 @@ class EditProfileFragment : BaseFragment() {
             //do something
         }
         return addressResult
+    }*/
+    fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        var addresses: List<Address>? = null
+        var addressResult = ""
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            var result: Address
+            if (addresses != null && !addresses.isEmpty()) {
+                if (addresses[0].countryName != null) {
+                    addresses[0].countryName
+                    addressResult = addresses[0].countryName
+
+                    for (arr in arrCountryData) {
+                        if (addresses[0].countryName == "United States") {
+                            txtCountry.text = arrCountryData[0].name
+                            var isStateValid = false
+                            for (arrState in arrData) {
+                                if (addresses[0].adminArea == arrState.name) {
+                                    isStateValid = true
+
+                                }
+                            }
+                            if (isStateValid){
+                                contState.visibility = View.VISIBLE
+                                txtState.text = addresses[0].adminArea
+                            }else{
+                                contState.visibility = View.VISIBLE
+                                txtState.text = "State required"
+                            }
+                            return ""
+
+                        } else if (addresses[0].countryName == "Canada") {
+                            txtCountry.text = arrCountryData[1].name
+                            txtState.text = ""
+                            getStates(arrCountryData[1].id)
+                            var isStateValid = false
+                            for (arrState in arrData) {
+                                if (addresses[0].adminArea == arrState.name) {
+                                    isStateValid = true
+
+                                }
+                            }
+                            if (isStateValid){
+                                contState.visibility = View.VISIBLE
+                                txtState.text = addresses[0].adminArea
+                            }else{
+                                contState.visibility = View.VISIBLE
+                                txtState.text = "State required"
+                            }
+                            return ""
+
+                        } else if (addresses[0].countryName == "Mexico") {
+                            txtCountry.text = arrCountryData[2].name
+                            txtState.text = ""
+                            getStates(arrCountryData[2].id)
+                            var isStateValid = false
+                            for (arrState in arrData) {
+                                if (addresses[0].adminArea == arrState.name) {
+                                    isStateValid = true
+
+                                }
+                            }
+                            if (isStateValid){
+                                contState.visibility = View.VISIBLE
+                                txtState.text = addresses[0].adminArea
+                            }else{
+                                contState.visibility = View.VISIBLE
+                                txtState.text = "State required"
+                            }
+                            return ""
+                        } else {
+                            Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
+                            return ""
+                        }
+                    }
+                } else {
+                    return ""
+                }
+
+            } else {
+                addressResult = ""
+
+            }
+        } catch (ignored: IOException) {
+            //do something
+        }
+        return addressResult
+    }
+
+    private fun registerCarrierEditText() {
+        ccpLoadNumber.registerCarrierNumberEditText(edtPhoneNo)
+        ccpLoadNumber.setPhoneNumberValidityChangeListener { isValidNumber ->
+            isValid = isValidNumber
+        }
+
+        ccpLoadNumber.registerCarrierNumberEditText(edtPhoneNo)
     }
 
 

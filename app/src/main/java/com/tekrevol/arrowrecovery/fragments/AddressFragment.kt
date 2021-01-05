@@ -75,7 +75,7 @@ class AddressFragment : BaseFragment() {
     override fun setListeners() {
 
         contState.setOnClickListener {
-            showProvidersInDialog(arrData)
+            //showProvidersInDialog(arrData)
         }
         contCountry.setOnClickListener {
             //showCountrySelectDialog()
@@ -99,35 +99,12 @@ class AddressFragment : BaseFragment() {
                     AppConstants.LAT = latitude
                     AppConstants.LNG = longitude
 
-                    var countryName = getCountryName(context,latitude,longitude)
-                    for (arr in arrCountryData){
-                        if (countryName == "United States"){
-                            txtCountry.text = arrCountryData[0].name
-                            txtState.text = ""
-                            getStates(arrCountryData[0].id)
-                            return
-
-                        }else if (countryName == "Canada"){
-                            txtCountry.text = arrCountryData[1].name
-                            txtState.text = ""
-                            getStates(arrCountryData[1].id)
-                            return
-
-                        }else if (countryName == "Mexico"){
-                            txtCountry.text = arrCountryData[2].name
-                            txtState.text = ""
-                            getStates(arrCountryData[2].id)
-                            return
-                        }else{
-                            Toast.makeText(context,"Wrong country",Toast.LENGTH_SHORT).show()
-                            return
-                        }
-                    }
+                    getCountryName(context, latitude, longitude)
 
 
-                        var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
-                        ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
-                        map.visibility = View.VISIBLE
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+                    ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                    map.visibility = View.VISIBLE
 
                 }
 
@@ -145,6 +122,7 @@ class AddressFragment : BaseFragment() {
             googlePlaceHelper!!.onActivityResult(requestCode, resultCode, data)
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getCountry()
@@ -214,11 +192,11 @@ class AddressFragment : BaseFragment() {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
 
-                if (spinnerModelArrayList.isEmpty()){
+                if (spinnerModelArrayList.isEmpty()) {
                     contState.visibility = View.GONE
-                    Toast.makeText(context,"No State Available",Toast.LENGTH_SHORT).show()
-                }else{
-                    contState.visibility = View.VISIBLE
+                    Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
+                } else {
+                    //contState.visibility = View.VISIBLE
                 }
             }
 
@@ -268,7 +246,7 @@ class AddressFragment : BaseFragment() {
                 val pagesModel: Slug = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , Slug::class.java)
-                baseActivity.addDockableFragment(GenericContentFragment.newInstance(pagesModel.title, pagesModel.content, true), false)
+                baseActivity.addFragment(GenericContentFragment.newInstance(pagesModel.title, pagesModel.content, true), false)
             }
 
             override fun onError(`object`: Any?) {}
@@ -288,19 +266,65 @@ class AddressFragment : BaseFragment() {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1)
             var result: Address
-             if (addresses != null && !addresses.isEmpty()) {
-                addresses[0].countryName
-                addressResult = addresses[0].countryName
-            } else {
-                 addressResult = ""
+            if (addresses != null && !addresses.isEmpty()) {
+                if (addresses[0].countryName != null) {
+                    addresses[0].countryName
+                    addressResult = addresses[0].countryName
 
-             }
+                    for (arr in arrCountryData) {
+                        if (addresses[0].countryName == "United States") {
+                            txtCountry.text = arrCountryData[0].name
+                            getStates(arrCountryData[0].id)
+                            for (arrState in arrData) {
+                                if (addresses[0].adminArea == arrState.name) {
+                                    contState.visibility = View.VISIBLE
+                                    txtState.text = arrState.name
+                                }
+                            }
+                            //txtState.text = addresses[0].adminArea
+                            return ""
+
+                        } else if (addresses[0].countryName == "Canada") {
+                            txtCountry.text = arrCountryData[1].name
+                            txtState.text = ""
+                            getStates(arrCountryData[1].id)
+                            for (arrState in arrData) {
+                                if (addresses[0].adminArea == arrState.name) {
+                                    contState.visibility = View.VISIBLE
+                                    txtState.text = arrState.name
+                                }
+                            }
+                            return ""
+
+                        } else if (addresses[0].countryName == "Mexico") {
+                            txtCountry.text = arrCountryData[2].name
+                            txtState.text = ""
+                            getStates(arrCountryData[2].id)
+                            for (arrState in arrData) {
+                                if (addresses[0].adminArea == arrState.name) {
+                                    contState.visibility = View.VISIBLE
+                                    txtState.text = arrState.name
+                                }
+                            }
+                            return ""
+                        } else {
+                            Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
+                            return ""
+                        }
+                    }
+                } else {
+                    return ""
+                }
+
+            } else {
+                addressResult = ""
+
+            }
         } catch (ignored: IOException) {
             //do something
         }
         return addressResult
     }
-
 
 
 }

@@ -203,7 +203,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
             totalPages = -1
             currentPage = 0
 
-            arrConverters.clear()
+           /* arrConverters.clear()*/
             scrollListener.reset()
             getFeaturedList()
             getVehicle()
@@ -430,6 +430,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 //        productid = item
        //rvConverters.showShimmer()
 
+        var tempArr = ArrayList<ProductDetailModel>()
         webCallProductDetail = getBaseWebServices(false).getAPIAnyObject(WebServiceConstants.PATH_GET_PRODUCT, queryMap as Map<String, Any>?, object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
 
@@ -439,6 +440,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , Product::class.java)
                 totalPages = product.total_pages
+                arrConverters.clear()
                 arrConverters.addAll(product.products)
                 if (arrConverters.isNullOrEmpty()){
                     txtStatus.visibility = View.VISIBLE

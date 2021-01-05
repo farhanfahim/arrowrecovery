@@ -91,7 +91,7 @@ class ProfileFragment : BaseFragment() {
 
     private fun setUserData() {
         ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
-        var userName = sharedPreferenceManager.currentUser.name
+        var userName = sharedPreferenceManager.currentUser.userDetails.fullName
         val fullName = sharedPreferenceManager.currentUser.userDetails.fullName
         val userEmail = sharedPreferenceManager.currentUser.email
         val address = sharedPreferenceManager.currentUser.userDetails.address

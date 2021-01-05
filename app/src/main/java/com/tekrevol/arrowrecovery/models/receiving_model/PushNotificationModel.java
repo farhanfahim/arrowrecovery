@@ -11,9 +11,9 @@ public class PushNotificationModel {
     @Expose
     @SerializedName("message")
     private String message;
-    @Expose
+   /* @Expose
     @SerializedName("server_time")
-    private ServerTime serverTime;
+    private ServerTime serverTime;*/
     @Expose
     @SerializedName("ref_id")
     private int refId;
@@ -45,14 +45,14 @@ public class PushNotificationModel {
         this.message = message;
     }
 
-    public ServerTime getServerTime() {
+    /*public ServerTime getServerTime() {
         return serverTime;
     }
 
     public void setServerTime(ServerTime serverTime) {
         this.serverTime = serverTime;
     }
-
+*/
     public int getRefId() {
         return refId;
     }
