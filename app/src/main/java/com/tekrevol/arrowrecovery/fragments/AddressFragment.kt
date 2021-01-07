@@ -15,6 +15,7 @@ import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
 import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
+import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
@@ -27,6 +28,13 @@ import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
+import kotlinx.android.synthetic.main.fragment_address.contCountry
+import kotlinx.android.synthetic.main.fragment_address.contState
+import kotlinx.android.synthetic.main.fragment_address.imgMap
+import kotlinx.android.synthetic.main.fragment_address.map
+import kotlinx.android.synthetic.main.fragment_address.txtCountry
+import kotlinx.android.synthetic.main.fragment_address.txtState
+import kotlinx.android.synthetic.main.fragment_editprofile.*
 import retrofit2.Call
 import java.io.IOException
 import java.util.*
@@ -274,10 +282,9 @@ class AddressFragment : BaseFragment() {
         var addresses: List<Address>? = null
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1)
-            var result: Address
+
             if (addresses != null && !addresses.isEmpty()) {
                 if (addresses[0].countryName != null) {
-                    addresses[0].countryName
 
                     for (arr in arrCountryData) {
                         if (addresses[0].countryName == "United States") {
@@ -296,7 +303,10 @@ class AddressFragment : BaseFragment() {
                             getStates(arrCountryData[2].id, addresses[0].adminArea)
 
                         } else {
-                            Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
+                            txtAddress.text = ""
+                            txtCountry.text = ""
+                            txtState.text = ""
+                            UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
                             return
                         }
                     }

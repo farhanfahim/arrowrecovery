@@ -36,7 +36,6 @@ import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
 import kotlinx.android.synthetic.main.fragment_editprofile.contState
@@ -181,29 +180,6 @@ class EditProfileFragment : BaseFragment() {
                     lng = longitude
 
                     getCountryName(context,latitude,longitude)
-                    /*for (arr in arrCountryData){
-                        if (countryName == "United States"){
-                            txtCountry.text = arrCountryData[0].name
-                            txtState.text = ""
-                            getStates(arrCountryData[0].id)
-                            return
-
-                        }else if (countryName == "Canada"){
-                            txtCountry.text = arrCountryData[1].name
-                            txtState.text = ""
-                            getStates(arrCountryData[1].id)
-                            return
-
-                        }else if (countryName == "Mexico"){
-                            txtCountry.text = arrCountryData[2].name
-                            txtState.text = ""
-                            getStates(arrCountryData[2].id)
-                            return
-                        }else{
-                            Toast.makeText(context,"Wrong country",Toast.LENGTH_SHORT).show()
-                            return
-                        }
-                    }*/
 
                     var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
                     ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
@@ -215,6 +191,13 @@ class EditProfileFragment : BaseFragment() {
             }, this@EditProfileFragment, onCreated)
 
             googlePlaceHelper!!.openMapsActivity()
+        }
+
+        edtPhoneNo.setFocusable(false);
+        edtPhoneNo.setClickable(true);
+        edtPhoneNo.setOnClickListener {
+
+            UIHelper.showAlertDialog(context, getString(R.string.kindly_sign_up))
         }
     }
 
@@ -652,119 +635,7 @@ class EditProfileFragment : BaseFragment() {
         super.onDestroyView()
     }
 
-    /*fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        var addresses: List<Address>? = null
-        var addressResult = ""
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1)
-            var result: Address
-            if (addresses != null && !addresses.isEmpty()) {
-                if (addresses[0].countryName != null){
-                    addresses[0].countryName
-                    addressResult = addresses[0].countryName
-                }else{
-                    return ""
-                }
 
-            } else {
-                addressResult = ""
-
-            }
-        } catch (ignored: IOException) {
-            //do something
-        }
-        return addressResult
-    }*/
-    /*fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        var addresses: List<Address>? = null
-        var addressResult = ""
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1)
-            var result: Address
-            if (addresses != null && !addresses.isEmpty()) {
-                if (addresses[0].countryName != null) {
-                    addresses[0].countryName
-                    addressResult = addresses[0].countryName
-
-                    for (arr in arrCountryData) {
-                        if (addresses[0].countryName == "United States") {
-                            txtCountry.text = arrCountryData[0].name
-                            var isStateValid = false
-                            for (arrState in arrData) {
-                                if (addresses[0].adminArea == arrState.name) {
-                                    isStateValid = true
-
-                                }
-                            }
-                            if (isStateValid){
-                                contState.visibility = View.VISIBLE
-                                txtState.text = addresses[0].adminArea
-                            }else{
-                                contState.visibility = View.VISIBLE
-                                txtState.text = "State required"
-                            }
-                            return ""
-
-                        } else if (addresses[0].countryName == "Canada") {
-                            txtCountry.text = arrCountryData[1].name
-                            txtState.text = ""
-                            getStates(arrCountryData[1].id)
-                            var isStateValid = false
-                            for (arrState in arrData) {
-                                if (addresses[0].adminArea == arrState.name) {
-                                    isStateValid = true
-
-                                }
-                            }
-                            if (isStateValid){
-                                contState.visibility = View.VISIBLE
-                                txtState.text = addresses[0].adminArea
-                            }else{
-                                contState.visibility = View.VISIBLE
-                                txtState.text = "State required"
-                            }
-                            return ""
-
-                        } else if (addresses[0].countryName == "Mexico") {
-                            txtCountry.text = arrCountryData[2].name
-                            txtState.text = ""
-                            getStates(arrCountryData[2].id)
-                            var isStateValid = false
-                            for (arrState in arrData) {
-                                if (addresses[0].adminArea == arrState.name) {
-                                    isStateValid = true
-
-                                }
-                            }
-                            if (isStateValid){
-                                contState.visibility = View.VISIBLE
-                                txtState.text = addresses[0].adminArea
-                            }else{
-                                contState.visibility = View.VISIBLE
-                                txtState.text = "State required"
-                            }
-                            return ""
-                        } else {
-                            Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
-                            return ""
-                        }
-                    }
-                } else {
-                    return ""
-                }
-
-            } else {
-                addressResult = ""
-
-            }
-        } catch (ignored: IOException) {
-            //do something
-        }
-        return addressResult
-    }
-*/
     fun getCountryName(context: Context?, latitude: Double, longitude: Double) {
         val geocoder = Geocoder(context, Locale.getDefault())
         var addresses: List<Address>? = null
@@ -773,29 +644,32 @@ class EditProfileFragment : BaseFragment() {
             var result: Address
             if (addresses != null && !addresses.isEmpty()) {
                 if (addresses[0].countryName != null) {
-                    addresses[0].countryName
-
-                    for (arr in AddressFragment.arrCountryData) {
-                        if (addresses[0].countryName == "United States") {
-                            txtCountry.text = AddressFragment.arrCountryData[0].name
-                            getStates(AddressFragment.arrCountryData[0].id, addresses[0].adminArea)
-
-                        } else if (addresses[0].countryName == "Canada") {
-                            txtCountry.text = AddressFragment.arrCountryData[1].name
-                            txtState.text = ""
-                            getStates(AddressFragment.arrCountryData[1].id, addresses[0].adminArea)
+                    var country = addresses[0].countryName
 
 
-                        } else if (addresses[0].countryName == "Mexico") {
-                            txtCountry.text = AddressFragment.arrCountryData[2].name
-                            txtState.text = ""
-                            getStates(AddressFragment.arrCountryData[2].id, addresses[0].adminArea)
+                        for (arr in arrCountryData) {
+                            if (addresses[0].countryName == "United States") {
+                                txtCountry.text = arrCountryData[0].name
+                                getStates(arrCountryData[0].id, addresses[0].adminArea)
 
-                        } else {
-                            Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
-                            return
+                            } else if (addresses[0].countryName == "Canada") {
+                                txtCountry.text = arrCountryData[1].name
+                                txtState.text = ""
+                                getStates(arrCountryData[1].id, addresses[0].adminArea)
+
+
+                            } else if (addresses[0].countryName == "Mexico") {
+                                txtCountry.text = arrCountryData[2].name
+                                txtState.text = ""
+                                getStates(arrCountryData[2].id, addresses[0].adminArea)
+
+                            } else {
+                                txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+                                UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
+                                return
+                            }
                         }
-                    }
+
                 }
             }
         } catch (ignored: IOException) {
