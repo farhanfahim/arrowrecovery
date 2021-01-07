@@ -36,6 +36,7 @@ import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
+import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
 import kotlinx.android.synthetic.main.fragment_editprofile.contState
@@ -258,7 +259,7 @@ class EditProfileFragment : BaseFragment() {
 
             txtCountry.text = arrCountryData[selectedCountryIndex].name
             txtState.text = ""
-            getStates(arrCountryData[selectedCountryIndex].id)
+            //getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
         builder.show()
@@ -547,9 +548,9 @@ class EditProfileFragment : BaseFragment() {
                 })
     }
 
-    private fun getStates(statId:Int) {
+    private fun getStates(statId: Int, stateName: String) {
 
-
+        txtState.text = ""
         val query: MutableMap<String, Any> = HashMap()
 
         query[WebServiceConstants.Q_PARAM_COUNTRY_ID] = statId
@@ -560,26 +561,36 @@ class EditProfileFragment : BaseFragment() {
 
                 }.type
 
-                arrData = GsonFactory.getSimpleGson()
+                AddressFragment.arrData = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
 
                 spinnerModelArrayList.clear()
 
-                for (states in arrData) {
+                for (states in AddressFragment.arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
-                if (spinnerModelArrayList.isEmpty()){
-                    contState.visibility = View.GONE
-                    Toast.makeText(context,"No State Available", Toast.LENGTH_SHORT).show()
-                }else{
-                    contState.visibility = View.VISIBLE
+
+                for (arrState in AddressFragment.arrData) {
+                    if (stateName == arrState.name) {
+                        contState.visibility = View.VISIBLE
+                        txtState.text = arrState.name
+                        return
+                    } else {
+                        txtState.text = "state required"
+                    }
                 }
 
-
+                if (spinnerModelArrayList.isEmpty()) {
+                    contState.visibility = View.GONE
+                    Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
+                } else {
+                    //contState.visibility = View.VISIBLE
+                }
             }
 
             override fun onError(`object`: Any?) {}
         })
+
     }
 
     private fun getIdFromSpinner(): Int {
@@ -609,7 +620,7 @@ class EditProfileFragment : BaseFragment() {
 
                 for (country in arrCountryData) {
                     if (country.name == txtCountry.stringTrimmed) {
-                        getStates(country.id)
+                        getStates(country.id,"")
                     }
                 }
                 initCountryAdapter()
@@ -627,7 +638,7 @@ class EditProfileFragment : BaseFragment() {
             if (country.name == txtCountry.stringTrimmed) {
                 txtCountry.text = country.name
 
-                getStates(country.id)
+                getStates(country.id,"")
                 return country.name
             }
         }
@@ -665,7 +676,7 @@ class EditProfileFragment : BaseFragment() {
         }
         return addressResult
     }*/
-    fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
+    /*fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
         val geocoder = Geocoder(context, Locale.getDefault())
         var addresses: List<Address>? = null
         var addressResult = ""
@@ -752,6 +763,44 @@ class EditProfileFragment : BaseFragment() {
             //do something
         }
         return addressResult
+    }
+*/
+    fun getCountryName(context: Context?, latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        var addresses: List<Address>? = null
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            var result: Address
+            if (addresses != null && !addresses.isEmpty()) {
+                if (addresses[0].countryName != null) {
+                    addresses[0].countryName
+
+                    for (arr in AddressFragment.arrCountryData) {
+                        if (addresses[0].countryName == "United States") {
+                            txtCountry.text = AddressFragment.arrCountryData[0].name
+                            getStates(AddressFragment.arrCountryData[0].id, addresses[0].adminArea)
+
+                        } else if (addresses[0].countryName == "Canada") {
+                            txtCountry.text = AddressFragment.arrCountryData[1].name
+                            txtState.text = ""
+                            getStates(AddressFragment.arrCountryData[1].id, addresses[0].adminArea)
+
+
+                        } else if (addresses[0].countryName == "Mexico") {
+                            txtCountry.text = AddressFragment.arrCountryData[2].name
+                            txtState.text = ""
+                            getStates(AddressFragment.arrCountryData[2].id, addresses[0].adminArea)
+
+                        } else {
+                            Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
+                            return
+                        }
+                    }
+                }
+            }
+        } catch (ignored: IOException) {
+            //do something
+        }
     }
 
     private fun registerCarrierEditText() {

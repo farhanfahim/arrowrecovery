@@ -170,7 +170,7 @@ class AddressFragment : BaseFragment() {
 
     }
 
-    private fun getStates(statId: Int) {
+    private fun getStates(statId: Int, stateName: String) {
 
         txtState.text = ""
         val query: MutableMap<String, Any> = HashMap()
@@ -190,6 +190,16 @@ class AddressFragment : BaseFragment() {
 
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
+                }
+
+                for (arrState in arrData) {
+                    if (stateName == arrState.name) {
+                        contState.visibility = View.VISIBLE
+                        txtState.text = arrState.name
+                        return
+                    } else {
+                        txtState.text = "state required"
+                    }
                 }
 
                 if (spinnerModelArrayList.isEmpty()) {
@@ -233,7 +243,7 @@ class AddressFragment : BaseFragment() {
 
             txtCountry.text = arrCountryData[selectedCountryIndex].name
             txtState.text = ""
-            getStates(arrCountryData[selectedCountryIndex].id)
+            //getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
         builder.show()
@@ -259,71 +269,42 @@ class AddressFragment : BaseFragment() {
         super.onDestroyView()
     }
 
-    fun getCountryName(context: Context?, latitude: Double, longitude: Double): String? {
+    fun getCountryName(context: Context?, latitude: Double, longitude: Double) {
         val geocoder = Geocoder(context, Locale.getDefault())
         var addresses: List<Address>? = null
-        var addressResult = ""
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1)
             var result: Address
             if (addresses != null && !addresses.isEmpty()) {
                 if (addresses[0].countryName != null) {
                     addresses[0].countryName
-                    addressResult = addresses[0].countryName
 
                     for (arr in arrCountryData) {
                         if (addresses[0].countryName == "United States") {
                             txtCountry.text = arrCountryData[0].name
-                            getStates(arrCountryData[0].id)
-                            for (arrState in arrData) {
-                                if (addresses[0].adminArea == arrState.name) {
-                                    contState.visibility = View.VISIBLE
-                                    txtState.text = arrState.name
-                                }
-                            }
-                            //txtState.text = addresses[0].adminArea
-                            return ""
+                            getStates(arrCountryData[0].id, addresses[0].adminArea)
 
                         } else if (addresses[0].countryName == "Canada") {
                             txtCountry.text = arrCountryData[1].name
                             txtState.text = ""
-                            getStates(arrCountryData[1].id)
-                            for (arrState in arrData) {
-                                if (addresses[0].adminArea == arrState.name) {
-                                    contState.visibility = View.VISIBLE
-                                    txtState.text = arrState.name
-                                }
-                            }
-                            return ""
+                            getStates(arrCountryData[1].id, addresses[0].adminArea)
+
 
                         } else if (addresses[0].countryName == "Mexico") {
                             txtCountry.text = arrCountryData[2].name
                             txtState.text = ""
-                            getStates(arrCountryData[2].id)
-                            for (arrState in arrData) {
-                                if (addresses[0].adminArea == arrState.name) {
-                                    contState.visibility = View.VISIBLE
-                                    txtState.text = arrState.name
-                                }
-                            }
-                            return ""
+                            getStates(arrCountryData[2].id, addresses[0].adminArea)
+
                         } else {
                             Toast.makeText(context, "Wrong country", Toast.LENGTH_SHORT).show()
-                            return ""
+                            return
                         }
                     }
-                } else {
-                    return ""
                 }
-
-            } else {
-                addressResult = ""
-
             }
         } catch (ignored: IOException) {
             //do something
         }
-        return addressResult
     }
 
 
