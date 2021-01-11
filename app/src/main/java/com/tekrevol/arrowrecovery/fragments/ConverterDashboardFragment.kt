@@ -227,10 +227,10 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
 
     private fun addToCart(it: View, anyObject: Any?) {
 
-        val dialog1 = Dialog(context)
-        dialog1.window.setBackgroundDrawableResource(android.R.color.transparent)
+        val dialog1 = Dialog(context!!)
+        dialog1.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog1.setContentView(R.layout.dialog_message)
-        dialog1.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog1.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         dialog1.show()
 
         val btnSave = dialog1.findViewById<Button>(R.id.btnSave)
