@@ -30,6 +30,8 @@ class TwoFactorVerification : BaseFragment() {
 
         txtPhone.text = "Please enter the OTP code sent to your phone number ${sharedPreferenceManager.currentUser.userDetails.phone}"
         txtBackToLoginScreen.visibility = View.GONE
+
+
         //sendOtp()
     }
 
@@ -99,7 +101,8 @@ class TwoFactorVerification : BaseFragment() {
                     if (webResponse.isSuccess) {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_IS_VERIFIED, "1")
                         Log.d("verify", sharedPreferenceManager.getString(AppConstants.KEY_IS_VERIFIED))
-
+                        baseActivity.hideKeyboard(activity!!)
+                        KeyboardHelper.hideSoftKeyboard(context, pinEditText)
                         baseActivity.finish()
                         baseActivity.openActivity(HomeActivity::class.java)
                     } else {
@@ -126,6 +129,7 @@ class TwoFactorVerification : BaseFragment() {
     override fun onDestroyView() {
         webCall?.cancel()
         webCallVerify?.cancel()
+        KeyboardHelper.hideSoftKeyboard(context, pinEditText)
         super.onDestroyView()
     }
 }

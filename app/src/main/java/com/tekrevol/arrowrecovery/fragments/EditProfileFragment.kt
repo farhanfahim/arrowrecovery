@@ -95,7 +95,7 @@ class EditProfileFragment : BaseFragment() {
         ccp.registerCarrierNumberEditText(edtPhoneNo)
         ccp.setNumberAutoFormattingEnabled(true)
 
-        getCountry()
+
         //setFields()
         getUserDetail(sharedPreferenceManager.currentUser.id)
 
@@ -134,9 +134,11 @@ class EditProfileFragment : BaseFragment() {
 
     override fun setListeners() {
 
+
         contState.setOnClickListener {
-           // showProvidersInDialog(arrData)
+            showProvidersInDialog(arrData)
         }
+
         contCountry.setOnClickListener {
            // showCountrySelectDialog()
         }
@@ -242,7 +244,7 @@ class EditProfileFragment : BaseFragment() {
 
             txtCountry.text = arrCountryData[selectedCountryIndex].name
             txtState.text = ""
-            //getStates(arrCountryData[selectedCountryIndex].id)
+            getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
         builder.show()
@@ -336,7 +338,7 @@ class EditProfileFragment : BaseFragment() {
                 //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
                 //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
                 txtState.text = (user.userDetails.state.name)
-
+                getCountry()
 
             }
 
@@ -531,9 +533,9 @@ class EditProfileFragment : BaseFragment() {
                 })
     }
 
-    private fun getStates(statId: Int, stateName: String) {
+    private fun getStates(statId:Int) {
 
-        txtState.text = ""
+
         val query: MutableMap<String, Any> = HashMap()
 
         query[WebServiceConstants.Q_PARAM_COUNTRY_ID] = statId
@@ -544,36 +546,26 @@ class EditProfileFragment : BaseFragment() {
 
                 }.type
 
-                AddressFragment.arrData = GsonFactory.getSimpleGson()
+                arrData = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result), type)
 
                 spinnerModelArrayList.clear()
 
-                for (states in AddressFragment.arrData) {
+                for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
-
-                for (arrState in AddressFragment.arrData) {
-                    if (stateName == arrState.name) {
-                        contState.visibility = View.VISIBLE
-                        txtState.text = arrState.name
-                        return
-                    } else {
-                        txtState.text = "state required"
-                    }
+                if (spinnerModelArrayList.isEmpty()){
+                    contParentState.visibility = View.GONE
+                    Toast.makeText(context,"No State Available", Toast.LENGTH_SHORT).show()
+                }else{
+                    contParentState.visibility = View.VISIBLE
                 }
 
-                if (spinnerModelArrayList.isEmpty()) {
-                    contState.visibility = View.GONE
-                    Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
-                } else {
-                    //contState.visibility = View.VISIBLE
-                }
+
             }
 
             override fun onError(`object`: Any?) {}
         })
-
     }
 
     private fun getIdFromSpinner(): Int {
@@ -602,8 +594,9 @@ class EditProfileFragment : BaseFragment() {
                 spinnerCountryArrayList.clear()
 
                 for (country in arrCountryData) {
-                    if (country.name == txtCountry.stringTrimmed) {
-                        getStates(country.id,"")
+                    var countryName = txtCountry.stringTrimmed
+                    if (country.name == countryName) {
+                        getStates(country.id)
                     }
                 }
                 initCountryAdapter()
@@ -621,7 +614,7 @@ class EditProfileFragment : BaseFragment() {
             if (country.name == txtCountry.stringTrimmed) {
                 txtCountry.text = country.name
 
-                getStates(country.id,"")
+                getStates(country.id)
                 return country.name
             }
         }
@@ -650,18 +643,19 @@ class EditProfileFragment : BaseFragment() {
                         for (arr in arrCountryData) {
                             if (addresses[0].countryName == "United States") {
                                 txtCountry.text = arrCountryData[0].name
-                                getStates(arrCountryData[0].id, addresses[0].adminArea)
+                                txtState.text = ""
+                                getStates(arrCountryData[0].id)
 
                             } else if (addresses[0].countryName == "Canada") {
                                 txtCountry.text = arrCountryData[1].name
                                 txtState.text = ""
-                                getStates(arrCountryData[1].id, addresses[0].adminArea)
+                                getStates(arrCountryData[1].id)
 
 
                             } else if (addresses[0].countryName == "Mexico") {
                                 txtCountry.text = arrCountryData[2].name
                                 txtState.text = ""
-                                getStates(arrCountryData[2].id, addresses[0].adminArea)
+                                getStates(arrCountryData[2].id)
 
                             } else {
                                 txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address

@@ -250,28 +250,45 @@
             <LinearLayout
                 android:id="@+id/contState"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:visibility="visible"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
 
-                <com.tekrevol.arrowrecovery.widget.AnyTextView
-                    android:id="@+id/txtState"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="State"
-                    android:padding="5dp"
-                    android:textColor="@color/title_color"
-                    android:textColorHint="@color/txtGrey"
-                    android:textSize="@dimen/s14"
-                    app:typeface="@string/font_light" />
+                    android:layout_height="wrap_content">
+
+                    <com.tekrevol.arrowrecovery.widget.AnyTextView
+                        android:id="@+id/txtState"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Select State..."
+                        android:padding="5dp"
+                        android:textColor="@color/title_color"
+                        android:textColorHint="@color/txtGrey"
+
+                        android:textSize="@dimen/s14"
+                        app:typeface="@string/font_light" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:contentDescription="Select category"
+                        android:padding="@dimen/x10dp"
+                        android:src="@drawable/spinner" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="@dimen/x10dp"
                     android:background="@color/txtGrey" />
+
+
             </LinearLayout>
+
 
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

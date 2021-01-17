@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.fragment_address.imgMap
 import kotlinx.android.synthetic.main.fragment_address.map
 import kotlinx.android.synthetic.main.fragment_address.txtCountry
 import kotlinx.android.synthetic.main.fragment_address.txtState
-import kotlinx.android.synthetic.main.fragment_editprofile.*
 import retrofit2.Call
 import java.io.IOException
 import java.util.*
@@ -83,8 +82,9 @@ class AddressFragment : BaseFragment() {
     override fun setListeners() {
 
         contState.setOnClickListener {
-            //showProvidersInDialog(arrData)
+            showProvidersInDialog(arrData)
         }
+
         contCountry.setOnClickListener {
             //showCountrySelectDialog()
         }
@@ -178,7 +178,7 @@ class AddressFragment : BaseFragment() {
 
     }
 
-    private fun getStates(statId: Int, stateName: String) {
+    private fun getStates(statId: Int) {
 
         txtState.text = ""
         val query: MutableMap<String, Any> = HashMap()
@@ -200,21 +200,11 @@ class AddressFragment : BaseFragment() {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
 
-                for (arrState in arrData) {
-                    if (stateName == arrState.name) {
-                        contState.visibility = View.VISIBLE
-                        txtState.text = arrState.name
-                        return
-                    } else {
-                        txtState.text = "state required"
-                    }
-                }
-
                 if (spinnerModelArrayList.isEmpty()) {
                     contState.visibility = View.GONE
                     Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
                 } else {
-                    //contState.visibility = View.VISIBLE
+                    contState.visibility = View.VISIBLE
                 }
             }
 
@@ -223,7 +213,7 @@ class AddressFragment : BaseFragment() {
 
     }
 
-    fun initCountryAdapter() {
+        fun initCountryAdapter() {
         countryListAdapter = object : ArrayAdapter<Country?>(
                 context!!,
                 R.layout.dialog_item,
@@ -251,7 +241,7 @@ class AddressFragment : BaseFragment() {
 
             txtCountry.text = arrCountryData[selectedCountryIndex].name
             txtState.text = ""
-            //getStates(arrCountryData[selectedCountryIndex].id)
+            getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
         builder.show()
@@ -289,21 +279,20 @@ class AddressFragment : BaseFragment() {
                     for (arr in arrCountryData) {
                         if (addresses[0].countryName == "United States") {
                             txtCountry.text = arrCountryData[0].name
-                            getStates(arrCountryData[0].id, addresses[0].adminArea)
+                            getStates(arrCountryData[0].id)
 
                         } else if (addresses[0].countryName == "Canada") {
                             txtCountry.text = arrCountryData[1].name
                             txtState.text = ""
-                            getStates(arrCountryData[1].id, addresses[0].adminArea)
-
+                            getStates(arrCountryData[1].id)
 
                         } else if (addresses[0].countryName == "Mexico") {
                             txtCountry.text = arrCountryData[2].name
                             txtState.text = ""
-                            getStates(arrCountryData[2].id, addresses[0].adminArea)
+                            getStates(arrCountryData[2].id)
 
                         } else {
-                            txtAddress.text = ""
+                            tvAddress.text = ""
                             txtCountry.text = ""
                             txtState.text = ""
                             UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))

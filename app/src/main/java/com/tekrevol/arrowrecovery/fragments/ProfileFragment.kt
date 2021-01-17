@@ -3,6 +3,7 @@ package com.tekrevol.arrowrecovery.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import com.bumptech.glide.Glide
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.AppConstants.AboutUs
@@ -15,7 +16,10 @@ import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.receiving_model.Slug
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
+import kotlinx.android.synthetic.main.fragment_editprofile.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.imgProfile
+import kotlinx.android.synthetic.main.fragment_profile.txtAddress
 import retrofit2.Call
 import java.util.*
 
@@ -90,14 +94,14 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun setUserData() {
-        ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
+        ImageLoaderHelper.loadImageWithAnimations(imgProfile, sharedPreferenceManager.currentUser.userDetails.imageUrl, true)
         var userName = sharedPreferenceManager.currentUser.userDetails.fullName
         val fullName = sharedPreferenceManager.currentUser.userDetails.fullName
         val userEmail = sharedPreferenceManager.currentUser.email
         val address = sharedPreferenceManager.currentUser.userDetails.address
         val city = sharedPreferenceManager.currentUser.userDetails.city
         val country = sharedPreferenceManager.currentUser.country
-        ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
+        //ImageLoaderHelper.loadImageWithAnimations(imgProfile, sharedPreferenceManager.currentUser.userDetails.imageUrl, true)
 
         txtName.text = fullName
         txtUsername.text = userName
