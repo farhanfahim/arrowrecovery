@@ -1,38 +1,41 @@
 package com.tekrevol.arrowrecovery.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.tekrevol.arrowrecovery.R
-import com.tekrevol.arrowrecovery.adapters.SpinnerDialogAdapter
-import com.tekrevol.arrowrecovery.callbacks.OnSpinnerItemClickListener
 import com.tekrevol.arrowrecovery.constatnts.AppConstants
-import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.fragments.abstracts.GenericContentFragment
+import com.tekrevol.arrowrecovery.helperclasses.GooglePlaceHelper
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
+import com.tekrevol.arrowrecovery.libraries.imageloader.ImageLoaderHelper
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
 import com.tekrevol.arrowrecovery.models.Country
-import com.tekrevol.arrowrecovery.models.IntWrapper
 import com.tekrevol.arrowrecovery.models.SpinnerModel
 import com.tekrevol.arrowrecovery.models.States
 import com.tekrevol.arrowrecovery.models.receiving_model.Slug
 import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
-import com.tekrevol.arrowrecovery.searchdialog.core.BaseSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
 import kotlinx.android.synthetic.main.fragment_address.contCountry
 import kotlinx.android.synthetic.main.fragment_address.contState
+import kotlinx.android.synthetic.main.fragment_address.imgMap
+import kotlinx.android.synthetic.main.fragment_address.map
 import kotlinx.android.synthetic.main.fragment_address.txtCountry
 import kotlinx.android.synthetic.main.fragment_address.txtState
-import kotlinx.android.synthetic.main.fragment_editprofile.*
 import retrofit2.Call
+import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,6 +46,9 @@ class AddressFragment : BaseFragment() {
     private var spinnerCountryArrayList = ArrayList<SpinnerModel>()
     var webCall: Call<WebResponse<Any>>? = null
     var aboutCall: Call<WebResponse<Any>>? = null
+
+    private var locationClick: Long = 0
+    var googlePlaceHelper: GooglePlaceHelper? = null
     override fun getDrawerLockMode(): Int {
         return 0
 
@@ -78,13 +84,50 @@ class AddressFragment : BaseFragment() {
         contState.setOnClickListener {
             showProvidersInDialog(arrData)
         }
+
         contCountry.setOnClickListener {
-            showCountrySelectDialog()
+            //showCountrySelectDialog()
         }
 
 
         contTermsAndConditions.setOnClickListener {
             privacyAPI(AppConstants.KEY_TERMS)
+        }
+
+        tvAddress.setOnClickListener {
+
+            if (SystemClock.elapsedRealtime() - locationClick < 2000) {
+                return@setOnClickListener
+            }
+            locationClick = SystemClock.elapsedRealtime()
+
+            googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
+                override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
+                    tvAddress.text = locationName
+                    AppConstants.LAT = latitude
+                    AppConstants.LNG = longitude
+
+                    getCountryName(context, latitude, longitude)
+
+
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+                    ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                    map.visibility = View.VISIBLE
+
+                }
+
+                override fun onError(error: String?) {}
+            }, this@AddressFragment, onCreated)
+
+            googlePlaceHelper!!.openMapsActivity()
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (googlePlaceHelper != null) {
+            googlePlaceHelper!!.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -157,10 +200,10 @@ class AddressFragment : BaseFragment() {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
 
-                if (spinnerModelArrayList.isEmpty()){
+                if (spinnerModelArrayList.isEmpty()) {
                     contState.visibility = View.GONE
-                    Toast.makeText(context,"No State Available",Toast.LENGTH_SHORT).show()
-                }else{
+                    Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
+                } else {
                     contState.visibility = View.VISIBLE
                 }
             }
@@ -170,7 +213,7 @@ class AddressFragment : BaseFragment() {
 
     }
 
-    fun initCountryAdapter() {
+        fun initCountryAdapter() {
         countryListAdapter = object : ArrayAdapter<Country?>(
                 context!!,
                 R.layout.dialog_item,
@@ -211,7 +254,7 @@ class AddressFragment : BaseFragment() {
                 val pagesModel: Slug = GsonFactory.getSimpleGson()
                         .fromJson(GsonFactory.getSimpleGson().toJson(webResponse.result)
                                 , Slug::class.java)
-                baseActivity.addDockableFragment(GenericContentFragment.newInstance(pagesModel.title, pagesModel.content, true), false)
+                baseActivity.addFragment(GenericContentFragment.newInstance(pagesModel.title, pagesModel.content, true), false)
             }
 
             override fun onError(`object`: Any?) {}
@@ -224,6 +267,44 @@ class AddressFragment : BaseFragment() {
         super.onDestroyView()
     }
 
+    fun getCountryName(context: Context?, latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        var addresses: List<Address>? = null
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1)
+
+            if (addresses != null && !addresses.isEmpty()) {
+                if (addresses[0].countryName != null) {
+
+                    for (arr in arrCountryData) {
+                        if (addresses[0].countryName == "United States") {
+                            txtCountry.text = arrCountryData[0].name
+                            getStates(arrCountryData[0].id)
+
+                        } else if (addresses[0].countryName == "Canada") {
+                            txtCountry.text = arrCountryData[1].name
+                            txtState.text = ""
+                            getStates(arrCountryData[1].id)
+
+                        } else if (addresses[0].countryName == "Mexico") {
+                            txtCountry.text = arrCountryData[2].name
+                            txtState.text = ""
+                            getStates(arrCountryData[2].id)
+
+                        } else {
+                            tvAddress.text = ""
+                            txtCountry.text = ""
+                            txtState.text = ""
+                            UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
+                            return
+                        }
+                    }
+                }
+            }
+        } catch (ignored: IOException) {
+            //do something
+        }
+    }
 
 
 }

@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:text="Company"
+                android:text="Business"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s14" />
 
@@ -135,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Personal"
+                android:text="Individual"
                 android:textColor="@color/txtDarkGrey"
                 android:textSize="@dimen/s14" />
 
@@ -152,7 +152,7 @@
             <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Company Name"
+                android:hint="Business Name"
                 android:id="@+id/edtCompanyName"
                 android:inputType="textPersonName"
                 android:maxLength="50"

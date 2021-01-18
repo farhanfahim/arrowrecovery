@@ -62,6 +62,19 @@ class HomeActivity : BaseActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (getCurrentUser() != null) {
+            checkAproved()
+            if (isFirebaseTokenUpdated()) {
+                updateProfileWithFirebaseToken()
+
+            } else {
+                callRefreshApi()
+            }
+        }
+    }
+
     private fun checkAproved() {
 
         val services = WebServices(this, sharedPreferenceManager!!.getString(AppConstants.KEY_TOKEN), BaseURLTypes.BASE_URL, false)

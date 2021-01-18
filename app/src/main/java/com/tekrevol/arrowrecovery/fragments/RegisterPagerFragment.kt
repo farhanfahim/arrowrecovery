@@ -1,11 +1,12 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.hbb20.CountryCodePicker
 import com.tekrevol.arrowrecovery.R
 import com.tekrevol.arrowrecovery.activities.HomeActivity
 import com.tekrevol.arrowrecovery.adapters.RegisterPagerAdapter
@@ -18,10 +19,7 @@ import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
 import com.tekrevol.arrowrecovery.managers.retrofit.GsonFactory
 import com.tekrevol.arrowrecovery.managers.retrofit.WebServices
-import com.tekrevol.arrowrecovery.models.SpinnerModel
-import com.tekrevol.arrowrecovery.models.UserDetails
 import com.tekrevol.arrowrecovery.models.receiving_model.DataUpdate
-import com.tekrevol.arrowrecovery.models.receiving_model.UserModel
 import com.tekrevol.arrowrecovery.models.sending_model.EditProfileSendingModel
 import com.tekrevol.arrowrecovery.models.sending_model.SignupSendingModel
 import com.tekrevol.arrowrecovery.models.wrappers.UserModelWrapper
@@ -29,29 +27,22 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_address.edtAddress
-import kotlinx.android.synthetic.main.fragment_address.edtCity
-import kotlinx.android.synthetic.main.fragment_address.edtZipCode
-import kotlinx.android.synthetic.main.fragment_address.txtCountry
-import kotlinx.android.synthetic.main.fragment_address.txtState
 import kotlinx.android.synthetic.main.fragment_contact.*
-import kotlinx.android.synthetic.main.fragment_contact.edtPhoneNo
 import kotlinx.android.synthetic.main.fragment_personal.*
-import kotlinx.android.synthetic.main.fragment_personal.edtLastName
-import kotlinx.android.synthetic.main.fragment_personal.radioBtnCompany
-import kotlinx.android.synthetic.main.fragment_personal.radioBtnIndividual
-import kotlinx.android.synthetic.main.fragment_personal.txtTitle
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
-import java.util.ArrayList
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class RegisterPagerFragment : BaseFragment() {
 
+    private lateinit var ccpLoadNumber: CountryCodePicker
     private var adapter: RegisterPagerAdapter? = null
     var email: String = ""
     var webCall: Call<WebResponse<Any>>? = null
     var positionToSelect: Int = 0
+
     lateinit var fragmentName: FragmentName
 
 
@@ -71,6 +62,7 @@ class RegisterPagerFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
         if (onCreated) {
             setViewPagerAdapter()
         } else {
@@ -83,6 +75,14 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
     }
+//    private fun registerCarrierEditText() {
+//        ccpLoadNumber.registerCarrierNumberEditText(edtPhoneNo)
+//        ccpLoadNumber.setPhoneNumberValidityChangeListener { isValidNumber ->
+//            isValid = isValidNumber
+//        }
+//
+//        ccpLoadNumber.registerCarrierNumberEditText(edtPhoneNo)
+//    }
 
     override fun getDrawerLockMode(): Int {
         return 0
@@ -119,7 +119,14 @@ class RegisterPagerFragment : BaseFragment() {
                 when (positionToSelect) {
                     0 -> accountDetails(positionToSelect)
                     1 -> personalDetails(positionToSelect)
-                    2 -> contactDetails(positionToSelect)
+                    2 -> {
+                        contactDetails(positionToSelect)
+
+                        /*ccpLoadNumber = ccp
+                        registerCarrierEditText()
+                        ccp.registerCarrierNumberEditText(edtPhoneNo)
+                        ccp.setNumberAutoFormattingEnabled(true)*/
+                    }
 
                 }
             } else {
@@ -153,7 +160,7 @@ class RegisterPagerFragment : BaseFragment() {
         if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter Address")
             return
         }
@@ -178,15 +185,20 @@ class RegisterPagerFragment : BaseFragment() {
         }
 
 
-        editProfileSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (edtAddress.stringTrimmed)
+        editProfileSendingModel.address = (tvAddress.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (edtFirstname.stringTrimmed)
-        editProfileSendingModel.stateId = getIdFromSpinner()
+        if (getIdFromSpinner() == -1){
+            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
+            return
+        }else {
+            editProfileSendingModel.stateId = getIdFromSpinner()
+        }
         //editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = getCountryFromSpinner()
@@ -275,7 +287,7 @@ class RegisterPagerFragment : BaseFragment() {
 
         sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN,"");
 
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter Address")
             return
         }
@@ -301,18 +313,26 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.email = (edtEmail.stringTrimmed)
         var email: String = edtEmail.stringTrimmed
         var phone: String = edtPhoneNo.stringTrimmed
-        signUpSendingModel.phone = (edtPhoneNo.stringTrimmed)
+        signUpSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         signUpSendingModel.firstName = (edtFirstname.stringTrimmed)
         signUpSendingModel.lastName = (edtLastName.stringTrimmed)
-        signUpSendingModel.address = (edtAddress.stringTrimmed)
+        signUpSendingModel.address = (tvAddress.stringTrimmed)
         signUpSendingModel.zipCode = (edtZipCode.stringTrimmed)
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
-        signUpSendingModel.stateId = getIdFromSpinner()
+        if (getIdFromSpinner() == -1){
+            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
+            return
+        }else {
+            signUpSendingModel.stateId = getIdFromSpinner()
+        }
         signUpSendingModel.city = (edtCity.stringTrimmed)
+
         //signUpSendingModel.about = (edtComment.stringTrimmed)
         signUpSendingModel.country = (txtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
+        signUpSendingModel.latitude = AppConstants.LAT
+        signUpSendingModel.longitude = AppConstants.LNG
         //signUpSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         signUpSendingModel.isCompleted = (1)
 
@@ -357,7 +377,7 @@ class RegisterPagerFragment : BaseFragment() {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         baseActivity.popBackStack()
-                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
+                        baseActivity.addDockableFragment(OtpVerificationFragment.newInstance(email, phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
@@ -392,19 +412,30 @@ class RegisterPagerFragment : BaseFragment() {
     private fun contactDetails(positionToSelect: Int) {
 
 
-        if (!edtPhoneNo.testValidity() || edtPhoneNo.text.toString().trim().length < 10) {
-            UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
-            return
+        var phoneNo = ccp.fullNumberWithPlus.toString()
+
+        if (edtPhoneNo.text.toString() == ""){
+            UIHelper.showAlertDialog(context, "Phone number is required")
+        }else {
+            /*val regex = "^\\+(?:[0-9] ?){6,14}[0-9]$"
+
+            val pattern: Pattern = Pattern.compile(regex)
+            val matcher: Matcher = pattern.matcher(phoneNo)*/
+            if (/*matcher.matches() && phoneNo.length <= 15 &&*/ ContactFragment.isValid) {
+                val builder = AlertDialog.Builder(context!!)
+                builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid Phone Number? ")
+                        .setTitle("Alert")
+                        .setCancelable(true)
+                        .setNegativeButton("No"
+                        ) { dialog, id -> dialog.cancel() }
+                        .setPositiveButton("Yes") { dialog, id -> setCurrentItemByPosition(positionToSelect + 1) }
+                val alert = builder.create()
+                alert.show()
+            }else{
+                UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
+
+            }
         }
-        val builder = AlertDialog.Builder(context!!)
-        builder.setMessage("Is " + edtPhoneNo.stringTrimmed + " your valid Phone Number? ")
-                .setTitle("Alert")
-                .setCancelable(true)
-                .setNegativeButton("No"
-                ) { dialog, id -> dialog.cancel() }
-                .setPositiveButton("Yes") { dialog, id -> setCurrentItemByPosition(positionToSelect + 1) }
-        val alert = builder.create()
-        alert.show()
     }
 
     private fun personalDetails(positionToSelect: Int) {
@@ -435,7 +466,7 @@ class RegisterPagerFragment : BaseFragment() {
 
         if (radioBtnCompany.isChecked) {
             if (edtCompanyName.stringTrimmed.isEmpty()) {
-                UIHelper.showAlertDialog(context, "Please enter your Company Name")
+                UIHelper.showAlertDialog(context, "Please enter your Business Name")
                 return
             }
         }

@@ -113,7 +113,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
-                        addDockableFragment(OtpVerificationFragment.newInstance(email!!, ""), true)
+                        addDockableFragment(OtpVerificationFragment.newInstance(email!!, userModelWrapper.user.userDetails.phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
@@ -243,7 +243,7 @@ class MainActivity : BaseActivity(), FacebookResponse {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)
 
                         popBackStack()
-                        addDockableFragment(OtpVerificationFragment.newInstance(email, ""), true)
+                        addDockableFragment(OtpVerificationFragment.newInstance(email, userModelWrapper.user.userDetails.phone), true)
                     }
                     (userModelWrapper.user.userDetails.isApproved) == 0 -> {
                         sharedPreferenceManager?.putValue(AppConstants.KEY_TOKEN, userModelWrapper.user.accessToken)

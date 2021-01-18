@@ -1,10 +1,12 @@
 package com.tekrevol.arrowrecovery.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Pair
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -73,6 +75,15 @@ abstract class BaseActivity : AppCompatActivity() {
             fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
         }
         fragmentTransaction.replace(dockableFragmentId, fragment).addToBackStack(fragment.javaClass.simpleName)
+                .commit()
+    }
+
+    fun addFragment(fragment: Fragment, isTransition: Boolean) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        if (isTransition) {
+            fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+        fragmentTransaction.add(dockableFragmentId, fragment).addToBackStack(fragment.javaClass.simpleName)
                 .commit()
     }
 
@@ -153,5 +164,16 @@ abstract class BaseActivity : AppCompatActivity() {
     fun refreshFragment(fragment: BaseFragment) {
         popBackStack()
         addDockableFragment(fragment, false)
+    }
+
+    fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = activity.currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

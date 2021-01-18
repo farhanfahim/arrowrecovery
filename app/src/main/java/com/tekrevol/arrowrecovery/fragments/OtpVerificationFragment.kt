@@ -26,7 +26,7 @@ class OtpVerificationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        txtPhone.text = "Please enter the OTP code sent to your email $email"
+        txtPhone.text = "Please enter the OTP code sent to your phone number $phone"
       //  txtPhone.text = "We have sent you a SMS with a code to the number $phone and your email $email"
         txtBackToLoginScreen.visibility = View.GONE
     }
@@ -120,6 +120,12 @@ class OtpVerificationFragment : BaseFragment() {
         webCall?.cancel()
 
         webCallVerify?.cancel()
+        KeyboardHelper.hideSoftKeyboard(context, pinEditText)
         super.onDestroyView()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        KeyboardHelper.hideSoftKeyboard(context, pinEditText)
     }
 }

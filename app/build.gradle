@@ -55,8 +55,8 @@ android {
         applicationId 'com.tekrevol.arrowrecovery'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 9
-        versionName "1.2.11"
+        versionCode 8
+        versionName "1.2.18"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
@@ -136,6 +136,9 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     testImplementation 'junit:junit:4.12'
     kapt 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
 
     implementation 'com.google.android.libraries.places:places:1.1.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
@@ -183,6 +186,9 @@ dependencies {
     implementation group: 'com.zendesk', name: 'support', version: '3.0.2'
     implementation group: 'com.zopim.android', name: 'sdk', version: '1.4.8'
     //convert html url into pdf
+
+    //country code picker
+    implementation 'com.hbb20:ccp:2.3.1'
 
 }
 

@@ -65,6 +65,14 @@ public class EditProfileSendingModel {
     @SerializedName("title")
     private int title;
 
+
+    @Expose
+    @SerializedName("latitude")
+    private Double latitude;
+    @Expose
+    @SerializedName("longitude")
+    private Double longitude;
+
     public String getAbout() {
         return about;
     }
@@ -88,6 +96,22 @@ public class EditProfileSendingModel {
     @Expose
     @SerializedName("user_type")
     private int userType;
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 
     public int getUserType() {
         return userType;

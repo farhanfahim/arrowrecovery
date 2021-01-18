@@ -54,6 +54,11 @@ public class AppConstants {
     public static final String FORMAT_DATE_SHOW = "MMM dd, yyyy";
     public static final String FORMAT_DATE_SEND = "dd/MM/yyyy HH:mm:ss";
 
+    //location lat lng
+
+    public static Double LAT = 0.0;
+    public static Double LNG = 0.0;
+
     /**
      * Path to save Media
      */

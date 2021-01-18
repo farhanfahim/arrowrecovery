@@ -97,10 +97,10 @@ public class UserDetails {
     @SerializedName("about")
     private String about;
     @Expose
-    @SerializedName("lat")
+    @SerializedName("latitude")
     private double lat;
     @Expose
-    @SerializedName("lng")
+    @SerializedName("longitude")
     private double lng;
     @Expose
     @SerializedName("title")
