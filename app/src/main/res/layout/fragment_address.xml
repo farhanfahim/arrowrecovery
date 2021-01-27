@@ -18,84 +18,6 @@
 
 
 
-            <LinearLayout
-                android:id="@+id/contLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint=" Address"
-                        android:inputType="textPersonName"
-                        android:maxLength="50"
-                        android:singleLine="true"
-                        android:textColor="@color/title_color"
-                        android:textColorHint="@color/txtGrey"
-                        android:textSize="14sp"
-                        app:typeface="@string/font_light" />
-
-
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:id="@+id/tvAddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Address"
-                        android:inputType="textPostalAddress"
-                        android:maxLength="200"
-                        android:singleLine="true"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/title_color"
-                        android:textColorHint="@color/txtGrey"
-                        android:textSize="@dimen/s14"
-                        app:typeface="@string/font_light" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/star_grey"/>
-
-
-
-                    <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
-                        android:id="@+id/map"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/x20dp"
-                        android:visibility="gone"
-                        app:corner_radius="@dimen/x10dp">
-
-                        <ImageView
-                            android:id="@+id/imgMap"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/x200dp"
-                            android:scaleType="centerCrop" />
-
-
-                    </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
-
-                </LinearLayout>
-
-
-
-
-            </LinearLayout>
-
-
             <!--<com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_fullname_login"
                 android:layout_width="match_parent"
@@ -118,27 +40,53 @@
                     app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 -->
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x10dp"
-                android:layout_marginTop="@dimen/_10sdp"
+
+                android:layout_marginTop="@dimen/x10dp"
                 android:textSize="@dimen/s14"
                 app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
 
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Zip Code"
-                    android:inputType="number"
-                    android:id="@+id/edtZipCode"
-                    android:maxLength="10"
+                    android:hint="Country"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:textSize="@dimen/s14"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="State"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/title_color"
+                    android:textColorHint="@color/txtGrey"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -162,135 +110,46 @@
                     app:typeface="@string/font_light" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/x10dp"
+                android:textSize="@dimen/s14"
+                app:hintTextAppearance="@style/TextAppearence.App.TextInputLayout">
+
+                <com.tekrevol.arrowrecovery.widget.AnyEditTextView
+                    android:id="@+id/edtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Address"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/title_color"
+                    android:textColorHint="@color/txtGrey"
+                    android:textSize="@dimen/s14"
+                    app:typeface="@string/font_light" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
+                android:id="@+id/map"
                 android:layout_marginTop="10dp"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:id="@+id/contCountry"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:id="@+id/txtCountry"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Country"
-                        android:padding="5dp"
-                        android:textColor="@color/title_color"
-                        android:textColorHint="@color/txtGrey"
-
-                        android:textSize="@dimen/s14"
-                        app:typeface="@string/font_light" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:contentDescription="country"
-                        android:padding="@dimen/x10dp"
-                        android:visibility="gone"
-                        android:src="@drawable/spinner" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/x10dp"
-                    android:background="@color/txtGrey" />
-
-
-            </LinearLayout>
-
-          <!--  <LinearLayout
-                android:id="@+id/contState"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:visibility="visible">
+                android:layout_marginBottom="@dimen/x20dp"
+                android:visibility="gone"
+                app:corner_radius="@dimen/x10dp">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/imgMap"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:id="@+id/txtState"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Select State..."
-                        android:padding="5dp"
-                        android:textColor="@color/title_color"
-                        android:textColorHint="@color/txtGrey"
-
-                        android:textSize="@dimen/s14"
-                        app:typeface="@string/font_light" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:contentDescription="Select category"
-                        android:padding="@dimen/x10dp"
-                        android:src="@drawable/spinner" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/x10dp"
-                    android:background="@color/txtGrey" />
+                    android:layout_height="@dimen/x200dp"
+                    android:scaleType="centerCrop" />
 
 
-            </LinearLayout>-->
-
-            <LinearLayout
-                android:id="@+id/contState"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.tekrevol.arrowrecovery.widget.AnyTextView
-                        android:id="@+id/txtState"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="Select State..."
-                        android:padding="5dp"
-                        android:textColor="@color/title_color"
-                        android:textColorHint="@color/txtGrey"
-
-                        android:textSize="@dimen/s14"
-                        app:typeface="@string/font_light" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:contentDescription="Select category"
-                        android:padding="@dimen/x10dp"
-                        android:src="@drawable/spinner" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/x10dp"
-                    android:background="@color/txtGrey" />
+            </com.jcminarro.roundkornerlayout.RoundKornerFrameLayout>
 
 
-            </LinearLayout>
-
-
-            <!--<com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x10dp"
@@ -300,23 +159,24 @@
                 <com.tekrevol.arrowrecovery.widget.AnyEditTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Country"
-                    android:inputType="text"
-                    android:id="@+id/edtCountry"
-                    android:maxLength="30"
+                    android:hint="Zip Code"
+                    android:inputType="number"
+                    android:id="@+id/edtZipCode"
+                    android:maxLength="10"
                     android:singleLine="true"
                     android:textColor="@color/title_color"
                     android:textColorHint="@color/txtGrey"
                     android:textSize="@dimen/s14"
                     app:typeface="@string/font_light" />
-            </com.google.android.material.textfield.TextInputLayout>-->
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x40dp"
-                android:layout_gravity="center"
-                >
+                android:layout_gravity="center">
 
                 <CheckBox
                     android:id="@+id/checked"

@@ -44,8 +44,8 @@ public class EditProfileSendingModel {
     @SerializedName("first_name")
     private String firstName;
     @Expose
-    @SerializedName("state_id")
-    private int stateId;
+    @SerializedName("state")
+    private String state;
     @Expose
     @SerializedName("zip_code")
     private String zipCode;
@@ -207,12 +207,12 @@ public class EditProfileSendingModel {
         this.firstName = firstName;
     }
 
-    public int getStateId() {
-        return stateId;
+    public String getState() {
+        return state;
     }
 
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getZipCode() {
