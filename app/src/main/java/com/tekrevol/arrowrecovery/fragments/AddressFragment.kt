@@ -92,7 +92,7 @@ class AddressFragment : BaseFragment() {
             privacyAPI(AppConstants.KEY_TERMS)
         }
 
-        txtCountry.setOnClickListener {
+        tvAddress.setOnClickListener {
 
             if (SystemClock.elapsedRealtime() - locationClick < 2000) {
                 return@setOnClickListener
@@ -101,7 +101,7 @@ class AddressFragment : BaseFragment() {
 
             googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
                 override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
-                    edtAddress.setText(locationName)
+                    tvAddress.text = locationName
                     AppConstants.LAT = latitude
                     AppConstants.LNG = longitude
 
@@ -296,7 +296,7 @@ class AddressFragment : BaseFragment() {
 
                         }*/ else {
 
-                            edtAddress.setText("")
+                            tvAddress.text = ""
                             edtCountry.setText("")
                             edtState.setText("")
                             UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))

@@ -166,14 +166,14 @@ class EditProfileFragment : BaseFragment() {
            // edtKindCompany.visibility = View.VISIBLE
         }
 
-        edtCountry.setOnClickListener {
+        tvAddress.setOnClickListener {
             if (SystemClock.elapsedRealtime() - locationClick < 2000) {
                 return@setOnClickListener
             }
             locationClick = SystemClock.elapsedRealtime()
             googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
                 override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
-                    edtAddress.setText(locationName)
+                    tvAddress.text = locationName
                     lat = latitude
                     lng = longitude
 
@@ -294,19 +294,6 @@ class EditProfileFragment : BaseFragment() {
 
                 ImageLoaderHelper.loadImageWithAnimations(imgProfile, user.userDetails.imageUrl, true)
 
-              /*  if (user.userDetails.title == AppConstants.TITLE_MR) {
-                    txtTitle.text = Constants.title[0]
-                }
-                if (user.userDetails.title == AppConstants.TITLE_MISS) {
-                    txtTitle.text = Constants.title[1]
-                }
-                if (user.userDetails.title == AppConstants.TITLE_MRS) {
-                    txtTitle.text = Constants.title[2]
-                }
-                if (user.userDetails.title == AppConstants.TITLE_MS) {
-                    txtTitle.text = Constants.title[3]
-                }*/
-
                 if (user.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
                     radioBtnIndividual.isChecked = true
                 }
@@ -319,7 +306,7 @@ class EditProfileFragment : BaseFragment() {
                 edtCompany.setText(user.userDetails.company)
                 edtPhoneNo.setText(user.userDetails.phone)
                 ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
-                edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
+                tvAddress.text = sharedPreferenceManager.currentUser.userDetails.address
                 if (user.userDetails.lat != null &&
                         user.userDetails.lng != null){
                     lat = user.userDetails.lat
@@ -328,12 +315,17 @@ class EditProfileFragment : BaseFragment() {
                     ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
                     map.visibility = View.VISIBLE
                 }
-                edtZipCode.setText(user.userDetails.zipCode)
-                edtCity.setText(user.userDetails.city)
-                edtCountry.setText(user.userDetails.country)
+                edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
+                edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
+                edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
                 //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
                 //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
-                edtState.setText(user.userDetails.state.name)
+                if (user.userDetails.state != null) {
+                    edtState.setText(sharedPreferenceManager.currentUser.userDetails.state)
+
+                }else{
+                    edtState.setText("")
+                }
                 getCountry()
 
             }
@@ -341,55 +333,6 @@ class EditProfileFragment : BaseFragment() {
             override fun onError(`object`: Any?) {
             }
         })
-
-    }
-
-
-    private fun setFields() {
-
-        ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
-
-       /* if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MR) {
-            txtTitle.text = Constants.title[0]
-        }
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MISS) {
-            txtTitle.text = Constants.title[1]
-        }
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MRS) {
-            txtTitle.text = Constants.title[2]
-        }
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MS) {
-            txtTitle.text = Constants.title[3]
-        }
-*/
-
-        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
-            radioBtnIndividual.isChecked = true
-        }
-        if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_COMPANY) {
-            radioBtnCompany.isChecked = true
-        }
-
-        edtFirstName.setText(sharedPreferenceManager.currentUser.userDetails.firstName)
-        edtLastName.setText(sharedPreferenceManager.currentUser.userDetails.lastName)
-        edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
-        edtPhoneNo.setText(sharedPreferenceManager.currentUser.userDetails.phone)
-        ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
-        edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
-        if (sharedPreferenceManager.currentUser.userDetails.lat != null &&
-                sharedPreferenceManager.currentUser.userDetails.lng != null){
-            lat = sharedPreferenceManager.currentUser.userDetails.lat
-            lng = sharedPreferenceManager.currentUser.userDetails.lng
-            var str: String = GooglePlaceHelper.getMapSnapshotURL(sharedPreferenceManager.currentUser.userDetails.lat,sharedPreferenceManager.currentUser.userDetails.lng)
-            ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
-            map.visibility = View.VISIBLE
-        }
-        edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
-        edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
-        edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
-        //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
-        //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
-        edtState.setText(sharedPreferenceManager.currentUser.userDetails.state.name)
 
     }
 
@@ -460,7 +403,7 @@ class EditProfileFragment : BaseFragment() {
             return
         }
 
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.text.toString().isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter your address")
             return
 
@@ -494,7 +437,7 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstName.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (edtAddress.stringTrimmed)
+        editProfileSendingModel.address = (tvAddress.stringTrimmed)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompany.stringTrimmed)
         editProfileSendingModel.name = (edtFirstName.stringTrimmed)
@@ -661,7 +604,7 @@ class EditProfileFragment : BaseFragment() {
                                 getStates(arrCountryData[2].id)
 
                             }*/ else {
-                                edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
+                                tvAddress.text = sharedPreferenceManager.currentUser.userDetails.address
                                 UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
                                 return
                             }

@@ -497,7 +497,7 @@ class CheckoutDialogFragment : BottomSheetDialogFragment(), GooglePlaceHelper.Go
             if (addresses != null && addresses.size > 0) {
                 val state = addresses[0].adminArea
                 if (state != null) {
-                    if (((sharedPreferenceManager?.currentUser?.userDetails?.state?.name)?.equals(state)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state?.shortName)?.equals(state)!!)) {
+                    if (((sharedPreferenceManager?.currentUser?.userDetails?.state)?.equals(state)!!) || ((sharedPreferenceManager?.currentUser?.userDetails?.state)?.equals(state)!!)) {
                         txtPickupLocation.text = locationName
                         latitudee = latitude
                         longitudee = longitude

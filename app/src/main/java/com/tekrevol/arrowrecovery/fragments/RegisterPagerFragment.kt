@@ -174,7 +174,7 @@ class RegisterPagerFragment : BaseFragment() {
             UIHelper.showAlertDialog(context, "Please select your state")
             return
         }
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.text.toString().isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter your address")
             return
         }
@@ -192,7 +192,7 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (edtAddress.stringTrimmed)
+        editProfileSendingModel.address = (tvAddress.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
@@ -301,7 +301,7 @@ class RegisterPagerFragment : BaseFragment() {
             return
         }
 
-        if (!edtAddress.testValidity()) {
+        if (tvAddress.text.toString().isEmpty()) {
             UIHelper.showAlertDialog(context, "Please enter your address")
             return
         }
@@ -327,7 +327,7 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         signUpSendingModel.firstName = (edtFirstname.stringTrimmed)
         signUpSendingModel.lastName = (edtLastName.stringTrimmed)
-        signUpSendingModel.address = (edtAddress.stringTrimmed)
+        signUpSendingModel.address = (tvAddress.stringTrimmed)
         signUpSendingModel.zipCode = (edtZipCode.stringTrimmed)
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
         signUpSendingModel.state = (edtState.stringTrimmed)

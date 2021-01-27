@@ -53,8 +53,8 @@ public class UserDetails {
     @SerializedName("first_name")
     private String firstName;
     @Expose
-    @SerializedName("state_id")
-    private int stateId;
+    @SerializedName("state")
+    private String state;
     @Expose
     @SerializedName("kind_of_company")
     private String kindOfCompany;
@@ -74,9 +74,6 @@ public class UserDetails {
     @SerializedName("user_type")
     private int userType;
 
-    @Expose
-    @SerializedName("state")
-    private States state;
 
     @Expose
     @SerializedName("id")
@@ -152,14 +149,6 @@ public class UserDetails {
 
     public void setCompany(String company) {
         this.company = company;
-    }
-
-    public int getStateId() {
-        return stateId;
-    }
-
-    public void setStateId(int stateId) {
-        this.stateId = stateId;
     }
 
     public String getImageUrl() {
@@ -314,12 +303,12 @@ public class UserDetails {
         this.title = title;
     }
 
-    public States getState() {
+    public String getState() {
         return state;
     }
 
 
-    public void setState(States state) {
+    public void setState(String state) {
         this.state = state;
     }
 
