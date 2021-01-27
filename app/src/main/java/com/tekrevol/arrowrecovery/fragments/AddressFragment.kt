@@ -28,12 +28,10 @@ import com.tekrevol.arrowrecovery.searchdialog.SimpleSearchDialogCompat
 import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_address.*
-import kotlinx.android.synthetic.main.fragment_address.contCountry
-import kotlinx.android.synthetic.main.fragment_address.contState
+import kotlinx.android.synthetic.main.fragment_address.edtCity
+import kotlinx.android.synthetic.main.fragment_address.edtZipCode
 import kotlinx.android.synthetic.main.fragment_address.imgMap
 import kotlinx.android.synthetic.main.fragment_address.map
-import kotlinx.android.synthetic.main.fragment_address.txtCountry
-import kotlinx.android.synthetic.main.fragment_address.txtState
 import retrofit2.Call
 import java.io.IOException
 import java.util.*
@@ -81,20 +79,20 @@ class AddressFragment : BaseFragment() {
 
     override fun setListeners() {
 
-        contState.setOnClickListener {
+        /*contState.setOnClickListener {
             showProvidersInDialog(arrData)
-        }
+        }*/
 
-        contCountry.setOnClickListener {
+        /*contCountry.setOnClickListener {
             //showCountrySelectDialog()
-        }
+        }*/
 
 
         contTermsAndConditions.setOnClickListener {
             privacyAPI(AppConstants.KEY_TERMS)
         }
 
-        tvAddress.setOnClickListener {
+        txtCountry.setOnClickListener {
 
             if (SystemClock.elapsedRealtime() - locationClick < 2000) {
                 return@setOnClickListener
@@ -103,7 +101,7 @@ class AddressFragment : BaseFragment() {
 
             googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
                 override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
-                    tvAddress.text = locationName
+                    edtAddress.setText(locationName)
                     AppConstants.LAT = latitude
                     AppConstants.LNG = longitude
 
@@ -141,7 +139,7 @@ class AddressFragment : BaseFragment() {
         val dialog = SimpleSearchDialogCompat(context, "Select State",
                 "Search here...", null, insuranceProvidersList, SearchResultListener<States> { dialog, item, position ->
             dialog.dismiss()
-            txtState.text = item.name
+            //txtState.text = item.name
         })
 
         dialog.show()
@@ -180,7 +178,7 @@ class AddressFragment : BaseFragment() {
 
     private fun getStates(statId: Int) {
 
-        txtState.text = ""
+       // txtState.text = ""
         val query: MutableMap<String, Any> = HashMap()
 
         query[WebServiceConstants.Q_PARAM_COUNTRY_ID] = statId
@@ -201,10 +199,10 @@ class AddressFragment : BaseFragment() {
                 }
 
                 if (spinnerModelArrayList.isEmpty()) {
-                    contState.visibility = View.GONE
+                    //contState.visibility = View.GONE
                     Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
                 } else {
-                    contState.visibility = View.VISIBLE
+                    //contState.visibility = View.VISIBLE
                 }
             }
 
@@ -239,9 +237,9 @@ class AddressFragment : BaseFragment() {
         ) { dialog, index ->
             selectedCountryIndex = index
 
-            txtCountry.text = arrCountryData[selectedCountryIndex].name
-            txtState.text = ""
-            getStates(arrCountryData[selectedCountryIndex].id)
+            /*txtCountry.text = arrCountryData[selectedCountryIndex].name
+            txtState.text = ""*/
+            //getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
         builder.show()
@@ -278,23 +276,29 @@ class AddressFragment : BaseFragment() {
 
                     for (arr in arrCountryData) {
                         if (addresses[0].countryName == "United States") {
-                            txtCountry.text = arrCountryData[0].name
-                            getStates(arrCountryData[0].id)
+                            edtCountry.setText(arrCountryData[0].name)
+                            edtState.setText(addresses[0].adminArea)
+                            edtCity.setText(addresses[0].locality)
+                            edtZipCode.setText(addresses[0].postalCode)
+                            //getStates(arrCountryData[0].id)
 
                         } else if (addresses[0].countryName == "Canada") {
-                            txtCountry.text = arrCountryData[1].name
-                            txtState.text = ""
-                            getStates(arrCountryData[1].id)
+                            edtCountry.setText(arrCountryData[1].name)
+                            edtState.setText(addresses[0].adminArea)
+                            edtCity.setText(addresses[0].locality)
+                            edtZipCode.setText(addresses[0].postalCode)
+                            //getStates(arrCountryData[1].id)
 
-                        } else if (addresses[0].countryName == "Mexico") {
+                        }/* else if (addresses[0].countryName == "Mexico") {
                             txtCountry.text = arrCountryData[2].name
                             txtState.text = ""
                             getStates(arrCountryData[2].id)
 
-                        } else {
-                            tvAddress.text = ""
-                            txtCountry.text = ""
-                            txtState.text = ""
+                        }*/ else {
+
+                            edtAddress.setText("")
+                            edtCountry.setText("")
+                            edtState.setText("")
                             UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
                             return
                         }

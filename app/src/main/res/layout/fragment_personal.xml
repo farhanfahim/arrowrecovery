@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.tekrevol.arrowrecovery.widget.AnyTextView
+         <!--   <com.tekrevol.arrowrecovery.widget.AnyTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint=" Title"
@@ -66,7 +66,7 @@
                 android:background="@color/txtGrey" />
 
 
-        </LinearLayout>
+        </LinearLayout>-->
 
 
         <com.google.android.material.textfield.TextInputLayout

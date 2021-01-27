@@ -14,6 +14,7 @@ import com.tekrevol.arrowrecovery.constatnts.AppConstants
 import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.enums.FragmentName
+import com.tekrevol.arrowrecovery.fragments.AddressFragment.Companion.arrData
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.helperclasses.validator.PasswordValidation
@@ -160,25 +161,28 @@ class RegisterPagerFragment : BaseFragment() {
         if (radioBtnIndividual.isChecked) {
             editProfileSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
-        if (tvAddress.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please enter Address")
-            return
-        }
 
-        if (!edtZipCode.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter Zip Code")
+        if (!edtCountry.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your country")
             return
-
         }
         if (!edtCity.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter City")
+            UIHelper.showAlertDialog(context, "Please enter your city")
             return
         }
-        if (txtState.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select State")
+        if (!edtState.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please select your state")
             return
         }
+        if (!edtAddress.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your address")
+            return
+        }
+        if (!edtZipCode.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your zip code")
+            return
 
+        }
         if (!checked.isChecked) {
             UIHelper.showAlertDialog(context, "Please accept Term of Use")
             return
@@ -188,17 +192,12 @@ class RegisterPagerFragment : BaseFragment() {
         editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstname.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (tvAddress.stringTrimmed)
+        editProfileSendingModel.address = (edtAddress.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompanyName.stringTrimmed)
         editProfileSendingModel.name = (edtFirstname.stringTrimmed)
-        if (getIdFromSpinner() == -1){
-            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
-            return
-        }else {
-            editProfileSendingModel.stateId = getIdFromSpinner()
-        }
+        editProfileSendingModel.state = (edtState.stringTrimmed)
         //editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = getCountryFromSpinner()
@@ -207,7 +206,7 @@ class RegisterPagerFragment : BaseFragment() {
         System.out.println(sharedPreferenceManager!!.getString(AppConstants.KEY_FIREBASE_TOKEN))
 
 
-        if (txtTitle.text == Constants.title[0]) {
+     /*   if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
         }
         if (txtTitle.text == Constants.title[1]) {
@@ -218,7 +217,7 @@ class RegisterPagerFragment : BaseFragment() {
         }
         if (txtTitle.text == Constants.title[3]) {
             editProfileSendingModel.title = AppConstants.TITLE_MS
-        }
+        }*/
         //   var email: String = edtEmail.stringTrimmed
         var phone: String = edtPhoneNo.stringTrimmed
 
@@ -287,22 +286,34 @@ class RegisterPagerFragment : BaseFragment() {
 
         sharedPreferenceManager.putValue(AppConstants.KEY_TOKEN,"");
 
-        if (tvAddress.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please enter Address")
+        if (!edtCountry.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your country")
+            return
+        }
+
+        if (!edtState.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your state")
+            return
+        }
+
+        if (!edtCity.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your city")
+            return
+        }
+
+        if (!edtAddress.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your address")
             return
         }
 
         if (!edtZipCode.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter Zip Code")
+            UIHelper.showAlertDialog(context, "Please enter your zip code")
             return
 
         }
-        if (!edtCity.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter City")
-            return
-        }
+
         if (!checked.isChecked) {
-            UIHelper.showAlertDialog(context, "Please accept Term of Use")
+            UIHelper.showAlertDialog(context, "Please accept term of use")
             return
         }
 
@@ -316,19 +327,13 @@ class RegisterPagerFragment : BaseFragment() {
         signUpSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         signUpSendingModel.firstName = (edtFirstname.stringTrimmed)
         signUpSendingModel.lastName = (edtLastName.stringTrimmed)
-        signUpSendingModel.address = (tvAddress.stringTrimmed)
+        signUpSendingModel.address = (edtAddress.stringTrimmed)
         signUpSendingModel.zipCode = (edtZipCode.stringTrimmed)
         signUpSendingModel.company = (edtCompanyName.stringTrimmed)
-        if (getIdFromSpinner() == -1){
-            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
-            return
-        }else {
-            signUpSendingModel.stateId = getIdFromSpinner()
-        }
+        signUpSendingModel.state = (edtState.stringTrimmed)
         signUpSendingModel.city = (edtCity.stringTrimmed)
-
         //signUpSendingModel.about = (edtComment.stringTrimmed)
-        signUpSendingModel.country = (txtCountry.stringTrimmed)
+        signUpSendingModel.country = (edtCountry.stringTrimmed)
         signUpSendingModel.password = (edtPasswordReg.stringTrimmed)
         signUpSendingModel.passwordConfirmation = (edtConfirmPassReg.stringTrimmed)
         signUpSendingModel.latitude = AppConstants.LAT
@@ -343,7 +348,7 @@ class RegisterPagerFragment : BaseFragment() {
             signUpSendingModel.userType = AppConstants.USER_TYPE_INDIVIDUAL
         }
 
-        if (txtTitle.text == Constants.title[0]) {
+      /*  if (txtTitle.text == Constants.title[0]) {
             signUpSendingModel.title = AppConstants.TITLE_MR
         }
         if (txtTitle.text == Constants.title[1]) {
@@ -354,7 +359,7 @@ class RegisterPagerFragment : BaseFragment() {
         }
         if (txtTitle.text == Constants.title[3]) {
             signUpSendingModel.title = AppConstants.TITLE_MS
-        }
+        }*/
 
         webCall = getBaseWebServices(true).postAPIAnyObject(WebServiceConstants.PATH_REGISTER, signUpSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
             override fun requestDataResponse(webResponse: WebResponse<Any?>) {
@@ -444,10 +449,10 @@ class RegisterPagerFragment : BaseFragment() {
 
         }
 
-        if (txtTitle.stringTrimmed.isEmpty()) {
+      /*  if (txtTitle.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please select Title")
             return
-        }
+        }*/
 
         if (!edtFirstname.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter First Name")
@@ -602,8 +607,8 @@ class RegisterPagerFragment : BaseFragment() {
 
     private fun getIdFromSpinner(): Int {
 
-        for (states in AddressFragment.arrData) {
-            if (states.name == txtState.stringTrimmed) {
+        for (states in arrData) {
+            if (states.name == edtState.stringTrimmed) {
                 return states.id
             }
         }
@@ -613,8 +618,8 @@ class RegisterPagerFragment : BaseFragment() {
     private fun getCountryFromSpinner(): String {
 
         for (country in AddressFragment.arrCountryData) {
-            if (country.name == txtCountry.stringTrimmed) {
-                txtCountry.text = country.name
+            if (country.name == edtCountry.stringTrimmed) {
+                edtCountry.setText(country.name)
                 return country.name
             }
         }

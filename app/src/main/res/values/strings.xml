@@ -63,7 +63,7 @@
     <string name="password_validation">Please enter more than 6 Characters in password</string>
     <string name="confirm_password_validation">Confirm password should be same as Password field</string>
     <string name="phone_number_validation">Please enter valid phone number</string>
-    <string name="we_are_not_available">We are not available in this country, please select a city in USA, Mexico and Canada</string>
+    <string name="we_are_not_available">We are not available in this country, please select a city in USA and Canada</string>
     <string name="kindly_sign_up">Kindly sign up with a new email and phone number as these are your unique identifiers</string>
 
 </resources>

@@ -37,15 +37,11 @@ import com.tekrevol.arrowrecovery.searchdialog.core.SearchResultListener
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.fragment_editprofile.*
-import kotlinx.android.synthetic.main.fragment_editprofile.contCountry
-import kotlinx.android.synthetic.main.fragment_editprofile.contState
 import kotlinx.android.synthetic.main.fragment_editprofile.edtCity
 import kotlinx.android.synthetic.main.fragment_editprofile.edtPhoneNo
 import kotlinx.android.synthetic.main.fragment_editprofile.edtZipCode
 import kotlinx.android.synthetic.main.fragment_editprofile.imgMap
 import kotlinx.android.synthetic.main.fragment_editprofile.map
-import kotlinx.android.synthetic.main.fragment_editprofile.txtCountry
-import kotlinx.android.synthetic.main.fragment_editprofile.txtState
 import retrofit2.Call
 import java.io.File
 import java.io.IOException
@@ -135,26 +131,26 @@ class EditProfileFragment : BaseFragment() {
     override fun setListeners() {
 
 
-        contState.setOnClickListener {
+       /* contState.setOnClickListener {
             showProvidersInDialog(arrData)
         }
 
         contCountry.setOnClickListener {
            // showCountrySelectDialog()
-        }
+        }*/
 
         imgCamera.setOnClickListener {
 
             UIHelper.cropImagePicker(homeActivity, this)
         }
 
-        contTitle.setOnClickListener {
+        /*contTitle.setOnClickListener {
             UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->
                 selectedPosition = (dialog as AlertDialog).listView.checkedItemPosition
                 txtTitle.text = Constants.title[selectedPosition]
                 dialog.dismiss()
             }
-        }
+        }*/
 
         radioBtnIndividual.setOnClickListener {
             edtCompany.visibility = View.GONE
@@ -170,14 +166,14 @@ class EditProfileFragment : BaseFragment() {
            // edtKindCompany.visibility = View.VISIBLE
         }
 
-        txtAddress.setOnClickListener {
+        edtCountry.setOnClickListener {
             if (SystemClock.elapsedRealtime() - locationClick < 2000) {
                 return@setOnClickListener
             }
             locationClick = SystemClock.elapsedRealtime()
             googlePlaceHelper = GooglePlaceHelper(baseActivity, GooglePlaceHelper.PLACE_PICKER, object : GooglePlaceHelper.GooglePlaceDataInterface {
                 override fun onPlaceActivityResult(longitude: Double, latitude: Double, locationName: String?) {
-                    txtAddress.text = locationName
+                    edtAddress.setText(locationName)
                     lat = latitude
                     lng = longitude
 
@@ -209,7 +205,7 @@ class EditProfileFragment : BaseFragment() {
         val dialog = SimpleSearchDialogCompat(context, "Select State",
                 "Search here...", null, insuranceProvidersList, SearchResultListener<States> { dialog, item, position ->
             dialog.dismiss()
-            txtState.text = item.name
+           // txtState.text = item.name
         })
 
         dialog.show()
@@ -242,8 +238,8 @@ class EditProfileFragment : BaseFragment() {
         ) { dialog, index ->
             selectedCountryIndex = index
 
-            txtCountry.text = arrCountryData[selectedCountryIndex].name
-            txtState.text = ""
+            /*txtCountry.text = arrCountryData[selectedCountryIndex].name
+            txtState.text = ""*/
             getStates(arrCountryData[selectedCountryIndex].id)
             dialog.dismiss()
         }
@@ -298,7 +294,7 @@ class EditProfileFragment : BaseFragment() {
 
                 ImageLoaderHelper.loadImageWithAnimations(imgProfile, user.userDetails.imageUrl, true)
 
-                if (user.userDetails.title == AppConstants.TITLE_MR) {
+              /*  if (user.userDetails.title == AppConstants.TITLE_MR) {
                     txtTitle.text = Constants.title[0]
                 }
                 if (user.userDetails.title == AppConstants.TITLE_MISS) {
@@ -309,7 +305,7 @@ class EditProfileFragment : BaseFragment() {
                 }
                 if (user.userDetails.title == AppConstants.TITLE_MS) {
                     txtTitle.text = Constants.title[3]
-                }
+                }*/
 
                 if (user.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
                     radioBtnIndividual.isChecked = true
@@ -323,7 +319,7 @@ class EditProfileFragment : BaseFragment() {
                 edtCompany.setText(user.userDetails.company)
                 edtPhoneNo.setText(user.userDetails.phone)
                 ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
-                txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+                edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
                 if (user.userDetails.lat != null &&
                         user.userDetails.lng != null){
                     lat = user.userDetails.lat
@@ -334,10 +330,10 @@ class EditProfileFragment : BaseFragment() {
                 }
                 edtZipCode.setText(user.userDetails.zipCode)
                 edtCity.setText(user.userDetails.city)
-                txtCountry.text = (user.userDetails.country)
+                edtCountry.setText(user.userDetails.country)
                 //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
                 //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
-                txtState.text = (user.userDetails.state.name)
+                edtState.setText(user.userDetails.state.name)
                 getCountry()
 
             }
@@ -353,7 +349,7 @@ class EditProfileFragment : BaseFragment() {
 
         ImageLoaderHelper.loadImageWithAnimations(imgProfile, currentUser.userDetails.imageUrl, true)
 
-        if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MR) {
+       /* if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MR) {
             txtTitle.text = Constants.title[0]
         }
         if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MISS) {
@@ -365,7 +361,7 @@ class EditProfileFragment : BaseFragment() {
         if (sharedPreferenceManager.currentUser.userDetails.title == AppConstants.TITLE_MS) {
             txtTitle.text = Constants.title[3]
         }
-
+*/
 
         if (sharedPreferenceManager.currentUser.userDetails.userType == AppConstants.USER_TYPE_INDIVIDUAL) {
             radioBtnIndividual.isChecked = true
@@ -379,7 +375,7 @@ class EditProfileFragment : BaseFragment() {
         edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
         edtPhoneNo.setText(sharedPreferenceManager.currentUser.userDetails.phone)
         ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
-        txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+        edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
         if (sharedPreferenceManager.currentUser.userDetails.lat != null &&
                 sharedPreferenceManager.currentUser.userDetails.lng != null){
             lat = sharedPreferenceManager.currentUser.userDetails.lat
@@ -390,10 +386,10 @@ class EditProfileFragment : BaseFragment() {
         }
         edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
         edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
-        txtCountry.text = (sharedPreferenceManager.currentUser.userDetails.country)
+        edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
         //edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
         //edtComment.setText(sharedPreferenceManager.currentUser.userDetails.about)
-        txtState.text = (sharedPreferenceManager.currentUser.userDetails.state.name)
+        edtState.setText(sharedPreferenceManager.currentUser.userDetails.state.name)
 
     }
 
@@ -401,10 +397,10 @@ class EditProfileFragment : BaseFragment() {
     private fun editProfileCall() {
         // Validations
 
-        if (txtTitle.stringTrimmed.isEmpty()) {
+       /* if (txtTitle.stringTrimmed.isEmpty()) {
             UIHelper.showAlertDialog(context, "Please select title")
             return
-        }
+        }*/
 
         if (!edtFirstName.testValidity()) {
 
@@ -449,25 +445,34 @@ class EditProfileFragment : BaseFragment() {
             }
         }
 
-        if (txtAddress.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please enter your address")
+        if (!edtCountry.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your country")
             return
-
         }
-        if (!edtZipCode.testValidity()) {
-            UIHelper.showAlertDialog(context, "Please enter zipCode")
-            return
 
-        }
         if (!edtCity.testValidity()) {
             UIHelper.showAlertDialog(context, "Please enter your city")
             return
         }
 
-        if (txtCountry.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select country")
+        if (!edtState.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your state")
             return
         }
+
+        if (!edtAddress.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter your address")
+            return
+
+        }
+        if (!edtZipCode.testValidity()) {
+            UIHelper.showAlertDialog(context, "Please enter zip code")
+            return
+
+        }
+
+
+
 
         // Initialize Models
         val editProfileSendingModel = EditProfileSendingModel()
@@ -489,24 +494,18 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.phone = (ccp.fullNumberWithPlus.toString())
         editProfileSendingModel.firstName = (edtFirstName.stringTrimmed)
         editProfileSendingModel.lastName = (edtLastName.stringTrimmed)
-        editProfileSendingModel.address = (txtAddress.stringTrimmed)
+        editProfileSendingModel.address = (edtAddress.stringTrimmed)
         editProfileSendingModel.zipCode = (edtZipCode.stringTrimmed)
         editProfileSendingModel.company = (edtCompany.stringTrimmed)
         editProfileSendingModel.name = (edtFirstName.stringTrimmed)
         editProfileSendingModel.city = (edtCity.stringTrimmed)
         editProfileSendingModel.country = getCountryFromSpinner()
-        if (getIdFromSpinner() == -1){
-            Toast.makeText(context,"State required",Toast.LENGTH_SHORT).show()
-            return
-
-        }else {
-            editProfileSendingModel.stateId = getIdFromSpinner()
-        }
+        editProfileSendingModel.state = (edtState.stringTrimmed)
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.latitude = lat
         editProfileSendingModel.longitude = lng
        // editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
-
+/*
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
         }
@@ -515,7 +514,7 @@ class EditProfileFragment : BaseFragment() {
         }
         if (txtTitle.text == Constants.title[2]) {
             editProfileSendingModel.title = AppConstants.TITLE_MRS
-        }
+        }*/
 
         WebServices(baseActivity, token, BaseURLTypes.BASE_URL, true)
                 .postMultipartAPI(WebServiceConstants.PATH_PROFILE, arrMultiFileModel, editProfileSendingModel.toString(), object : WebServices.IRequestWebResponseAnyObjectCallBack {
@@ -555,10 +554,10 @@ class EditProfileFragment : BaseFragment() {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
                 if (spinnerModelArrayList.isEmpty()){
-                    contParentState.visibility = View.GONE
+                    //contParentState.visibility = View.GONE
                     Toast.makeText(context,"No State Available", Toast.LENGTH_SHORT).show()
                 }else{
-                    contParentState.visibility = View.VISIBLE
+                    //contParentState.visibility = View.VISIBLE
                 }
 
 
@@ -571,8 +570,8 @@ class EditProfileFragment : BaseFragment() {
     private fun getIdFromSpinner(): Int {
 
         for (states in arrData) {
-            if (states.name == txtState.stringTrimmed) {
-                txtState.text = states.name
+            if (states.name == edtState.stringTrimmed) {
+                edtState.setText(states.name)
                 return states.id
             }
         }
@@ -594,7 +593,7 @@ class EditProfileFragment : BaseFragment() {
                 spinnerCountryArrayList.clear()
 
                 for (country in arrCountryData) {
-                    var countryName = txtCountry.stringTrimmed
+                    var countryName = edtCountry.stringTrimmed
                     if (country.name == countryName) {
                         getStates(country.id)
                     }
@@ -611,8 +610,8 @@ class EditProfileFragment : BaseFragment() {
     private fun getCountryFromSpinner(): String {
 
         for (country in arrCountryData) {
-            if (country.name == txtCountry.stringTrimmed) {
-                txtCountry.text = country.name
+            if (country.name == edtCountry.stringTrimmed) {
+                edtCountry.setText(country.name)
 
                 getStates(country.id)
                 return country.name
@@ -642,23 +641,27 @@ class EditProfileFragment : BaseFragment() {
 
                         for (arr in arrCountryData) {
                             if (addresses[0].countryName == "United States") {
-                                txtCountry.text = arrCountryData[0].name
-                                txtState.text = ""
-                                getStates(arrCountryData[0].id)
+                                edtCountry.setText(arrCountryData[0].name)
+                                edtState.setText(addresses[0].adminArea)
+                                edtCity.setText(addresses[0].locality)
+                                edtZipCode.setText(addresses[0].postalCode)
+                                //getStates(arrCountryData[0].id)
 
                             } else if (addresses[0].countryName == "Canada") {
-                                txtCountry.text = arrCountryData[1].name
-                                txtState.text = ""
-                                getStates(arrCountryData[1].id)
+                                edtCountry.setText(arrCountryData[1].name)
+                                edtState.setText(addresses[0].adminArea)
+                                edtCity.setText(addresses[0].locality)
+                                edtZipCode.setText(addresses[0].postalCode)
+                                //getStates(arrCountryData[1].id)
 
 
-                            } else if (addresses[0].countryName == "Mexico") {
+                            }/* else if (addresses[0].countryName == "Mexico") {
                                 txtCountry.text = arrCountryData[2].name
                                 txtState.text = ""
                                 getStates(arrCountryData[2].id)
 
-                            } else {
-                                txtAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+                            }*/ else {
+                                edtAddress.setText(sharedPreferenceManager.currentUser.userDetails.address)
                                 UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
                                 return
                             }

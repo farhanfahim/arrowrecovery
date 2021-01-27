@@ -9,8 +9,6 @@ import com.tekrevol.arrowrecovery.constatnts.Constants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.UIHelper
 import com.tekrevol.arrowrecovery.widget.TitleBar
-import kotlinx.android.synthetic.main.fragment_editprofile.contTitle
-import kotlinx.android.synthetic.main.fragment_editprofile.txtTitle
 import kotlinx.android.synthetic.main.fragment_personal.*
 
 class PersonalFragment : BaseFragment() {
@@ -42,14 +40,14 @@ class PersonalFragment : BaseFragment() {
 
     override fun setListeners() {
 
-
+/*
         contTitle.setOnClickListener {
             UIHelper.showCheckedDialogBox(context, "Select Title", Constants.title, selectedPosition) { dialog, which ->
                 selectedPosition = (dialog as androidx.appcompat.app.AlertDialog).listView.checkedItemPosition
                 txtTitle.text = Constants.title[selectedPosition]
                 dialog.dismiss()
             }
-        }
+        }*/
 
         radioBtnIndividual.setOnClickListener {
             edtCompanyName.visibility = View.GONE
