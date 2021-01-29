@@ -206,7 +206,7 @@ class ConverterDashboardFragment : BaseFragment(), ImageListener, OnItemClickLis
            /* arrConverters.clear()*/
             scrollListener.reset()
             getFeaturedList()
-            getVehicle()
+            getProductsList(buildHashMap(currentPage, productid))
             pullToRefresh.isRefreshing = false
         }
 

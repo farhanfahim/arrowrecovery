@@ -262,7 +262,7 @@
                             app:ccp_showFullName="false"
                             app:ccp_clickable="false"
                             app:ccp_showPhoneCode="false"
-                            app:ccp_customMasterCountries="US,CA,MX,PK"
+                            app:ccp_customMasterCountries="US,CA"
                             app:ccp_showNameCode="false"
                             app:ccp_defaultLanguage="ENGLISH"
                             app:ccp_showFlag="true"/>
@@ -386,12 +386,12 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/x20dp"
                                 android:visibility="gone"
                                 app:corner_radius="@dimen/x10dp">
 
                                 <ImageView
                                     android:id="@+id/imgMap"
+                                    android:layout_marginBottom="@dimen/x20dp"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/x200dp"
                                     android:scaleType="centerCrop" />

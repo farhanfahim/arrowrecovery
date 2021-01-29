@@ -36,8 +36,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint=" Address"
+                        android:id="@+id/tvAddressLabel"
                         android:inputType="textPersonName"
                         android:maxLength="50"
+                        android:visibility="gone"
                         android:singleLine="true"
                         android:textColor="@color/title_color"
                         android:textColorHint="@color/txtGrey"
@@ -70,15 +72,15 @@
 
                     <com.jcminarro.roundkornerlayout.RoundKornerFrameLayout
                         android:id="@+id/map"
-                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/x20dp"
+                        android:layout_marginTop="10dp"
                         android:visibility="gone"
                         app:corner_radius="@dimen/x10dp">
 
                         <ImageView
                             android:id="@+id/imgMap"
+                            android:layout_marginBottom="@dimen/x20dp"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/x200dp"
                             android:scaleType="centerCrop" />

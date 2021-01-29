@@ -67,6 +67,7 @@ class EditProfileFragment : BaseFragment() {
     var lat = 0.0
     var lng = 0.0
     var googlePlaceHelper: GooglePlaceHelper? = null
+
     companion object {
 
         var arrData: ArrayList<States> = ArrayList()
@@ -97,14 +98,14 @@ class EditProfileFragment : BaseFragment() {
 
         if (radioBtnCompany.isChecked) {
             edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
-           // edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+            // edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
             edtCompany.visibility = View.VISIBLE
             //edtKindCompany.visibility = View.VISIBLE
         } else {
             edtCompany.visibility = View.GONE
             edtCompany.setText("")
-           // edtKindCompany.visibility = View.GONE
-           // edtKindCompany.setText("")
+            // edtKindCompany.visibility = View.GONE
+            // edtKindCompany.setText("")
         }
 
     }
@@ -131,13 +132,13 @@ class EditProfileFragment : BaseFragment() {
     override fun setListeners() {
 
 
-       /* contState.setOnClickListener {
-            showProvidersInDialog(arrData)
-        }
+        /* contState.setOnClickListener {
+             showProvidersInDialog(arrData)
+         }
 
-        contCountry.setOnClickListener {
-           // showCountrySelectDialog()
-        }*/
+         contCountry.setOnClickListener {
+            // showCountrySelectDialog()
+         }*/
 
         imgCamera.setOnClickListener {
 
@@ -155,15 +156,15 @@ class EditProfileFragment : BaseFragment() {
         radioBtnIndividual.setOnClickListener {
             edtCompany.visibility = View.GONE
             edtCompany.setText("")
-           // edtKindCompany.visibility = View.GONE
-           // edtKindCompany.setText("")
+            // edtKindCompany.visibility = View.GONE
+            // edtKindCompany.setText("")
         }
 
         radioBtnCompany.setOnClickListener {
             edtCompany.setText(sharedPreferenceManager.currentUser.userDetails.company)
-           // edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
+            // edtKindCompany.setText(sharedPreferenceManager.currentUser.userDetails.kindOfCompany)
             edtCompany.visibility = View.VISIBLE
-           // edtKindCompany.visibility = View.VISIBLE
+            // edtKindCompany.visibility = View.VISIBLE
         }
 
         tvAddress.setOnClickListener {
@@ -177,9 +178,9 @@ class EditProfileFragment : BaseFragment() {
                     lat = latitude
                     lng = longitude
 
-                    getCountryName(context,latitude,longitude)
+                    getCountryName(context, latitude, longitude)
 
-                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude,longitude)
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
                     ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
                     map.visibility = View.VISIBLE
 
@@ -200,12 +201,11 @@ class EditProfileFragment : BaseFragment() {
     }
 
 
-
     fun showProvidersInDialog(insuranceProvidersList: ArrayList<States>) {
         val dialog = SimpleSearchDialogCompat(context, "Select State",
                 "Search here...", null, insuranceProvidersList, SearchResultListener<States> { dialog, item, position ->
             dialog.dismiss()
-           // txtState.text = item.name
+            // txtState.text = item.name
         })
 
         dialog.show()
@@ -308,10 +308,10 @@ class EditProfileFragment : BaseFragment() {
                 ccpLoadNumber.fullNumber = edtPhoneNo.text.toString()
                 tvAddress.text = sharedPreferenceManager.currentUser.userDetails.address
                 if (user.userDetails.lat != null &&
-                        user.userDetails.lng != null){
+                        user.userDetails.lng != null) {
                     lat = user.userDetails.lat
                     lng = user.userDetails.lng
-                    var str: String = GooglePlaceHelper.getMapSnapshotURL(user.userDetails.lat,user.userDetails.lng)
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(user.userDetails.lat, user.userDetails.lng)
                     ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
                     map.visibility = View.VISIBLE
                 }
@@ -323,7 +323,7 @@ class EditProfileFragment : BaseFragment() {
                 if (user.userDetails.state != null) {
                     edtState.setText(sharedPreferenceManager.currentUser.userDetails.state)
 
-                }else{
+                } else {
                     edtState.setText("")
                 }
                 getCountry()
@@ -340,10 +340,10 @@ class EditProfileFragment : BaseFragment() {
     private fun editProfileCall() {
         // Validations
 
-       /* if (txtTitle.stringTrimmed.isEmpty()) {
-            UIHelper.showAlertDialog(context, "Please select title")
-            return
-        }*/
+        /* if (txtTitle.stringTrimmed.isEmpty()) {
+             UIHelper.showAlertDialog(context, "Please select title")
+             return
+         }*/
 
         if (!edtFirstName.testValidity()) {
 
@@ -372,17 +372,17 @@ class EditProfileFragment : BaseFragment() {
 
         var phoneNo = ccp.fullNumberWithPlus.toString()
 
-        if (!edtPhoneNo.testValidity()){
+        if (!edtPhoneNo.testValidity()) {
             UIHelper.showAlertDialog(context, "Phone number is required")
             return
-        }else {
+        } else {
             val regex = "^\\+(?:[0-9] ?){6,14}[0-9]$"
 
             val pattern: Pattern = Pattern.compile(regex)
             val matcher: Matcher = pattern.matcher(phoneNo)
             if (matcher.matches() && phoneNo.length <= 15 && isValid) {
                 println("Invalid phone no")
-            }else{
+            } else {
                 UIHelper.showAlertDialog(context, getString(R.string.phone_number_validation))
 
             }
@@ -415,8 +415,6 @@ class EditProfileFragment : BaseFragment() {
         }
 
 
-
-
         // Initialize Models
         val editProfileSendingModel = EditProfileSendingModel()
         val arrMultiFileModel = ArrayList<MultiFileModel>()
@@ -447,7 +445,7 @@ class EditProfileFragment : BaseFragment() {
         editProfileSendingModel.isCompleted = (1)
         editProfileSendingModel.latitude = lat
         editProfileSendingModel.longitude = lng
-       // editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
+        // editProfileSendingModel.kindOfCompany = edtKindCompany.stringTrimmed
 /*
         if (txtTitle.text == Constants.title[0]) {
             editProfileSendingModel.title = AppConstants.TITLE_MR
@@ -475,7 +473,7 @@ class EditProfileFragment : BaseFragment() {
                 })
     }
 
-    private fun getStates(statId:Int) {
+    private fun getStates(statId: Int) {
 
 
         val query: MutableMap<String, Any> = HashMap()
@@ -496,10 +494,10 @@ class EditProfileFragment : BaseFragment() {
                 for (states in arrData) {
                     spinnerModelArrayList.add(SpinnerModel(states.name))
                 }
-                if (spinnerModelArrayList.isEmpty()){
+                if (spinnerModelArrayList.isEmpty()) {
                     //contParentState.visibility = View.GONE
-                    Toast.makeText(context,"No State Available", Toast.LENGTH_SHORT).show()
-                }else{
+                    Toast.makeText(context, "No State Available", Toast.LENGTH_SHORT).show()
+                } else {
                     //contParentState.visibility = View.VISIBLE
                 }
 
@@ -520,6 +518,7 @@ class EditProfileFragment : BaseFragment() {
         }
         return -1
     }
+
     private fun getCountry() {
 
         val query: MutableMap<String, Any> = HashMap()
@@ -546,10 +545,11 @@ class EditProfileFragment : BaseFragment() {
             }
 
             override fun onError(`object`: Any?) {
-                Toast.makeText(context,`object`.toString(),Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, `object`.toString(), Toast.LENGTH_SHORT).show()
             }
         })
     }
+
     private fun getCountryFromSpinner(): String {
 
         for (country in arrCountryData) {
@@ -579,37 +579,51 @@ class EditProfileFragment : BaseFragment() {
             var result: Address
             if (addresses != null && !addresses.isEmpty()) {
                 if (addresses[0].countryName != null) {
-                    var country = addresses[0].countryName
+
+                    if (addresses[0].countryName == "United States") {
+                        edtCountry.setText(arrCountryData[0].name)
+                        edtState.setText(addresses[0].adminArea)
+                        edtCity.setText(addresses[0].locality)
+                        edtZipCode.setText(addresses[0].postalCode)
+                        map.visibility = View.VISIBLE
+                        imgMap.visibility = View.VISIBLE
+
+                    } else if (addresses[0].countryName == "Canada") {
+                        edtCountry.setText(arrCountryData[1].name)
+                        edtState.setText(addresses[0].adminArea)
+                        edtCity.setText(addresses[0].locality)
+                        edtZipCode.setText(addresses[0].postalCode)
+                        map.visibility = View.VISIBLE
+                        imgMap.visibility = View.VISIBLE
 
 
-                        for (arr in arrCountryData) {
-                            if (addresses[0].countryName == "United States") {
-                                edtCountry.setText(arrCountryData[0].name)
-                                edtState.setText(addresses[0].adminArea)
-                                edtCity.setText(addresses[0].locality)
-                                edtZipCode.setText(addresses[0].postalCode)
-                                //getStates(arrCountryData[0].id)
+                    } else {
+                        tvAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+                        edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
+                        edtState.setText(sharedPreferenceManager.currentUser.userDetails.state)
+                        edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
+                        edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
+                        var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+                        ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                        UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
+                        map.visibility = View.GONE
+                        imgMap.visibility = View.GONE
+                        return
+                    }
 
-                            } else if (addresses[0].countryName == "Canada") {
-                                edtCountry.setText(arrCountryData[1].name)
-                                edtState.setText(addresses[0].adminArea)
-                                edtCity.setText(addresses[0].locality)
-                                edtZipCode.setText(addresses[0].postalCode)
-                                //getStates(arrCountryData[1].id)
 
-
-                            }/* else if (addresses[0].countryName == "Mexico") {
-                                txtCountry.text = arrCountryData[2].name
-                                txtState.text = ""
-                                getStates(arrCountryData[2].id)
-
-                            }*/ else {
-                                tvAddress.text = sharedPreferenceManager.currentUser.userDetails.address
-                                UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
-                                return
-                            }
-                        }
-
+                } else {
+                    tvAddress.text = sharedPreferenceManager.currentUser.userDetails.address
+                    edtCountry.setText(sharedPreferenceManager.currentUser.userDetails.country)
+                    edtState.setText(sharedPreferenceManager.currentUser.userDetails.state)
+                    edtCity.setText(sharedPreferenceManager.currentUser.userDetails.city)
+                    edtZipCode.setText(sharedPreferenceManager.currentUser.userDetails.zipCode)
+                    var str: String = GooglePlaceHelper.getMapSnapshotURL(latitude, longitude)
+                    ImageLoaderHelper.loadImageWithAnimations(imgMap, str, false)
+                    map.visibility = View.GONE
+                    imgMap.visibility = View.GONE
+                    UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
+                    return
                 }
             }
         } catch (ignored: IOException) {

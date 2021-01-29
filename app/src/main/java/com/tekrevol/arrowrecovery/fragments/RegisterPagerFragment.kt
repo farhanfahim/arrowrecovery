@@ -553,6 +553,8 @@ class RegisterPagerFragment : BaseFragment() {
                 btnnext.text = "Sign Up"
                 btnBack.visibility = View.VISIBLE
                 socialloginLayout.visibility = View.GONE
+                edtZipCode.clearFocus()
+
 
             }
         }

@@ -1,10 +1,13 @@
 package com.tekrevol.arrowrecovery.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tekrevol.arrowrecovery.R
+import com.tekrevol.arrowrecovery.callbacks.OnMessageReceive
 import com.tekrevol.arrowrecovery.constatnts.WebServiceConstants
 import com.tekrevol.arrowrecovery.fragments.abstracts.BaseFragment
 import com.tekrevol.arrowrecovery.helperclasses.ui.helper.KeyboardHelper
@@ -15,10 +18,14 @@ import com.tekrevol.arrowrecovery.models.wrappers.WebResponse
 import com.tekrevol.arrowrecovery.widget.TitleBar
 import kotlinx.android.synthetic.main.fragment_verify_account.*
 import retrofit2.Call
+import swarajsaaj.smscodereader.interfaces.OTPListener
+import swarajsaaj.smscodereader.receivers.OtpReader
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 
 class OtpVerificationFragment : BaseFragment() {
-
     var webCall: Call<WebResponse<Any>>? = null
     var email: String = ""
     var phone: String = ""
@@ -29,7 +36,10 @@ class OtpVerificationFragment : BaseFragment() {
         txtPhone.text = "Please enter the OTP code sent to your phone number $phone"
       //  txtPhone.text = "We have sent you a SMS with a code to the number $phone and your email $email"
         txtBackToLoginScreen.visibility = View.GONE
+
     }
+
+
 
     private fun sendOtp() {
 
@@ -45,6 +55,7 @@ class OtpVerificationFragment : BaseFragment() {
         })
 
     }
+
 
     companion object {
         fun newInstance(email: String, phone: String): Fragment {
@@ -128,4 +139,7 @@ class OtpVerificationFragment : BaseFragment() {
         super.onPause()
         KeyboardHelper.hideSoftKeyboard(context, pinEditText)
     }
+
+
+
 }

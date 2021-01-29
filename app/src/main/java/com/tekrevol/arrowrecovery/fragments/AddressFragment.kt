@@ -178,7 +178,7 @@ class AddressFragment : BaseFragment() {
 
     private fun getStates(statId: Int) {
 
-       // txtState.text = ""
+        // txtState.text = ""
         val query: MutableMap<String, Any> = HashMap()
 
         query[WebServiceConstants.Q_PARAM_COUNTRY_ID] = statId
@@ -211,7 +211,7 @@ class AddressFragment : BaseFragment() {
 
     }
 
-        fun initCountryAdapter() {
+    fun initCountryAdapter() {
         countryListAdapter = object : ArrayAdapter<Country?>(
                 context!!,
                 R.layout.dialog_item,
@@ -274,35 +274,50 @@ class AddressFragment : BaseFragment() {
             if (addresses != null && !addresses.isEmpty()) {
                 if (addresses[0].countryName != null) {
 
-                    for (arr in arrCountryData) {
-                        if (addresses[0].countryName == "United States") {
-                            edtCountry.setText(arrCountryData[0].name)
-                            edtState.setText(addresses[0].adminArea)
-                            edtCity.setText(addresses[0].locality)
-                            edtZipCode.setText(addresses[0].postalCode)
-                            //getStates(arrCountryData[0].id)
 
-                        } else if (addresses[0].countryName == "Canada") {
-                            edtCountry.setText(arrCountryData[1].name)
-                            edtState.setText(addresses[0].adminArea)
-                            edtCity.setText(addresses[0].locality)
-                            edtZipCode.setText(addresses[0].postalCode)
-                            //getStates(arrCountryData[1].id)
+                    if (addresses[0].countryName == "United States") {
+                        tvAddressLabel.visibility = View.VISIBLE
+                        edtCountry.setText(arrCountryData[0].name)
+                        edtState.setText(addresses[0].adminArea)
+                        edtCity.setText(addresses[0].locality)
+                        edtZipCode.setText(addresses[0].postalCode)
 
-                        }/* else if (addresses[0].countryName == "Mexico") {
-                            txtCountry.text = arrCountryData[2].name
-                            txtState.text = ""
-                            getStates(arrCountryData[2].id)
+                        map.visibility = View.VISIBLE
+                        imgMap.visibility = View.VISIBLE
 
-                        }*/ else {
 
-                            tvAddress.text = ""
-                            edtCountry.setText("")
-                            edtState.setText("")
-                            UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
-                            return
-                        }
+                    } else if (addresses[0].countryName == "Canada") {
+                        tvAddressLabel.visibility = View.VISIBLE
+                        edtCountry.setText(arrCountryData[1].name)
+                        edtState.setText(addresses[0].adminArea)
+                        edtCity.setText(addresses[0].locality)
+                        edtZipCode.setText(addresses[0].postalCode)
+
+                        map.visibility = View.VISIBLE
+                        imgMap.visibility = View.VISIBLE
+
+                    } else {
+                        tvAddressLabel.visibility = View.GONE
+                        tvAddress.text = ""
+                        edtCountry.setText("")
+                        edtCity.setText("")
+                        edtState.setText("")
+                        edtZipCode.setText("")
+                        map.visibility = View.GONE
+                        imgMap.visibility = View.GONE
+                        UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
                     }
+
+                } else {
+                    tvAddressLabel.visibility = View.GONE
+                    tvAddress.text = ""
+                    edtCountry.setText("")
+                    edtCity.setText("")
+                    edtState.setText("")
+                    edtZipCode.setText("")
+                    map.visibility = View.GONE
+                    imgMap.visibility = View.GONE
+                    UIHelper.showAlertDialog(context, getString(R.string.we_are_not_available))
                 }
             }
         } catch (ignored: IOException) {
